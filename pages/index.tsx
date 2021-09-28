@@ -2,7 +2,7 @@ import Head from "next/head"
 import Image from "next/image"
 import React from "react"
 import styles from "../styles/Home.module.css"
-import { Box, Stack, Text, Icon, Button } from "@chakra-ui/react"
+import { Box, Stack, Text, Icon, Button, Link } from "@chakra-ui/react"
 import { FiAlertCircle, FiMenu } from "react-icons/fi"
 
 export default function Home() {
@@ -127,17 +127,23 @@ export default function Home() {
       </Box>
 
       <Stack
+        zIndex={10}
         isInline
         alignItems="center"
         justifyContent="center"
         as="footer"
         // sx={{ backdropFilter: "blur(5px)", bg: "rgba(10, 25, 41, 0.3)" }}
-        height={10}
+        // height={10}
         width="full"
       >
-        <Text fontSize="sm">Made with 💙 by kp</Text>
+        <Stack spacing={0} fontSize="sm" pb={1}>
+          <Text>
+            Made with 💙 by <Link href="https://kastproductions.com">Kastproductions</Link> in 🇱🇹
+          </Text>
+          {/* <Text>Contributed to around the 🌏</Text> */}
+        </Stack>
       </Stack>
-      <ul className="circles">
+      <Box as="ul" className="circles">
         <li></li>
         <li></li>
         <li></li>
@@ -148,7 +154,7 @@ export default function Home() {
         <li></li>
         <li></li>
         <li></li>
-      </ul>
+      </Box>
     </Stack>
   )
 }
