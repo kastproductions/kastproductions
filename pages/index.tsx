@@ -2,10 +2,30 @@ import Head from "next/head"
 // import Image from "next/image"
 import React from "react"
 import styles from "../styles/Home.module.css"
-import { Box, Stack, Text, Icon, Button, Link, Image } from "@chakra-ui/react"
+import {
+  Box,
+  Stack,
+  Text,
+  Icon,
+  Button,
+  Link,
+  Image,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useDisclosure,
+  Input,
+} from "@chakra-ui/react"
 import { FiAlertCircle, FiMenu } from "react-icons/fi"
+import NextLink from "next/link"
+import { Router, useRouter } from "next/dist/client/router"
 
 export default function Home() {
+  const router = useRouter()
   return (
     <Stack bg="gray.900" color="white" width="full" minH="100vh" className="area" spacing={0}>
       <Head>
@@ -63,9 +83,7 @@ export default function Home() {
             </Stack>
             <Stack flex={1}></Stack>
             <Stack flex={1} display={["flex", "none"]}>
-              <Button bg="transparent" _hover={{}} _active={{}} variant="unstyled">
-                <Icon as={FiMenu} fontSize="3xl" />
-              </Button>
+              <DrawerExample />
             </Stack>
             <Stack display={["none", "flex"]} isInline flex={1} justifyContent="flex-end" spacing={4}>
               <Box>
@@ -75,6 +93,7 @@ export default function Home() {
                     bg: "gray.800",
                   }}
                   _active={{}}
+                  onClick={() => router.push("/about")}
                 >
                   About
                 </Button>
@@ -86,6 +105,7 @@ export default function Home() {
                     bg: "gray.800",
                   }}
                   _active={{}}
+                  onClick={() => router.push("/work")}
                 >
                   Work
                 </Button>
@@ -97,6 +117,7 @@ export default function Home() {
                     bg: "gray.800",
                   }}
                   _active={{}}
+                  onClick={() => router.push("/contact")}
                 >
                   Contact
                 </Button>
@@ -158,6 +179,59 @@ export default function Home() {
         <li></li>
       </Box>
     </Stack>
+  )
+}
+
+function DrawerExample() {
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const btnRef = React.useRef()
+
+  return (
+    <>
+      <Button ref={btnRef} onClick={onOpen} bg="transparent" _hover={{}} _active={{}} variant="unstyled">
+        <Icon as={FiMenu} fontSize="3xl" />
+      </Button>
+      <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
+        <DrawerOverlay />
+        <DrawerContent bg="gray.900" color="white">
+          <DrawerCloseButton />
+          <DrawerHeader></DrawerHeader>
+
+          <DrawerBody>
+            <Stack>
+              <Box>
+                <NextLink href="/about" passHref>
+                  <Link fontSize="4xl" fontWeight="semibold">
+                    About
+                  </Link>
+                </NextLink>
+              </Box>
+              <Box>
+                <NextLink href="/work" passHref>
+                  <Link fontSize="4xl" fontWeight="semibold">
+                    Work
+                  </Link>
+                </NextLink>
+              </Box>
+              <Box>
+                <NextLink href="/contact" passHref>
+                  <Link fontSize="4xl" fontWeight="semibold">
+                    Contact
+                  </Link>
+                </NextLink>
+              </Box>
+            </Stack>
+          </DrawerBody>
+
+          {/* <DrawerFooter>
+            <Button variant="outline" mr={3} onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorScheme="blue">Save</Button>
+          </DrawerFooter> */}
+        </DrawerContent>
+      </Drawer>
+    </>
   )
 }
 
