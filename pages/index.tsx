@@ -297,7 +297,7 @@ function RecomendationList() {
     <Stack isInline spacing={[5, 10]}>
       {recomendations.map((item) => (
         <Stack direction={["column", "row"]} key={item.id}>
-          <Box pr={[0, 20]} flex={0.8}>
+          <Box pr={[0, 20]} flex={[1, 0.8]}>
             <Box pb={4}>
               <Icon as={VscQuote} fontSize={["6xl", "6xl"]} />
             </Box>
@@ -307,7 +307,7 @@ function RecomendationList() {
               </Text>
             </Box>
           </Box>
-          <Stack flex={0.2} pt={[8, 0]}>
+          <Stack flex={[1, 0.2]} pt={[8, 0]}>
             <Box boxSize={28} borderColor="white" borderWidth="4px" rounded="full" overflow="hidden">
               <Image src={item.imageUrl} boxSize={28} objectFit="cover" alt="picture of reviewer" />
             </Box>
