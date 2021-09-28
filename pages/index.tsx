@@ -118,7 +118,7 @@ export default function Home() {
       <Box as="main" flex={1} zIndex={10} px={4}>
         <Stack mx="auto" width="full" maxW="7xl" pb={[40, 64]} fontFamily="Inter" alignItems="center">
           <Box pb={12}>
-            <Text textAlign="center" fontSize={["3xl", "4xl"]} fontWeight="black">
+            <Text textAlign="center" fontSize={["2xl", "4xl"]} fontWeight={["black"]}>
               Trusted by industry leading brands
             </Text>
           </Box>
