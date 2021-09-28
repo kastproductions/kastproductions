@@ -21,6 +21,8 @@ import {
   Input,
 } from "@chakra-ui/react"
 import { FiAlertCircle, FiMenu } from "react-icons/fi"
+import { VscQuote } from "react-icons/vsc"
+
 import NextLink from "next/link"
 import { Router, useRouter } from "next/dist/client/router"
 
@@ -146,6 +148,10 @@ export default function Home() {
           <Box>
             <CompanyLogos />
           </Box>
+        </Stack>
+
+        <Stack mx="auto" width="full" maxW="7xl" pb={[40, 64]} fontFamily="Inter">
+          <RecomendationList />
         </Stack>
       </Box>
 
@@ -273,6 +279,52 @@ const companyList = [
   //     "https://media-exp1.licdn.com/dms/image/C560BAQGuwEuCPMZAAw/company-logo_200_200/0/1531722161731?e=1640822400&v=beta&t=6dYOM8KSPAP1o3MS3lBHYRNUOPUt9zaaNI-xDk8CfNI",
   // },
 ]
+
+const recomendations = [
+  {
+    name: "Kristian Tasevski",
+    position: "Head of Engineering at UserCentric",
+    imageUrl:
+      "https://media-exp1.licdn.com/dms/image/C5603AQEmAjRMGwzMUw/profile-displayphoto-shrink_200_200/0/1554286352901?e=1637193600&v=beta&t=zbmO_2cV9vPnALWpx4Cdw7ecAHyuSzi6110Mzp7s58g",
+    id: 1,
+    message:
+      "Karolis is one of those rare developers who has an exceptional eye for detail, everything that he works on has a certain visual aesthetic to it. I was directly managing Karolis on a number of different projects at UserCentric for high profile enterprise clients of ours and all of the front-end work that Karolis did on those projects just looked great. He also has a strong self driven motivation to continue to learn and to stay up to date with whatever is topical in the dev community, and contributed a lot to our Engineering culture at UserCentric by always sharing with us what was the latest and greatest in the scene.",
+  },
+]
+
+function RecomendationList() {
+  return (
+    <Stack isInline spacing={[5, 10]}>
+      {recomendations.map((item) => (
+        <Stack direction={["column", "row"]} key={item.id}>
+          <Box pr={[0, 20]} flex={0.8}>
+            <Box pb={4}>
+              <Icon as={VscQuote} fontSize={["6xl", "6xl"]} />
+            </Box>
+            <Box>
+              <Text fontSize={["md", "xl"]} fontWeight="light">
+                {item.message}
+              </Text>
+            </Box>
+          </Box>
+          <Stack flex={0.2} pt={[8, 0]}>
+            <Box boxSize={28} borderColor="white" borderWidth="4px" rounded="full" overflow="hidden">
+              <Image src={item.imageUrl} boxSize={28} objectFit="cover" alt="picture of reviewer" />
+            </Box>
+            <Box>
+              <Text fontSize="xl" fontWeight="bold">
+                {item.name}
+              </Text>
+            </Box>
+            <Box>
+              <Text fontSize="sm">{item.position}</Text>
+            </Box>
+          </Stack>
+        </Stack>
+      ))}
+    </Stack>
+  )
+}
 
 function CompanyLogos() {
   return (
