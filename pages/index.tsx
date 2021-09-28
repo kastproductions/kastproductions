@@ -106,7 +106,7 @@ export default function Home() {
         </Stack>
       </Stack>
       <Box pt={[16, 20]} as="header" zIndex={10} height="100vh">
-        <Stack mx="auto" width="full" maxW="7xl" px={4} pt={[10, 40]}>
+        <Stack mx="auto" width="full" maxW="7xl" px={4} pt={[20, 40]}>
           <Text fontSize={["5xl", "8xl"]} lineHeight={["short", "normal"]} fontWeight="black" fontFamily="Inter" as="h1">
             <Box as="span" color="blue.400">
               Kast Productions
@@ -116,7 +116,7 @@ export default function Home() {
         </Stack>
       </Box>
       <Box as="main" flex={1} zIndex={10} px={4}>
-        <Stack mx="auto" width="full" maxW="7xl" pb={40} fontFamily="Inter" alignItems="center">
+        <Stack mx="auto" width="full" maxW="7xl" pb={[40, 64]} fontFamily="Inter" alignItems="center">
           <Box pb={12}>
             <Text textAlign="center" fontSize={["3xl", "4xl"]} fontWeight="black">
               Trusted by industry leading brands
