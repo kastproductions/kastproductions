@@ -149,7 +149,7 @@ export default function Home() {
         </Stack>
       </Box>
 
-      <Stack
+      {/* <Stack
         zIndex={10}
         isInline
         alignItems="center"
@@ -163,9 +163,8 @@ export default function Home() {
           <Text>
             Made with 💙 by <Link href="https://kastproductions.com">Kastproductions</Link> in 🇱🇹
           </Text>
-          {/* <Text>Contributed to around the 🌏</Text> */}
         </Stack>
-      </Stack>
+      </Stack> */}
       <Box as="ul" className="circles">
         <li></li>
         <li></li>
@@ -272,7 +271,7 @@ function CompanyLogos() {
   return (
     <Stack isInline spacing={[5, 10]}>
       {companyList.map((item) => (
-        <Box key={item.iconUrl} boxShadow="base" borderColor="white" borderWidth="1px" rounded={["md", "xl"]} overflow="hidden">
+        <Box key={item.iconUrl} borderColor="white" borderWidth="2px" rounded={["md", "xl"]} overflow="hidden">
           <Link href={item.companyUrl} isExternal>
             <Image src={item.iconUrl} alt="client logo" objectFit="contain" boxSize={[16, 20]} />
           </Link>
