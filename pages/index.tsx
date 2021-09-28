@@ -272,9 +272,9 @@ function CompanyLogos() {
   return (
     <Stack isInline spacing={[5, 10]}>
       {companyList.map((item) => (
-        <Box key={item.iconUrl}>
+        <Box key={item.iconUrl} boxShadow="base" borderColor="white" borderWidth="1px" rounded={["md", "xl"]} overflow="hidden">
           <Link href={item.companyUrl} isExternal>
-            <Image src={item.iconUrl} alt="client logo" objectFit="contain" boxSize={[16, 20]} rounded={["md", "xl"]} />
+            <Image src={item.iconUrl} alt="client logo" objectFit="contain" boxSize={[16, 20]} />
           </Link>
         </Box>
       ))}
