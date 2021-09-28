@@ -10,7 +10,7 @@ export default function Home() {
     <Stack bg="gray.900" color="white" width="full" minH="100vh" className="area" spacing={0}>
       <Head>
         <title>Kastproductions</title>
-        <meta name="description" content="Kast Productions is design & frontend web development consultancy." />
+        <meta name="description" content="Kast Productions is design & frontend web development consultancy based in Lithuania." />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
