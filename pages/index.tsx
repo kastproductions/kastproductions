@@ -88,7 +88,7 @@ export default function Home() {
             <Box as="span" color="blue.400">
               Kast Productions
             </Box>{" "}
-            is internationally recognised design & development consultancy.
+            is design & development consultancy.
           </Text>
         </Stack>
       </Box>
