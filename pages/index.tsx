@@ -16,7 +16,16 @@ export default function Home() {
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700;900&display=swap" rel="stylesheet" />
       </Head>
-      <Stack as="nav" height={[20, 28]} width="full" spacing={0} position="fixed" zIndex={10}>
+      <Stack
+        as="nav"
+        height={[20, 28]}
+        width="full"
+        spacing={0}
+        position="fixed"
+        zIndex={10}
+        sx={{ backdropFilter: "blur(20px)" }}
+        // bg=" rgba(10, 25, 41, 0.72)"
+      >
         {/* <Stack width="full" bg="blue.500" height={12} isInline justifyContent="center" alignItems="center" px={4}>
           <Icon as={FiAlertCircle} fontSize="xl" />
           <Text textAlign="center" pl={0.5}>{`I'm currently  on a contract project but I'm happy to hearing from people`}</Text>
