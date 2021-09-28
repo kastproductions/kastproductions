@@ -6,7 +6,7 @@ export default function Contact() {
     <Box p={4} bg="gray.900" minH="100vh" color="white">
       <Box pt={40}>
         <Text textAlign="center" fontSize="3xl" fontWeight="bold">
-          Awesome things here will be soon
+          Amazing things coming soon
         </Text>
         <Text textAlign="center" fontSize="2xl">
           hello@kastproductions.com
