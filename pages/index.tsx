@@ -140,7 +140,7 @@ export default function Home() {
         <Stack mx="auto" width="full" maxW="7xl" pb={[40, 64]} fontFamily="Inter" alignItems="center">
           <Box pb={12}>
             <Text textAlign="center" fontSize={["2xl", "4xl"]} fontWeight={["black"]}>
-              Trusted by industry leading brands
+              Trusted by industry leading companies
             </Text>
           </Box>
           <Box>
@@ -219,15 +219,22 @@ function DrawerExample() {
                   </Link>
                 </NextLink>
               </Box>
+              <Box>
+                <Link isExternal href="mailto:hello@kastproductions.com">
+                  hello@kastproductions.com
+                </Link>
+              </Box>
             </Stack>
           </DrawerBody>
 
-          {/* <DrawerFooter>
-            <Button variant="outline" mr={3} onClick={onClose}>
+          <DrawerFooter>
+            <Stack width="full"></Stack>
+
+            {/* <Button variant="outline" mr={3} onClick={onClose}>
               Cancel
             </Button>
-            <Button colorScheme="blue">Save</Button>
-          </DrawerFooter> */}
+            <Button colorScheme="blue">Save</Button> */}
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

@@ -8,6 +8,9 @@ export default function Contact() {
         <Text textAlign="center" fontSize="3xl" fontWeight="bold">
           Awesome things here will be soon
         </Text>
+        <Text textAlign="center" fontSize="2xl">
+          hello@kastproductions.com
+        </Text>
       </Box>
     </Box>
   )
