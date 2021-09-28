@@ -1,8 +1,8 @@
 import Head from "next/head"
-import Image from "next/image"
+// import Image from "next/image"
 import React from "react"
 import styles from "../styles/Home.module.css"
-import { Box, Stack, Text, Icon, Button, Link } from "@chakra-ui/react"
+import { Box, Stack, Text, Icon, Button, Link, Image } from "@chakra-ui/react"
 import { FiAlertCircle, FiMenu } from "react-icons/fi"
 
 export default function Home() {
@@ -18,11 +18,11 @@ export default function Home() {
       </Head>
       <Stack
         as="nav"
-        height={[20, 28]}
+        height={[16, 20]}
         width="full"
         spacing={0}
         position="fixed"
-        zIndex={10}
+        zIndex={20}
         sx={{ backdropFilter: "blur(20px)" }}
         // bg=" rgba(10, 25, 41, 0.72)"
       >
@@ -33,18 +33,33 @@ export default function Home() {
         <Stack isInline alignItems="center" height="full" px={4}>
           <Stack isInline alignItems="center" maxW="7xl" width="full" mx="auto">
             <Stack flex={1} isInline alignItems="center">
-              <Stack justifyContent="center" alignItems="center" rounded="full" borderColor="blue.500" borderWidth="3px" boxSize={10}>
+              <Stack
+                justifyContent="center"
+                alignItems="center"
+                rounded="full"
+                borderColor="blue.500"
+                borderWidth="3px"
+                boxSize={10}
+                bg="gray.900"
+              >
                 <Box>
                   <Text m={0} fontWeight="bold">
-                    kp
+                    KP
                   </Text>
                 </Box>
               </Stack>
-              <Box pl={1}>
-                <Text fontSize={["2xl", "3xl"]} fontWeight="black">
-                  Kastproductions
-                </Text>
-              </Box>
+              <Stack spacing={0} fontSize={["2xl", "2xl"]} fontWeight="black">
+                <Box mb="-5px">
+                  <Text lineHeight="none" m={0}>
+                    Kast
+                  </Text>
+                </Box>
+                <Box>
+                  <Text lineHeight="none" m={0}>
+                    Productions
+                  </Text>
+                </Box>
+              </Stack>
             </Stack>
             <Stack flex={1}></Stack>
             <Stack flex={1} display={["flex", "none"]}>
@@ -90,7 +105,7 @@ export default function Home() {
           </Stack>
         </Stack>
       </Stack>
-      <Box pt={[20, 28]} as="header">
+      <Box pt={[16, 20]} as="header" zIndex={10} height="100vh">
         <Stack mx="auto" width="full" maxW="7xl" px={4} pt={[10, 40]}>
           <Text fontSize={["5xl", "8xl"]} lineHeight={["short", "normal"]} fontWeight="black" fontFamily="Inter" as="h1">
             <Box as="span" color="blue.400">
@@ -100,38 +115,16 @@ export default function Home() {
           </Text>
         </Stack>
       </Box>
-      <Box as="main" flex={1}>
-        <Stack mx="auto" width="full" maxW="7xl" px={4}>
-          {/* <Box>
-            <Text fontSize="3xl" fontWeight="bold">
-              Here what clients has to say...
+      <Box as="main" flex={1} zIndex={10} px={4}>
+        <Stack mx="auto" width="full" maxW="7xl" pb={40} fontFamily="Inter" alignItems="center">
+          <Box pb={12}>
+            <Text textAlign="center" fontSize={["3xl", "4xl"]} fontWeight="black">
+              Trusted by industry leading brands
             </Text>
-          </Box> */}
-
-          {/* <Box className={styles.grid} px={0}>
-          <Box href="https://nextjs.org/docs" className={styles.card} bg="blue.800" color="gray.100" boxShadow="md">
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
           </Box>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a href="https://github.com/vercel/next.js/tree/master/examples" className={styles.card}>
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>Instantly deploy your Next.js site to a public URL with Vercel.</p>
-          </a>
-        </Box> */}
+          <Box>
+            <CompanyLogos />
+          </Box>
         </Stack>
       </Box>
 
@@ -145,7 +138,7 @@ export default function Home() {
         // height={10}
         width="full"
       >
-        <Stack spacing={0} fontSize="sm" pb={1}>
+        <Stack spacing={0} fontSize="sm" pb={2}>
           <Text>
             Made with 💙 by <Link href="https://kastproductions.com">Kastproductions</Link> in 🇱🇹
           </Text>
@@ -164,6 +157,53 @@ export default function Home() {
         <li></li>
         <li></li>
       </Box>
+    </Stack>
+  )
+}
+
+const companyList = [
+  {
+    name: "zipmex",
+    companyUrl: "https://zipmex.com/",
+    iconUrl:
+      "https://media-exp1.licdn.com/dms/image/C560BAQHngLGnK79K0A/company-logo_200_200/0/1630634430189?e=1640822400&v=beta&t=e0ZqytWDlP0r_dz3q_OVJQW_Cm5jsVtpvmNh3fKdu24",
+  },
+  {
+    name: "usercentric",
+    companyUrl: "https://www.usercentric.com.au/",
+    iconUrl:
+      "https://media-exp1.licdn.com/dms/image/C560BAQGfhA99SK3mQQ/company-logo_200_200/0/1527735335142?e=1640822400&v=beta&t=4b1mDku_YStCJo1Tg3duxMUxjEmvXydRe3JdEZWkvG8",
+  },
+  {
+    name: "trustpilot",
+    companyUrl: "https://www.trustpilot.com/",
+    iconUrl:
+      "https://media-exp1.licdn.com/dms/image/C4D0BAQG9UEQhbr04qg/company-logo_200_200/0/1528790384860?e=1640822400&v=beta&t=xPFVRkzWV9YjtorB-6Lknb8sSBXMYc1yeXS7tPRJfSA",
+  },
+  {
+    name: "rocket",
+    companyUrl: "https://www.rocketsoftware.com/",
+    iconUrl:
+      "https://media-exp1.licdn.com/dms/image/C4E0BAQEvZIPtNRIRjg/company-logo_200_200/0/1569934947546?e=1640822400&v=beta&t=lBOjg48-sUE9k2NGS0XvRHHhcDrOPZvXAKLNqdPCsU0",
+  },
+  // {
+  //   name: "netfront",
+  //   companyUrl: "https://www.rocketsoftware.com/",
+  //   iconUrl:
+  //     "https://media-exp1.licdn.com/dms/image/C560BAQGuwEuCPMZAAw/company-logo_200_200/0/1531722161731?e=1640822400&v=beta&t=6dYOM8KSPAP1o3MS3lBHYRNUOPUt9zaaNI-xDk8CfNI",
+  // },
+]
+
+function CompanyLogos() {
+  return (
+    <Stack isInline spacing={[5, 10]}>
+      {companyList.map((item) => (
+        <Box key={item.iconUrl}>
+          <Link href={item.companyUrl} isExternal>
+            <Image src={item.iconUrl} alt="client logo" objectFit="contain" boxSize={[16, 20]} rounded={["md", "xl"]} />
+          </Link>
+        </Box>
+      ))}
     </Stack>
   )
 }
