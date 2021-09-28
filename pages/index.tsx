@@ -7,7 +7,7 @@ import { FiAlertCircle, FiMenu } from "react-icons/fi"
 
 export default function Home() {
   return (
-    <Stack bg="gray.900" color="white" width="full" minH="100vh" className="area">
+    <Stack bg="gray.900" color="white" width="full" minH="100vh" className="area" spacing={0}>
       <Head>
         <title>Kastproductions</title>
         <meta name="description" content="Kast Productions is design & frontend web development consultancy." />
