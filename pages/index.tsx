@@ -282,6 +282,7 @@ const companyList = [
 
 const recomendations = [
   {
+    linkedinUrl: "",
     name: "Kristian Tasevski",
     position: "Head of Engineering at UserCentric",
     imageUrl:
@@ -290,35 +291,61 @@ const recomendations = [
     message:
       "Karolis is one of those rare developers who has an exceptional eye for detail, everything that he works on has a certain visual aesthetic to it. I was directly managing Karolis on a number of different projects at UserCentric for high profile enterprise clients of ours and all of the front-end work that Karolis did on those projects just looked great. He also has a strong self driven motivation to continue to learn and to stay up to date with whatever is topical in the dev community, and contributed a lot to our Engineering culture at UserCentric by always sharing with us what was the latest and greatest in the scene.",
   },
+  {
+    linkedinUrl: "",
+    name: "Greg Stephenson",
+    position: "Founder at Netfront",
+    imageUrl:
+      "https://media-exp1.licdn.com/dms/image/C4E03AQEjnspdfR8lWw/profile-displayphoto-shrink_200_200/0/1516274019938?e=1638403200&v=beta&t=C3j_kwWJVbpe1vMIsnKjq7pMA94hb4bKDwbGLD9Pkt4",
+    id: 2,
+    message:
+      "I have had the pleasure of working with Karolis across a few projects. Karolis has a very keen eye for detail and a great analytical approach to programming. I was impressed with the polished UI and UX considerations Karolis made while working with him. In addition to his solid programming skills, Karolis is a great communicator and easy to work with. I would recommend Karolis to anyone who is looking for a good react developer, he would be a true asset to your team.",
+  },
+  {
+    linkedinUrl: "",
+    name: "Povilas Nanevičius",
+    position: "Mainframe Engineer at Rocket Software",
+    imageUrl:
+      "https://media-exp1.licdn.com/dms/image/C4D03AQFySgrTHt3Vkg/profile-displayphoto-shrink_200_200/0/1578655726413?e=1638403200&v=beta&t=TKaJ3mEkhh2e81DZt4br-09max6hRDobup4KksKL0nk",
+    id: 3,
+    message: `I know Karolis was in his element in Reactjs: researching, delivering latest and greatest Reactjs UI in his work, spending free time rewriting Three.js games with React components, building web apps.
+    Full of energy, efficient, right on the point. Looking forward to working (and having lunch time IT discussions) with you again!`,
+  },
 ]
 
 function RecomendationList() {
   return (
-    <Stack isInline spacing={[5, 10]}>
+    <Stack spacing={20}>
       {recomendations.map((item) => (
-        <Stack direction={["column", "row"]} key={item.id}>
-          <Box pr={[0, 20]} flex={[1, 0.8]}>
-            <Box pb={4}>
-              <Icon as={VscQuote} fontSize={["6xl", "6xl"]} />
+        <Stack key={item.id} isInline spacing={[5, 10]}>
+          <Stack direction={["column", "row"]}>
+            <Box pr={[0, 20]} flex={[1, 0.8]}>
+              <Box pb={4}>
+                <Icon as={VscQuote} fontSize={["6xl", "6xl"]} />
+              </Box>
+              <Box>
+                <Text fontSize={["md", "xl"]} fontWeight="light" fontFamily="Inter">
+                  {item.message}
+                </Text>
+              </Box>
             </Box>
-            <Box>
-              <Text fontSize={["md", "xl"]} fontWeight="light">
-                {item.message}
-              </Text>
-            </Box>
-          </Box>
-          <Stack flex={[1, 0.2]} pt={[8, 0]}>
-            <Box boxSize={28} borderColor="white" borderWidth="4px" rounded="full" overflow="hidden">
-              <Image src={item.imageUrl} boxSize={28} objectFit="cover" alt="picture of reviewer" />
-            </Box>
-            <Box>
-              <Text fontSize="xl" fontWeight="bold">
-                {item.name}
-              </Text>
-            </Box>
-            <Box>
-              <Text fontSize="sm">{item.position}</Text>
-            </Box>
+            <Stack flex={[1, 0.2]} pt={[5, 1]}>
+              <Box alignSelf={["center", "flex-start"]} boxSize={28} borderColor="white" borderWidth="4px" rounded="full" overflow="hidden">
+                <Image src={item.imageUrl} boxSize={28} objectFit="cover" alt="picture of reviewer" />
+              </Box>
+              <Box pt={2}>
+                <Box>
+                  <Text textAlign={["center", "left"]} fontSize="xl" fontWeight="bold">
+                    {item.name}
+                  </Text>
+                </Box>
+                <Box>
+                  <Text textAlign={["center", "left"]} fontSize="sm">
+                    {item.position}
+                  </Text>
+                </Box>
+              </Box>
+            </Stack>
           </Stack>
         </Stack>
       ))}
@@ -330,7 +357,7 @@ function CompanyLogos() {
   return (
     <Stack isInline spacing={[5, 10]}>
       {companyList.map((item) => (
-        <Box key={item.iconUrl} borderColor="white" borderWidth="2px" rounded={["md", "xl"]} overflow="hidden">
+        <Box key={item.iconUrl} borderColor="white" borderWidth={["1px", "2px"]} rounded={["md", "xl"]} overflow="hidden">
           <Link href={item.companyUrl} isExternal>
             <Image src={item.iconUrl} alt="client logo" objectFit="contain" boxSize={[16, 20]} />
           </Link>
