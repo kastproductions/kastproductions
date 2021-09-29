@@ -315,7 +315,7 @@ const recomendations = [
 
 function RecomendationList() {
   return (
-    <Stack spacing={20}>
+    <Stack spacing={[10, 20]}>
       {recomendations.map((item) => (
         <Stack key={item.id} isInline spacing={[5, 10]}>
           <Stack direction={["column", "row"]}>
