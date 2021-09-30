@@ -55,21 +55,7 @@ export default function Home() {
         <Stack isInline alignItems="center" height="full" px={4}>
           <Stack isInline alignItems="center" maxW="7xl" width="full" mx="auto">
             <Stack flex={1} isInline alignItems="center">
-              <Stack
-                justifyContent="center"
-                alignItems="center"
-                rounded="full"
-                borderColor="blue.500"
-                borderWidth="3px"
-                boxSize={10}
-                bg="gray.900"
-              >
-                <Box>
-                  <Text m={0} fontWeight="bold">
-                    KP
-                  </Text>
-                </Box>
-              </Stack>
+              <Logo />
               <Stack spacing={0} fontSize={["2xl", "2xl"]} fontWeight="black">
                 <Box mb="-5px">
                   <Text lineHeight="none" m={0}>
@@ -153,6 +139,9 @@ export default function Home() {
         <Stack mx="auto" width="full" maxW="7xl" pb={[40, 64]} fontFamily="Inter">
           <RecomendationList />
         </Stack>
+        {/* <Stack mx="auto" width="full" maxW="7xl" pb={[40, 64]} fontFamily="Inter">
+          <ProjectList />
+        </Stack> */}
       </Box>
 
       {/* <Stack
@@ -182,6 +171,18 @@ export default function Home() {
         <li></li>
         <li></li>
         <li></li>
+      </Box>
+    </Stack>
+  )
+}
+
+function Logo() {
+  return (
+    <Stack justifyContent="center" alignItems="center" borderColor="blue.500" borderWidth="3px" boxSize={10} bg="gray.900">
+      <Box>
+        <Text m={0} fontWeight="black" fontSize="2xl">
+          K
+        </Text>
       </Box>
     </Stack>
   )
@@ -361,6 +362,33 @@ function CompanyLogos() {
           <Link href={item.companyUrl} isExternal>
             <Image src={item.iconUrl} alt="client logo" objectFit="contain" boxSize={[16, 20]} />
           </Link>
+        </Box>
+      ))}
+    </Stack>
+  )
+}
+
+const projectList = [
+  {
+    id: 1,
+    title: "POC Binary Options Trading Web App",
+    imageUrl:
+      "https://media-exp1.licdn.com/dms/image/C5603AQEmAjRMGwzMUw/profile-displayphoto-shrink_200_200/0/1554286352901?e=1637193600&v=beta&t=zbmO_2cV9vPnALWpx4Cdw7ecAHyuSzi6110Mzp7s58g",
+  },
+  {
+    id: 1,
+    title: "POC Binary Options Trading Web App",
+    imageUrl:
+      "https://media-exp1.licdn.com/dms/image/C5603AQEmAjRMGwzMUw/profile-displayphoto-shrink_200_200/0/1554286352901?e=1637193600&v=beta&t=zbmO_2cV9vPnALWpx4Cdw7ecAHyuSzi6110Mzp7s58g",
+  },
+]
+
+function ProjectList() {
+  return (
+    <Stack isInline spacing={[5, 10]}>
+      {projectList.map((item) => (
+        <Box key={item.id} p={10} bg="gray.700" rounded="md">
+          <Text fontWeight="bold">{item.title}</Text>
         </Box>
       ))}
     </Stack>
