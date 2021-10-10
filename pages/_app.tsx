@@ -6,7 +6,8 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Kastproductions</title>
+        <title>Kast productions</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta name="description" content="Kast Productions is design & frontend web development consultancy based in Lithuania." />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
