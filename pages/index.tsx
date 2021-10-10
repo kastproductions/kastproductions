@@ -1,4 +1,3 @@
-import Head from "next/head"
 // import Image from "next/image"
 import React from "react"
 import styles from "../styles/Home.module.css"
@@ -30,14 +29,6 @@ export default function Home() {
   const router = useRouter()
   return (
     <Stack bg="gray.900" color="white" width="full" minH="100vh" className="area" spacing={0}>
-      <Head>
-        <title>Kastproductions</title>
-        <meta name="description" content="Kast Productions is design & frontend web development consultancy based in Lithuania." />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;500;700;900&display=swap" rel="stylesheet" />
-      </Head>
       <Stack
         as="nav"
         height={[16, 20]}
