@@ -277,8 +277,7 @@ const recomendations = [
     linkedinUrl: "",
     name: "Kristian Tasevski",
     position: "Head of Engineering at UserCentric",
-    imageUrl:
-      "https://media-exp1.licdn.com/dms/image/C5603AQEmAjRMGwzMUw/profile-displayphoto-shrink_200_200/0/1554286352901?e=1637193600&v=beta&t=zbmO_2cV9vPnALWpx4Cdw7ecAHyuSzi6110Mzp7s58g",
+    imageUrl:`/reviewers/1554286352901.jpeg`,
     id: 1,
     message:
       "Karolis is one of those rare developers who has an exceptional eye for detail, everything that he works on has a certain visual aesthetic to it. I was directly managing Karolis on a number of different projects at UserCentric for high profile enterprise clients of ours and all of the front-end work that Karolis did on those projects just looked great. He also has a strong self driven motivation to continue to learn and to stay up to date with whatever is topical in the dev community, and contributed a lot to our Engineering culture at UserCentric by always sharing with us what was the latest and greatest in the scene.",
@@ -287,8 +286,7 @@ const recomendations = [
     linkedinUrl: "",
     name: "Greg Stephenson",
     position: "Founder at Netfront",
-    imageUrl:
-      "https://media-exp1.licdn.com/dms/image/C4E03AQEjnspdfR8lWw/profile-displayphoto-shrink_200_200/0/1516274019938?e=1638403200&v=beta&t=C3j_kwWJVbpe1vMIsnKjq7pMA94hb4bKDwbGLD9Pkt4",
+    imageUrl:`/reviewers/1516274019938.jpeg`,
     id: 2,
     message:
       "I have had the pleasure of working with Karolis across a few projects. Karolis has a very keen eye for detail and a great analytical approach to programming. I was impressed with the polished UI and UX considerations Karolis made while working with him. In addition to his solid programming skills, Karolis is a great communicator and easy to work with. I would recommend Karolis to anyone who is looking for a good react developer, he would be a true asset to your team.",
@@ -297,8 +295,7 @@ const recomendations = [
     linkedinUrl: "",
     name: "Povilas Nanevičius",
     position: "Mainframe Engineer at Rocket Software",
-    imageUrl:
-      "https://media-exp1.licdn.com/dms/image/C4D03AQFySgrTHt3Vkg/profile-displayphoto-shrink_200_200/0/1578655726413?e=1638403200&v=beta&t=TKaJ3mEkhh2e81DZt4br-09max6hRDobup4KksKL0nk",
+    imageUrl:`/reviewers/1578655726413.jpeg`,
     id: 3,
     message: `I know Karolis was in his element in Reactjs: researching, delivering latest and greatest Reactjs UI in his work, spending free time rewriting Three.js games with React components, building web apps.
     Full of energy, efficient, right on the point. Looking forward to working (and having lunch time IT discussions) with you again!`,
