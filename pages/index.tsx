@@ -256,7 +256,7 @@ const companyList = [
     name: "trustpilot",
     companyUrl: "https://www.trustpilot.com/",
     iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C4D0BAQG9UEQhbr04qg/company-logo_200_200/0/1528790384860?e=1640822400&v=beta&t=xPFVRkzWV9YjtorB-6Lknb8sSBXMYc1yeXS7tPRJfSA",
+      "https://media-exp1.licdn.com/dms/image/C4D0BAQH0zz3eatK08g/company-logo_200_200/0/1645722678155?e=1655337600&v=beta&t=VidwECF0Aye8iA9qjgHnHgk6YwnqA7qf8gnesm2Eg58",
   },
   {
     name: "rocket",
