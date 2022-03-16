@@ -24,6 +24,7 @@ import { VscQuote } from "react-icons/vsc"
 
 import NextLink from "next/link"
 import { Router, useRouter } from "next/dist/client/router"
+import { Header } from "../components/header"
 
 export default function Home() {
   const router = useRouter()
@@ -35,7 +36,7 @@ export default function Home() {
         width="full"
         spacing={0}
         position="fixed"
-        zIndex={20}
+        zIndex={999}
         sx={{ backdropFilter: "blur(20px)" }}
         // bg=" rgba(10, 25, 41, 0.72)"
       >
@@ -105,18 +106,19 @@ export default function Home() {
           </Stack>
         </Stack>
       </Stack>
-      <Box pt={[16, 20]} as="header" zIndex={10} height="100vh">
-        <Stack mx="auto" width="full" maxW="7xl" px={4} pt={[20, 40]}>
+      {/* <Box pt={[16, 20]} as="header" zIndex={10} height="100vh"> */}
+      <Header />
+      {/* <Stack mx="auto" width="full" maxW="7xl" px={4} pt={[20, 40]}>
           <Text fontSize={["5xl", "8xl"]} lineHeight={["short", "normal"]} fontWeight="black" fontFamily="Inter" as="h1">
             <Box as="span" color="blue.400">
               Kast Productions
             </Box>{" "}
             is design & frontend web development consultancy.
           </Text>
-        </Stack>
-      </Box>
+        </Stack> */}
+      {/* </Box> */}
       <Box as="main" flex={1} zIndex={10} px={4}>
-        <Stack mx="auto" width="full" maxW="7xl" pb={[40, 64]} fontFamily="Inter" alignItems="center">
+        <Stack mx="auto" width="full" maxW="7xl" py={[20, 64]} fontFamily="Inter" alignItems="center">
           <Box pb={12}>
             <Text textAlign="center" fontSize={["2xl", "4xl"]} fontWeight={["black"]}>
               Trusted by industry leading companies
