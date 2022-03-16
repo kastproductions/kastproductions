@@ -244,13 +244,13 @@ const companyList = [
     name: "zipmex",
     companyUrl: "https://zipmex.com/",
     iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C560BAQHngLGnK79K0A/company-logo_200_200/0/1630634430189?e=1640822400&v=beta&t=e0ZqytWDlP0r_dz3q_OVJQW_Cm5jsVtpvmNh3fKdu24",
+      "https://media-exp1.licdn.com/dms/image/C560BAQHngLGnK79K0A/company-logo_200_200/0/1630634430189?e=1655337600&v=beta&t=EyrBUVNY9JxP2DoeSaKapoDOmjw3-c93F5BIb-OMxrI",
   },
   {
     name: "usercentric",
     companyUrl: "https://www.usercentric.com.au/",
     iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C560BAQGfhA99SK3mQQ/company-logo_200_200/0/1527735335142?e=1640822400&v=beta&t=4b1mDku_YStCJo1Tg3duxMUxjEmvXydRe3JdEZWkvG8",
+      "https://media-exp1.licdn.com/dms/image/C560BAQGfhA99SK3mQQ/company-logo_200_200/0/1527735335142?e=1655337600&v=beta&t=J0LB-rVnGmP98x5XZXunCrvspzu2jFDj7XpJXTaQhxc",
   },
   {
     name: "trustpilot",
@@ -262,7 +262,7 @@ const companyList = [
     name: "rocket",
     companyUrl: "https://www.rocketsoftware.com/",
     iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C4E0BAQEvZIPtNRIRjg/company-logo_200_200/0/1569934947546?e=1640822400&v=beta&t=lBOjg48-sUE9k2NGS0XvRHHhcDrOPZvXAKLNqdPCsU0",
+      "https://media-exp1.licdn.com/dms/image/C4E0BAQHQyp9sUmbUtw/company-logo_200_200/0/1645040294049?e=1655337600&v=beta&t=ROCQmG5f5_U_NxCfQaDtCdyrYTkYV-lIvnB0N_-aHZA",
   },
   // {
   //   name: "netfront",
