@@ -90,46 +90,60 @@ function EmailUs({ children }) {
 }
 
 function Navigation() {
+  const [bg, setBg] = React.useState('transparent');
+
+  React.useEffect(() => {
+    document.addEventListener('scroll', () => {
+      setBg(window.scrollY > 100 ? '#1E1E1F' : 'transparent');
+    });
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      document.removeEventListener('scroll', () => {});
+    };
+  }, []);
+
   return (
-    <Container py={5} maxW="8xl" display={['none', 'flex']}>
-      <HStack fontWeight="light" fontSize="sm" w="full">
-        <Box flex={1}>
-          <NextLink href="/" passHref>
-            <Link fontSize="xl" fontWeight="semibold" _hover={{}}>
-              KastProductions.
-            </Link>
-          </NextLink>
-        </Box>
-        <HStack spacing={10}>
-          {['what we do', 'services', 'clients', 'testimonials'].map((item) => (
-            <Button
-              onClick={() => scrollIntoView(item)}
-              key={item}
-              textTransform="capitalize"
-              variant="unstyled"
-              fontWeight="light"
-              fontSize="sm"
-            >
-              {item}
-            </Button>
-          ))}
+    <Box position="fixed" top={0} left={0} w="full" zIndex={100} bg={bg} transition="all 0.2s ease-in-out">
+      <Container py={5} maxW="8xl" display={['none', 'flex']}>
+        <HStack fontWeight="light" fontSize="sm" w="full">
+          <Box flex={1}>
+            <NextLink href="/" passHref>
+              <Link fontSize="xl" fontWeight="semibold" _hover={{}}>
+                KastProductions.
+              </Link>
+            </NextLink>
+          </Box>
+          <HStack spacing={10}>
+            {['what we do', 'services', 'clients', 'testimonials'].map((item) => (
+              <Button
+                onClick={() => scrollIntoView(item)}
+                key={item}
+                textTransform="capitalize"
+                variant="unstyled"
+                fontWeight="light"
+                fontSize="sm"
+              >
+                {item}
+              </Button>
+            ))}
+          </HStack>
+          <HStack flex={1} justifyContent="flex-end">
+            <EmailUs>
+              <Button rounded="none" h={14} w={40} fontWeight="semibold" fontSize="sm" color="gray.900">
+                Work With Us
+              </Button>
+            </EmailUs>
+          </HStack>
         </HStack>
-        <HStack flex={1} justifyContent="flex-end">
-          <EmailUs>
-            <Button rounded="none" h={14} w={40} fontWeight="semibold" fontSize="sm" color="gray.900">
-              Work With Us
-            </Button>
-          </EmailUs>
-        </HStack>
-      </HStack>
-    </Container>
+      </Container>
+    </Box>
   );
 }
 
 export default function Home() {
   return (
     <Box fontFamily="Poppins" bgGradient="linear(to-br, #3D3A49, #1E1E1E)" color="white">
-      <Stack spacing={0}>
+      <Stack spacing={0} pt={[0, 24]}>
         <Navigation />
         <Box borderTopColor="gray.600" borderTopWidth="0.5px" h="full">
           <Container height="full" maxW="8xl">
