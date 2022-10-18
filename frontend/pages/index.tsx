@@ -96,11 +96,11 @@ export default function Home() {
                     objectPosition="0%"
                     src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80"
                   />
-                  <Text fontSize="md" fontWeight="light">
-                    Api
+                  <Text fontSize="xl" fontFamily="Cormorant Infant">
+                    Api Development
                   </Text>
                 </Stack>
-                <Stack mt={[0, '-7']}>
+                <Stack mt={[0, '-8']}>
                   <Img
                     rounded="sm"
                     objectFit="cover"
@@ -109,11 +109,11 @@ export default function Home() {
                     w="full"
                     src="https://images.unsplash.com/photo-1558174685-430919a96c8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
                   />
-                  <Text fontSize="md" fontWeight="light">
-                    Website
+                  <Text fontSize="xl" fontFamily="Cormorant Infant">
+                    Website Development
                   </Text>
                 </Stack>
-                <Stack mt={[0, '-14']}>
+                <Stack mt={[0, '-16']}>
                   <Img
                     rounded="sm"
                     objectFit="cover"
@@ -122,8 +122,8 @@ export default function Home() {
                     w="full"
                     src="https://images.unsplash.com/photo-1601972599720-36938d4ecd31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
                   />
-                  <Text fontSize="md" fontWeight="light">
-                    Mobile
+                  <Text fontSize="xl" fontFamily="Cormorant Infant">
+                    Mobile Development
                   </Text>
                 </Stack>
               </SimpleGrid>
@@ -334,165 +334,6 @@ export default function Home() {
       </Box>
     </Box>
   );
-  const router = useRouter();
-  return (
-    <Stack bg="gray.900" color="white" width="full" minH="100vh" className="area" spacing={0}>
-      <Stack
-        as="nav"
-        height={[16, 20]}
-        width="full"
-        spacing={0}
-        position="fixed"
-        zIndex={999}
-        sx={{ backdropFilter: 'blur(20px)' }}
-        // bg=" rgba(10, 25, 41, 0.72)"
-      >
-        {/* <Stack width="full" bg="blue.500" height={12} isInline justifyContent="center" alignItems="center" px={4}>
-          <Icon as={FiAlertCircle} fontSize="xl" />
-          <Text textAlign="center" pl={0.5}>{`I'm currently  on a contract project but I'm happy to hearing from people`}</Text>
-        </Stack> */}
-        <Stack isInline alignItems="center" height="full" px={4}>
-          <Stack isInline alignItems="center" maxW="7xl" width="full" mx="auto">
-            <Stack flex={1} isInline alignItems="center">
-              <Logo />
-              <Stack spacing={0} fontSize={['2xl', '2xl']} fontWeight="black">
-                <Box mb="-5px">
-                  <Text lineHeight="none" m={0}>
-                    Kast
-                  </Text>
-                </Box>
-                <Box>
-                  <Text lineHeight="none" m={0}>
-                    Productions
-                  </Text>
-                </Box>
-              </Stack>
-            </Stack>
-            <Stack flex={1}></Stack>
-            <Stack flex={1} display={['flex', 'none']}>
-              <DrawerExample />
-            </Stack>
-            <Stack display={['none', 'flex']} isInline flex={1} justifyContent="flex-end" spacing={4}>
-              <Box>
-                <Button
-                  bg="transparent"
-                  _hover={{
-                    bg: 'gray.800',
-                  }}
-                  _active={{}}
-                  onClick={() => router.push('/about')}
-                >
-                  About
-                </Button>
-              </Box>
-              <Box>
-                <Button
-                  bg="transparent"
-                  _hover={{
-                    bg: 'gray.800',
-                  }}
-                  _active={{}}
-                  onClick={() => router.push('/work')}
-                >
-                  Work
-                </Button>
-              </Box>
-              <Box>
-                <Button
-                  bg="transparent"
-                  _hover={{
-                    bg: 'gray.800',
-                  }}
-                  _active={{}}
-                  onClick={() => router.push('/contact')}
-                >
-                  Contact
-                </Button>
-              </Box>
-            </Stack>
-          </Stack>
-        </Stack>
-      </Stack>
-      {/* <Box pt={[16, 20]} as="header" zIndex={10} height="100vh"> */}
-      <Header />
-      {/* <Stack mx="auto" width="full" maxW="7xl" px={4} pt={[20, 40]}>
-          <Text fontSize={["5xl", "8xl"]} lineHeight={["short", "normal"]} fontWeight="black" fontFamily="Inter" as="h1">
-            <Box as="span" color="blue.400">
-              Kast Productions
-            </Box>{" "}
-            is design & frontend web development consultancy.
-          </Text>
-        </Stack> */}
-      {/* </Box> */}
-      <Box as="main" flex={1} zIndex={10} px={4}>
-        <Stack mx="auto" width="full" maxW="7xl" py={[20, 64]} fontFamily="Inter" alignItems="center">
-          <Box pb={12}>
-            <Text textAlign="center" fontSize={['2xl', '4xl']} fontWeight={['black']}>
-              Trusted by industry leading companies
-            </Text>
-          </Box>
-          <Box>
-            <CompanyLogos />
-          </Box>
-        </Stack>
-
-        <Stack mx="auto" width="full" maxW="7xl" pb={[40, 64]} fontFamily="Inter">
-          <RecommendationList />
-        </Stack>
-        {/* <Stack mx="auto" width="full" maxW="7xl" pb={[40, 64]} fontFamily="Inter">
-          <ProjectList />
-        </Stack> */}
-      </Box>
-
-      {/* <Stack
-        zIndex={10}
-        isInline
-        alignItems="center"
-        justifyContent="center"
-        as="footer"
-        // sx={{ backdropFilter: "blur(5px)", bg: "rgba(10, 25, 41, 0.3)" }}
-        // height={10}
-        width="full"
-      >
-        <Stack spacing={0} fontSize="sm" pb={2}>
-          <Text>
-            Made with 💙 by <Link href="https://kastproductions.com">Kastproductions</Link> in 🇱🇹
-          </Text>
-        </Stack>
-      </Stack> */}
-      <Box as="ul" className="circles">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-      </Box>
-    </Stack>
-  );
-}
-
-function Logo() {
-  return (
-    <Stack
-      justifyContent="center"
-      alignItems="center"
-      borderColor="blue.500"
-      borderWidth="3px"
-      boxSize={10}
-      bg="gray.900"
-    >
-      <Box>
-        <Text m={0} fontWeight="black" fontSize="2xl">
-          K
-        </Text>
-      </Box>
-    </Stack>
-  );
 }
 
 function DrawerExample() {
@@ -664,7 +505,7 @@ const recomendations = [
 
 function RecommendationList() {
   return (
-    <SimpleGrid columns={[1, 2]} pb={7}>
+    <SimpleGrid columns={[1, 2]} pb={[7, 0]}>
       {recomendations.map((item, index) => {
         const showBorder = index % 2 === 0;
         return (
