@@ -1,6 +1,5 @@
 // import Image from "next/image"
 import React from 'react';
-import styles from '../styles/Home.module.css';
 import {
   Box,
   Stack,
@@ -24,6 +23,7 @@ import {
   Container,
   VStack,
   Center,
+  Slide,
 } from '@chakra-ui/react';
 import { FiAlertCircle, FiMenu } from 'react-icons/fi';
 import { VscQuote } from 'react-icons/vsc';
@@ -32,26 +32,94 @@ import NextLink from 'next/link';
 import { Router, useRouter } from 'next/dist/client/router';
 import { Header } from '../components/header';
 
+function scrollIntoView(id) {
+  const element = document.getElementById(id);
+  element?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+}
+
+function EmailUs({ children }) {
+  const { isOpen, onOpen, onToggle, onClose } = useDisclosure();
+
+  React.useEffect(() => {
+    let id;
+    if (isOpen) {
+      id = setTimeout(() => {
+        onClose();
+      }, 4000);
+    }
+    return () => {
+      if (typeof id !== 'undefined') clearTimeout(id);
+      if (isOpen) onClose();
+    };
+  }, [isOpen, onClose]);
+
+  const element = React.cloneElement(children, { onClick: onOpen });
+
+  return (
+    <>
+      {element}
+      <Slide direction="bottom" in={isOpen} style={{ zIndex: 10 }}>
+        <Box bg="purple.600">
+          <Container maxW="8xl" py={[7, 14]}>
+            <VStack>
+              <Text
+                textAlign="center"
+                fontSize={['4xl', '6xl']}
+                fontFamily="Cormorant Infant"
+                fontWeight="semibold"
+                lineHeight="none"
+              >
+                Get In Touch
+              </Text>
+              <Link
+                isExternal
+                href="mailto:hello@kastproductions.com"
+                textDecor="underline"
+                textAlign="center"
+                fontSize={['md', '2xl']}
+                fontWeight="light"
+              >
+                hello@kastproductions.com
+              </Link>
+            </VStack>
+          </Container>
+        </Box>
+      </Slide>
+    </>
+  );
+}
+
 function Navigation() {
   return (
     <Container py={5} maxW="8xl" display={['none', 'flex']}>
       <HStack fontWeight="light" fontSize="sm" w="full">
         <Box flex={1}>
-          <Text fontSize="xl" fontWeight="semibold">
-            KastProductions.
-          </Text>
+          <NextLink href="/" passHref>
+            <Link fontSize="xl" fontWeight="semibold" _hover={{}}>
+              KastProductions.
+            </Link>
+          </NextLink>
         </Box>
         <HStack spacing={10}>
-          {['what we do', 'services', 'our work', 'clients', 'testimonials'].map((item) => (
-            <Text key={item} textTransform="capitalize">
+          {['what we do', 'services', 'clients', 'testimonials'].map((item) => (
+            <Button
+              onClick={() => scrollIntoView(item)}
+              key={item}
+              textTransform="capitalize"
+              variant="unstyled"
+              fontWeight="light"
+              fontSize="sm"
+            >
               {item}
-            </Text>
+            </Button>
           ))}
         </HStack>
         <HStack flex={1} justifyContent="flex-end">
-          <Button rounded="none" h={14} w={40} fontWeight="semibold" fontSize="sm" color="gray.900">
-            Work With Us
-          </Button>
+          <EmailUs>
+            <Button rounded="none" h={14} w={40} fontWeight="semibold" fontSize="sm" color="gray.900">
+              Work With Us
+            </Button>
+          </EmailUs>
         </HStack>
       </HStack>
     </Container>
@@ -153,16 +221,18 @@ export default function Home() {
               </Text>
               <Stack direction={['column', 'row']} spacing={[3, 6]}>
                 <Box>
-                  <Button
-                    colorScheme="purple"
-                    rounded="none"
-                    h={[14, 16]}
-                    w={['full', 48]}
-                    fontWeight="normal"
-                    fontSize={['sm', 'md']}
-                  >
-                    Start A Project
-                  </Button>
+                  <EmailUs>
+                    <Button
+                      colorScheme="purple"
+                      rounded="none"
+                      h={[14, 16]}
+                      w={['full', 48]}
+                      fontWeight="normal"
+                      fontSize={['sm', 'md']}
+                    >
+                      Start A Project
+                    </Button>
+                  </EmailUs>
                 </Box>
                 <Box>
                   <Button
@@ -172,6 +242,8 @@ export default function Home() {
                     w={['full', 48]}
                     fontWeight="normal"
                     fontSize={['sm', 'md']}
+                    _hover={{}}
+                    onClick={() => scrollIntoView('what we do')}
                   >
                     Learn More
                   </Button>
@@ -181,7 +253,7 @@ export default function Home() {
           </Stack>
         </Container>
       </Box>
-      <Container maxW="8xl" py={14}>
+      <Container maxW="8xl" py={14} id="what we do">
         <Stack direction={['column-reverse', 'row']} alignItems="center" spacing={[10, 20]}>
           <Box w={['full', '50%']}>
             <Img
@@ -216,7 +288,7 @@ export default function Home() {
           })}
         </SimpleGrid>
       </Container>
-      <Box borderTopColor="gray.600" borderTopWidth="0.5px">
+      <Box borderTopColor="gray.600" borderTopWidth="0.5px" id="services">
         <Container maxW="8xl">
           <Stack direction={['column', 'row']} spacing={0}>
             <Box w={['full', '50%']} borderRightColor="gray.600" borderRightWidth="0.5px">
@@ -249,7 +321,7 @@ export default function Home() {
           </Stack>
         </Container>
       </Box>
-      <Box borderTopColor="gray.600" borderTopWidth="0.5px">
+      <Box borderTopColor="gray.600" borderTopWidth="0.5px" id="clients">
         <Container maxW="8xl">
           <Stack direction={['column', 'row']} spacing={0}>
             <Box w={['full', '50%']} borderRightColor="gray.600" borderRightWidth="0.5px">
@@ -283,7 +355,7 @@ export default function Home() {
           </Stack>
         </Container>
       </Box>
-      <Box borderTopColor="gray.600" borderTopWidth="0.5px">
+      <Box borderTopColor="gray.600" borderTopWidth="0.5px" id="testimonials">
         <Container maxW="8xl" borderColor="gray.600" borderLeftWidth="0.5px" borderRightWidth="0.5px">
           <VStack p={14} px={[0, 14]} spacing={[6, 12]}>
             <Text
@@ -308,7 +380,7 @@ export default function Home() {
         </Container>
       </Box>
       <Box borderTopColor="gray.600" borderTopWidth="0.5px" bg="purple.600">
-        <Container maxW="8xl" py={14}>
+        <Container maxW="8xl" py={[7, 14]}>
           <VStack>
             <Text
               textAlign="center"
