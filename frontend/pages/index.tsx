@@ -105,7 +105,7 @@ function Navigation() {
   }, []);
 
   return (
-    <Box position="fixed" top={0} left={0} w="full" zIndex={100} bg={bg} transition="all 0.2s ease-in-out">
+    <Box position="fixed" top={0} left={0} w="full" zIndex={100} bg={bg} transition="all 0.25s ease-in-out">
       <Container py={5} maxW="8xl" display={['none', 'flex']}>
         <HStack fontWeight="light" fontSize="sm" w="full">
           <Box flex={1}>
@@ -147,7 +147,7 @@ function MobileNavigation() {
 
   React.useEffect(() => {
     const handleScroll = () => {
-      setBg(window.scrollY > 100 ? '#1E1E1E' : 'transparent');
+      setBg(window.scrollY > 25 ? '#1E1E1E' : 'transparent');
     };
     document.addEventListener('scroll', (e) => {
       handleScroll();
@@ -160,7 +160,7 @@ function MobileNavigation() {
     };
   }, []);
   return (
-    <Box position="fixed" top={0} left={0} w="full" zIndex={100} bg={bg} transition="all 0.2s ease-in-out">
+    <Box position="fixed" top={0} left={0} w="full" zIndex={100} bg={bg} transition="all 0.25s ease-in-out">
       <HStack px={4} py={3}>
         <Box flex={1}>
           <NextLink href="/" passHref>
@@ -513,7 +513,7 @@ function MenuDrawer() {
               ))}
             </Stack>
           </DrawerBody>
-          <DrawerFooter p={4}>
+          <DrawerFooter p={4} position="fixed" bottom={4} w="full">
             <EmailUs>
               <Button fontWeight="medium" fontSize="sm" h={16} w="full" rounded="sm" colorScheme="purple">
                 Work With Us
