@@ -492,7 +492,7 @@ function MenuDrawer() {
               </Link>
             </NextLink>
           </DrawerHeader>
-          <DrawerBody p={4}>
+          <DrawerBody p={4} h="full" display="flex" flexDir="column" justifyContent="space-between">
             <Stack pt={8} color="white">
               {['what we do', 'services', 'clients', 'testimonials'].map((item) => (
                 <Button
@@ -512,14 +512,14 @@ function MenuDrawer() {
                 </Button>
               ))}
             </Stack>
+            <Box w="full" pb={4}>
+              <EmailUs>
+                <Button fontWeight="medium" fontSize="sm" h={16} w="full" rounded="sm" colorScheme="purple">
+                  Work With Us
+                </Button>
+              </EmailUs>
+            </Box>
           </DrawerBody>
-          <DrawerFooter p={4} position="fixed" bottom={4} w="full">
-            <EmailUs>
-              <Button fontWeight="medium" fontSize="sm" h={16} w="full" rounded="sm" colorScheme="purple">
-                Work With Us
-              </Button>
-            </EmailUs>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>
