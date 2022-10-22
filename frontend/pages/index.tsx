@@ -23,6 +23,7 @@ import {
   Center,
   Slide,
   IconButton,
+  DrawerFooter,
 } from '@chakra-ui/react';
 import { VscQuote } from 'react-icons/vsc';
 import { HiBars3BottomRight } from 'react-icons/hi2';
@@ -491,36 +492,34 @@ function MenuDrawer() {
               </Link>
             </NextLink>
           </DrawerHeader>
-          <DrawerBody p={4} h="full">
-            <Stack spacing={0} h="full">
-              <Stack pt={8} color="white" flex={1}>
-                {['what we do', 'services', 'clients', 'testimonials'].map((item) => (
-                  <Button
-                    onClick={() => {
-                      onClose();
-                      scrollIntoView(item);
-                    }}
-                    key={item}
-                    textTransform="capitalize"
-                    variant="unstyled"
-                    fontWeight="semibold"
-                    fontSize="4xl"
-                    fontFamily="Cormorant Infant"
-                    h={20}
-                  >
-                    {item}
-                  </Button>
-                ))}
-              </Stack>
-              <Box w="full" pb={4}>
-                <EmailUs>
-                  <Button fontWeight="medium" fontSize="sm" h={16} w="full" rounded="sm" colorScheme="purple">
-                    Work With Us
-                  </Button>
-                </EmailUs>
-              </Box>
+          <DrawerBody p={4}>
+            <Stack pt={8} color="white">
+              {['what we do', 'services', 'clients', 'testimonials'].map((item) => (
+                <Button
+                  onClick={() => {
+                    onClose();
+                    scrollIntoView(item);
+                  }}
+                  key={item}
+                  textTransform="capitalize"
+                  variant="unstyled"
+                  fontWeight="semibold"
+                  fontSize="4xl"
+                  fontFamily="Cormorant Infant"
+                  h={20}
+                >
+                  {item}
+                </Button>
+              ))}
             </Stack>
           </DrawerBody>
+          <DrawerFooter position="fixed" bottom={0} left={0} w="full" mb={4}>
+            <EmailUs>
+              <Button fontWeight="medium" fontSize="sm" h={16} w="full" rounded="sm" colorScheme="purple">
+                Work With Us
+              </Button>
+            </EmailUs>
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>
