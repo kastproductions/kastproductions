@@ -24,13 +24,11 @@ import {
   VStack,
   Center,
   Slide,
+  IconButton,
 } from '@chakra-ui/react';
-import { FiAlertCircle, FiMenu } from 'react-icons/fi';
 import { VscQuote } from 'react-icons/vsc';
-
+import { HiBars3BottomRight } from 'react-icons/hi2';
 import NextLink from 'next/link';
-import { Router, useRouter } from 'next/dist/client/router';
-import { Header } from '../components/header';
 
 function scrollIntoView(id) {
   const element = document.getElementById(id);
@@ -60,7 +58,7 @@ function EmailUs({ children }) {
       {element}
       <Slide direction="bottom" in={isOpen} style={{ zIndex: 10 }}>
         <Box bg="purple.600">
-          <Container maxW="8xl" py={[7, 14]}>
+          <Container maxW="8xl" py={[7, 14]} color="white">
             <VStack>
               <Text
                 textAlign="center"
@@ -93,12 +91,17 @@ function Navigation() {
   const [bg, setBg] = React.useState('transparent');
 
   React.useEffect(() => {
-    document.addEventListener('scroll', () => {
-      setBg(window.scrollY > 100 ? '#1E1E1F' : 'transparent');
+    const handleScroll = () => {
+      setBg(window.scrollY > 100 ? '#1E1E1E' : 'transparent');
+    };
+    document.addEventListener('scroll', (e) => {
+      handleScroll();
     });
     return () => {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
-      document.removeEventListener('scroll', () => {});
+      document.removeEventListener('scroll', (e) => {
+        handleScroll();
+      });
     };
   }, []);
 
@@ -140,11 +143,45 @@ function Navigation() {
   );
 }
 
+function MobileNavigation() {
+  const [bg, setBg] = React.useState('transparent');
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setBg(window.scrollY > 100 ? '#1E1E1E' : 'transparent');
+    };
+    document.addEventListener('scroll', (e) => {
+      handleScroll();
+    });
+    return () => {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      document.removeEventListener('scroll', (e) => {
+        handleScroll();
+      });
+    };
+  }, []);
+  return (
+    <Box position="fixed" top={0} left={0} w="full" zIndex={100} bg={bg} transition="all 0.2s ease-in-out">
+      <HStack px={4} py={3}>
+        <Box flex={1}></Box>
+        <HStack flex={1} justify="flex-end">
+          <MenuDrawer />
+        </HStack>
+      </HStack>
+    </Box>
+  );
+}
+
 export default function Home() {
   return (
     <Box fontFamily="Poppins" bgGradient="linear(to-br, #3D3A49, #1E1E1E)" color="white">
       <Stack spacing={0} pt={[0, 24]}>
-        <Navigation />
+        <Box display={['none', 'block']}>
+          <Navigation />
+        </Box>
+        <Box display={['block', 'none']}>
+          <MobileNavigation />
+        </Box>
         <Box borderTopColor="gray.600" borderTopWidth="0.5px" h="full">
           <Container height="full" maxW="8xl">
             <Stack
@@ -267,7 +304,7 @@ export default function Home() {
           </Stack>
         </Container>
       </Box>
-      <Container maxW="8xl" py={14} id="what we do">
+      <Container maxW="8xl" py={20} id="what we do">
         <Stack direction={['column-reverse', 'row']} alignItems="center" spacing={[10, 20]}>
           <Box w={['full', '50%']}>
             <Img
@@ -306,24 +343,24 @@ export default function Home() {
         <Container maxW="8xl">
           <Stack direction={['column', 'row']} spacing={0}>
             <Box w={['full', '50%']} borderRightColor="gray.600" borderRightWidth="0.5px">
-              <Stack p={[14]} pl={0} spacing={[6, 12]}>
+              <Stack p={[14]} pt={[20, 14]} pl={0} spacing={[6, 12]}>
                 <Text fontSize={['4xl', '6xl']} fontFamily="Cormorant Infant" fontWeight="semibold" lineHeight="none">
                   Services We Provide
                 </Text>
                 <Stack spacing={4}>
-                  <Text fontSize={['lg', '2xl']} fontWeight="medium">
+                  <Text fontSize={['md', '2xl']} fontWeight="normal">
                     UI/UX Designs
                   </Text>
-                  <Text fontSize={['lg', '2xl']} fontWeight="medium">
+                  <Text fontSize={['md', '2xl']} fontWeight="normal">
                     API development
                   </Text>
-                  <Text fontSize={['lg', '2xl']} fontWeight="medium">
+                  <Text fontSize={['md', '2xl']} fontWeight="normal">
                     Website development
                   </Text>
-                  <Text fontSize={['lg', '2xl']} fontWeight="medium">
+                  <Text fontSize={['md', '2xl']} fontWeight="normal">
                     Mobile development
                   </Text>
-                  <Text fontSize={['xl', '2xl']} fontWeight="medium">
+                  <Text fontSize={['md', '2xl']} fontWeight="normal">
                     End to end (E2E) testing
                   </Text>
                 </Stack>
@@ -339,7 +376,7 @@ export default function Home() {
         <Container maxW="8xl">
           <Stack direction={['column', 'row']} spacing={0}>
             <Box w={['full', '50%']} borderRightColor="gray.600" borderRightWidth="0.5px">
-              <Stack p={14} pl={0} pr={[0, 28]} spacing={[4, 10]}>
+              <Stack p={14} pt={[20, 14]} pl={0} pr={[0, 28]} spacing={[4, 10]}>
                 <Text
                   maxW="md"
                   fontSize={['4xl', '6xl']}
@@ -371,7 +408,7 @@ export default function Home() {
       </Box>
       <Box borderTopColor="gray.600" borderTopWidth="0.5px" id="testimonials">
         <Container maxW="8xl" borderColor="gray.600" borderLeftWidth="0.5px" borderRightWidth="0.5px">
-          <VStack p={14} px={[0, 14]} spacing={[6, 12]}>
+          <VStack p={14} pt={[20, 14]} px={[0, 14]} spacing={[6, 12]}>
             <Text
               textAlign="center"
               fontSize={['4xl', '6xl']}
@@ -422,59 +459,57 @@ export default function Home() {
   );
 }
 
-function DrawerExample() {
+function MenuDrawer() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
   return (
     <>
-      <Button ref={btnRef} onClick={onOpen} bg="transparent" _hover={{}} _active={{}} variant="unstyled">
-        <Icon as={FiMenu} fontSize="3xl" />
-      </Button>
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
+      <IconButton
+        variant="unstyled"
+        aria-label="open-close-menu"
+        as={HiBars3BottomRight}
+        ref={btnRef}
+        onClick={onOpen}
+      />
+      <Drawer size="full" isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef}>
         <DrawerOverlay />
-        <DrawerContent bg="gray.900" color="white">
-          <DrawerCloseButton />
-          <DrawerHeader></DrawerHeader>
-
-          <DrawerBody>
-            <Stack>
-              <Box>
-                <NextLink href="/about" passHref>
-                  <Link fontSize="4xl" fontWeight="semibold">
-                    About
-                  </Link>
-                </NextLink>
-              </Box>
-              <Box>
-                <NextLink href="/work" passHref>
-                  <Link fontSize="4xl" fontWeight="semibold">
-                    Work
-                  </Link>
-                </NextLink>
-              </Box>
-              <Box>
-                <NextLink href="/contact" passHref>
-                  <Link fontSize="4xl" fontWeight="semibold">
-                    Contact
-                  </Link>
-                </NextLink>
-              </Box>
-              <Box>
-                <Link isExternal href="mailto:hello@kastproductions.com">
-                  hello@kastproductions.com
-                </Link>
-              </Box>
+        <DrawerContent bg="#1E1E1E">
+          <DrawerCloseButton color="white" fontSize={16} m={2} />
+          <DrawerHeader mt={0.5}>
+            <NextLink href="/" passHref>
+              <Link fontSize="xl" fontWeight="semibold" _hover={{}} color="white" onClick={onClose}>
+                KastProductions.
+              </Link>
+            </NextLink>
+          </DrawerHeader>
+          <DrawerBody p={4}>
+            <Stack pt={8} color="white">
+              {['what we do', 'services', 'clients', 'testimonials'].map((item) => (
+                <Button
+                  onClick={() => {
+                    onClose();
+                    scrollIntoView(item);
+                  }}
+                  key={item}
+                  textTransform="capitalize"
+                  variant="unstyled"
+                  fontWeight="semibold"
+                  fontSize="4xl"
+                  fontFamily="Cormorant Infant"
+                  h={20}
+                >
+                  {item}
+                </Button>
+              ))}
             </Stack>
           </DrawerBody>
-
-          <DrawerFooter>
-            <Stack width="full"></Stack>
-
-            {/* <Button variant="outline" mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button colorScheme="blue">Save</Button> */}
+          <DrawerFooter p={4}>
+            <EmailUs>
+              <Button fontWeight="medium" fontSize="sm" h={16} w="full" rounded="sm" colorScheme="purple">
+                Work With Us
+              </Button>
+            </EmailUs>
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
@@ -594,13 +629,14 @@ function RecommendationList() {
     <SimpleGrid columns={[1, 2]} pb={[7, 0]}>
       {recomendations.map((item, index) => {
         const showBorder = index % 2 === 0;
+        const isLast = recomendations.length - 1 === index;
         return (
           <Stack
             key={item.id}
             isInline
             spacing={[5]}
             borderRightWidth="0.5px"
-            borderBottomWidth="0.5px"
+            borderBottomWidth={[isLast ? 0 : '0.5px']}
             borderRightColor={showBorder ? 'gray.600' : 'transparent'}
             borderBottomColor={'gray.600'}
             pr={[2, showBorder ? 14 : 0]}
