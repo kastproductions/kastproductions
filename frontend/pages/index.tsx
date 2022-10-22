@@ -16,7 +16,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  Input,
   HStack,
   Img,
   SimpleGrid,
@@ -62,7 +61,7 @@ function EmailUs({ children }) {
             <VStack>
               <Text
                 textAlign="center"
-                fontSize={['4xl', '6xl']}
+                fontSize={['4xl', '5xl']}
                 fontFamily="Cormorant Infant"
                 fontWeight="semibold"
                 lineHeight="none"
@@ -74,7 +73,7 @@ function EmailUs({ children }) {
                 href="mailto:hello@kastproductions.com"
                 textDecor="underline"
                 textAlign="center"
-                fontSize={['md', '2xl']}
+                fontSize={['md', 'xl']}
                 fontWeight="light"
               >
                 hello@kastproductions.com
@@ -163,7 +162,13 @@ function MobileNavigation() {
   return (
     <Box position="fixed" top={0} left={0} w="full" zIndex={100} bg={bg} transition="all 0.2s ease-in-out">
       <HStack px={4} py={3}>
-        <Box flex={1}></Box>
+        <Box flex={1}>
+          <NextLink href="/" passHref>
+            <Link fontSize="xl" fontWeight="semibold" _hover={{}}>
+              KastProductions.
+            </Link>
+          </NextLink>
+        </Box>
         <HStack flex={1} justify="flex-end">
           <MenuDrawer />
         </HStack>
@@ -208,6 +213,7 @@ export default function Home() {
               <SimpleGrid columns={[1, 3]} spacing={[4, 8]}>
                 <Stack>
                   <Img
+                    alt="Api Development"
                     rounded="sm"
                     objectFit="cover"
                     height={['200px', '325px']}
@@ -221,6 +227,7 @@ export default function Home() {
                 </Stack>
                 <Stack mt={[0, '-8']}>
                   <Img
+                    alt="Website Development"
                     rounded="sm"
                     objectFit="cover"
                     objectPosition="100%"
@@ -234,6 +241,7 @@ export default function Home() {
                 </Stack>
                 <Stack mt={[0, '-16']}>
                   <Img
+                    alt=" Mobile Development"
                     rounded="sm"
                     objectFit="cover"
                     objectPosition="0% 60%"
@@ -308,6 +316,7 @@ export default function Home() {
         <Stack direction={['column-reverse', 'row']} alignItems="center" spacing={[10, 20]}>
           <Box w={['full', '50%']}>
             <Img
+              alt="solve problems"
               objectFit="cover"
               objectPosition={['0% 80%', '10% 90%']}
               height={['200px', '450px']}
@@ -367,7 +376,7 @@ export default function Home() {
               </Stack>
             </Box>
             <Box w={['full', '50%']} p={[0, 14]}>
-              <Img h={['250px', '400px']} w="full" objectFit="cover" src="/image-1.png" />
+              <Img h={['250px', '400px']} w="full" objectFit="cover" src="/image-1.png" alt="design and implement" />
             </Box>
           </Stack>
         </Container>
@@ -394,10 +403,10 @@ export default function Home() {
             </Box>
             <Box w={['full', '50%']} p={[0, 14]}>
               <SimpleGrid columns={4} spacing={0}>
-                {companyList.map(({ iconUrl, companyUrl }) => (
+                {companyList.map(({ iconUrl, companyUrl, name }) => (
                   <Link key={iconUrl} href={companyUrl} isExternal>
                     <Box>
-                      <Img src={iconUrl} objectFit="cover" />
+                      <Img src={iconUrl} objectFit="cover" alt={name} />
                     </Box>
                   </Link>
                 ))}
@@ -476,9 +485,9 @@ function MenuDrawer() {
         <DrawerOverlay />
         <DrawerContent bg="#1E1E1E">
           <DrawerCloseButton color="white" fontSize={16} m={2} />
-          <DrawerHeader mt={0.5}>
+          <DrawerHeader mt={0.5} color="white">
             <NextLink href="/" passHref>
-              <Link fontSize="xl" fontWeight="semibold" _hover={{}} color="white" onClick={onClose}>
+              <Link fontSize="xl" fontWeight="bold" _hover={{}} onClick={onClose}>
                 KastProductions.
               </Link>
             </NextLink>
