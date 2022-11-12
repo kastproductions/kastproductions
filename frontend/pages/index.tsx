@@ -24,6 +24,7 @@ import {
   Slide,
   IconButton,
   DrawerFooter,
+  Heading,
 } from '@chakra-ui/react';
 import { VscQuote } from 'react-icons/vsc';
 import { HiBars3BottomRight } from 'react-icons/hi2';
@@ -59,21 +60,15 @@ function EmailUs({ children }) {
         <Box bg="purple.600">
           <Container maxW="8xl" py={[7, 14]} color="white">
             <VStack>
-              <Text
-                textAlign="center"
-                fontSize={['4xl', '5xl']}
-                fontFamily="Cormorant Infant"
-                fontWeight="semibold"
-                lineHeight="none"
-              >
+              <Heading as="h3" textAlign="center" fontSize={['4xl', '5xl']} fontWeight="semibold" lineHeight="none">
                 Get In Touch
-              </Text>
+              </Heading>
               <Link
                 isExternal
                 href="mailto:hello@kastproductions.com"
                 textDecor="underline"
                 textAlign="center"
-                fontSize={['md', 'xl']}
+                fontSize={['md', 'lg']}
                 fontWeight="light"
               >
                 hello@kastproductions.com
@@ -179,7 +174,7 @@ function MobileNavigation() {
 
 export default function Home() {
   return (
-    <Box fontFamily="Poppins" bgGradient="linear(to-br, #3D3A49, #1E1E1E)" color="white">
+    <Box bgGradient="linear(to-br, #3D3A49, #1E1E1E)" color="white">
       <Stack spacing={0} pt={[0, 24]}>
         <Box display={['none', 'block']}>
           <Navigation />
@@ -199,16 +194,9 @@ export default function Home() {
               pb={16}
             >
               <Box px={[2, 8]} pb={[10, 16]} pt={[24, 16]}>
-                <Text
-                  as="h1"
-                  fontSize={['5xl', '8xl']}
-                  fontFamily="Cormorant Infant"
-                  fontWeight="medium"
-                  maxW="4xl"
-                  lineHeight="shorter"
-                >
+                <Heading as="h1" fontSize={['5xl', '8xl']} fontWeight="semibold" maxW="4xl" lineHeight="shorter">
                   We Design & Create High Quality Digital Products.
-                </Text>
+                </Heading>
               </Box>
               <SimpleGrid columns={[1, 3]} spacing={[4, 8]}>
                 <Stack>
@@ -221,9 +209,9 @@ export default function Home() {
                     objectPosition="0%"
                     src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80"
                   />
-                  <Text fontSize="xl" fontFamily="Cormorant Infant">
+                  <Heading as="h4" fontSize="xl">
                     Api Development
-                  </Text>
+                  </Heading>
                 </Stack>
                 <Stack mt={[0, '-8']}>
                   <Img
@@ -235,9 +223,9 @@ export default function Home() {
                     w="full"
                     src="https://images.unsplash.com/photo-1558174685-430919a96c8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
                   />
-                  <Text fontSize="xl" fontFamily="Cormorant Infant">
+                  <Heading as="h4" fontSize="xl">
                     Website Development
-                  </Text>
+                  </Heading>
                 </Stack>
                 <Stack mt={[0, '-16']}>
                   <Img
@@ -249,9 +237,9 @@ export default function Home() {
                     w="full"
                     src="https://images.unsplash.com/photo-1601972599720-36938d4ecd31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
                   />
-                  <Text fontSize="xl" fontFamily="Cormorant Infant">
+                  <Heading as="h4" fontSize="xl">
                     Mobile Development
-                  </Text>
+                  </Heading>
                 </Stack>
               </SimpleGrid>
             </Stack>
@@ -262,16 +250,15 @@ export default function Home() {
         <Container maxW="8xl" py={[7, 14]}>
           <Stack direction={['column', 'row']} alignItems="center" spacing={[10, 20]}>
             <Box w={['full', '40%']}>
-              <Text
+              <Heading
                 as="h2"
                 fontSize={['4xl', '6xl']}
-                fontFamily="Cormorant Infant"
                 fontWeight="semibold"
                 lineHeight="shorter"
                 textAlign={['center', 'left']}
               >
                 Start Your Successful Project With Us
-              </Text>
+              </Heading>
             </Box>
             <Stack spacing={6} w={['full', '60%']}>
               <Text fontSize={['sm', 'lg']} fontWeight="light">
@@ -325,10 +312,10 @@ export default function Home() {
             />
           </Box>
           <Box w={['full', '50%']}>
-            <Text fontSize={['4xl', '6xl']} fontFamily="Cormorant Infant" fontWeight="semibold" lineHeight="shorter">
+            <Heading as="h3" fontSize={['4xl', '6xl']} fontWeight="semibold" lineHeight="shorter">
               We connect brands with users through designs that are unique, elegant, easy to use and centered on user
               needs.
-            </Text>
+            </Heading>
           </Box>
         </Stack>
         <SimpleGrid columns={[1, 3]} spacing={[2, 8]} pt={10}>
@@ -336,7 +323,7 @@ export default function Home() {
             return (
               <Stack as="fieldset" key={item} borderWidth="0.5px" borderColor="gray.600" px={10} pb={10}>
                 <Box as="legend" pl={4} pr={2}>
-                  <Text fontSize={['5xl', '7xl']} fontFamily="Cormorant Infant" fontWeight="semibold">
+                  <Text fontSize={['5xl', '7xl']} fontWeight="semibold">
                     0{index + 1}
                   </Text>
                 </Box>
@@ -353,23 +340,23 @@ export default function Home() {
           <Stack direction={['column', 'row']} spacing={0}>
             <Box w={['full', '50%']} borderRightColor="gray.600" borderRightWidth="0.5px">
               <Stack p={[14]} pt={[20, 14]} pl={0} spacing={[6, 12]}>
-                <Text fontSize={['4xl', '6xl']} fontFamily="Cormorant Infant" fontWeight="semibold" lineHeight="none">
+                <Heading as="h3" fontSize={['4xl', '6xl']} fontWeight="semibold" lineHeight="none">
                   Services We Provide
-                </Text>
+                </Heading>
                 <Stack spacing={4}>
-                  <Text fontSize={['md', '2xl']} fontWeight="normal">
+                  <Text fontSize={['md', '2xl']} fontWeight="light">
                     UI/UX Designs
                   </Text>
-                  <Text fontSize={['md', '2xl']} fontWeight="normal">
+                  <Text fontSize={['md', '2xl']} fontWeight="light">
                     API development
                   </Text>
-                  <Text fontSize={['md', '2xl']} fontWeight="normal">
+                  <Text fontSize={['md', '2xl']} fontWeight="light">
                     Website development
                   </Text>
-                  <Text fontSize={['md', '2xl']} fontWeight="normal">
+                  <Text fontSize={['md', '2xl']} fontWeight="light">
                     Mobile development
                   </Text>
-                  <Text fontSize={['md', '2xl']} fontWeight="normal">
+                  <Text fontSize={['md', '2xl']} fontWeight="light">
                     End to end (E2E) testing
                   </Text>
                 </Stack>
@@ -386,15 +373,9 @@ export default function Home() {
           <Stack direction={['column', 'row']} spacing={0}>
             <Box w={['full', '50%']} borderRightColor="gray.600" borderRightWidth="0.5px">
               <Stack p={14} pt={[20, 14]} pl={0} pr={[0, 28]} spacing={[4, 10]}>
-                <Text
-                  maxW="md"
-                  fontSize={['4xl', '6xl']}
-                  fontFamily="Cormorant Infant"
-                  fontWeight="semibold"
-                  lineHeight="shorter"
-                >
+                <Heading as="h3" maxW="md" fontSize={['4xl', '6xl']} fontWeight="semibold" lineHeight="shorter">
                   Take A Look At Our Clients
-                </Text>
+                </Heading>
                 <Text fontWeight="light" fontSize={['sm', 'lg']}>
                   Products and platforms that combine craft, empathy and inclusive technology will conquer the world.
                   Here's who we've partnered with to go further.
@@ -418,15 +399,9 @@ export default function Home() {
       <Box borderTopColor="gray.600" borderTopWidth="0.5px" id="testimonials">
         <Container maxW="8xl" borderColor="gray.600" borderLeftWidth="0.5px" borderRightWidth="0.5px">
           <VStack p={14} pt={[20, 14]} px={[0, 14]} spacing={[6, 12]}>
-            <Text
-              textAlign="center"
-              fontSize={['4xl', '6xl']}
-              fontFamily="Cormorant Infant"
-              fontWeight="semibold"
-              lineHeight="none"
-            >
+            <Heading as="h3" textAlign="center" fontSize={['4xl', '6xl']} fontWeight="semibold" lineHeight="none">
               What Our Clients Say About Us
-            </Text>
+            </Heading>
             <Text fontWeight="light" fontSize={['sm', 'lg']} maxW="3xl" textAlign="center">
               Know what people say about us. Every review on this page has been written by a real client. It is neither
               filtered or edited by us.
@@ -442,13 +417,7 @@ export default function Home() {
       <Box borderTopColor="gray.600" borderTopWidth="0.5px" bg="purple.600">
         <Container maxW="8xl" py={[7, 14]}>
           <VStack>
-            <Text
-              textAlign="center"
-              fontSize={['4xl', '6xl']}
-              fontFamily="Cormorant Infant"
-              fontWeight="semibold"
-              lineHeight="none"
-            >
+            <Text textAlign="center" fontSize={['4xl', '6xl']} fontWeight="semibold" lineHeight="none">
               Get In Touch
             </Text>
             <Link
@@ -503,12 +472,11 @@ function MenuDrawer() {
                   key={item}
                   textTransform="capitalize"
                   variant="unstyled"
-                  fontWeight="semibold"
-                  fontSize="4xl"
-                  fontFamily="Cormorant Infant"
                   h={20}
                 >
-                  {item}
+                  <Heading as="h4" fontSize="3xl" fontWeight="normal">
+                    {item}
+                  </Heading>
                 </Button>
               ))}
             </Stack>

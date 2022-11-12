@@ -1,23 +1,42 @@
-import Head from 'next/head';
-import { ChakraProvider } from '@chakra-ui/react';
+import { ChakraProvider, extendTheme } from '@chakra-ui/react';
 import Script from 'next/script';
 import { DefaultSeo } from 'next-seo';
+// import { Poppins, Cormorant_Infant } from '@next/font/google';
 
-import '../styles/globals.css';
+import '@fontsource/cormorant-infant/300.css';
+import '@fontsource/cormorant-infant/400.css';
+import '@fontsource/cormorant-infant/500.css';
+import '@fontsource/cormorant-infant/600.css';
+import '@fontsource/cormorant-infant/700.css';
+
+import '@fontsource/poppins/100.css';
+import '@fontsource/poppins/200.css';
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/poppins/600.css';
+import '@fontsource/poppins/700.css';
+import '@fontsource/poppins/800.css';
+import '@fontsource/poppins/900.css';
+// const poppins = Poppins({
+//   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+//   // variable: '--font-poppins',
+// });
+// const cormorant_Infant = Cormorant_Infant({
+//   weight: ['300', '400', '500', '600', '700'],
+//   // variable: '--font-cormorant',
+// });
+
+const theme = extendTheme({
+  fonts: {
+    heading: `"Cormorant Infant", serif`,
+    body: `"Poppins", sans-serif`,
+  },
+});
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      {/* <Head>
-        <title>Kast productions</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          name="description"
-          content="Kast Productions is design & frontend web development consultancy based in Lithuania."
-        />
-        <link rel="icon" href="/favicon.ico" />
-        <script src="//code.tidio.co/ogzuurqarhap0hu77ypyxfrvanh8i03p.js" async></script>
-      </Head> */}
       <DefaultSeo
         title="KastProductions"
         description="KastProductions is design and frontend web development consultancy based in Lithuania."
@@ -66,7 +85,7 @@ function MyApp({ Component, pageProps }) {
           `}
       </Script>
       {/* <Script strategy="lazyOnload" src="//code.tidio.co/horcjpmh4cyjywzqwtchuceklbfnex9j.js" /> */}
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>
     </>
