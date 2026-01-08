@@ -470,114 +470,61 @@ export default function Home() {
         </Container>
       </Box>
       <Box borderTopColor="gray.600" borderTopWidth="0.5px" id="clients">
-        <Container maxW="8xl" py={{ base: 16, md: 24 }}>
-          <Stack gap={{ base: 10, md: 16 }}>
-            <Stack
-              gap={{ base: 4, md: 6 }}
-              maxW="3xl"
-              mx="auto"
-              textAlign="center"
+        <Container maxW="8xl">
+          <Stack direction={{ base: "column", md: "row" }} gap={0}>
+            <Box
+              w={{ base: "full", md: "50%" }}
+              borderRightColor="gray.600"
+              borderRightWidth="0.5px"
             >
-              <Heading
-                as="h3"
-                fontSize={{ base: "3xl", md: "5xl" }}
-                fontWeight="semibold"
-                lineHeight="shorter"
+              <Stack
+                p={14}
+                pt={{ base: 20, md: 14 }}
+                pl={0}
+                pr={{ base: 0, md: 28 }}
+                gap={{ base: 4, md: 10 }}
               >
-                Trusted By Industry Leaders
-              </Heading>
-              <Text
-                fontWeight="light"
-                fontSize={{ base: "sm", md: "lg" }}
-                color="gray.300"
-              >
-                Products and platforms that combine craft, empathy and inclusive
-                technology will conquer the world. Here&apos;s who we&apos;ve
-                partnered with to go further.
-              </Text>
-            </Stack>
-
-            <SimpleGrid
-              columns={{ base: 2, sm: 3, md: 4, lg: 4 }}
-              gap={{ base: 3, md: 5 }}
-            >
-              {companyList.map(({ iconUrl, companyUrl, name }) => (
-                <Link
-                  key={iconUrl}
-                  href={companyUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  _hover={{}}
-                  _focus={{ outline: "none" }}
+                <Heading
+                  as="h3"
+                  maxW="md"
+                  fontSize={{ base: "4xl", md: "6xl" }}
+                  fontWeight="semibold"
+                  lineHeight="shorter"
                 >
-                  <Box
-                    position="relative"
-                    bg="rgba(255, 255, 255, 0.03)"
-                    borderWidth="1px"
-                    borderColor="rgba(255, 255, 255, 0.08)"
-                    rounded="lg"
-                    p={{ base: 4, md: 6 }}
-                    h={{ base: "100px", md: "140px" }}
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    overflow="hidden"
-                    transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                    _hover={{
-                      bg: "rgba(255, 255, 255, 0.08)",
-                      borderColor: "rgba(255, 255, 255, 0.15)",
-                      transform: "translateY(-4px)",
-                      boxShadow: "0 20px 40px -12px rgba(0, 0, 0, 0.4)",
-                    }}
-                    css={{
-                      "&:hover .logo-name": {
-                        opacity: 1,
-                        transform: "translateY(0)",
-                      },
-                      "&:hover .logo-image": {
-                        transform: "scale(1.05)",
-                        filter: "brightness(1.1)",
-                      },
-                    }}
+                  Take A Look At Our Clients
+                </Heading>
+                <Text fontWeight="light" fontSize={{ base: "sm", md: "lg" }}>
+                  Products and platforms that combine craft, empathy and
+                  inclusive technology will conquer the world. Here&apos;s who
+                  we&apos;ve partnered with to go further.
+                </Text>
+              </Stack>
+            </Box>
+            <Box w={{ base: "full", md: "50%" }} p={{ base: 0, md: 14 }}>
+              <SimpleGrid columns={4} gap={4}>
+                {companyList.map(({ iconUrl, companyUrl, name }) => (
+                  <Link
+                    key={iconUrl}
+                    href={companyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <Image
-                      className="logo-image"
-                      src={iconUrl}
-                      w={{ base: "70%", md: "75%" }}
-                      h={{ base: "70%", md: "75%" }}
-                      maxH={{ base: "50px", md: "70px" }}
-                      objectFit="contain"
-                      alt={name}
-                      transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
-                      filter="brightness(0.95)"
-                    />
                     <Box
-                      className="logo-name"
-                      position="absolute"
-                      bottom={0}
-                      left={0}
-                      right={0}
-                      py={2}
-                      px={3}
-                      bg="linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%)"
-                      opacity={0}
-                      transform="translateY(8px)"
-                      transition="all 0.3s cubic-bezier(0.4, 0, 0.2, 1)"
+                      w={{ base: "60px", md: "100px" }}
+                      h={{ base: "60px", md: "100px" }}
                     >
-                      <Text
-                        fontSize={{ base: "xs", md: "sm" }}
-                        fontWeight="medium"
-                        color="white"
-                        textAlign="center"
-                        truncate
-                      >
-                        {name}
-                      </Text>
+                      <Image
+                        src={iconUrl}
+                        w="full"
+                        h="full"
+                        objectFit="contain"
+                        alt={name}
+                      />
                     </Box>
-                  </Box>
-                </Link>
-              ))}
-            </SimpleGrid>
+                  </Link>
+                ))}
+              </SimpleGrid>
+            </Box>
           </Stack>
         </Container>
       </Box>
