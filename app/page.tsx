@@ -666,53 +666,44 @@ function MenuDrawer() {
 
 const companyList = [
   {
-    name: "zipmex",
+    name: "Zipmex",
     companyUrl: "https://zipmex.com/",
-    iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C560BAQEZFbVB701LiQ/company-logo_200_200/0/1650870418499?e=1674086400&v=beta&t=9Bnk8PVN19nASToPp7ldGeLtqN-I_njxgVxKwVg6JI4",
+    iconUrl: "/logos/zipmex.svg",
   },
-
   {
-    name: "trustpilot",
+    name: "Trustpilot",
     companyUrl: "https://www.trustpilot.com/",
-    iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C4D0BAQEcsYTuxD0gdA/company-logo_200_200/0/1647966817956?e=1674086400&v=beta&t=mKVb1pUy_jcpNM0geMyu-hPKE-WFtSrFrbgBxh3YeY8",
+    iconUrl: "/logos/trustpilot.svg",
   },
   {
-    name: "bound",
+    name: "Bound Interactive",
     companyUrl: "https://boundinteractive.com/",
-    iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C4E0BAQHMu66kuMajIQ/company-logo_200_200/0/1658885766023?e=1674086400&v=beta&t=mahudunBUlzFyFHDOVt9vV6sZTfuK-emnCGesoA6qa0",
+    iconUrl: "/logos/bound.svg",
   },
   {
-    name: "rocket",
+    name: "Rocket Software",
     companyUrl: "https://www.rocketsoftware.com/",
-    iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C4E0BAQHQyp9sUmbUtw/company-logo_200_200/0/1645040294049?e=1674086400&v=beta&t=BbBS5qKN3Hdo1G9kEd1mjImpdG0oMSQ5Y82-QCaxE6Q",
+    iconUrl: "/logos/rocket-software.svg",
   },
   {
-    name: "netfront",
+    name: "Netfront",
     companyUrl: "https://netfront.com.au/",
-    iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C560BAQGuwEuCPMZAAw/company-logo_200_200/0/1531722161731?e=1674086400&v=beta&t=yqu0i9rtBizAYaJgAL6SZxWk5yiA6AemflSPPHJcszg",
+    iconUrl: "/logos/netfront.svg",
   },
   {
-    name: "allhuman",
+    name: "All Human",
     companyUrl: "https://allhuman.com/",
-    iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C4E0BAQESlCtevJJggw/company-logo_200_200/0/1626685744946?e=1674086400&v=beta&t=Cti9fboAjYCBGzRHDd1sujT9QwL02pzjDgxPpUXOibM",
+    iconUrl: "/logos/allhuman.svg",
   },
   {
     name: "Central Innovation",
     companyUrl: "https://centralinnovation.com/",
-    iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C4E0BAQEE3Bubi5E0yQ/company-logo_200_200/0/1521168247082?e=1674086400&v=beta&t=Hzz6qytoC1BixcoFZzMAYCuQ98F3muMEOnLK9pvZZIk",
+    iconUrl: "/logos/central-innovation.svg",
   },
   {
-    name: "irishlife",
+    name: "Irish Life",
     companyUrl: "https://www.irishlife.ie/",
-    iconUrl:
-      "https://media-exp1.licdn.com/dms/image/C560BAQGRsICZqVa9Iw/company-logo_200_200/0/1656595564144?e=1674086400&v=beta&t=19zDpIP_WG0olF5Bane6d7-1mCN8DLMK1ZjoSzqdhkc",
+    iconUrl: "/logos/irish-life.svg",
   },
 ];
 
