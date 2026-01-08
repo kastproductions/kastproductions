@@ -677,57 +677,57 @@ const companyList = [
   {
     name: "Zipmex",
     companyUrl: "https://zipmex.com/",
-    iconUrl: "/logos/zipmex.svg",
+    iconUrl: "/logos/zipmex.png",
   },
   {
     name: "Trustpilot",
     companyUrl: "https://www.trustpilot.com/",
-    iconUrl: "/logos/trustpilot.svg",
+    iconUrl: "/logos/trustpilot.png",
   },
   {
     name: "Bound Interactive",
     companyUrl: "https://boundinteractive.com/",
-    iconUrl: "/logos/bound.svg",
+    iconUrl: "/logos/bound.png",
   },
   {
     name: "Rocket Software",
     companyUrl: "https://www.rocketsoftware.com/",
-    iconUrl: "/logos/rocket-software.svg",
+    iconUrl: "/logos/rocket-software.png",
   },
   {
     name: "Netfront",
     companyUrl: "https://netfront.com.au/",
-    iconUrl: "/logos/netfront.svg",
+    iconUrl: "/logos/netfront.png",
   },
   {
     name: "All Human",
     companyUrl: "https://allhuman.com/",
-    iconUrl: "/logos/allhuman.svg",
+    iconUrl: "/logos/allhuman.png",
   },
   {
     name: "Central Innovation",
     companyUrl: "https://centralinnovation.com/",
-    iconUrl: "/logos/central-innovation.svg",
+    iconUrl: "/logos/central-innovation.png",
   },
   {
     name: "Irish Life",
     companyUrl: "https://www.irishlife.ie/",
-    iconUrl: "/logos/irish-life.svg",
+    iconUrl: "/logos/irish-life.png",
   },
   {
     name: "Macaw",
     companyUrl: "https://www.macaw.net/",
-    iconUrl: "/logos/macaw.svg",
+    iconUrl: "/logos/macaw.png",
   },
   {
     name: "Pexx",
-    companyUrl: "https://www.pexx.com/",
-    iconUrl: "/logos/pexx.svg",
+    companyUrl: "https://pexx.co/",
+    iconUrl: "/logos/pexx.png",
   },
   {
     name: "Apart People",
     companyUrl: "https://www.apartpeople.com/",
-    iconUrl: "/logos/apart-people.svg",
+    iconUrl: "/logos/apart-people.png",
   },
 ];
 
