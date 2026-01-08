@@ -725,8 +725,8 @@ const companyList = [
     iconUrl: "/logos/pexx.png",
   },
   {
-    name: "Apart People",
-    companyUrl: "https://www.apartpeople.com/",
+    name: "Apart Tech",
+    companyUrl: "https://www.apart.tech/",
     iconUrl: "/logos/apart-people.png",
   },
 ];
