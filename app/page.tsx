@@ -501,7 +501,7 @@ export default function Home() {
               </Stack>
             </Box>
             <Box w={{ base: "full", md: "50%" }} p={{ base: 0, md: 14 }}>
-              <SimpleGrid columns={4} gap={0}>
+              <SimpleGrid columns={4} gap={4}>
                 {companyList.map(({ iconUrl, companyUrl, name }) => (
                   <Link
                     key={iconUrl}
@@ -509,8 +509,17 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <Box>
-                      <Image src={iconUrl} objectFit="cover" alt={name} />
+                    <Box
+                      w={{ base: "60px", md: "100px" }}
+                      h={{ base: "60px", md: "100px" }}
+                    >
+                      <Image
+                        src={iconUrl}
+                        w="full"
+                        h="full"
+                        objectFit="contain"
+                        alt={name}
+                      />
                     </Box>
                   </Link>
                 ))}
