@@ -714,6 +714,21 @@ const companyList = [
     companyUrl: "https://www.irishlife.ie/",
     iconUrl: "/logos/irish-life.svg",
   },
+  {
+    name: "Macaw",
+    companyUrl: "https://www.macaw.net/",
+    iconUrl: "/logos/macaw.svg",
+  },
+  {
+    name: "Pexx",
+    companyUrl: "https://www.pexx.com/",
+    iconUrl: "/logos/pexx.svg",
+  },
+  {
+    name: "Apart People",
+    companyUrl: "https://www.apartpeople.com/",
+    iconUrl: "/logos/apart-people.svg",
+  },
 ];
 
 const recomendations = [

@@ -1,5 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
-  <rect width="200" height="200" rx="20" fill="#00A651"/>
-  <text x="100" y="95" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">IRISH</text>
-  <text x="100" y="130" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">LIFE</text>
+  <rect width="200" height="200" rx="20" fill="#16A34A"/>
+  <text x="100" y="115" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white" text-anchor="middle">Irish Life</text>
 </svg>
