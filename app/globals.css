@@ -1,0 +1,102 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: var(--font-instrument);
+  --font-display: var(--font-bricolage);
+  --font-mono: var(--font-plex-mono);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-iris: var(--iris);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * The working drawing — dark-only drafting palette.
+ * ink / sheet / line / bone / slate / iris
+ */
+:root {
+  --background: #0f0f13; /* ink */
+  --foreground: #ebebee; /* bone */
+  --card: #16161c; /* sheet */
+  --card-foreground: #ebebee;
+  --popover: #16161c;
+  --popover-foreground: #ebebee;
+  --primary: #6e56cf; /* iris */
+  --primary-foreground: #ffffff;
+  --secondary: #1d1d25;
+  --secondary-foreground: #ebebee;
+  --muted: #1a1a21;
+  --muted-foreground: #91919d; /* slate */
+  --accent: #1d1d25;
+  --accent-foreground: #ebebee;
+  --destructive: #e5484d;
+  --border: #27272f; /* line */
+  --input: #27272f;
+  --ring: #6e56cf;
+  --iris: #a99ef2; /* iris, tuned for text on ink */
+  --radius: 0rem; /* drafting sheets have sharp corners */
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  a,
+  button {
+    touch-action: manipulation;
+  }
+  html {
+    @apply font-sans motion-safe:scroll-smooth;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  ::selection {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}

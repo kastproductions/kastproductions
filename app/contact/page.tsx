@@ -1,18 +1,31 @@
-"use client";
+import type { Metadata } from "next";
+import NextLink from "next/link";
 
-import { Box, Text } from "@chakra-ui/react";
+export const metadata: Metadata = {
+  title: "Contact",
+};
 
 export default function Contact() {
   return (
-    <Box p={4} bg="gray.900" minH="100vh" color="white">
-      <Box pt={40}>
-        <Text textAlign="center" fontSize="3xl" fontWeight="bold">
-          Amazing things coming soon
-        </Text>
-        <Text textAlign="center" fontSize="2xl">
-          hello@kastproductions.com
-        </Text>
-      </Box>
-    </Box>
+    <main className="flex min-h-dvh flex-col items-center justify-center gap-6 px-6 text-center">
+      <p className="font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">
+        Sheet: Contact — always open
+      </p>
+      <h1 className="font-display text-4xl font-bold tracking-tight text-balance md:text-6xl">
+        Say hello.
+      </h1>
+      <a
+        href="mailto:hello@kastproductions.com"
+        className="font-mono text-sm text-iris underline underline-offset-4 transition-colors hover:text-foreground md:text-base"
+      >
+        hello@kastproductions.com
+      </a>
+      <NextLink
+        href="/"
+        className="font-mono text-xs tracking-[0.14em] text-muted-foreground uppercase underline underline-offset-4 transition-colors hover:text-foreground"
+      >
+        ← Back to the drawing board
+      </NextLink>
+    </main>
   );
 }

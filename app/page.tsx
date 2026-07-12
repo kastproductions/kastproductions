@@ -1,679 +1,209 @@
-"use client";
+import Image from "next/image";
+import { ArrowUpRight, Quote } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SiteHeader } from "@/components/site-header";
+import { cn } from "@/lib/utils";
 
-import { useState, useEffect, useRef, cloneElement } from "react";
-import {
-  Box,
-  Stack,
-  Text,
-  Icon,
-  Button,
-  Link,
-  Image,
-  HStack,
-  SimpleGrid,
-  Container,
-  VStack,
-  Center,
-  IconButton,
-  Heading,
-  Drawer,
-  Portal,
-  CloseButton,
-} from "@chakra-ui/react";
-import { VscQuote } from "react-icons/vsc";
-import { HiBars3BottomRight } from "react-icons/hi2";
-import NextLink from "next/link";
+const EMAIL = "hello@kastproductions.com";
+const EMAIL_HREF = `mailto:${EMAIL}`;
 
-function scrollIntoView(id: string) {
-  const element = document.getElementById(id);
-  element?.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-    inline: "nearest",
-  });
-}
+/* Shared framed container — the vertical rails of the drawing sheet. */
+const frame = "mx-auto w-full max-w-7xl border-x px-5 sm:px-8 md:px-12";
 
-function EmailUs({
-  children,
-}: {
-  children: React.ReactElement<{ onClick?: () => void }>;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    let id: ReturnType<typeof setTimeout>;
-    if (isOpen) {
-      id = setTimeout(() => {
-        setIsOpen(false);
-      }, 4000);
-    }
-    return () => {
-      if (typeof id !== "undefined") clearTimeout(id);
-      if (isOpen) setIsOpen(false);
-    };
-  }, [isOpen]);
-
-  const element = cloneElement(children, { onClick: () => setIsOpen(true) } as {
-    onClick: () => void;
-  });
-
+export default function Home() {
   return (
     <>
-      {element}
-      <Box
-        position="fixed"
-        bottom={0}
-        left={0}
-        right={0}
-        zIndex={10}
-        transform={isOpen ? "translateY(0)" : "translateY(100%)"}
-        transition="transform 0.3s ease-in-out"
-        bg="purple.600"
-      >
-        <Container maxW="8xl" py={{ base: 7, md: 14 }} color="white">
-          <VStack>
-            <Heading
-              as="h3"
-              textAlign="center"
-              fontSize={{ base: "4xl", md: "5xl" }}
-              fontWeight="semibold"
-              lineHeight="none"
-            >
-              Get In Touch
-            </Heading>
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href="mailto:hello@kastproductions.com"
-              textDecor="underline"
-              textAlign="center"
-              fontSize={{ base: "md", md: "lg" }}
-              fontWeight="light"
-            >
-              hello@kastproductions.com
-            </Link>
-          </VStack>
-        </Container>
-      </Box>
+      <SiteHeader />
+      <main id="top" tabIndex={-1} className="pt-14">
+        <Hero />
+        <Capabilities />
+        <Services />
+        <Clients />
+        <Testimonials />
+        <Contact />
+      </main>
+      <Footer />
     </>
   );
 }
 
-function Navigation() {
-  const [bg, setBg] = useState("transparent");
+/* ------------------------------------------------------------------ */
+/* Building blocks                                                     */
+/* ------------------------------------------------------------------ */
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setBg(window.scrollY > 100 ? "#1E1E1E" : "transparent");
-    };
-    document.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
+function Cross({ className }: { className?: string }) {
   return (
-    <Box
-      position="fixed"
-      top={0}
-      left={0}
-      w="full"
-      zIndex={100}
-      bg={bg}
-      transition="all 0.25s ease-in-out"
+    <span
+      aria-hidden
+      className={cn("pointer-events-none absolute z-10 size-[9px]", className)}
     >
-      <Container py={5} maxW="8xl" display={{ base: "none", md: "flex" }}>
-        <HStack fontWeight="light" fontSize="sm" w="full">
-          <Box flex={1}>
-            <Link asChild fontSize="xl" fontWeight="semibold" _hover={{}}>
-              <NextLink href="/">KastProductions.</NextLink>
-            </Link>
-          </Box>
-          <HStack gap={10}>
-            {["what we do", "services", "clients", "testimonials"].map(
-              (item) => (
-                <Button
-                  onClick={() => scrollIntoView(item)}
-                  key={item}
-                  textTransform="capitalize"
-                  variant="ghost"
-                  fontWeight="light"
-                  fontSize="sm"
-                >
-                  {item}
-                </Button>
-              ),
-            )}
-          </HStack>
-          <HStack flex={1} justifyContent="flex-end">
-            <EmailUs>
-              <Button
-                rounded="none"
-                h={14}
-                w={40}
-                fontWeight="semibold"
-                fontSize="sm"
-                color="gray.900"
-              >
-                Work With Us
-              </Button>
-            </EmailUs>
-          </HStack>
-        </HStack>
-      </Container>
-    </Box>
+      <span className="absolute top-0 left-1/2 h-full w-px -translate-x-1/2 bg-muted-foreground/70" />
+      <span className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-muted-foreground/70" />
+    </span>
   );
 }
 
-function MobileNavigation() {
-  const [bg, setBg] = useState("transparent");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setBg(window.scrollY > 25 ? "#1E1E1E" : "transparent");
-    };
-    document.addEventListener("scroll", handleScroll);
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
+function Eyebrow({
+  index,
+  children,
+}: {
+  index: string;
+  children: React.ReactNode;
+}) {
   return (
-    <Box
-      position="fixed"
-      top={0}
-      left={0}
-      w="full"
-      zIndex={100}
-      bg={bg}
-      transition="all 0.25s ease-in-out"
-    >
-      <HStack px={4} py={3}>
-        <Box flex={1}>
-          <Link asChild fontSize="xl" fontWeight="semibold" _hover={{}}>
-            <NextLink href="/">KastProductions.</NextLink>
-          </Link>
-        </Box>
-        <HStack flex={1} justify="flex-end">
-          <MenuDrawer />
-        </HStack>
-      </HStack>
-    </Box>
+    <p className="flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">
+      <span className="text-iris">{index}</span>
+      <span aria-hidden className="h-px w-8 bg-border" />
+      {children}
+    </p>
   );
 }
 
-export default function Home() {
+/* ------------------------------------------------------------------ */
+/* Sections                                                            */
+/* ------------------------------------------------------------------ */
+
+function Hero() {
   return (
-    <Box
-      bgGradient="to-br"
-      gradientFrom="#3D3A49"
-      gradientTo="#1E1E1E"
-      color="white"
-    >
-      <Stack gap={0} pt={{ base: 0, md: 24 }}>
-        <Box display={{ base: "none", md: "block" }}>
-          <Navigation />
-        </Box>
-        <Box display={{ base: "block", md: "none" }}>
-          <MobileNavigation />
-        </Box>
-        <Box borderTopColor="gray.600" borderTopWidth="0.5px" h="full">
-          <Container height="full" maxW="8xl">
-            <Stack
-              gap={0}
-              borderLeftColor="gray.600"
-              borderLeftWidth="0.5px"
-              borderRightColor="gray.600"
-              borderRightWidth="0.5px"
-              h="full"
-              pb={16}
+    <section className="border-b">
+      <div className={cn(frame, "relative")}>
+        <Cross className="-top-[5px] -left-[5px]" />
+        <Cross className="-top-[5px] -right-[5px]" />
+        <Cross className="-bottom-[5px] -left-[5px]" />
+        <Cross className="-bottom-[5px] -right-[5px]" />
+
+        <div className="flex items-center justify-between gap-4 border-b py-3 font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase md:text-[11px]">
+          <span>KP — Working drawing Nº 01</span>
+          <span className="hidden sm:block">
+            Vilnius, LT · 54.6872° N, 25.2797° E
+          </span>
+        </div>
+
+        <div className="py-20 md:py-32">
+          <h1 className="motion-safe:animate-rise max-w-5xl font-display text-5xl leading-[0.95] font-bold tracking-tight text-balance sm:text-7xl md:text-8xl">
+            We design &amp; build high&#8209;quality{" "}
+            <span className="text-iris">digital products.</span>
+          </h1>
+          <p className="motion-safe:animate-rise mt-8 max-w-xl text-base text-muted-foreground md:text-lg motion-safe:[animation-delay:120ms]">
+            Kast Productions is an independent design and frontend development
+            consultancy. We build unconventional websites, APIs and mobile
+            products with unique design.
+          </p>
+          <div className="motion-safe:animate-rise mt-10 flex flex-col gap-3 sm:flex-row motion-safe:[animation-delay:240ms]">
+            <Button
+              asChild
+              className="h-12 px-7 font-mono text-[11px] tracking-[0.14em] uppercase"
             >
-              <Box
-                px={{ base: 2, md: 8 }}
-                pb={{ base: 10, md: 16 }}
-                pt={{ base: 24, md: 16 }}
-              >
-                <Heading
-                  as="h1"
-                  fontSize={{ base: "5xl", md: "8xl" }}
-                  fontWeight="semibold"
-                  maxW="4xl"
-                  lineHeight="shorter"
-                >
-                  We Design & Create High Quality Digital Products.
-                </Heading>
-              </Box>
-              <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: 4, md: 8 }}>
-                <Stack>
-                  <Image
-                    alt="Api Development"
-                    rounded="sm"
-                    objectFit="cover"
-                    height={{ base: "200px", md: "325px" }}
-                    w="full"
-                    objectPosition="0%"
-                    src="https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1331&q=80"
-                  />
-                  <Heading as="h4" fontSize="xl">
-                    Api Development
-                  </Heading>
-                </Stack>
-                <Stack mt={{ base: 0, md: "-8" }}>
-                  <Image
-                    alt="Website Development"
-                    rounded="sm"
-                    objectFit="cover"
-                    objectPosition="100%"
-                    height={{ base: "200px", md: "325px" }}
-                    w="full"
-                    src="https://images.unsplash.com/photo-1558174685-430919a96c8d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
-                  />
-                  <Heading as="h4" fontSize="xl">
-                    Website Development
-                  </Heading>
-                </Stack>
-                <Stack mt={{ base: 0, md: "-16" }}>
-                  <Image
-                    alt=" Mobile Development"
-                    rounded="sm"
-                    objectFit="cover"
-                    objectPosition="0% 60%"
-                    height={{ base: "200px", md: "325px" }}
-                    w="full"
-                    src="https://images.unsplash.com/photo-1601972599720-36938d4ecd31?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-                  />
-                  <Heading as="h4" fontSize="xl">
-                    Mobile Development
-                  </Heading>
-                </Stack>
-              </SimpleGrid>
-            </Stack>
-          </Container>
-        </Box>
-      </Stack>
-      <Box
-        borderBottomColor="gray.600"
-        borderBottomWidth="0.5px"
-        borderTopColor="gray.600"
-        borderTopWidth="0.5px"
-      >
-        <Container maxW="8xl" py={{ base: 7, md: 14 }}>
-          <Stack
-            direction={{ base: "column", md: "row" }}
-            alignItems="center"
-            gap={{ base: 10, md: 20 }}
-          >
-            <Box w={{ base: "full", md: "40%" }}>
-              <Heading
-                as="h2"
-                fontSize={{ base: "4xl", md: "6xl" }}
-                fontWeight="semibold"
-                lineHeight="shorter"
-                textAlign={{ base: "center", md: "left" }}
-              >
-                Start Your Successful Project With Us
-              </Heading>
-            </Box>
-            <Stack gap={6} w={{ base: "full", md: "60%" }}>
-              <Text fontSize={{ base: "sm", md: "lg" }} fontWeight="light">
-                <b>Kast Productions</b> is web design and development
-                consultancy. We develop the highest quality unconventional
-                websites and mobile products with unique design.
-              </Text>
-              <Stack
-                direction={{ base: "column", md: "row" }}
-                gap={{ base: 3, md: 6 }}
-              >
-                <Box>
-                  <EmailUs>
-                    <Button
-                      colorPalette="purple"
-                      rounded="none"
-                      h={{ base: 14, md: 16 }}
-                      w={{ base: "full", md: 48 }}
-                      fontWeight="normal"
-                      fontSize={{ base: "sm", md: "md" }}
-                    >
-                      Start A Project
-                    </Button>
-                  </EmailUs>
-                </Box>
-                <Box>
-                  <Button
-                    rounded="none"
-                    variant="outline"
-                    h={{ base: 14, md: 16 }}
-                    w={{ base: "full", md: 48 }}
-                    fontWeight="normal"
-                    fontSize={{ base: "sm", md: "md" }}
-                    _hover={{}}
-                    onClick={() => scrollIntoView("what we do")}
-                  >
-                    Learn More
-                  </Button>
-                </Box>
-              </Stack>
-            </Stack>
-          </Stack>
-        </Container>
-      </Box>
-      <Container maxW="8xl" py={20} id="what we do">
-        <Stack
-          direction={{ base: "column-reverse", md: "row" }}
-          alignItems="center"
-          gap={{ base: 10, md: 20 }}
+              <a href={EMAIL_HREF}>Start a project</a>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="h-12 px-7 font-mono text-[11px] tracking-[0.14em] uppercase"
+            >
+              <a href="#capabilities">See capabilities ↓</a>
+            </Button>
+          </div>
+        </div>
+
+        <div
+          aria-hidden
+          className="motion-safe:animate-rise flex items-center gap-4 pb-8 motion-safe:[animation-delay:360ms]"
         >
-          <Box w={{ base: "full", md: "50%" }}>
-            <Image
-              alt="solve problems"
-              objectFit="cover"
-              objectPosition={{ base: "0% 80%", md: "10% 90%" }}
-              height={{ base: "200px", md: "450px" }}
-              w="full"
-              src="https://images.unsplash.com/photo-1589340786362-6b77c6489489?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80"
-            />
-          </Box>
-          <Box w={{ base: "full", md: "50%" }}>
-            <Heading
-              as="h3"
-              fontSize={{ base: "4xl", md: "6xl" }}
-              fontWeight="semibold"
-              lineHeight="shorter"
-            >
-              We connect brands with users through designs that are unique,
-              elegant, easy to use and centered on user needs.
-            </Heading>
-          </Box>
-        </Stack>
-        <SimpleGrid
-          columns={{ base: 1, md: 3 }}
-          gap={{ base: 2, md: 8 }}
-          pt={10}
-        >
-          {["Design", "Development", "Strategic"].map((item, index) => {
-            return (
-              <Stack
-                as="fieldset"
-                key={item}
-                borderWidth="0.5px"
-                borderColor="gray.600"
-                px={10}
-                pb={10}
-              >
-                <Box as="legend" pl={4} pr={2}>
-                  <Text
-                    fontSize={{ base: "5xl", md: "7xl" }}
-                    fontWeight="semibold"
-                  >
-                    0{index + 1}
-                  </Text>
-                </Box>
-                <Text fontSize={{ base: "xl", md: "3xl" }} fontWeight="medium">
-                  {item}
-                </Text>
-              </Stack>
-            );
-          })}
-        </SimpleGrid>
-      </Container>
-      <Box borderTopColor="gray.600" borderTopWidth="0.5px" id="services">
-        <Container maxW="8xl">
-          <Stack direction={{ base: "column", md: "row" }} gap={0}>
-            <Box
-              w={{ base: "full", md: "50%" }}
-              borderRightColor="gray.600"
-              borderRightWidth="0.5px"
-            >
-              <Stack
-                p={14}
-                pt={{ base: 20, md: 14 }}
-                pl={0}
-                gap={{ base: 6, md: 12 }}
-              >
-                <Heading
-                  as="h3"
-                  fontSize={{ base: "4xl", md: "6xl" }}
-                  fontWeight="semibold"
-                  lineHeight="none"
-                >
-                  Services We Provide
-                </Heading>
-                <Stack gap={4}>
-                  <Text fontSize={{ base: "md", md: "2xl" }} fontWeight="light">
-                    UI/UX Designs
-                  </Text>
-                  <Text fontSize={{ base: "md", md: "2xl" }} fontWeight="light">
-                    API development
-                  </Text>
-                  <Text fontSize={{ base: "md", md: "2xl" }} fontWeight="light">
-                    Website development
-                  </Text>
-                  <Text fontSize={{ base: "md", md: "2xl" }} fontWeight="light">
-                    Mobile development
-                  </Text>
-                  <Text fontSize={{ base: "md", md: "2xl" }} fontWeight="light">
-                    End to end (E2E) testing
-                  </Text>
-                </Stack>
-              </Stack>
-            </Box>
-            <Box w={{ base: "full", md: "50%" }} p={{ base: 0, md: 14 }}>
-              <Image
-                h={{ base: "250px", md: "400px" }}
-                w="full"
-                objectFit="cover"
-                src="/image-1.png"
-                alt="design and implement"
-              />
-            </Box>
-          </Stack>
-        </Container>
-      </Box>
-      <Box borderTopColor="gray.600" borderTopWidth="0.5px" id="clients">
-        <Container maxW="8xl">
-          <Stack direction={{ base: "column", md: "row" }} gap={0}>
-            <Box
-              w={{ base: "full", md: "50%" }}
-              borderRightColor="gray.600"
-              borderRightWidth="0.5px"
-            >
-              <Stack
-                p={14}
-                pt={{ base: 20, md: 14 }}
-                pl={0}
-                pr={{ base: 0, md: 28 }}
-                gap={{ base: 4, md: 10 }}
-              >
-                <Heading
-                  as="h3"
-                  maxW="md"
-                  fontSize={{ base: "4xl", md: "6xl" }}
-                  fontWeight="semibold"
-                  lineHeight="shorter"
-                >
-                  Take A Look At Our Clients
-                </Heading>
-                <Text fontWeight="light" fontSize={{ base: "sm", md: "lg" }}>
-                  Products and platforms that combine craft, empathy and
-                  inclusive technology will conquer the world. Here&apos;s who
-                  we&apos;ve partnered with to go further.
-                </Text>
-              </Stack>
-            </Box>
-            <Box w={{ base: "full", md: "50%" }} p={{ base: 0, md: 14 }}>
-              <SimpleGrid columns={4} gap={4}>
-                {companyList.map(({ iconUrl, companyUrl, name }) => (
-                  <Link
-                    key={iconUrl}
-                    href={companyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Box
-                      w={{ base: "60px", md: "100px" }}
-                      h={{ base: "60px", md: "100px" }}
-                    >
-                      <Image
-                        src={iconUrl}
-                        w="full"
-                        h="full"
-                        objectFit="contain"
-                        alt={name}
-                      />
-                    </Box>
-                  </Link>
-                ))}
-              </SimpleGrid>
-            </Box>
-          </Stack>
-        </Container>
-      </Box>
-      <Box borderTopColor="gray.600" borderTopWidth="0.5px" id="testimonials">
-        <Container
-          maxW="8xl"
-          borderColor="gray.600"
-          borderLeftWidth="0.5px"
-          borderRightWidth="0.5px"
-        >
-          <VStack
-            p={14}
-            pt={{ base: 20, md: 14 }}
-            px={{ base: 0, md: 14 }}
-            gap={{ base: 6, md: 12 }}
-          >
-            <Heading
-              as="h3"
-              textAlign="center"
-              fontSize={{ base: "4xl", md: "6xl" }}
-              fontWeight="semibold"
-              lineHeight="none"
-            >
-              What Our Clients Say About Us
-            </Heading>
-            <Text
-              fontWeight="light"
-              fontSize={{ base: "sm", md: "lg" }}
-              maxW="3xl"
-              textAlign="center"
-            >
-              Know what people say about us. Every review on this page has been
-              written by a real client. It is neither filtered or edited by us.
-            </Text>
-          </VStack>
-        </Container>
-      </Box>
-      <Box borderTopColor="gray.600" borderTopWidth="0.5px">
-        <Container maxW="8xl">
-          <RecommendationList />
-        </Container>
-      </Box>
-      <Box borderTopColor="gray.600" borderTopWidth="0.5px" bg="purple.600">
-        <Container maxW="8xl" py={{ base: 7, md: 14 }}>
-          <VStack>
-            <Text
-              textAlign="center"
-              fontSize={{ base: "4xl", md: "6xl" }}
-              fontWeight="semibold"
-              lineHeight="none"
-            >
-              Get In Touch
-            </Text>
-            <Link
-              target="_blank"
-              rel="noopener noreferrer"
-              href="mailto:hello@kastproductions.com"
-              textDecor="underline"
-              textAlign="center"
-              fontSize={{ base: "md", md: "2xl" }}
-              fontWeight="light"
-            >
-              hello@kastproductions.com
-            </Link>
-          </VStack>
-        </Container>
-      </Box>
-    </Box>
+          <span className="h-2.5 w-px bg-border" />
+          <span className="h-px flex-1 bg-border" />
+          <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
+            Scale 1:1 · Drawn and built by hand
+          </span>
+          <span className="h-px flex-1 bg-border" />
+          <span className="h-2.5 w-px bg-border" />
+        </div>
+      </div>
+    </section>
   );
 }
 
-function MenuDrawer() {
-  const [open, setOpen] = useState(false);
+const capabilities = [
+  {
+    title: "Design",
+    description:
+      "Interfaces with a point of view — design systems, prototypes and UI that stay elegant under real content.",
+  },
+  {
+    title: "Development",
+    description:
+      "Production-grade React, Next.js and TypeScript. Websites, APIs and mobile products built to ship.",
+  },
+  {
+    title: "Strategy",
+    description:
+      "Technical direction and honest advice, from the first sketch to launch and beyond.",
+  },
+];
 
+function Capabilities() {
   return (
-    <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)} size="full">
-      <Drawer.Trigger asChild>
-        <IconButton variant="ghost" aria-label="open-close-menu">
-          <HiBars3BottomRight />
-        </IconButton>
-      </Drawer.Trigger>
-      <Portal>
-        <Drawer.Backdrop />
-        <Drawer.Positioner>
-          <Drawer.Content bg="#1E1E1E">
-            <Drawer.Header mt={0.5} color="white">
-              <Link
-                asChild
-                fontSize="xl"
-                fontWeight="bold"
-                _hover={{}}
-                onClick={() => setOpen(false)}
-              >
-                <NextLink href="/">KastProductions.</NextLink>
-              </Link>
-            </Drawer.Header>
-            <Drawer.Body p={4}>
-              <Stack pt={8} color="white">
-                {["what we do", "services", "clients", "testimonials"].map(
-                  (item) => (
-                    <Button
-                      onClick={() => {
-                        setOpen(false);
-                        scrollIntoView(item);
-                      }}
-                      key={item}
-                      textTransform="capitalize"
-                      variant="ghost"
-                      h={20}
-                    >
-                      <Heading as="h4" fontSize="3xl" fontWeight="normal">
-                        {item}
-                      </Heading>
-                    </Button>
-                  ),
-                )}
-              </Stack>
-            </Drawer.Body>
-            <Drawer.Footer position="fixed" bottom={0} left={0} w="full" mb={4}>
-              <EmailUs>
-                <Button
-                  fontWeight="medium"
-                  fontSize="sm"
-                  h={16}
-                  w="full"
-                  rounded="sm"
-                  colorPalette="purple"
-                >
-                  Work With Us
-                </Button>
-              </EmailUs>
-            </Drawer.Footer>
-            <Drawer.CloseTrigger asChild>
-              <CloseButton
-                size="sm"
-                color="white"
-                position="absolute"
-                top={4}
-                right={4}
-              />
-            </Drawer.CloseTrigger>
-          </Drawer.Content>
-        </Drawer.Positioner>
-      </Portal>
-    </Drawer.Root>
+    <section id="capabilities" className="scroll-mt-14 border-b">
+      <div className={cn(frame, "py-20 md:py-28")}>
+        <Eyebrow index="01">Capabilities</Eyebrow>
+        <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
+          We connect brands with people through design that is unique, elegant
+          and centered on real needs.
+        </h2>
+        <div className="mt-14 grid gap-px border bg-border md:grid-cols-3">
+          {capabilities.map((item) => (
+            <div key={item.title} className="bg-background p-8 md:p-10">
+              <h3 className="font-display text-xl font-semibold md:text-2xl">
+                {item.title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                {item.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
-const companyList = [
+const services = [
+  "UI/UX design",
+  "Website development",
+  "API development",
+  "Mobile development",
+  "End-to-end testing",
+];
+
+function Services() {
+  return (
+    <section id="services" className="scroll-mt-14 border-b">
+      <div className={cn(frame, "py-20 md:py-28")}>
+        <Eyebrow index="02">Services</Eyebrow>
+        <h2 className="mt-6 font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
+          Services we provide
+        </h2>
+        <ul className="mt-14 border-t">
+          {services.map((service, index) => (
+            <li
+              key={service}
+              className="group flex items-baseline gap-6 border-b py-6 md:py-8"
+            >
+              <span className="font-mono text-xs text-muted-foreground">
+                /0{index + 1}
+              </span>
+              <span className="font-display text-2xl font-medium transition-colors group-hover:text-iris md:text-4xl">
+                {service}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+const clients = [
   {
     name: "Zipmex",
     companyUrl: "https://zipmex.com/",
@@ -720,132 +250,232 @@ const companyList = [
     iconUrl: "/logos/macaw.png",
   },
   {
-    name: "Pexx",
-    companyUrl: "https://pexx.co/",
+    name: "PEXX",
+    companyUrl: "https://pexx.com/",
     iconUrl: "/logos/pexx.png",
   },
   {
     name: "Apart Tech",
     companyUrl: "https://www.apart.tech/",
-    iconUrl: "/logos/apart-people.png",
+    iconUrl: "/logos/apart-tech.png",
+  },
+  {
+    name: "Toptal",
+    companyUrl: "https://www.toptal.com/",
+    iconUrl: "/logos/toptal.png",
+  },
+  {
+    name: "An Post",
+    companyUrl: "https://www.anpost.com/",
+    iconUrl: "/logos/anpost.png",
+  },
+  {
+    name: "Bidfood",
+    companyUrl: "https://www.bidfood.nl/",
+    iconUrl: "/logos/bidfood.png",
+  },
+  {
+    name: "RNHB",
+    companyUrl: "https://www.rnhb.nl/",
+    iconUrl: "/logos/rnhb.png",
+  },
+  {
+    name: "Volkswagen Financial Services",
+    companyUrl: "https://www.vwfs.com/",
+    iconUrl: "/logos/vwfs.png",
+  },
+  {
+    name: "visionI",
+    companyUrl: "https://www.visioni.com.au/",
+    iconUrl: "/logos/visioni.png",
   },
 ];
 
-const recomendations = [
+function Clients() {
+  return (
+    <section id="clients" className="scroll-mt-14 border-b">
+      <div className={cn(frame, "py-20 md:py-28")}>
+        <div className="grid items-start gap-12 md:grid-cols-2 md:gap-16">
+          <div>
+            <Eyebrow index="03">Clients</Eyebrow>
+            <h2 className="mt-6 max-w-md font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
+              In good company
+            </h2>
+            <p className="mt-6 max-w-md text-sm leading-relaxed text-muted-foreground md:text-base">
+              Products and platforms that combine craft, empathy and inclusive
+              technology will conquer the world. Here’s who we’ve
+              partnered with to go further.
+            </p>
+          </div>
+          <ul className="grid grid-cols-3 gap-px border bg-border sm:grid-cols-4">
+            {clients.map((client) => (
+              <li key={client.name} className="bg-background">
+                <a
+                  href={client.companyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={client.name}
+                  className="flex aspect-square items-center justify-center p-4 opacity-60 grayscale transition hover:opacity-100 hover:grayscale-0 focus-visible:opacity-100 focus-visible:grayscale-0"
+                >
+                  <Image
+                    src={client.iconUrl}
+                    alt={client.name}
+                    width={96}
+                    height={96}
+                    className="size-full object-contain"
+                  />
+                </a>
+              </li>
+            ))}
+            <li aria-hidden className="aspect-square bg-background" />
+            <li aria-hidden className="hidden aspect-square bg-background sm:block" />
+            <li aria-hidden className="hidden aspect-square bg-background sm:block" />
+            <li className="col-span-3 bg-background sm:col-span-4">
+              <a
+                href={EMAIL_HREF}
+                className="flex items-center justify-center gap-2 p-5 font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-iris"
+              >
+                You + us
+                <ArrowUpRight className="size-3.5" aria-hidden />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const testimonials = [
   {
-    linkedinUrl: "",
     name: "Kristian Tasevski",
     position: "Head of Mobile | Bound",
-    imageUrl: `/reviewers/1554286352901.jpeg`,
-    id: 1,
+    imageUrl: "/reviewers/1554286352901.jpeg",
     message:
       "Karolis is one of those rare developers who has an exceptional eye for detail, everything that he works on has a certain visual aesthetic to it. I was directly managing Karolis on a number of different projects at UserCentric for high profile enterprise clients of ours and all of the front-end work that Karolis did on those projects just looked great. He also has a strong self driven motivation to continue to learn and to stay up to date with whatever is topical in the dev community, and contributed a lot to our Engineering culture at UserCentric by always sharing with us what was the latest and greatest in the scene.",
   },
   {
-    linkedinUrl: "",
     name: "Greg Stephenson",
     position: "Founder at Netfront",
-    imageUrl: `/reviewers/1516274019938.jpeg`,
-    id: 2,
+    imageUrl: "/reviewers/1516274019938.jpeg",
     message:
       "I have had the pleasure of working with Karolis across a few projects. Karolis has a very keen eye for detail and a great analytical approach to programming. I was impressed with the polished UI and UX considerations Karolis made while working with him. In addition to his solid programming skills, Karolis is a great communicator and easy to work with. I would recommend Karolis to anyone who is looking for a good react developer, he would be a true asset to your team.",
   },
   {
-    linkedinUrl: "",
     name: "Povilas Nanevičius",
     position: "Mainframe Engineer at Rocket Software",
-    imageUrl: `/reviewers/1578655726413.jpeg`,
-    id: 3,
-    message: `I know Karolis was in his element in Reactjs: researching, delivering latest and greatest Reactjs UI in his work, spending free time rewriting Three.js games with React components, building web apps.
-    Full of energy, efficient, right on the point. Looking forward to working (and having lunch time IT discussions) with you again!`,
+    imageUrl: "/reviewers/1578655726413.jpeg",
+    message:
+      "I know Karolis was in his element in Reactjs: researching, delivering latest and greatest Reactjs UI in his work, spending free time rewriting Three.js games with React components, building web apps. Full of energy, efficient, right on the point. Looking forward to working (and having lunch time IT discussions) with you again!",
   },
   {
-    linkedinUrl: "",
     name: "Nando Mogollon",
     position: "Founder and Director at BuilDigital",
-    imageUrl: `/reviewers/1600770423042.jpeg`,
-    id: 4,
-    message: `I had the opportunity to work with Karolis from 2016 to 2019 while he was in Australia. I can attest he is a highly motivated, committed and responsible individual. Working with him gives you the confidence that work is going to be done and to the best standard.
-    He would be a tremendous asset for you to hire or to get his services as a highly qualified professional.`,
+    imageUrl: "/reviewers/1600770423042.jpeg",
+    message:
+      "I had the opportunity to work with Karolis from 2016 to 2019 while he was in Australia. I can attest he is a highly motivated, committed and responsible individual. Working with him gives you the confidence that work is going to be done and to the best standard. He would be a tremendous asset for you to hire or to get his services as a highly qualified professional.",
   },
   {
-    linkedinUrl: "",
     name: "Cathal McAliskey",
     position: "Lead IT Consultant at GemPool Recruitment",
-    imageUrl: `/reviewers/1631633235263.jpeg`,
-    id: 5,
-    message: `Karolis is the consummate professional. Highly personable, excellent communication skills, dedicated and technically astute. Along with all that he is a nice guy.`,
+    imageUrl: "/reviewers/1631633235263.jpeg",
+    message:
+      "Karolis is the consummate professional. Highly personable, excellent communication skills, dedicated and technically astute. Along with all that he is a nice guy.",
   },
   {
-    linkedinUrl: "",
     name: "Orla Lewis",
     position: "Product Design Manager at Irish Life",
-    imageUrl: `/reviewers/1645312108470.jpeg`,
-    id: 6,
-    message: `Karolis worked as a react developer with my UX team. He was instrumental in building and developing our design system, a first for the company. I found him to be highly skilled and knowledgeable and an expert in his field. He is a strong communicator and diligent in his work. I highly recommend Karolis and hope to work with him again in the future. `,
+    imageUrl: "/reviewers/1645312108470.jpeg",
+    message:
+      "Karolis worked as a react developer with my UX team. He was instrumental in building and developing our design system, a first for the company. I found him to be highly skilled and knowledgeable and an expert in his field. He is a strong communicator and diligent in his work. I highly recommend Karolis and hope to work with him again in the future.",
   },
 ];
 
-function RecommendationList() {
+function Testimonials() {
   return (
-    <SimpleGrid columns={{ base: 1, md: 2 }} pb={{ base: 7, md: 0 }}>
-      {recomendations.map((item, index) => {
-        const showBorder = index % 2 === 0;
-        const isLast = recomendations.length - 1 === index;
-        return (
-          <HStack
-            key={item.id}
-            gap={5}
-            borderRightWidth="0.5px"
-            borderBottomWidth={isLast ? 0 : "0.5px"}
-            borderRightColor={showBorder ? "gray.600" : "transparent"}
-            borderBottomColor={"gray.600"}
-            pr={{ base: 2, md: showBorder ? 14 : 0 }}
-            pl={{ base: 0, md: !showBorder ? 14 : 0 }}
-            pb={{ base: 7, md: 14 }}
-            pt={{ base: 7, md: 14 }}
-          >
-            <Stack gap={10}>
-              <Box>
-                <Box pb={4}>
-                  <Icon as={VscQuote} fontSize={{ base: "4xl", md: "6xl" }} />
-                </Box>
-                <Box>
-                  <Text fontSize={{ base: "sm", md: "md" }} fontWeight="light">
-                    {item.message}
-                  </Text>
-                </Box>
-              </Box>
-              <HStack gap={4}>
-                <Center
-                  maxW="20"
-                  w="full"
-                  borderColor="white"
-                  borderWidth="4px"
-                  rounded="full"
-                  overflow="hidden"
-                >
-                  <Image
-                    src={item.imageUrl}
-                    objectFit="cover"
-                    alt="picture of reviewer"
-                  />
-                </Center>
-                <Box w="auto">
-                  <Box>
-                    <Text fontSize="md" fontWeight="bold">
-                      {item.name}
-                    </Text>
-                  </Box>
-                  <Box>
-                    <Text fontSize="sm">{item.position}</Text>
-                  </Box>
-                </Box>
-              </HStack>
-            </Stack>
-          </HStack>
-        );
-      })}
-    </SimpleGrid>
+    <section id="testimonials" className="scroll-mt-14 border-b">
+      <div className={cn(frame, "py-20 md:py-28")}>
+        <Eyebrow index="04">Testimonials</Eyebrow>
+        <h2 className="mt-6 max-w-2xl font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
+          What our clients say
+        </h2>
+        <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
+          Every review on this page has been written by a real client. It is
+          neither filtered nor edited by us.
+        </p>
+        <div className="mt-14 grid gap-px border bg-border md:grid-cols-2">
+          {testimonials.map((item) => (
+            <figure
+              key={item.name}
+              className="flex flex-col gap-8 bg-background p-8 md:p-10"
+            >
+              <blockquote>
+                <Quote
+                  className="size-6 text-iris"
+                  aria-hidden
+                  fill="currentColor"
+                  strokeWidth={0}
+                />
+                <p className="mt-4 text-sm leading-relaxed text-foreground/85">
+                  {item.message}
+                </p>
+              </blockquote>
+              <figcaption className="mt-auto flex items-center gap-4">
+                <Image
+                  src={item.imageUrl}
+                  alt={`Portrait of ${item.name}`}
+                  width={48}
+                  height={48}
+                  className="size-12 rounded-full border object-cover"
+                />
+                <div>
+                  <p className="text-sm font-medium">{item.name}</p>
+                  <p className="mt-0.5 font-mono text-[11px] text-muted-foreground">
+                    {item.position}
+                  </p>
+                </div>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Contact() {
+  return (
+    <section className="border-b bg-primary text-primary-foreground">
+      <div className={cn(frame, "border-white/20 py-20 text-center md:py-28")}>
+        <p className="font-mono text-[11px] tracking-[0.2em] uppercase opacity-80">
+          05 — Get in touch · New projects, collaborations, quick hellos
+        </p>
+        <a
+          href={EMAIL_HREF}
+          className="mt-8 inline-block font-display text-2xl font-bold tracking-tight underline decoration-2 underline-offset-8 transition-[text-decoration-thickness] hover:decoration-4 sm:text-4xl md:text-6xl"
+        >
+          {EMAIL}
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer>
+      <div
+        className={cn(
+          frame,
+          "flex flex-col items-center justify-between gap-2 py-6 font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase sm:flex-row md:text-[11px]",
+        )}
+      >
+        <span>© {new Date().getFullYear()} Kast Productions</span>
+        <span>Vilnius, Lithuania</span>
+        <a href="#top" className="transition-colors hover:text-foreground">
+          Back to top ↑
+        </a>
+      </div>
+    </footer>
   );
 }

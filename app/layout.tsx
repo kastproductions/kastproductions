@@ -1,32 +1,48 @@
-import type { Metadata } from "next";
-import { Poppins, Cormorant_Infant } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import {
+  Bricolage_Grotesque,
+  IBM_Plex_Mono,
+  Instrument_Sans,
+} from "next/font/google";
 import { Analytics } from "@/components/analytics";
-import { Provider } from "@/components/ui/provider";
+import "./globals.css";
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-poppins",
+export const viewport: Viewport = {
+  themeColor: "#0f0f13",
+};
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-bricolage",
   display: "swap",
 });
 
-const cormorantInfant = Cormorant_Infant({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-cormorant",
+const instrument = Instrument_Sans({
+  subsets: ["latin", "latin-ext"],
+  variable: "--font-instrument",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "KastProductions",
+  title: {
+    default: "KastProductions",
+    template: "%s — KastProductions",
+  },
   description:
-    "KastProductions is design and frontend web development consultancy based in Lithuania.",
+    "KastProductions is a design and frontend web development consultancy based in Lithuania.",
   metadataBase: new URL("https://www.kastproductions.com"),
   openGraph: {
     url: "https://www.kastproductions.com/",
     title: "KastProductions",
     description:
-      "KastProductions is design and frontend web development consultancy based in Lithuania.",
+      "KastProductions is a design and frontend web development consultancy based in Lithuania.",
     siteName: "KastProductions",
   },
   icons: {
@@ -42,18 +58,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning
-      className={`${poppins.variable} ${cormorantInfant.variable}`}
+      className={`dark ${bricolage.variable} ${instrument.variable} ${plexMono.variable}`}
     >
       <body>
-        <Provider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          {children}
-        </Provider>
+        {children}
         <Analytics />
       </body>
     </html>
