@@ -5,9 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-instrument);
-  --font-display: var(--font-bricolage);
-  --font-mono: var(--font-plex-mono);
+  --font-sans: var(--font-geist-sans);
+  --font-display: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -27,7 +27,7 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-iris: var(--iris);
+  --color-blueprint: var(--blueprint);
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -39,30 +39,30 @@
 }
 
 /*
- * The working drawing — dark-only drafting palette.
- * ink / sheet / line / bone / slate / iris
+ * Vercel-style monochrome — light canvas, near-black ink, whisper borders.
+ * Blue (#0072f5) is the single interactive accent.
  */
 :root {
-  --background: #0f0f13; /* ink */
-  --foreground: #ebebee; /* bone */
-  --card: #16161c; /* sheet */
-  --card-foreground: #ebebee;
-  --popover: #16161c;
-  --popover-foreground: #ebebee;
-  --primary: #6e56cf; /* iris */
+  --background: #ffffff;
+  --foreground: #171717; /* near-black, not #000 */
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #171717; /* dark CTA */
   --primary-foreground: #ffffff;
-  --secondary: #1d1d25;
-  --secondary-foreground: #ebebee;
-  --muted: #1a1a21;
-  --muted-foreground: #91919d; /* slate */
-  --accent: #1d1d25;
-  --accent-foreground: #ebebee;
-  --destructive: #e5484d;
-  --border: #27272f; /* line */
-  --input: #27272f;
-  --ring: #6e56cf;
-  --iris: #a99ef2; /* iris, tuned for text on ink */
-  --radius: 0rem; /* drafting sheets have sharp corners */
+  --secondary: #fafafa;
+  --secondary-foreground: #171717;
+  --muted: #fafafa;
+  --muted-foreground: #666666;
+  --accent: #fafafa;
+  --accent-foreground: #171717;
+  --destructive: #ff5b4f;
+  --border: #ebebeb;
+  --input: #ebebeb;
+  --ring: hsl(212 100% 48%); /* focus blue */
+  --blueprint: #0072f5; /* link blue — the one accent */
+  --radius: 0.5rem; /* 6px buttons, 8px cards */
 }
 
 @layer base {
@@ -75,7 +75,7 @@
   }
   html {
     @apply font-sans motion-safe:scroll-smooth;
-    color-scheme: dark;
+    color-scheme: light;
   }
   body {
     @apply bg-background text-foreground antialiased;
@@ -100,3 +100,33 @@
 @utility animate-rise {
   animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/*
+ * Scroll-driven reveal — progressive enhancement only. Browsers without
+ * animation-timeline support (or reduced-motion users via the motion-safe
+ * variant) simply see static content.
+ * Range capped at entry 30% so blocks taller than the viewport still
+ * complete the animation.
+ */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-reveal {
+  @supports (animation-timeline: view()) {
+    animation-name: reveal;
+    animation-duration: 1ms; /* progress driven by the timeline */
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 30%;
+  }
+}
+

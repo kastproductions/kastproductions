@@ -59,25 +59,31 @@ public/
 
 ## Design System (CRITICAL)
 
-Dark-only "working drawing" theme. The `<html>` element carries a hardcoded
-`dark` class; there is NO theme switching and NO `next-themes`.
+Light-only, Vercel-style monochrome. There is NO theme switching and NO
+`next-themes`; the `dark` custom variant in `globals.css` is unused.
 
 - **Tokens** are defined in `app/globals.css` under `:root` (hex values) and
   mapped to utilities via `@theme inline`. Semantic names follow shadcn
   conventions (`bg-background`, `text-muted-foreground`, `border-border`,
-  `bg-primary`), plus a custom `text-iris` accent.
-- **Radius is 0** (`--radius: 0rem`) - drafting sheets have sharp corners.
-  Do not add `rounded-*` overrides.
+  `bg-primary`), plus a custom `text-blueprint` accent (link blue `#0072f5`).
+- **Palette**: white canvas, near-black `#171717` ink (never pure `#000`),
+  `#ebebeb` whisper borders, `#666666` muted text. Blue is reserved for
+  interactive/accent moments (logo dot, hero span, hover states) — never
+  decorative chrome.
+- **Radius**: `--radius: 0.5rem` (≈6px buttons via shadcn scale). Custom grid
+  cells stay square; don't add `rounded-*` overrides to them.
+- **Weights**: 400 body, 500 UI, 600 headings. Never `font-bold` (700).
+  Display headlines use `tracking-tighter`/`tracking-tight` (negative only).
 - **Fonts** via `next/font/google` variables:
-  - `font-display` = Bricolage Grotesque (headlines)
-  - `font-sans` = Instrument Sans (body, default)
-  - `font-mono` = IBM Plex Mono (annotations, nav, labels - uppercase + tracked)
-- **Signature elements**: hairline borders (`border-border`), registration
-  crosshairs (`Cross` in `app/page.tsx`), mono eyebrow labels
-  (`01 — CAPABILITIES`), full-bleed section rules with a framed `max-w-7xl`
-  container (`border-x`).
-- **Motion**: CSS-only. Use `motion-safe:animate-rise` with
-  `motion-safe:[animation-delay:...]`. Never animate without the
+  - `font-sans` = `font-display` = Geist (single face; display sizes are
+    differentiated by weight and negative tracking)
+  - `font-mono` = Geist Mono (annotations, nav, labels - uppercase + tracked)
+- **Signature elements**: hairline borders (`border-border`), mono eyebrow
+  labels (`01 — CAPABILITIES`), full-bleed section rules with a framed
+  `max-w-7xl` container (`border-x`), dark `#171717` contact band.
+- **Motion**: CSS-only. `motion-safe:animate-rise` for load-in,
+  `motion-safe:animate-reveal` for scroll-driven reveals (progressive
+  enhancement via `animation-timeline: view()`). Never animate without the
   `motion-safe:` guard.
 
 ## Code Style Guidelines

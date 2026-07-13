@@ -1,5 +1,10 @@
 import Image from "next/image";
 import { ArrowUpRight, Quote } from "lucide-react";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/site-header";
 import { cn } from "@/lib/utils";
@@ -31,17 +36,6 @@ export default function Home() {
 /* Building blocks                                                     */
 /* ------------------------------------------------------------------ */
 
-function Cross({ className }: { className?: string }) {
-  return (
-    <span
-      aria-hidden
-      className={cn("pointer-events-none absolute z-10 size-[9px]", className)}
-    >
-      <span className="absolute top-0 left-1/2 h-full w-px -translate-x-1/2 bg-muted-foreground/70" />
-      <span className="absolute top-1/2 left-0 h-px w-full -translate-y-1/2 bg-muted-foreground/70" />
-    </span>
-  );
-}
 
 function Eyebrow({
   index,
@@ -52,7 +46,7 @@ function Eyebrow({
 }) {
   return (
     <p className="flex items-center gap-3 font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">
-      <span className="text-iris">{index}</span>
+      <span className="text-foreground">{index}</span>
       <span aria-hidden className="h-px w-8 bg-border" />
       {children}
     </p>
@@ -66,23 +60,19 @@ function Eyebrow({
 function Hero() {
   return (
     <section className="border-b">
-      <div className={cn(frame, "relative")}>
-        <Cross className="-top-[5px] -left-[5px]" />
-        <Cross className="-top-[5px] -right-[5px]" />
-        <Cross className="-bottom-[5px] -left-[5px]" />
-        <Cross className="-bottom-[5px] -right-[5px]" />
+      <div className={frame}>
 
         <div className="flex items-center justify-between gap-4 border-b py-3 font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase md:text-[11px]">
-          <span>KP — Working drawing Nº 01</span>
+          <span>KP — Design &amp; frontend consultancy</span>
           <span className="hidden sm:block">
             Vilnius, LT · 54.6872° N, 25.2797° E
           </span>
         </div>
 
         <div className="py-20 md:py-32">
-          <h1 className="motion-safe:animate-rise max-w-5xl font-display text-5xl leading-[0.95] font-bold tracking-tight text-balance sm:text-7xl md:text-8xl">
+          <h1 className="motion-safe:animate-rise max-w-5xl font-display text-5xl leading-[0.95] font-semibold tracking-tighter text-balance sm:text-7xl md:text-8xl">
             We design &amp; build high&#8209;quality{" "}
-            <span className="text-iris">digital products.</span>
+            <span className="text-blueprint">digital products.</span>
           </h1>
           <p className="motion-safe:animate-rise mt-8 max-w-xl text-base text-muted-foreground md:text-lg motion-safe:[animation-delay:120ms]">
             Kast Productions is an independent design and frontend development
@@ -113,7 +103,7 @@ function Hero() {
           <span className="h-2.5 w-px bg-border" />
           <span className="h-px flex-1 bg-border" />
           <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">
-            Scale 1:1 · Drawn and built by hand
+            Designed and built by hand
           </span>
           <span className="h-px flex-1 bg-border" />
           <span className="h-2.5 w-px bg-border" />
@@ -145,12 +135,14 @@ function Capabilities() {
   return (
     <section id="capabilities" className="scroll-mt-14 border-b">
       <div className={cn(frame, "py-20 md:py-28")}>
-        <Eyebrow index="01">Capabilities</Eyebrow>
-        <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
-          We connect brands with people through design that is unique, elegant
-          and centered on real needs.
-        </h2>
-        <div className="mt-14 grid gap-px border bg-border md:grid-cols-3">
+        <div className="motion-safe:animate-reveal">
+          <Eyebrow index="01">Capabilities</Eyebrow>
+          <h2 className="mt-6 max-w-3xl font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
+            We connect brands with people through design that is unique,
+            elegant and centered on real needs.
+          </h2>
+        </div>
+        <div className="motion-safe:animate-reveal mt-14 grid gap-px border bg-border md:grid-cols-3">
           {capabilities.map((item) => (
             <div key={item.title} className="bg-background p-8 md:p-10">
               <h3 className="font-display text-xl font-semibold md:text-2xl">
@@ -168,33 +160,56 @@ function Capabilities() {
 }
 
 const services = [
-  "UI/UX design",
-  "Website development",
-  "API development",
-  "Mobile development",
-  "End-to-end testing",
+  {
+    name: "UI/UX design",
+    blurb:
+      "Flows, wireframes and polished interfaces — designed in the browser, against real content.",
+  },
+  {
+    name: "Website development",
+    blurb:
+      "Marketing sites and web apps in Next.js — fast, accessible and easy to maintain.",
+  },
+  {
+    name: "API development",
+    blurb: "Typed REST and GraphQL backends that frontends love to consume.",
+  },
+  {
+    name: "Mobile development",
+    blurb: "React Native apps that share code and ship to both stores.",
+  },
+  {
+    name: "End-to-end testing",
+    blurb: "Playwright suites that catch regressions before your users do.",
+  },
 ];
 
 function Services() {
   return (
     <section id="services" className="scroll-mt-14 border-b">
       <div className={cn(frame, "py-20 md:py-28")}>
-        <Eyebrow index="02">Services</Eyebrow>
-        <h2 className="mt-6 font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
-          Services we provide
-        </h2>
-        <ul className="mt-14 border-t">
+        <div className="motion-safe:animate-reveal">
+          <Eyebrow index="02">Services</Eyebrow>
+          <h2 className="mt-6 font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
+            Services we provide
+          </h2>
+        </div>
+        <ul className="motion-safe:animate-reveal mt-14 border-t">
           {services.map((service, index) => (
-            <li
-              key={service}
-              className="group flex items-baseline gap-6 border-b py-6 md:py-8"
-            >
-              <span className="font-mono text-xs text-muted-foreground">
-                /0{index + 1}
-              </span>
-              <span className="font-display text-2xl font-medium transition-colors group-hover:text-iris md:text-4xl">
-                {service}
-              </span>
+            <li key={service.name} className="group border-b py-6 md:py-8">
+              <div className="flex items-baseline gap-6">
+                <span className="font-mono text-xs text-muted-foreground">
+                  /0{index + 1}
+                </span>
+                <div>
+                  <h3 className="font-display text-2xl font-semibold transition-colors group-hover:text-blueprint md:text-4xl">
+                    {service.name}
+                  </h3>
+                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                    {service.blurb}
+                  </p>
+                </div>
+              </div>
             </li>
           ))}
         </ul>
@@ -296,7 +311,7 @@ function Clients() {
     <section id="clients" className="scroll-mt-14 border-b">
       <div className={cn(frame, "py-20 md:py-28")}>
         <div className="grid items-start gap-12 md:grid-cols-2 md:gap-16">
-          <div>
+          <div className="motion-safe:animate-reveal">
             <Eyebrow index="03">Clients</Eyebrow>
             <h2 className="mt-6 max-w-md font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
               In good company
@@ -307,15 +322,14 @@ function Clients() {
               partnered with to go further.
             </p>
           </div>
-          <ul className="grid grid-cols-3 gap-px border bg-border sm:grid-cols-4">
+          <ul className="motion-safe:animate-reveal grid grid-cols-3 gap-px border bg-border sm:grid-cols-4">
             {clients.map((client) => (
               <li key={client.name} className="bg-background">
                 <a
                   href={client.companyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  title={client.name}
-                  className="flex aspect-square items-center justify-center p-4 opacity-60 grayscale transition hover:opacity-100 hover:grayscale-0 focus-visible:opacity-100 focus-visible:grayscale-0"
+                  className="group relative flex aspect-square items-center justify-center p-4 opacity-60 grayscale transition hover:opacity-100 hover:grayscale-0 focus-visible:opacity-100 focus-visible:grayscale-0"
                 >
                   <Image
                     src={client.iconUrl}
@@ -324,6 +338,12 @@ function Clients() {
                     height={96}
                     className="size-full object-contain"
                   />
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 bottom-0 truncate px-2 pb-1.5 text-center font-mono text-[9px] tracking-[0.08em] text-muted-foreground uppercase opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+                  >
+                    {client.name}
+                  </span>
                 </a>
               </li>
             ))}
@@ -333,7 +353,7 @@ function Clients() {
             <li className="col-span-3 bg-background sm:col-span-4">
               <a
                 href={EMAIL_HREF}
-                className="flex items-center justify-center gap-2 p-5 font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-iris"
+                className="flex items-center justify-center gap-2 p-5 font-mono text-[10px] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-blueprint"
               >
                 You + us
                 <ArrowUpRight className="size-3.5" aria-hidden />
@@ -391,43 +411,60 @@ const testimonials = [
   },
 ];
 
+function initials(name: string) {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("");
+}
+
 function Testimonials() {
   return (
     <section id="testimonials" className="scroll-mt-14 border-b">
       <div className={cn(frame, "py-20 md:py-28")}>
-        <Eyebrow index="04">Testimonials</Eyebrow>
-        <h2 className="mt-6 max-w-2xl font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
-          What our clients say
-        </h2>
-        <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
-          Every review on this page has been written by a real client. It is
-          neither filtered nor edited by us.
-        </p>
+        <div className="motion-safe:animate-reveal">
+          <Eyebrow index="04">Testimonials</Eyebrow>
+          <h2 className="mt-6 max-w-2xl font-display text-3xl leading-tight font-semibold text-balance md:text-5xl">
+            What our clients say
+          </h2>
+          <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base">
+            Every review on this page has been written by a real client. It is
+            neither filtered nor edited by us.
+          </p>
+        </div>
         <div className="mt-14 grid gap-px border bg-border md:grid-cols-2">
-          {testimonials.map((item) => (
+          {testimonials.map((item, index) => (
             <figure
               key={item.name}
-              className="flex flex-col gap-8 bg-background p-8 md:p-10"
+              className={cn(
+                "motion-safe:animate-reveal flex flex-col gap-8 bg-background p-8 md:p-10",
+                index === 0 && "md:col-span-2",
+              )}
             >
               <blockquote>
                 <Quote
-                  className="size-6 text-iris"
+                  className="size-6 text-muted-foreground"
                   aria-hidden
                   fill="currentColor"
                   strokeWidth={0}
                 />
-                <p className="mt-4 text-sm leading-relaxed text-foreground/85">
+                <p
+                  className={cn(
+                    "mt-4 text-sm leading-relaxed text-foreground/85",
+                    index === 0 && "max-w-3xl md:text-base",
+                  )}
+                >
                   {item.message}
                 </p>
               </blockquote>
               <figcaption className="mt-auto flex items-center gap-4">
-                <Image
-                  src={item.imageUrl}
-                  alt={`Portrait of ${item.name}`}
-                  width={48}
-                  height={48}
-                  className="size-12 rounded-full border object-cover"
-                />
+                <Avatar className="size-12 border">
+                  <AvatarImage src={item.imageUrl} alt="" />
+                  <AvatarFallback className="font-mono text-xs">
+                    {initials(item.name)}
+                  </AvatarFallback>
+                </Avatar>
                 <div>
                   <p className="text-sm font-medium">{item.name}</p>
                   <p className="mt-0.5 font-mono text-[11px] text-muted-foreground">
@@ -437,6 +474,19 @@ function Testimonials() {
               </figcaption>
             </figure>
           ))}
+          <a
+            href={EMAIL_HREF}
+            className="motion-safe:animate-reveal group flex flex-col justify-between gap-8 bg-background p-8 md:p-10"
+          >
+            <p className="font-display text-xl font-semibold text-balance md:text-2xl">
+              Worked with us?{" "}
+              <span className="text-blueprint">Add your note.</span>
+            </p>
+            <span className="flex items-center gap-2 font-mono text-[11px] tracking-[0.18em] text-muted-foreground uppercase transition-colors group-hover:text-blueprint">
+              Write to {EMAIL}
+              <ArrowUpRight className="size-3.5" aria-hidden />
+            </span>
+          </a>
         </div>
       </div>
     </section>
@@ -447,15 +497,17 @@ function Contact() {
   return (
     <section className="border-b bg-primary text-primary-foreground">
       <div className={cn(frame, "border-white/20 py-20 text-center md:py-28")}>
-        <p className="font-mono text-[11px] tracking-[0.2em] uppercase opacity-80">
-          05 — Get in touch · New projects, collaborations, quick hellos
-        </p>
-        <a
-          href={EMAIL_HREF}
-          className="mt-8 inline-block font-display text-2xl font-bold tracking-tight underline decoration-2 underline-offset-8 transition-[text-decoration-thickness] hover:decoration-4 sm:text-4xl md:text-6xl"
-        >
-          {EMAIL}
-        </a>
+        <div className="motion-safe:animate-reveal">
+          <p className="font-mono text-[11px] tracking-[0.2em] uppercase opacity-80">
+            05 — Get in touch · New projects, collaborations, quick hellos
+          </p>
+          <a
+            href={EMAIL_HREF}
+            className="mt-8 inline-block font-display text-2xl font-semibold tracking-tight underline decoration-2 underline-offset-8 transition-[text-decoration-thickness] hover:decoration-4 sm:text-4xl md:text-6xl"
+          >
+            {EMAIL}
+          </a>
+        </div>
       </div>
     </section>
   );

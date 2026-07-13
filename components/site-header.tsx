@@ -42,7 +42,7 @@ export function SiteHeader() {
           href="/"
           className="font-mono text-xs font-medium tracking-[0.18em] uppercase"
         >
-          KastProductions<span className="text-iris">.</span>
+          KastProductions<span className="text-blueprint">.</span>
         </NextLink>
 
         <nav

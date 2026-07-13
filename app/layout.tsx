@@ -1,32 +1,21 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Bricolage_Grotesque,
-  IBM_Plex_Mono,
-  Instrument_Sans,
-} from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import "./globals.css";
 
 export const viewport: Viewport = {
-  themeColor: "#0f0f13",
+  themeColor: "#ffffff",
 };
 
-const bricolage = Bricolage_Grotesque({
+const geist = Geist({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-bricolage",
+  variable: "--font-geist-sans",
   display: "swap",
 });
 
-const instrument = Instrument_Sans({
+const geistMono = Geist_Mono({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-instrument",
-  display: "swap",
-});
-
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500"],
-  variable: "--font-plex-mono",
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
@@ -56,10 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`dark ${bricolage.variable} ${instrument.variable} ${plexMono.variable}`}
-    >
+    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
       <body>
         {children}
         <Analytics />

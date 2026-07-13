@@ -42,7 +42,7 @@ export default function MenuSheet({
       >
         <SheetHeader>
           <SheetTitle className="text-left font-mono text-xs font-medium tracking-[0.18em] uppercase">
-            KastProductions<span className="text-iris">.</span>
+            KastProductions<span className="text-blueprint">.</span>
           </SheetTitle>
         </SheetHeader>
         <nav aria-label="Sections" className="flex flex-col border-t">
