@@ -34,7 +34,7 @@ export default function MenuSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="w-full max-w-full sm:max-w-sm"
+        className="w-full max-w-full overscroll-contain sm:max-w-sm"
         onCloseAutoFocus={(event) => {
           event.preventDefault();
           returnFocusRef.current?.focus();
@@ -42,7 +42,7 @@ export default function MenuSheet({
       >
         <SheetHeader>
           <SheetTitle className="text-left font-mono text-xs font-medium tracking-[0.18em] uppercase">
-            KastProductions<span className="text-blueprint">.</span>
+            KastProductions<span className="text-klein">.</span>
           </SheetTitle>
         </SheetHeader>
         <nav aria-label="Sections" className="flex flex-col border-t">
@@ -51,20 +51,21 @@ export default function MenuSheet({
               key={item.href}
               href={item.href}
               onClick={() => onOpenChange(false)}
-              className="flex items-baseline gap-4 border-b px-4 py-5 transition-colors hover:bg-muted active:bg-muted"
+              className="group flex items-baseline gap-4 border-b px-4 py-5 transition-colors hover:bg-muted active:bg-muted"
             >
-              <span className="font-mono text-[11px] text-muted-foreground">
+              <span className="font-mono text-[11px] text-muted-foreground transition-colors group-hover:text-klein">
                 /0{index + 1}
               </span>
-              <span className="font-display text-2xl font-medium capitalize">
+              <span className="font-display text-2xl font-medium capitalize transition-colors group-hover:text-klein">
                 {item.label}
               </span>
             </a>
           ))}
         </nav>
-        <div className="mt-auto p-4">
+        <div className="mt-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <Button
             asChild
+            variant="klein"
             className="h-12 w-full font-mono text-[11px] tracking-[0.14em] uppercase"
           >
             <a href={EMAIL_HREF}>Start a project</a>

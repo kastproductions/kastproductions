@@ -42,7 +42,7 @@ export function SiteHeader() {
           href="/"
           className="font-mono text-xs font-medium tracking-[0.18em] uppercase"
         >
-          KastProductions<span className="text-blueprint">.</span>
+          KastProductions<span className="text-klein">.</span>
         </NextLink>
 
         <nav
@@ -53,7 +53,7 @@ export function SiteHeader() {
             <a
               key={item.href}
               href={item.href}
-              className="font-mono text-[11px] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-foreground"
+              className="font-mono text-[11px] tracking-[0.18em] text-muted-foreground uppercase transition-colors hover:text-klein"
             >
               {item.label}
             </a>
@@ -63,6 +63,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Button
             asChild
+            variant="klein"
             className="hidden font-mono text-[11px] tracking-[0.14em] uppercase md:inline-flex"
           >
             <a href={EMAIL_HREF}>Start a project</a>
