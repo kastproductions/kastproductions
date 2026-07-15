@@ -118,13 +118,13 @@ function ClientMarquee() {
               aria-label={client.name}
               className="group/logo flex shrink-0"
             >
-              <span className="flex size-16 items-center justify-center overflow-hidden rounded-xl border bg-card p-3.5 transition-colors duration-300 group-hover/logo:border-klein/40 md:size-20 md:p-4">
+              <span className="flex size-24 items-center justify-center overflow-hidden rounded-xl border bg-card p-3 transition-colors duration-300 group-hover/logo:border-klein/40 md:size-28 md:p-4">
                 <Image
                   src={client.iconUrl}
                   alt={client.name}
-                  width={96}
-                  height={96}
-                  className="size-full object-contain opacity-70 grayscale transition duration-300 group-hover/logo:opacity-100 group-hover/logo:grayscale-0"
+                  width={128}
+                  height={128}
+                  className="size-full object-contain grayscale transition duration-300 group-hover/logo:grayscale-0"
                 />
               </span>
             </a>

@@ -1,6 +1,6 @@
 "use client";
 
-import type { RefObject } from "react";
+import type { MouseEvent, RefObject } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -30,6 +30,21 @@ export default function MenuSheet({
   onOpenChange,
   returnFocusRef,
 }: MenuSheetProps) {
+  const handleNavClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    event.preventDefault();
+    onOpenChange(false);
+    // The sheet locks body scroll, so scroll only after it releases (~200ms
+    // close animation). scroll-behavior comes from CSS (motion-safe), so
+    // reduced-motion users get an instant jump.
+    window.setTimeout(() => {
+      document.getElementById(href.slice(1))?.scrollIntoView({ block: "start" });
+      history.replaceState(null, "", href);
+    }, 240);
+  };
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
@@ -37,7 +52,7 @@ export default function MenuSheet({
         className="w-full max-w-full overscroll-contain sm:max-w-sm"
         onCloseAutoFocus={(event) => {
           event.preventDefault();
-          returnFocusRef.current?.focus();
+          returnFocusRef.current?.focus({ preventScroll: true });
         }}
       >
         <SheetHeader>
@@ -50,7 +65,7 @@ export default function MenuSheet({
             <a
               key={item.href}
               href={item.href}
-              onClick={() => onOpenChange(false)}
+              onClick={(event) => handleNavClick(event, item.href)}
               className="group flex items-baseline gap-4 border-b px-4 py-5 transition-colors hover:bg-muted active:bg-muted"
             >
               <span className="font-mono text-[11px] text-muted-foreground transition-colors group-hover:text-klein">

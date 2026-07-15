@@ -70,11 +70,20 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: "KastProductions — AI-Native Product Studio",
     description: DESCRIPTION,
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "KastProductions — AI-native product studio in Vilnius",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "KastProductions — AI-Native Product Studio",
     description: DESCRIPTION,
+    images: ["/og.png"],
   },
   robots: {
     index: true,
