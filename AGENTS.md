@@ -2,8 +2,13 @@
 
 ## Project Overview
 
-Personal portfolio website built with Next.js 16 App Router, Tailwind CSS v4 and shadcn/ui.
-Static site with `output: 'export'` - no server-side features.
+Marketing site for KastProductions, an AI-native product studio in Vilnius.
+Next.js 16 App Router, Tailwind CSS v4, shadcn/ui primitives. Static site with
+`output: 'export'` - no server-side features. The single conversion is one email
+to `hello@kastproductions.com`.
+
+Read `PRODUCT.md` for product truth and `DESIGN.md` for the visual system before
+changing anything visible.
 
 ## Tech Stack
 
@@ -39,52 +44,77 @@ bunx --bun shadcn@latest add <component>
 
 ```
 app/                    # Next.js App Router pages
-  layout.tsx           # Root layout (fonts, metadata, globals.css)
-  globals.css          # Tailwind v4 theme: design tokens, keyframes
-  page.tsx             # Home page (all sections + content data)
-  about/page.tsx       # About page (placeholder)
-  work/page.tsx        # Work page (placeholder)
-  contact/page.tsx     # Contact page
+  layout.tsx           # Root layout: faces, metadata, emitted direction contract
+  globals.css          # Tailwind v4 theme: the desk's tokens and utilities
+  page.tsx             # The desk (all six sections + content data)
+  about/page.tsx       # A blanking plate: story not written yet
+  work/page.tsx        # An empty bay: no case studies yet
+  contact/page.tsx     # The output stage
 components/
-  site-header.tsx      # Sticky header; lazy-loads menu-sheet on interaction (client)
+  site-header.tsx      # The meter bridge; lazy-loads menu-sheet (client)
   menu-sheet.tsx       # Mobile nav Sheet, code-split via next/dynamic (client)
   analytics.tsx        # Google Analytics component
-  ui/                  # shadcn/ui primitives (button, sheet)
+  desk/
+    level-engine.tsx   # The one motion system: VU ballistics (client)
+    vu-meter.tsx       # A VU movement, drawn as static SVG
+    hardware.tsx       # Rail, PanelLink, Screw, RackEar, Knob, Jack, Fader,
+                       #   Tape, PeakLadder
+    record-button.tsx  # The commit control (the only red)
+    site-footer.tsx    # The chassis bottom plate
+  ui/                  # shadcn/ui primitives (button, sheet, avatar)
 lib/
+  nav.ts               # Bridge legends (as ids) + the email constants
   utils.ts             # cn() helper (clsx + tailwind-merge)
 public/
-  logos/               # Client company logos (PNG)
-  reviewers/           # Testimonial avatars (JPEG)
+  logos/               # Client logos. UNUSED — see the note in app/page.tsx
+  reviewers/           # Referee portraits (JPEG), used in References
+  og.png               # Social card, rendered from the desk's own components
 ```
 
 ## Design System (CRITICAL)
 
-Light-only, Vercel-style monochrome. There is NO theme switching and NO
-`next-themes`; the `dark` custom variant in `globals.css` is unused.
+**The desk.** A mastering room at night: overheads off, the room lit by the
+meter bridge and one desk lamp. Read `DESIGN.md` for the full record; this is the
+short version. There is NO theme switching and no light mode.
 
-- **Tokens** are defined in `app/globals.css` under `:root` (hex values) and
-  mapped to utilities via `@theme inline`. Semantic names follow shadcn
-  conventions (`bg-background`, `text-muted-foreground`, `border-border`,
-  `bg-primary`), plus a custom `text-blueprint` accent (link blue `#0072f5`).
-- **Palette**: white canvas, near-black `#171717` ink (never pure `#000`),
-  `#ebebeb` whisper borders, `#666666` muted text. Blue is reserved for
-  interactive/accent moments (logo dot, hero span, hover states) — never
-  decorative chrome.
-- **Radius**: `--radius: 0.5rem` (≈6px buttons via shadcn scale). Custom grid
-  cells stay square; don't add `rounded-*` overrides to them.
-- **Weights**: 400 body, 500 UI, 600 headings. Never `font-bold` (700).
-  Display headlines use `tracking-tighter`/`tracking-tight` (negative only).
-- **Fonts** via `next/font/google` variables:
-  - `font-sans` = `font-display` = Geist (single face; display sizes are
-    differentiated by weight and negative tracking)
-  - `font-mono` = Geist Mono (annotations, nav, labels - uppercase + tracked)
-- **Signature elements**: hairline borders (`border-border`), mono eyebrow
-  labels (`01 — CAPABILITIES`), full-bleed section rules with a framed
-  `max-w-7xl` container (`border-x`), dark `#171717` contact band.
-- **Motion**: CSS-only. `motion-safe:animate-rise` for load-in,
-  `motion-safe:animate-reveal` for scroll-driven reveals (progressive
-  enhancement via `animation-timeline: view()`). Never animate without the
-  `motion-safe:` guard.
+- **Tokens** live in `app/globals.css` under `:root` and map to utilities via
+  `@theme inline`. Two layers: the desk's own names (`bg-panel`, `text-silk`,
+  `bg-face`, `text-ink`, `bg-signal`) and shadcn semantics
+  (`bg-background`, `text-muted-foreground`) mapped onto them so vendored
+  components inherit the chassis for free.
+- **Palette**: warm anodised graphite chassis (`--desk #151413`,
+  `--panel #232120`, `--panel-raised #2c2a27`), silkscreen ink
+  (`--silk #d6d1c7`, `--silk-dim #9b958a`), ivory paper for meter faces and
+  label tape (`--face #efe9dc`, `--ink #16150f`), walnut end cheeks
+  (`--wood #6d4526`), brass screws (`--brass`).
+- **Colour is hardware, never mood.** Exactly three functional roles:
+  `signal` (amber) means signal present or active, `cue` (green) means routed or
+  available, `over` (red) is reserved for the arc past 0 dB and for the one
+  committing action. If you reach for red anywhere else, you are wrong.
+- **Paper fields**: put `data-field="paper"` on a region to flip the raw
+  variables to the ivory surface. Do not override utilities per callsite.
+- **Elevation is declared once**: a machined bevel. Use `panel`,
+  `panel-raised`, or `panel-recessed`. Never a border plus a shadow.
+- **Radius** is small (`--radius: 4px`); these are machined panels, not cards.
+- **Fonts** via `next/font/google`:
+  - `font-display` = Anybody (variable, has a `wdth` axis). Silkscreen legends
+    and monumental badging. Compress with `font-variation-settings: "wdth" N`,
+    never with a transform.
+  - `font-sans` = Archivo. All body copy.
+  - There is no `font-mono`. Monospace as a costume for "technical" is banned;
+    use `data-numerals="tabular"` for real measurements.
+- **Type utilities**: `legend` (12px) and `legend-sm` (11px) for panel legends,
+  `badge-type` for display, `engraved` for the cut-in lip, `tape` for label tape.
+  Never go below 11px.
+- **No eyebrows or kickers.** Section identity lives in the hardware (rails,
+  plate legends, bay headers), never as a tracked label above a heading.
+- **Motion is one system.** `components/desk/level-engine.tsx` publishes
+  `--vu-l`, `--vu-r` and `--vu-drive` from real visitor activity under true VU
+  ballistics. Needles, lamps and the peak ladder read those. Do not add
+  independent animations; extend the engine or use nothing. The engine never
+  starts under `prefers-reduced-motion`.
+- **`--bridge`** is the fixed header's height. Pages clear it with `desk-frame`;
+  anchors clear it with `under-bridge`. Never hardcode the number.
 
 ## Code Style Guidelines
 
@@ -113,27 +143,33 @@ import { cn } from "@/lib/utils";
 
 ### shadcn/ui + Tailwind Conventions
 
-- Compose from `components/ui/` before writing custom markup; add missing
-  components via the CLI, do not hand-write them.
-- Use semantic color tokens (`bg-primary`, `text-muted-foreground`) - never
-  raw palette values like `bg-purple-500`.
-- `className` is for layout; use built-in variants (`variant="outline"`)
-  for styling.
+- The chassis comes first. Build from `components/desk/` before reaching for
+  `components/ui/`; a stock shadcn control dropped into a committed form is a
+  lapse. `components/ui/` still holds `sheet` (the mobile nav) and `avatar`.
+- Use tokens, never raw palette values. Both layers are legal: the desk's names
+  (`bg-panel`, `text-silk`) and the shadcn semantics mapped onto them.
 - Use `cn()` for conditional classes.
 - Spacing: `flex` + `gap-*`, never `space-x-*`/`space-y-*`.
 - Equal dimensions: `size-*`, not `w-* h-*`.
-- Links styled as buttons: `<Button asChild><a …/></Button>`.
-- Hairline grids: `grid gap-px border bg-border` with `bg-background` cells.
+- Panels: `panel` / `panel-raised` / `panel-recessed`, never a hand-rolled
+  border-plus-shadow pair.
+- Long-form legends and monumental type set `fontVariationSettings` inline,
+  because the width axis is the point and Tailwind has no utility for it.
 
 ### Component Patterns
 
-- Server components by default; `"use client"` only where state/events are
-  needed (currently `site-header.tsx`, `menu-sheet.tsx` and `analytics.tsx`).
+- Server components by default; `"use client"` only where state or events are
+  needed (currently `level-engine.tsx`, `site-header.tsx`, `menu-sheet.tsx` and
+  `analytics.tsx`). Every drawn part in `components/desk/` except the engine is
+  a server component, so the hardware ships as markup and costs no JS.
 - Colocate section components and content data in `app/page.tsx` until a
   second consumer exists.
 - Load interaction-only UI on demand: the mobile menu Sheet is imported via
   `next/dynamic` and preloaded on trigger hover/focus, so radix Dialog code
   never ships in the initial bundle (Vercel `bundle-conditional` rule).
+- Never fabricate proof. Client count, references, metrics and availability come
+  from `PRODUCT.md`. There are 17 clients and 6 references; if you change a
+  count in one place, change it everywhere.
 
 ### Responsive Design
 

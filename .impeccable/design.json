@@ -1,0 +1,820 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-27T16:56:49Z",
+  "title": "Design System: KastProductions",
+  "extensions": {
+    "colorMeta": {
+      "desk": {
+        "role": "neutral",
+        "displayName": "Desk Shadow",
+        "canonical": "oklch(19.2% 0.003 67.7)",
+        "cssVariable": "--desk",
+        "tonalRamp": [
+          "oklch(15% 0.003 67.7)",
+          "oklch(26% 0.003 67.7)",
+          "oklch(38% 0.003 67.7)",
+          "oklch(49% 0.003 67.7)",
+          "oklch(61% 0.003 67.7)",
+          "oklch(72% 0.003 67.7)",
+          "oklch(84% 0.003 67.7)",
+          "oklch(95% 0.003 67.7)"
+        ]
+      },
+      "panel-sunk": {
+        "role": "neutral",
+        "displayName": "Recess Floor",
+        "canonical": "oklch(22.0% 0.004 48.6)",
+        "cssVariable": "--panel-sunk",
+        "tonalRamp": [
+          "oklch(15% 0.004 48.6)",
+          "oklch(26% 0.004 48.6)",
+          "oklch(38% 0.004 48.6)",
+          "oklch(49% 0.004 48.6)",
+          "oklch(61% 0.004 48.6)",
+          "oklch(72% 0.004 48.6)",
+          "oklch(84% 0.004 48.6)",
+          "oklch(95% 0.004 48.6)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Panel Face",
+        "canonical": "oklch(25.0% 0.004 48.6)",
+        "cssVariable": "--panel",
+        "tonalRamp": [
+          "oklch(15% 0.004 48.6)",
+          "oklch(26% 0.004 48.6)",
+          "oklch(38% 0.004 48.6)",
+          "oklch(49% 0.004 48.6)",
+          "oklch(61% 0.004 48.6)",
+          "oklch(72% 0.004 48.6)",
+          "oklch(84% 0.004 48.6)",
+          "oklch(95% 0.004 48.6)"
+        ]
+      },
+      "panel-raised": {
+        "role": "neutral",
+        "displayName": "Panel Raised",
+        "canonical": "oklch(28.6% 0.006 78.2)",
+        "cssVariable": "--panel-raised",
+        "tonalRamp": [
+          "oklch(15% 0.006 78.2)",
+          "oklch(26% 0.006 78.2)",
+          "oklch(38% 0.006 78.2)",
+          "oklch(49% 0.006 78.2)",
+          "oklch(61% 0.006 78.2)",
+          "oklch(72% 0.006 78.2)",
+          "oklch(84% 0.006 78.2)",
+          "oklch(95% 0.006 78.2)"
+        ]
+      },
+      "bevel": {
+        "role": "neutral",
+        "displayName": "Machined Bevel",
+        "canonical": "oklch(34.8% 0.008 59.4)",
+        "cssVariable": "--bevel",
+        "tonalRamp": [
+          "oklch(15% 0.008 59.4)",
+          "oklch(26% 0.008 59.4)",
+          "oklch(38% 0.008 59.4)",
+          "oklch(49% 0.008 59.4)",
+          "oklch(61% 0.008 59.4)",
+          "oklch(72% 0.008 59.4)",
+          "oklch(84% 0.008 59.4)",
+          "oklch(95% 0.008 59.4)"
+        ]
+      },
+      "rail": {
+        "role": "neutral",
+        "displayName": "Rack Rail",
+        "canonical": "oklch(39.6% 0.010 73.6)",
+        "cssVariable": "--rail",
+        "tonalRamp": [
+          "oklch(15% 0.010 73.6)",
+          "oklch(26% 0.010 73.6)",
+          "oklch(38% 0.010 73.6)",
+          "oklch(49% 0.010 73.6)",
+          "oklch(61% 0.010 73.6)",
+          "oklch(72% 0.010 73.6)",
+          "oklch(84% 0.010 73.6)",
+          "oklch(95% 0.010 73.6)"
+        ]
+      },
+      "rail-lit": {
+        "role": "neutral",
+        "displayName": "Lit Rail Edge",
+        "canonical": "oklch(45.7% 0.016 71.1)",
+        "cssVariable": "--rail-lit",
+        "tonalRamp": [
+          "oklch(15% 0.016 71.1)",
+          "oklch(26% 0.016 71.1)",
+          "oklch(38% 0.016 71.1)",
+          "oklch(49% 0.016 71.1)",
+          "oklch(61% 0.016 71.1)",
+          "oklch(72% 0.016 71.1)",
+          "oklch(84% 0.016 71.1)",
+          "oklch(95% 0.016 71.1)"
+        ]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Chassis Hairline",
+        "canonical": "oklch(31.9% 0.008 75.3)",
+        "cssVariable": "--border",
+        "tonalRamp": [
+          "oklch(15% 0.008 75.3)",
+          "oklch(26% 0.008 75.3)",
+          "oklch(38% 0.008 75.3)",
+          "oklch(49% 0.008 75.3)",
+          "oklch(61% 0.008 75.3)",
+          "oklch(72% 0.008 75.3)",
+          "oklch(84% 0.008 75.3)",
+          "oklch(95% 0.008 75.3)"
+        ]
+      },
+      "shadow-deep": {
+        "role": "neutral",
+        "displayName": "Bore Black",
+        "canonical": "oklch(14.1% 0.003 69.4)",
+        "cssVariable": "--shadow-deep",
+        "tonalRamp": [
+          "oklch(15% 0.003 69.4)",
+          "oklch(26% 0.003 69.4)",
+          "oklch(38% 0.003 69.4)",
+          "oklch(49% 0.003 69.4)",
+          "oklch(61% 0.003 69.4)",
+          "oklch(72% 0.003 69.4)",
+          "oklch(84% 0.003 69.4)",
+          "oklch(95% 0.003 69.4)"
+        ]
+      },
+      "specular": {
+        "role": "neutral",
+        "displayName": "Specular White",
+        "canonical": "oklch(100% 0 89.9)",
+        "cssVariable": "--specular",
+        "tonalRamp": [
+          "oklch(15% 0.000 89.9)",
+          "oklch(26% 0.000 89.9)",
+          "oklch(38% 0.000 89.9)",
+          "oklch(49% 0.000 89.9)",
+          "oklch(61% 0.000 89.9)",
+          "oklch(72% 0.000 89.9)",
+          "oklch(84% 0.000 89.9)",
+          "oklch(95% 0.000 89.9)"
+        ]
+      },
+      "silk": {
+        "role": "neutral",
+        "displayName": "Silkscreen",
+        "canonical": "oklch(86.2% 0.015 84.6)",
+        "cssVariable": "--silk",
+        "tonalRamp": [
+          "oklch(15% 0.015 84.6)",
+          "oklch(26% 0.015 84.6)",
+          "oklch(38% 0.015 84.6)",
+          "oklch(49% 0.015 84.6)",
+          "oklch(61% 0.015 84.6)",
+          "oklch(72% 0.015 84.6)",
+          "oklch(84% 0.015 84.6)",
+          "oklch(95% 0.015 84.6)"
+        ]
+      },
+      "silk-dim": {
+        "role": "neutral",
+        "displayName": "Silkscreen Dim",
+        "canonical": "oklch(67.2% 0.017 82.8)",
+        "cssVariable": "--silk-dim",
+        "tonalRamp": [
+          "oklch(15% 0.017 82.8)",
+          "oklch(26% 0.017 82.8)",
+          "oklch(38% 0.017 82.8)",
+          "oklch(49% 0.017 82.8)",
+          "oklch(61% 0.017 82.8)",
+          "oklch(72% 0.017 82.8)",
+          "oklch(84% 0.017 82.8)",
+          "oklch(95% 0.017 82.8)"
+        ]
+      },
+      "face": {
+        "role": "neutral",
+        "displayName": "Meter Ivory",
+        "canonical": "oklch(93.5% 0.018 86.1)",
+        "cssVariable": "--face",
+        "tonalRamp": [
+          "oklch(15% 0.018 86.1)",
+          "oklch(26% 0.018 86.1)",
+          "oklch(38% 0.018 86.1)",
+          "oklch(49% 0.018 86.1)",
+          "oklch(61% 0.018 86.1)",
+          "oklch(72% 0.018 86.1)",
+          "oklch(84% 0.018 86.1)",
+          "oklch(95% 0.018 86.1)"
+        ]
+      },
+      "face-2": {
+        "role": "neutral",
+        "displayName": "Track Sheet",
+        "canonical": "oklch(90.5% 0.023 87.2)",
+        "cssVariable": "--face-2",
+        "tonalRamp": [
+          "oklch(15% 0.023 87.2)",
+          "oklch(26% 0.023 87.2)",
+          "oklch(38% 0.023 87.2)",
+          "oklch(49% 0.023 87.2)",
+          "oklch(61% 0.023 87.2)",
+          "oklch(72% 0.023 87.2)",
+          "oklch(84% 0.023 87.2)",
+          "oklch(95% 0.023 87.2)"
+        ]
+      },
+      "face-line": {
+        "role": "neutral",
+        "displayName": "Ruled Line",
+        "canonical": "oklch(82.8% 0.029 86.7)",
+        "cssVariable": "--face-line",
+        "tonalRamp": [
+          "oklch(15% 0.029 86.7)",
+          "oklch(26% 0.029 86.7)",
+          "oklch(38% 0.029 86.7)",
+          "oklch(49% 0.029 86.7)",
+          "oklch(61% 0.029 86.7)",
+          "oklch(72% 0.029 86.7)",
+          "oklch(84% 0.029 86.7)",
+          "oklch(95% 0.029 86.7)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Working Ink",
+        "canonical": "oklch(19.5% 0.012 99.5)",
+        "cssVariable": "--ink",
+        "tonalRamp": [
+          "oklch(15% 0.012 99.5)",
+          "oklch(26% 0.012 99.5)",
+          "oklch(38% 0.012 99.5)",
+          "oklch(49% 0.012 99.5)",
+          "oklch(61% 0.012 99.5)",
+          "oklch(72% 0.012 99.5)",
+          "oklch(84% 0.012 99.5)",
+          "oklch(95% 0.012 99.5)"
+        ]
+      },
+      "ink-dim": {
+        "role": "neutral",
+        "displayName": "Working Ink Dim",
+        "canonical": "oklch(43.9% 0.013 89.8)",
+        "cssVariable": "--ink-dim",
+        "tonalRamp": [
+          "oklch(15% 0.013 89.8)",
+          "oklch(26% 0.013 89.8)",
+          "oklch(38% 0.013 89.8)",
+          "oklch(49% 0.013 89.8)",
+          "oklch(61% 0.013 89.8)",
+          "oklch(72% 0.013 89.8)",
+          "oklch(84% 0.013 89.8)",
+          "oklch(95% 0.013 89.8)"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Faint Print",
+        "canonical": "oklch(51.4% 0.018 90.3)",
+        "cssVariable": "--ink-faint",
+        "tonalRamp": [
+          "oklch(15% 0.018 90.3)",
+          "oklch(26% 0.018 90.3)",
+          "oklch(38% 0.018 90.3)",
+          "oklch(49% 0.018 90.3)",
+          "oklch(61% 0.018 90.3)",
+          "oklch(72% 0.018 90.3)",
+          "oklch(84% 0.018 90.3)",
+          "oklch(95% 0.018 90.3)"
+        ]
+      },
+      "wood": {
+        "role": "neutral",
+        "displayName": "Walnut",
+        "canonical": "oklch(43.0% 0.071 57.1)",
+        "cssVariable": "--wood",
+        "tonalRamp": [
+          "oklch(15% 0.071 57.1)",
+          "oklch(26% 0.071 57.1)",
+          "oklch(38% 0.071 57.1)",
+          "oklch(49% 0.071 57.1)",
+          "oklch(61% 0.071 57.1)",
+          "oklch(72% 0.071 57.1)",
+          "oklch(84% 0.071 57.1)",
+          "oklch(95% 0.071 57.1)"
+        ]
+      },
+      "wood-dark": {
+        "role": "neutral",
+        "displayName": "Walnut Dark",
+        "canonical": "oklch(31.4% 0.052 57.2)",
+        "cssVariable": "--wood-dark",
+        "tonalRamp": [
+          "oklch(15% 0.052 57.2)",
+          "oklch(26% 0.052 57.2)",
+          "oklch(38% 0.052 57.2)",
+          "oklch(49% 0.052 57.2)",
+          "oklch(61% 0.052 57.2)",
+          "oklch(72% 0.052 57.2)",
+          "oklch(84% 0.052 57.2)",
+          "oklch(95% 0.052 57.2)"
+        ]
+      },
+      "brass": {
+        "role": "neutral",
+        "displayName": "Brass",
+        "canonical": "oklch(67.9% 0.089 82.8)",
+        "cssVariable": "--brass",
+        "tonalRamp": [
+          "oklch(15% 0.089 82.8)",
+          "oklch(26% 0.089 82.8)",
+          "oklch(38% 0.089 82.8)",
+          "oklch(49% 0.089 82.8)",
+          "oklch(61% 0.089 82.8)",
+          "oklch(72% 0.089 82.8)",
+          "oklch(84% 0.089 82.8)",
+          "oklch(95% 0.089 82.8)"
+        ]
+      },
+      "brass-dark": {
+        "role": "neutral",
+        "displayName": "Brass Dark",
+        "canonical": "oklch(57.8% 0.073 90.6)",
+        "cssVariable": "--brass-dark",
+        "tonalRamp": [
+          "oklch(15% 0.073 90.6)",
+          "oklch(26% 0.073 90.6)",
+          "oklch(38% 0.073 90.6)",
+          "oklch(49% 0.073 90.6)",
+          "oklch(61% 0.073 90.6)",
+          "oklch(72% 0.073 90.6)",
+          "oklch(84% 0.073 90.6)",
+          "oklch(95% 0.073 90.6)"
+        ]
+      },
+      "signal": {
+        "role": "primary",
+        "displayName": "Signal Amber",
+        "canonical": "oklch(75.8% 0.152 74.9)",
+        "cssVariable": "--signal",
+        "tonalRamp": [
+          "oklch(15% 0.152 74.9)",
+          "oklch(26% 0.152 74.9)",
+          "oklch(38% 0.152 74.9)",
+          "oklch(49% 0.152 74.9)",
+          "oklch(61% 0.152 74.9)",
+          "oklch(72% 0.152 74.9)",
+          "oklch(84% 0.152 74.9)",
+          "oklch(95% 0.152 74.9)"
+        ]
+      },
+      "cue": {
+        "role": "secondary",
+        "displayName": "Cue Green",
+        "canonical": "oklch(69.2% 0.103 163.4)",
+        "cssVariable": "--cue",
+        "tonalRamp": [
+          "oklch(15% 0.103 163.4)",
+          "oklch(26% 0.103 163.4)",
+          "oklch(38% 0.103 163.4)",
+          "oklch(49% 0.103 163.4)",
+          "oklch(61% 0.103 163.4)",
+          "oklch(72% 0.103 163.4)",
+          "oklch(84% 0.103 163.4)",
+          "oklch(95% 0.103 163.4)"
+        ]
+      },
+      "over": {
+        "role": "tertiary",
+        "displayName": "Over Red",
+        "canonical": "oklch(58.1% 0.196 31.7)",
+        "cssVariable": "--over",
+        "tonalRamp": [
+          "oklch(15% 0.196 31.7)",
+          "oklch(26% 0.196 31.7)",
+          "oklch(38% 0.196 31.7)",
+          "oklch(49% 0.196 31.7)",
+          "oklch(61% 0.196 31.7)",
+          "oklch(72% 0.196 31.7)",
+          "oklch(84% 0.196 31.7)",
+          "oklch(95% 0.196 31.7)"
+        ],
+        "purpose": "past 0 dB, and the one committing action. It marks the over-zone of the instrument — the arc from 0 VU to the right pin on a meter face, the peak lamp that lights only when a needle passes 0 VU, and the top two segments of the bridge peak ladder — plus the lamp on the record button. It is also the --destructive mapping, unused today. It is never used for text on the chassis; only white-on-red (4.7:1 reversed) or as a non-text mark."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Badge",
+        "purpose": "The desk's own badging. One per page, on the master claim."
+      },
+      "headline": {
+        "displayName": "Plate Heading",
+        "purpose": "Section headings, capped at 16-24 characters."
+      },
+      "quote": {
+        "displayName": "Featured Quote",
+        "purpose": "The featured client reference only. Sentence case, line-height 1.14 because it is display type."
+      },
+      "title": {
+        "displayName": "Module Title",
+        "purpose": "Channel strip names and mobile menu rows at 21px."
+      },
+      "title-lg": {
+        "displayName": "Rack Title",
+        "purpose": "Rack unit titles only, 30px from md. Starts at Module Title on small screens and steps up once, because a rack unit gets the full panel width and a channel strip never does."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Running copy at 15px, held to 58-68ch on the chassis and 46-72ch on paper. Rack copy starts at 14px and steps to 15px at md; secondary track-sheet quotations run 14.5px."
+      },
+      "body-dense": {
+        "displayName": "Strip Copy",
+        "purpose": "Dense copy inside a channel strip."
+      },
+      "label": {
+        "displayName": "Legend",
+        "purpose": "Silkscreened legend on a panel. The `legend` utility."
+      },
+      "label-sm": {
+        "displayName": "Legend Small",
+        "purpose": "Rails, plate legends, bay headers, tape. The `legend-sm` utility. 11px is the floor."
+      },
+      "action": {
+        "displayName": "Commit Legend",
+        "purpose": "The legend on the large commit button, 15px. A wider cut than a plate legend because a button is pressed, not read across the room."
+      },
+      "action-sm": {
+        "displayName": "Panel Button Legend",
+        "purpose": "The legend on a panel link and on the paper-field text link, 13px."
+      },
+      "action-xs": {
+        "displayName": "Small Commit Legend",
+        "purpose": "The legend on the bridge's small commit button, 11px."
+      }
+    },
+    "shadows": [
+      {
+        "name": "panel",
+        "value": "inset 0 1px 0 rgba(61,57,54,0.7), inset 0 -1px 0 #171514, inset 1px 0 0 rgba(61,57,54,0.3), inset -1px 0 0 #1b1918",
+        "purpose": "The default surface, flush with the chassis. No drop shadow at all."
+      },
+      {
+        "name": "panel-raised",
+        "value": "inset 0 1px 0 rgba(61,57,54,0.9), inset 0 -1px 0 #171514, 0 2px 4px -1px rgba(0,0,0,0.5), 0 8px 20px -8px rgba(0,0,0,0.6)",
+        "purpose": "A module bolted on top of the panel: the bridge, rack units, the footer plate."
+      },
+      {
+        "name": "panel-recessed",
+        "value": "inset 0 2px 5px rgba(0,0,0,0.55), inset 0 -1px 0 rgba(61,57,54,0.55)",
+        "purpose": "A bay cut into the chassis: the patchbay, fader slots, the mobile menu rows. Painted on --panel-sunk (#1c1a19), because a recess is darker than the face it is cut into, not merely shadowed."
+      },
+      {
+        "name": "tape",
+        "value": "inset 0 -1px 0 rgba(207,198,178,0.9), 0 1px 2px rgba(0,0,0,0.45)",
+        "purpose": "A printed strip stuck onto metal. Sits barely above the surface."
+      },
+      {
+        "name": "paper-field",
+        "value": "inset 0 6px 14px -8px rgba(0,0,0,0.6), inset 0 -6px 14px -8px rgba(0,0,0,0.6)",
+        "purpose": "The references section reads as a lid opened in the chassis."
+      },
+      {
+        "name": "engraved",
+        "value": "text-shadow: 0 -1px 0 rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.055)",
+        "purpose": "Type cut into the panel. Dark edge above the glyph, lit lip below."
+      },
+      {
+        "name": "commit-button",
+        "value": "inset 0 1px 0 rgba(90,84,76,0.9), inset 0 -1px 0 #171514, 0 2px 5px -1px rgba(0,0,0,0.55)",
+        "purpose": "A machined button body: bevel line on top, dark bottom edge, short cast shadow."
+      },
+      {
+        "name": "lamp-halo",
+        "value": "0 0 8px 1px rgba(88,176,138,0.5)",
+        "purpose": "The tight halo around a lit lamp cap. Amber uses rgba(232,160,32,0.45), red rgba(214,58,34,0.45). Never wider than this."
+      }
+    ],
+    "motion": [
+      {
+        "name": "vu-ballistics",
+        "value": "second-order, damping ratio 0.8, natural frequency 16.7 rad/s (~300ms settling, ~1.5% overshoot)",
+        "purpose": "The only motion law on the site. components/desk/level-engine.tsx integrates it per frame and publishes --vu-l, --vu-r, --vu-drive from real scroll and pointer speed. Never starts under prefers-reduced-motion; stops when hidden or settled."
+      },
+      {
+        "name": "vu-rest",
+        "value": "REST_L 0.070, REST_R 0.098",
+        "purpose": "Resting deflection, one value per channel, registered as the @property initial values of --vu-l and --vu-r so untouched needles read room noise just above -20 before any script runs and under prefers-reduced-motion. The two channels rest apart because no two moving coils zero at the same place; under signal the right follows the left through a one-pole lag and the pair converges, which is what being ganged means. Change one of the four numbers and you must change the other three, or the needles jump on hydration."
+      },
+      {
+        "name": "power-on",
+        "value": "320ms at full drive, then free fall under vu-ballistics",
+        "purpose": "The power-on self-test. Real gear slams its needles to full scale and lets them fall."
+      },
+      {
+        "name": "idle-stop",
+        "value": "1100ms",
+        "purpose": "How long the loop waits with no input before it stops itself at rest."
+      },
+      {
+        "name": "lamp-warm",
+        "value": "1.4s cubic-bezier(0.33, 1, 0.68, 1) both",
+        "purpose": "A lamp filament warming on load. Opacity only."
+      },
+      {
+        "name": "plate-settle",
+        "value": "0.7s cubic-bezier(0.16, 1, 0.3, 1) both",
+        "purpose": "A panel arriving: 6px rise plus opacity. The master module and interior plates."
+      },
+      {
+        "name": "fader-travel",
+        "value": "550ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "A fader cap riding from 12% to 66% of its slot when a strip is engaged."
+      },
+      {
+        "name": "state-fast",
+        "value": "200ms",
+        "purpose": "Button body, press, and underline colour changes."
+      },
+      {
+        "name": "state-slow",
+        "value": "300ms",
+        "purpose": "Lamp opacity, legend colour, jack tip reveal, nav lamp changes."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      },
+      {
+        "name": "xl",
+        "value": "80rem"
+      }
+    ],
+    "custom": [
+      {
+        "name": "--bridge",
+        "value": "59px, 75px from md",
+        "purpose": "Fixed meter-bridge height: the header flex row plus the 1px rail it is bolted to. desk-frame and under-bridge consume it. Never hardcoded."
+      },
+      {
+        "name": "shell",
+        "value": "max-width 86rem; gutters 16px / 24px (sm) / 40px (md)",
+        "purpose": "The one container every section shares."
+      },
+      {
+        "name": "--vu-l / --vu-r / --vu-drive",
+        "value": "@property <number>, inherits; initial 0.07 (--vu-l) / 0.098 (--vu-r) / 0 (--vu-drive)",
+        "purpose": "The three numbers every needle, lamp, lit legend and ladder segment reads."
+      },
+      {
+        "name": "chassis-face",
+        "value": "background-color: var(--panel); background-image: url(/textures/chassis.webp); background-size: 100% 100%; background-repeat: no-repeat",
+        "purpose": "Faces the master module in brushed anodised aluminium. Stretched, never tiled: the raster carries one baked raking key light and tiling turns one light into many."
+      },
+      {
+        "name": "/textures/chassis.webp",
+        "value": "1600x620, WebP quality 90, 39.6KB; provenance in public/textures/chassis.webp.json",
+        "purpose": "Procedurally generated in a browser canvas, not by an image model. Anisotropic value noise box-averaged along x (radius 30 brush, radius 3 grit), one raking key from the upper left, a specular band with a real edge. Measured on the shipped file: 295 unique colours, anisotropy ratio 4.8. Amplitude was chosen by looking at the rendered page, not by maximising the metric. The sidecar exists because WebP has no text chunk."
+      },
+      {
+        "name": "/textures/walnut.webp",
+        "value": "48x1024, WebP lossless, 13.7KB, repeat-y at 24px; provenance in public/textures/walnut.webp.json",
+        "purpose": "The desk's end cheeks, drawn by desk-frame from lg up. Every along-length term is periodic in the tile height, so it repeats down the page with no seam. Lossless because a lossy artefact at the tile boundary would put a seam in a texture whose whole point is not having one."
+      },
+      {
+        "name": "min-h-[1.84em]",
+        "value": "two lines at the badge-type line-height of 0.92",
+        "purpose": "The strip-title floor on channel-bank titles. Some titles wrap and their row-mates do not; without the floor the copy blocks in one bank row start at different heights and the bank stops reading as one chassis."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Commit Button",
+      "kind": "button",
+      "refersTo": "button-commit-lg",
+      "description": "The one committing action on any surface. A transport record button: dark body, recessed dark-glass lamp with a red filament, action named in plain words.",
+      "html": "<a class=\"ds-btn-commit\" href=\"mailto:hello@kastproductions.com\"><span class=\"ds-btn-commit-lamp\" aria-hidden=\"true\"><span></span></span><span class=\"ds-btn-commit-label\">Start a project</span></a>",
+      "css": ".ds-btn-commit { display: inline-flex; align-items: center; gap: 20px; padding: 16px 24px; border-radius: 2px; background: #332f2b; text-decoration: none; box-shadow: inset 0 1px 0 rgba(90,84,76,0.9), inset 0 -1px 0 #171514, 0 2px 5px -1px rgba(0,0,0,0.55); transition: transform 0.2s, background-color 0.2s; } .ds-btn-commit:hover { background: #3c3833; } .ds-btn-commit:active { transform: translateY(1px); } .ds-btn-commit:focus-visible { outline: 2px solid var(--cue, #58b08a); outline-offset: 2px; } .ds-btn-commit-lamp { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9999px; background: #1a1110; box-shadow: inset 0 2px 4px rgba(0,0,0,0.7); flex: none; } .ds-btn-commit-lamp > span { display: block; width: 16px; height: 16px; border-radius: 9999px; background: var(--over, #d63a22); opacity: 0.8; transition: opacity 0.3s, box-shadow 0.3s; } .ds-btn-commit:hover .ds-btn-commit-lamp > span { opacity: 1; box-shadow: 0 0 10px 2px rgba(214,58,34,0.45); } .ds-btn-commit-label { color: var(--silk, #d6d1c7); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 84, \"wght\" 650; letter-spacing: 0.09em; text-transform: uppercase; font-size: 15px; } .ds-btn-commit:hover .ds-btn-commit-label { color: var(--face, #efe9dc); }"
+    },
+    {
+      "name": "Panel Link",
+      "kind": "button",
+      "refersTo": "button-panel",
+      "description": "Every machined button that is not the commit. Same body, same press, no lamp and no red.",
+      "html": "<a class=\"ds-btn-panel\" href=\"#clients\">See who is patched in<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path d=\"M12 5v14\"/><path d=\"m19 12-7 7-7-7\"/></svg></a>",
+      "css": ".ds-btn-panel { display: inline-flex; align-items: center; gap: 10px; padding: 16px 20px; border-radius: 2px; background: #2b2825; color: var(--silk, #d6d1c7); text-decoration: none; box-shadow: inset 0 1px 0 rgba(90,84,76,0.85), inset 0 -1px 0 #171514, 0 2px 5px -1px rgba(0,0,0,0.5); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 84, \"wght\" 620; letter-spacing: 0.1em; text-transform: uppercase; font-size: 13px; transition: background-color 0.2s, transform 0.2s, color 0.2s; } .ds-btn-panel:hover { background: #343029; color: var(--face, #efe9dc); } .ds-btn-panel:active { transform: translateY(1px); } .ds-btn-panel:focus-visible { outline: 2px solid var(--cue, #58b08a); outline-offset: 2px; }"
+    },
+    {
+      "name": "Channel Strip",
+      "kind": "card",
+      "refersTo": "card-channel",
+      "description": "One strip of the fader bank. Strips share a single panel face and are divided by a 1px score line, never separated into cards. The title reserves two lines (min-height 1.84em at line-height 0.92) so every strip in a row starts its copy at the same height. Hover raises the fader cap and turns the legend amber.",
+      "html": "<div class=\"ds-bank\"><a class=\"ds-strip\" href=\"mailto:hello@kastproductions.com\"><span class=\"ds-fader\" aria-hidden=\"true\"><span class=\"ds-fader-slot\"></span><span class=\"ds-fader-cap\"></span></span><span class=\"ds-strip-body\"><span class=\"ds-strip-head\"><span class=\"ds-strip-title\">AI integration</span><span class=\"ds-strip-lamp\"></span></span><span class=\"ds-strip-blurb\">LLM features, RAG and agents wired into real products, shipped with evals and guardrails.</span><span class=\"ds-strip-cta\">Enquire<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" width=\"16\" height=\"16\" aria-hidden=\"true\"><path d=\"M7 7h10v10\"/><path d=\"M7 17 17 7\"/></svg></span><span class=\"ds-strip-foot\"><span class=\"ds-strip-index\">01</span><span class=\"ds-tape\">AI</span></span></span></a></div>",
+      "css": ".ds-bank { border-radius: 2px; overflow: hidden; background: #1b1918; box-shadow: inset 0 1px 0 rgba(61,57,54,0.55), inset 0 -1px 0 #141312; } .ds-strip { display: flex; gap: 20px; padding: 20px; background: var(--panel, #232120); text-decoration: none; } .ds-strip-body { display: flex; flex-direction: column; gap: 14px; min-width: 0; flex: 1; } .ds-strip-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; } .ds-strip-title { font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 92, \"wght\" 700; letter-spacing: -0.015em; line-height: 0.92; text-transform: uppercase; font-size: 21px; min-height: 1.84em; color: var(--silk, #d6d1c7); transition: color 0.3s; } .ds-strip:hover .ds-strip-title { color: var(--face, #efe9dc); } .ds-strip-lamp { margin-top: 4px; width: 8px; height: 8px; border-radius: 9999px; flex: none; background: var(--signal, #e8a020); box-shadow: 0 0 7px 1px rgba(232,160,32,0.45); } .ds-strip-blurb { font-family: Archivo, sans-serif; font-size: 13.5px; line-height: 1.625; color: var(--silk-dim, #9b958a); } .ds-strip-cta { display: flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 8px; color: var(--silk-dim, #9b958a); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 80, \"wght\" 600; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.6875rem; line-height: 1.15; transition: color 0.3s; } .ds-strip:hover .ds-strip-cta { color: var(--signal, #e8a020); } .ds-strip-foot { display: flex; align-items: center; gap: 8px; } .ds-strip-index { flex: none; color: var(--silk-dim, #9b958a); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 80, \"wght\" 600; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.6875rem; line-height: 1.15; font-variant-numeric: tabular-nums; } .ds-tape { display: block; flex: 1; padding: 4px 8px; border-radius: 2px; background: var(--face, #efe9dc); color: var(--ink, #16150f); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 80, \"wght\" 600; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.6875rem; line-height: 1.15; box-shadow: inset 0 -1px 0 rgba(207,198,178,0.9), 0 1px 2px rgba(0,0,0,0.45); } .ds-fader { position: relative; width: 36px; flex: none; align-self: stretch; min-height: 120px; } .ds-fader-slot { position: absolute; top: 4px; bottom: 4px; left: 50%; width: 7px; transform: translateX(-50%); border-radius: 9999px; background: #1c1a19; box-shadow: inset 0 2px 5px rgba(0,0,0,0.55), inset 0 -1px 0 rgba(61,57,54,0.55); } .ds-fader-cap { position: absolute; left: 0; right: 0; bottom: 12%; height: 22px; border-radius: 2px; background: #5c574f; border: 1px solid #26231f; box-shadow: 0 2px 3px rgba(0,0,0,0.55), inset 0 -2px 0 #4b4740; transition: bottom 550ms cubic-bezier(0.16,1,0.3,1); } .ds-fader-cap::after { content: \"\"; position: absolute; left: 2px; right: 2px; top: 50%; height: 1.6px; background: #efe9dc; } .ds-strip:hover .ds-fader-cap, .ds-strip:focus-visible .ds-fader-cap { bottom: 66%; }"
+    },
+    {
+      "name": "Rack Unit",
+      "kind": "card",
+      "refersTo": "card-rack",
+      "description": "A 19-inch outboard unit: raised panel, a rack ear with two screws at each end, model number in tabular legend beside the title, knobs on the right. The title is the one place the 30px ramp step is used, and only from md.",
+      "html": "<article class=\"ds-rack\"><span class=\"ds-rack-ear\" aria-hidden=\"true\"><svg viewBox=\"0 0 14 14\" aria-hidden=\"true\" width=\"12\" height=\"12\"><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"#8a7845\"/><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"none\" stroke=\"#2f2921\" stroke-width=\"1\"/><circle cx=\"7\" cy=\"6.2\" r=\"5\" fill=\"none\" stroke=\"#c4ae74\" stroke-width=\"0.8\"/><path d=\"M 3.4 5.4 L 10.6 8.6\" stroke=\"#241e17\" stroke-width=\"1.7\"/></svg><svg viewBox=\"0 0 14 14\" aria-hidden=\"true\" width=\"12\" height=\"12\"><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"#8a7845\"/><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"none\" stroke=\"#2f2921\" stroke-width=\"1\"/><circle cx=\"7\" cy=\"6.2\" r=\"5\" fill=\"none\" stroke=\"#c4ae74\" stroke-width=\"0.8\"/><path d=\"M 3.4 5.4 L 10.6 8.6\" stroke=\"#241e17\" stroke-width=\"1.7\"/></svg></span><div class=\"ds-rack-body\"><div class=\"ds-rack-head\"><h3 class=\"ds-rack-title\">Design</h3><span class=\"ds-rack-model\">KP-01</span></div><p class=\"ds-rack-copy\">Interfaces with a point of view, explored and refined with AI so we cover more ground in less time.</p></div><span class=\"ds-rack-ear ds-rack-ear-right\" aria-hidden=\"true\"><svg viewBox=\"0 0 14 14\" aria-hidden=\"true\" width=\"12\" height=\"12\"><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"#8a7845\"/><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"none\" stroke=\"#2f2921\" stroke-width=\"1\"/><circle cx=\"7\" cy=\"6.2\" r=\"5\" fill=\"none\" stroke=\"#c4ae74\" stroke-width=\"0.8\"/><path d=\"M 3.4 5.4 L 10.6 8.6\" stroke=\"#241e17\" stroke-width=\"1.7\"/></svg><svg viewBox=\"0 0 14 14\" aria-hidden=\"true\" width=\"12\" height=\"12\"><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"#8a7845\"/><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"none\" stroke=\"#2f2921\" stroke-width=\"1\"/><circle cx=\"7\" cy=\"6.2\" r=\"5\" fill=\"none\" stroke=\"#c4ae74\" stroke-width=\"0.8\"/><path d=\"M 3.4 5.4 L 10.6 8.6\" stroke=\"#241e17\" stroke-width=\"1.7\"/></svg></span></article>",
+      "css": ".ds-rack { display: flex; border-radius: 2px; background: var(--panel-raised, #2c2a27); box-shadow: inset 0 1px 0 rgba(61,57,54,0.9), inset 0 -1px 0 #171514, 0 2px 4px -1px rgba(0,0,0,0.5), 0 8px 20px -8px rgba(0,0,0,0.6); } .ds-rack-ear { display: flex; width: 32px; flex: none; flex-direction: column; align-items: center; justify-content: space-between; padding: 12px 0; border-radius: 2px 0 0 2px; background: var(--panel-raised, #2c2a27); box-shadow: inset 0 1px 0 rgba(61,57,54,0.9), inset 0 -1px 0 #171514, 0 2px 4px -1px rgba(0,0,0,0.5), 0 8px 20px -8px rgba(0,0,0,0.6); } .ds-rack-ear-right { border-radius: 0 2px 2px 0; } .ds-rack-body { flex: 1; min-width: 0; padding: 28px 32px; } .ds-rack-head { display: flex; align-items: baseline; gap: 12px; } .ds-rack-title { margin: 0; font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 92, \"wght\" 700; line-height: 0.92; text-transform: uppercase; letter-spacing: -0.02em; font-size: 30px; color: var(--silk, #d6d1c7); } .ds-rack-model { color: var(--silk-dim, #9b958a); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 80, \"wght\" 600; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.6875rem; line-height: 1.15; font-variant-numeric: tabular-nums; } .ds-rack-copy { margin: 12px 0 0; max-width: 62ch; font-family: Archivo, sans-serif; font-size: 15px; line-height: 1.625; color: var(--silk-dim, #9b958a); }"
+    },
+    {
+      "name": "Recessed Bay",
+      "kind": "card",
+      "refersTo": "bay-recessed",
+      "description": "A bay cut into the chassis, with a legend header row, a tape strip of names inside it, and a screw at each bottom corner. The nesting is deliberate: a recess labelled with applied tape.",
+      "html": "<div class=\"ds-bay\"><div class=\"ds-bay-head\"><span class=\"ds-bay-legend\">Bay A · sources</span><span class=\"ds-bay-count\">17 patched</span></div><ul class=\"ds-bay-row\"><li><a class=\"ds-bay-cell\" href=\"#\"><svg viewBox=\"0 0 34 34\" aria-hidden=\"true\" width=\"20\" height=\"20\"><circle cx=\"17\" cy=\"17\" r=\"16\" fill=\"#3d3833\"/><circle cx=\"17\" cy=\"16.2\" r=\"16\" fill=\"none\" stroke=\"#5d564e\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"17\" r=\"12\" fill=\"#8a7845\"/><circle cx=\"17\" cy=\"17\" r=\"12\" fill=\"none\" stroke=\"#2c2620\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"17\" r=\"8\" fill=\"#0d0c0b\"/><circle cx=\"17\" cy=\"17\" r=\"8\" fill=\"none\" stroke=\"#000\" stroke-opacity=\"0.6\" stroke-width=\"2\"/><circle class=\"ds-jack-tip\" cx=\"17\" cy=\"17\" r=\"4.5\" fill=\"var(--cue, #58b08a)\"/></svg><span>Trustpilot</span></a></li><li><a class=\"ds-bay-cell\" href=\"#\"><svg viewBox=\"0 0 34 34\" aria-hidden=\"true\" width=\"20\" height=\"20\"><circle cx=\"17\" cy=\"17\" r=\"16\" fill=\"#3d3833\"/><circle cx=\"17\" cy=\"16.2\" r=\"16\" fill=\"none\" stroke=\"#5d564e\" stroke-width=\"1.2\"/><circle cx=\"17\" cy=\"17\" r=\"12\" fill=\"#8a7845\"/><circle cx=\"17\" cy=\"17\" r=\"12\" fill=\"none\" stroke=\"#2c2620\" stroke-width=\"1\"/><circle cx=\"17\" cy=\"17\" r=\"8\" fill=\"#0d0c0b\"/><circle cx=\"17\" cy=\"17\" r=\"8\" fill=\"none\" stroke=\"#000\" stroke-opacity=\"0.6\" stroke-width=\"2\"/><circle class=\"ds-jack-tip\" cx=\"17\" cy=\"17\" r=\"4.5\" fill=\"var(--cue, #58b08a)\"/></svg><span>An Post</span></a></li></ul><div class=\"ds-bay-foot\"><svg viewBox=\"0 0 14 14\" aria-hidden=\"true\" width=\"12\" height=\"12\"><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"#8a7845\"/><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"none\" stroke=\"#2f2921\" stroke-width=\"1\"/><circle cx=\"7\" cy=\"6.2\" r=\"5\" fill=\"none\" stroke=\"#c4ae74\" stroke-width=\"0.8\"/><path d=\"M 3.4 5.4 L 10.6 8.6\" stroke=\"#241e17\" stroke-width=\"1.7\"/></svg><span class=\"ds-bay-legend\">Normalled to master bus</span><svg viewBox=\"0 0 14 14\" aria-hidden=\"true\" width=\"12\" height=\"12\"><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"#8a7845\"/><circle cx=\"7\" cy=\"7\" r=\"6\" fill=\"none\" stroke=\"#2f2921\" stroke-width=\"1\"/><circle cx=\"7\" cy=\"6.2\" r=\"5\" fill=\"none\" stroke=\"#c4ae74\" stroke-width=\"0.8\"/><path d=\"M 3.4 5.4 L 10.6 8.6\" stroke=\"#241e17\" stroke-width=\"1.7\"/></svg></div></div>",
+      "css": ".ds-bay { border-radius: 2px; padding: 20px; background: var(--panel-sunk, #1c1a19); box-shadow: inset 0 2px 5px rgba(0,0,0,0.55), inset 0 -1px 0 rgba(61,57,54,0.55); } .ds-bay-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 0 4px 14px; } .ds-bay-legend { color: var(--silk-dim, #9b958a); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 80, \"wght\" 600; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.6875rem; line-height: 1.15; } .ds-bay-count { color: var(--silk-dim, #9b958a); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 80, \"wght\" 600; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.6875rem; line-height: 1.15; font-variant-numeric: tabular-nums; } .ds-bay-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 36px; margin: 0; padding: 16px 20px; list-style: none; border-radius: 2px; background: var(--face, #efe9dc); box-shadow: inset 0 -1px 0 rgba(207,198,178,0.9), 0 1px 2px rgba(0,0,0,0.45); } .ds-bay-cell { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; } .ds-bay-cell > span { font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 82, \"wght\" 650; letter-spacing: 0.08em; text-transform: uppercase; font-size: 15px; color: var(--ink-dim, #55524a); transition: color 0.3s; } .ds-bay-cell:hover > span { color: var(--ink, #16150f); } .ds-jack-tip { opacity: 0; transition: opacity 0.3s; } .ds-bay-cell:hover .ds-jack-tip, .ds-bay-cell:focus-visible .ds-jack-tip { opacity: 1; } .ds-bay-foot { display: flex; align-items: center; justify-content: space-between; padding: 16px 4px 0; }"
+    },
+    {
+      "name": "Module Rail",
+      "kind": "custom",
+      "refersTo": "rail",
+      "description": "The silkscreened strip along the top or bottom edge of a panel. It carries a left legend and an optional right legend, engraved into the metal. This is where section identity lives instead of an eyebrow.",
+      "html": "<div class=\"ds-panel\"><div class=\"ds-rail ds-rail-top\"><span>Master section</span><span>Vilnius LT · 54.69°N 25.28°E</span></div><div class=\"ds-panel-body\">Panel content</div><div class=\"ds-rail ds-rail-bottom\"><span>17 clients patched · 3 continents</span><span>Available for new work</span></div></div>",
+      "css": ".ds-panel { border-radius: 2px; background: var(--panel, #232120); box-shadow: inset 0 1px 0 rgba(61,57,54,0.7), inset 0 -1px 0 #171514, inset 1px 0 0 rgba(61,57,54,0.3), inset -1px 0 0 #1b1918; } .ds-rail { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 10px 24px; } .ds-rail > span { color: var(--silk-dim, #9b958a); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 80, \"wght\" 600; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.6875rem; line-height: 1.15; text-shadow: 0 -1px 0 rgba(0,0,0,0.6), 0 1px 0 rgba(255,255,255,0.055); } .ds-rail-top { border-bottom: 1px solid #191817; } .ds-rail-bottom { border-top: 1px solid #3a3733; } .ds-panel-body { padding: 40px 24px; font-family: Archivo, sans-serif; font-size: 15px; line-height: 1.625; color: var(--silk-dim, #9b958a); }"
+    },
+    {
+      "name": "Bridge Nav Legend",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "A channel legend on the meter bridge: label tape with a lamp above it. The lamp lights amber for the section being read and goes out when the reader leaves it.",
+      "html": "<nav class=\"ds-bridge\" aria-label=\"Sections\"><a class=\"ds-nav is-active\" href=\"#clients\" aria-current=\"true\"><span class=\"ds-nav-lamp\" aria-hidden=\"true\"></span><span class=\"ds-nav-tape\">Clients</span></a><a class=\"ds-nav\" href=\"#services\"><span class=\"ds-nav-lamp\" aria-hidden=\"true\"></span><span class=\"ds-nav-tape\">Services</span></a><a class=\"ds-nav\" href=\"#process\"><span class=\"ds-nav-lamp\" aria-hidden=\"true\"></span><span class=\"ds-nav-tape\">Process</span></a></nav>",
+      "css": ".ds-bridge { display: flex; align-items: center; gap: 6px; padding: 12px 16px; background: var(--panel-raised, #2c2a27); box-shadow: inset 0 1px 0 rgba(61,57,54,0.9), inset 0 -1px 0 #171514, 0 2px 4px -1px rgba(0,0,0,0.5), 0 8px 20px -8px rgba(0,0,0,0.6); } .ds-nav { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 4px; border-radius: 2px; text-decoration: none; } .ds-nav-lamp { width: 6px; height: 6px; border-radius: 9999px; background: var(--rail, #4a4641); transition: background-color 0.3s; } .ds-nav:hover .ds-nav-lamp { background: var(--silk-dim, #9b958a); } .ds-nav.is-active .ds-nav-lamp { background: var(--signal, #e8a020); box-shadow: 0 0 0 2px rgba(232,160,32,0.18); } .ds-nav-tape { display: block; padding: 4px 10px; border-radius: 2px; background: var(--face, #efe9dc); color: var(--ink-dim, #55524a); font-family: Anybody, sans-serif; font-variation-settings: \"wdth\" 80, \"wght\" 600; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.6875rem; line-height: 1.15; box-shadow: inset 0 -1px 0 rgba(207,198,178,0.9), 0 1px 2px rgba(0,0,0,0.45); transition: color 0.3s; } .ds-nav:hover .ds-nav-tape { color: var(--ink, #16150f); } .ds-nav.is-active .ds-nav-tape { color: var(--ink, #16150f); } .ds-nav:focus-visible { outline: 2px solid var(--cue, #58b08a); outline-offset: 2px; }"
+    },
+    {
+      "name": "Peak Ladder",
+      "kind": "custom",
+      "description": "Twelve segments on the meter bridge reading the same --vu-drive every needle reads. Green to segment 7, amber to 10, red above. It is part of the instrument, not a progress bar.",
+      "html": "<div class=\"ds-ladder\" aria-hidden=\"true\"><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--cue, #58b08a); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.0000) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--cue, #58b08a); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.0833) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--cue, #58b08a); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.1667) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--cue, #58b08a); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.2500) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--cue, #58b08a); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.3333) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--cue, #58b08a); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.4167) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--cue, #58b08a); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.5000) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--signal, #e8a020); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.5833) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--signal, #e8a020); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.6667) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--signal, #e8a020); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.7500) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--over, #d63a22); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.8333) * 24), 1);\"></span></span><span class=\"ds-seg\"><span class=\"ds-seg-off\"></span><span class=\"ds-seg-on\" style=\"background: var(--over, #d63a22); opacity: clamp(0, calc((var(--vu-drive, 0) - 0.9167) * 24), 1);\"></span></span></div>",
+      "css": ".ds-ladder { display: flex; align-items: flex-end; gap: 3px; } .ds-seg { position: relative; display: block; width: 3px; height: 16px; } .ds-seg-off, .ds-seg-on { position: absolute; inset: 0; border-radius: 1px; } .ds-seg-off { background: rgba(74,70,65,0.45); }"
+    },
+    {
+      "name": "VU Movement",
+      "kind": "custom",
+      "description": "The signature component, and one of a separately specified pair. Real face geometry: deflection is 10^((dB-3)/20) across a 60 degree sweep, so 0 VU lands at 71% of the arc; the pivot sits below the viewBox at 154,228 and the needle tip stops at r=184. The needle reads --vu-l; the peak lamp lights only past 0 VU. This snippet is the left unit. The right unit is a different specification in the same file's UNIT table: its own glass vector and peak opacity (0.075, not 0.2), its own warmer three-stop face tone, its own four bezel screw slot angles, and its own resting deflection. Do not collapse the two into one shared definition.",
+      "html": "<svg class=\"ds-vu\" viewBox=\"0 0 308 212\" role=\"img\" aria-label=\"Speed — VU meter\"><defs><linearGradient id=\"ds-vu-face\" x1=\"0\" y1=\"0\" x2=\"0.35\" y2=\"1\"><stop offset=\"0\" stop-color=\"#f7f2e8\"/><stop offset=\"0.55\" stop-color=\"#efe9dc\"/><stop offset=\"1\" stop-color=\"#e3dac8\"/></linearGradient><linearGradient id=\"ds-vu-glass\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"0.92\"><stop offset=\"0\" stop-color=\"var(--specular, #ffffff)\" stop-opacity=\"0.2\"/><stop offset=\"0.34\" stop-color=\"var(--specular, #ffffff)\" stop-opacity=\"0.04\"/><stop offset=\"0.36\" stop-color=\"var(--specular, #ffffff)\" stop-opacity=\"0\"/></linearGradient><clipPath id=\"ds-vu-clip\"><rect x=\"10\" y=\"10\" width=\"288\" height=\"192\" rx=\"3\"/></clipPath></defs><rect x=\"0\" y=\"0\" width=\"308\" height=\"212\" rx=\"5\" fill=\"#1a1817\" stroke=\"#0f0e0d\"/><rect x=\"4\" y=\"4\" width=\"300\" height=\"204\" rx=\"4\" fill=\"none\" stroke=\"#403c37\"/><rect x=\"10\" y=\"10\" width=\"288\" height=\"192\" rx=\"3\" fill=\"url(#ds-vu-face)\"/><g clip-path=\"url(#ds-vu-clip)\"><path d=\"M 195.05 42.49 A 190 190 0 0 1 249.00 63.46\" fill=\"none\" stroke=\"#d63a22\" stroke-width=\"7\"/><path d=\"M 76.66 67.68 A 178 178 0 0 1 243.00 73.85\" fill=\"none\" stroke=\"#16150f\" stroke-width=\"1.4\"/><path d=\"M 86.04 63.49 L 89.09 70.88 M 95.08 60.03 L 97.73 67.58 M 108.14 56.01 L 110.21 63.74 M 113.69 54.63 L 115.50 62.42 M 127.04 52.05 L 128.25 59.96 M 144.07 50.28 L 144.51 58.26 M 200.05 56.06 L 197.98 63.79 M 216.29 61.25 L 213.49 68.75 M 233.82 68.90 L 230.23 76.05\" fill=\"none\" stroke=\"#16150f\" stroke-width=\"1.2\"/><path d=\"M 76.66 67.68 L 83.18 81.19 M 103.24 57.39 L 107.52 71.77 M 119.96 53.29 L 122.82 68.01 M 135.04 51.01 L 136.64 65.93 M 154.22 50.00 L 154.20 65.00 M 165.61 50.38 L 164.63 65.35 M 178.33 51.67 L 176.28 66.53 M 192.46 54.20 L 189.22 68.85 M 208.00 58.39 L 203.45 72.68 M 224.91 64.73 L 218.93 78.49 M 243.00 73.85 L 235.50 86.84\" fill=\"none\" stroke=\"#16150f\" stroke-width=\"2.2\"/><text x=\"154\" y=\"170\" text-anchor=\"middle\" fill=\"var(--ink-faint, #6b675c)\" font-size=\"14\" style=\"font-family: Anybody, sans-serif; font-variation-settings: &quot;wdth&quot; 80, &quot;wght&quot; 500; letter-spacing: 0.42em;\">VU</text><g class=\"ds-vu-needle\"><path d=\"M 153.6 229.5 L 154.9 45.5 L 156.5 45.5 L 157.8 229.5 Z\" fill=\"#16150f\" opacity=\"0.18\"/><path d=\"M 151.9 228 L 153.15 44 L 154.85 44 L 156.1 228 Z\" fill=\"#16150f\"/></g></g><rect x=\"10\" y=\"10\" width=\"288\" height=\"192\" rx=\"3\" fill=\"url(#ds-vu-glass)\" pointer-events=\"none\"/><rect x=\"10\" y=\"10\" width=\"288\" height=\"192\" rx=\"3\" fill=\"none\" stroke=\"#0f0e0d\" stroke-opacity=\"0.5\"/><g class=\"ds-vu-peak\"><circle cx=\"276\" cy=\"180\" r=\"7\" fill=\"#d63a22\"/><circle cx=\"276\" cy=\"180\" r=\"7\" fill=\"none\" stroke=\"#7c1f11\"/></g><circle cx=\"276\" cy=\"180\" r=\"7.5\" fill=\"none\" stroke=\"#b5aa94\" stroke-width=\"1.5\"/><g><circle cx=\"14\" cy=\"14\" r=\"4.5\" fill=\"var(--brass-dark, #8a7845)\"/><circle cx=\"14\" cy=\"14\" r=\"4.5\" fill=\"none\" stroke=\"#3a3229\" stroke-width=\"0.8\"/><path d=\"M 11 14 L 17 14\" stroke=\"#2b241c\" stroke-width=\"1.3\" transform=\"rotate(-24 14 14)\"/></g><g><circle cx=\"294\" cy=\"14\" r=\"4.5\" fill=\"var(--brass-dark, #8a7845)\"/><circle cx=\"294\" cy=\"14\" r=\"4.5\" fill=\"none\" stroke=\"#3a3229\" stroke-width=\"0.8\"/><path d=\"M 291 14 L 297 14\" stroke=\"#2b241c\" stroke-width=\"1.3\" transform=\"rotate(61 294 14)\"/></g><g><circle cx=\"14\" cy=\"198\" r=\"4.5\" fill=\"var(--brass-dark, #8a7845)\"/><circle cx=\"14\" cy=\"198\" r=\"4.5\" fill=\"none\" stroke=\"#3a3229\" stroke-width=\"0.8\"/><path d=\"M 11 198 L 17 198\" stroke=\"#2b241c\" stroke-width=\"1.3\" transform=\"rotate(12 14 198)\"/></g><g><circle cx=\"294\" cy=\"198\" r=\"4.5\" fill=\"var(--brass-dark, #8a7845)\"/><circle cx=\"294\" cy=\"198\" r=\"4.5\" fill=\"none\" stroke=\"#3a3229\" stroke-width=\"0.8\"/><path d=\"M 291 198 L 297 198\" stroke=\"#2b241c\" stroke-width=\"1.3\" transform=\"rotate(-47 294 198)\"/></g></svg>",
+      "css": ".ds-vu { display: block; width: 100%; height: auto; } .ds-vu-needle { transform: rotate(calc((-30 + 60 * clamp(0, var(--vu-l, 0.07), 1.02)) * 1deg)); transform-box: view-box; transform-origin: 154px 228px; } .ds-vu-peak { opacity: clamp(0, calc((var(--vu-l, 0.07) - 0.708) * 7), 1); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Desk",
+    "overview": "The site is a mastering desk at night. The overhead lights are off. The room is lit by the meter bridge and one desk lamp. The body is warm anodised graphite, machined and bolted. The bright things are physical objects: ivory meter faces, white label tape, brass screws, a walnut end cheek. Nothing on this desk glows. Things are lit.\n\nThe world exists to state one claim as a physical fact. Two master movements sit side by side, labelled SPEED and JUDGMENT, with a lit LINK lamp between them. They are ganged, so they always read together. That is the studio's position without an adjective. Everything else on the page follows signal flow, because that is the order a desk is read in: master, sources, channels, outboard, returns, out.\n\nDensity is high and even. A console has no hero space and no decorative breathing room; it has panels packed with legible controls. Identity comes from the chassis itself — rails, plate legends, bay headers, screws — never from a label announcing a section. The build refuses the agency default it was measured against: dark hero, bento capability cards, logo marquee, one neon accent. Two rasters carry real material: walnut grain on the desk's end cheeks and brushed aluminium with one raking key light on the master module. Both were authored procedurally in a browser canvas, both ship as WebP, and both carry their full generation record in a .webp.json sidecar — because no image model exists on the build machine, and WebP has no text chunk to stamp provenance into.",
+    "keyCharacteristics": [
+      "Colour is functional hardware with exactly three roles: amber, green, red.",
+      "Elevation is one machined bevel, declared once, never a border plus a shadow.",
+      "Type is two faces: Anybody (variable wdth axis) and Archivo. No monospace.",
+      "Section identity lives in the chassis. No eyebrows, no kickers.",
+      "One motion system, driven by real visitor activity under VU ballistics.",
+      "Corners are machined: 2–4px on panels, full round only on things that are round in life."
+    ],
+    "rules": [
+      {
+        "name": "The Three Lamps Rule",
+        "section": "colors",
+        "body": "Colour on this desk is functional hardware with three roles and no fourth: amber means signal present, green means routed or available, red means past 0 dB and the one committing action. A new colour needs a new physical function on the panel, or it does not ship."
+      },
+      {
+        "name": "The Rationed Red Rule",
+        "section": "colors",
+        "body": "Red means one of two things and nothing else: the over-zone of a meter (the arc past 0 VU, the peak lamp above it, the top two segments of the peak ladder) or the single committing action. Red anywhere else is wrong, including error text, badges, and hover states."
+      },
+      {
+        "name": "The Lit, Not Glowing Rule",
+        "section": "colors",
+        "body": "Nothing emits light except a lamp. Colour arrives on a lamp cap, a printed face, or a piece of tape. No page-level colour wash, no neon, no gradient background."
+      },
+      {
+        "name": "The Named Shade Rule",
+        "section": "colors",
+        "body": "A chassis shade used in more than one place is a token with a stated role, not a hex repeated at two callsites. That is what --panel-sunk, --rail-lit, --shadow-deep, --specular, --ink-faint and --brass-dark are: each one names a physical condition — the floor of a recess, an edge catching the key, the inside of a bore, light on glass, faded print, metal in shade. Two of them carry a hard limit with the name: --shadow-deep is never ink, and --specular is never opaque."
+      },
+      {
+        "name": "The Paper Field Rule",
+        "section": "colors",
+        "body": "A region covered by paper flips the raw variables with [data-field=\"paper\"], so every vendored component inside it inherits ink on ivory. Never override paper colours per callsite."
+      },
+      {
+        "name": "The No Monospace Rule",
+        "section": "typography",
+        "body": "This system has no monospace family. Monospace worn as a costume for \"technical\" is out. Real measurements get data-numerals=\"tabular\", which sets font-variant-numeric: tabular-nums, so numbers never reflow between values while a needle moves."
+      },
+      {
+        "name": "The Eleven Pixel Floor Rule",
+        "section": "typography",
+        "body": "Legend type never goes below 11px (0.6875rem). Real silkscreen is smaller, but tracked uppercase at 10px stops being comfortably readable in this face, and a legend nobody can read is decoration. Character comes from the width axis and the tracking, not from shrinking further."
+      },
+      {
+        "name": "The Held Ramp Rule",
+        "section": "typography",
+        "body": "The fixed sizes on this desk are 30, 21, 15, 14.5, 14, 13.5, 13, 12 and 11px, and the fluid ones are the four display clamps listed above. A new size snaps to the nearest existing step; it does not land between two of them because a particular block looked a pixel tight. Every off-ramp value in the first build — 24, 19, 17 and 16px — was a local decision that never became a step, and each one made the panel read as assembled from different machines."
+      },
+      {
+        "name": "The Two-Line Title Floor Rule",
+        "section": "typography",
+        "body": "Channel-bank titles carry min-h-[1.84em]: two lines at the badge-type line-height of 0.92. Some titles wrap and their row-mates do not, so without the floor the copy blocks in one bank row start at different heights and the bank stops looking like one chassis. Do not delete it because the title above it happens to fit on one line."
+      },
+      {
+        "name": "The No Eyebrow Rule",
+        "section": "typography",
+        "body": "No eyebrows and no kickers anywhere. A small tracked uppercase line above a large line is a kicker; if a section needs that line, the line is the heading. Section identity belongs to the chassis: rails, plate legends, and bay headers."
+      },
+      {
+        "name": "The Width Axis Rule",
+        "section": "typography",
+        "body": "Condensed type comes from font-variation-settings: \"wdth\". Never transform: scaleX(), never a separate condensed family, never font-stretch on a face without the axis."
+      },
+      {
+        "name": "The Bridge Token Rule",
+        "section": "layout",
+        "body": "--bridge is the single source for the fixed header height (the flex row plus the 1px rail it is bolted to). desk-frame consumes it as padding-top; under-bridge consumes it as scroll-margin-top: calc(var(--bridge) + 1.5rem) so in-page anchors land below the bridge instead of behind it. Never hardcode the number, and never re-measure it per route."
+      },
+      {
+        "name": "The Score Line Rule",
+        "section": "layout",
+        "body": "Sibling modules that belong to the same bank share one panel face and are divided by a 1px score line. Do not turn a bank into a row of separate cards with their own backgrounds and gaps."
+      },
+      {
+        "name": "The One Bevel Rule",
+        "section": "elevation",
+        "body": "Elevation is declared once, by panel, panel-raised, or panel-recessed. Never a border plus a shadow on the same element; that pair is the ghost card this world was built to avoid. If a surface needs a new depth, it needs a new utility, not a local override."
+      },
+      {
+        "name": "The Cut Above Rule",
+        "section": "elevation",
+        "body": "Engraved text puts its dark edge above the glyph, where light does not reach, and a faint lit lip below it. A single dark shadow under a glyph reads as raised lettering, which is the opposite of a cut."
+      },
+      {
+        "name": "The One Motion System Rule",
+        "section": "components",
+        "body": "Extend the level engine or add nothing. A new moving thing reads --vu-l, --vu-r or --vu-drive; it does not start its own timer, its own requestAnimationFrame loop, or its own keyframe loop."
+      },
+      {
+        "name": "The Real Measurement Rule",
+        "section": "components",
+        "body": "A meter, ladder or readout shows either the visitor's own activity or a number the studio can stand behind. Never a fake metric dressed as an instrument reading."
+      },
+      {
+        "name": "The Two Units Rule",
+        "section": "components",
+        "body": "Anything the desk carries a matched pair of is specified twice, with real differences in the specification. A pair drawn from one definition is one object rendered twice, and it looks like it."
+      }
+    ],
+    "dos": [
+      "Do treat colour as hardware. Three roles only: amber #e8a020 for signal present, green #58b08a for routed or available, red #d63a22 for past 0 dB and the one committing action.",
+      "Do declare elevation once, with panel, panel-raised, or panel-recessed.",
+      "Do give a repeated chassis shade a name and a role instead of retyping the hex. --panel-sunk, --rail-lit, --shadow-deep, --specular, --ink-faint and --brass-dark each name a physical condition, and two of them state their own limit: --shadow-deep is a depth and never an ink, --specular is light and never opaque.",
+      "Do use data-numerals=\"tabular\" on every real measurement, count, and model number.",
+      "Do put section identity in the chassis: a rail with a left and right legend, a plate legend, or a bay header.",
+      "Do consume --bridge for anything that has to clear the fixed header, and add under-bridge to every section that is an in-page anchor target.",
+      "Do flip whole paper regions with [data-field=\"paper\"] rather than recolouring components one at a time.",
+      "Do keep the two VU movements specified separately, with their own glass vector, face tone, screw angles and resting deflection. The pair is two units, not one unit drawn twice.",
+      "Do keep min-h-[1.84em] on channel-bank titles. It is two lines at the 0.92 badge line-height, and it is the only reason the copy blocks in a bank row start level when one title wraps and its neighbours do not.",
+      "Do keep the recessed bay with tape strips inside it, even though a bay containing applied labels reads as three nested cards to a generic depth check. A patchbay is a recess in the chassis and it is labelled with printed tape stuck on top; the nesting is the object.",
+      "Do keep credential and legend lines uppercase at 32–37 characters — \"Volkswagen Financial Services\", \"Vilnius LT · 54.69°N 25.28°E\". A generic uppercase-length limit assumes running prose; these are silkscreened panel legends, which are uppercase in life and are read as labels, not sentences.",
+      "Do keep the featured blockquote at line-height: 1.14. It is display type at clamp(1.55rem, 3.1vw, 2.8rem), where body-copy leading floors do not apply; the same line at 1.4 stops holding together as a display block.",
+      "Do set the featured quote in sentence case even though the display recipe uppercases elsewhere. A 160-character quotation in caps becomes a shout and misrepresents how the referee wrote it. Display voice there comes from the face, the width axis, and the size.",
+      "Do read #000 and #fff in the built stylesheet as vendor baseline, not as system colour. Both come out of the vendored shadcn/tailwind.css and tw-animate-css imports, which this build does not author and does not fork. This system's own deepest value is --shadow-deep (#0a0908) and its own white is --specular (#ffffff), which appears only as light on glass at 0.20 opacity or less.",
+      "Do draw hardware as real SVG geometry with real travel and real marks.",
+      "Do name every action in plain words. The console lives in the hardware, not in the vocabulary.",
+      "Do stamp provenance beside any raster this build authors. Both shipped textures ship as WebP with a .webp.json sidecar, because WebP has no text chunk to stamp into. Each sidecar carries the full generation record — public/textures/walnut.webp (48×1024, lossless, 13.7KB, every along-length term periodic in the tile height so it repeats down the page with no seam) and public/textures/chassis.webp (1600×620, quality 90, 39.6KB, one baked raking key light, and the note that its grain amplitude was chosen by looking at the rendered page rather than by maximising the metric).",
+      "Do keep components/ui/ to what is actually used. It holds button.tsx and sheet.tsx, and button.tsx is there only because sheet.tsx uses it for the close control. A vendored component nobody renders is a second style vocabulary waiting to be picked up."
+    ],
+    "donts": [
+      "Don't use red outside a meter's over-zone or the commit lamp. Not for errors, not for badges, not for emphasis.",
+      "Don't put a border and a shadow on the same surface.",
+      "Don't set anything in --shadow-deep, and don't use --specular at full opacity. One is a hole, the other is a highlight.",
+      "Don't add a monospace family. There is none, and monospace as a costume for \"technical\" is out.",
+      "Don't write an eyebrow, a kicker, or an \"Our Services\"-style tracked line above a heading. If the section needs that line, make it the heading.",
+      "Don't take legend type below 11px.",
+      "Don't introduce a type size off the ramp. The steps are 30, 21, 15, 14.5, 14, 13.5, 13, 12 and 11px plus the four display clamps; snap to the nearest one.",
+      "Don't condense type with transform: scaleX(). Use Anybody's wdth axis.",
+      "Don't hardcode the header height. It is --bridge, at every breakpoint.",
+      "Don't start a second animation loop, a timed keyframe loop, or a scroll library. Extend the level engine.",
+      "Don't change REST_L or REST_R without changing the matching @property initial value in app/globals.css. The registered value is what the page shows before hydration and under reduced motion.",
+      "Don't collapse the UNIT table in components/desk/vu-meter.tsx into one shared definition, and don't equalise the two rest values. The difference is the point.",
+      "Don't feed a meter, ladder, or readout with invented data.",
+      "Don't tile public/textures/chassis.webp. It carries one baked key light, so chassis-face stretches it to the module (background-size: 100% 100%, no repeat); tiling turns one light into many.",
+      "Don't re-encode public/textures/walnut.webp lossily. It is lossless because artefacts at the tile boundary would put a seam in a texture whose whole point is not having one.",
+      "Don't restore the 17 client logo rasters in public/logos/ to the patchbay as they are. They are opaque 200×200 files with baked backgrounds, nine dark and eight light, so no single card colour holds them and the wall reads as mismatched tiles. The bay is name-led on printed tape instead. Marks return only when transparent, single-weight versions arrive.",
+      "Don't turn the channel bank into separate cards. One chassis, scored by a 1px line.",
+      "Don't make an empty state apologise. An unfinished bay ships with its tape printed and nothing patched into it."
+    ]
+  }
+}
