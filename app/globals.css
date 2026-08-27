@@ -18,7 +18,12 @@
 /* Typed so the ballistics engine can push numbers 60x/second without the engine
  * re-parsing strings, and so untouched needles have a resting value even before
  * any script runs — which is the value reduced-motion users keep. The two
- * channels rest apart on purpose; see REST_L / REST_R in level-engine.tsx. */
+ * channels rest apart on purpose; see REST_L / REST_R in level-engine.tsx.
+ *
+ * `inherits: true` is what lets the engine set a value on a needle group and
+ * have the shapes inside it read it. The engine writes to those groups, never
+ * to the root: a custom property set on the root invalidates computed style for
+ * the whole document on every frame. See level-engine.tsx. */
 @property --vu-l {
   syntax: "<number>";
   inherits: true;

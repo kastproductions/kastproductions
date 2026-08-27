@@ -315,35 +315,36 @@ export function Tape({
  * The bridge's peak ladder. Twelve segments reading the same drive every
  * needle reads, so the header is part of the instrument rather than a bar
  * pinned above it.
+ *
+ * Each lit segment carries `data-vu="drive"`. That is how the level engine
+ * finds them: it writes `--vu-drive` onto the segments themselves instead of
+ * onto the document element, because a custom property set on the root
+ * invalidates computed style for the whole page on every frame.
+ *
+ * A segment's threshold, tone and finished opacity expression never change, so
+ * they are resolved once here rather than 12 times per render of the bridge.
  */
-const LADDER = Array.from({ length: 12 }, (_, index) => {
-  const threshold = index / 12;
-  return {
-    threshold,
-    key: index,
-    tone:
-      index >= 10
-        ? "bg-over"
-        : index >= 7
-          ? "bg-signal"
-          : "bg-cue",
-  };
-});
+const LADDER = Array.from({ length: 12 }, (_, index) => ({
+  key: index,
+  className: cn(
+    "absolute inset-0 rounded-[1px]",
+    index >= 10 ? "bg-over" : index >= 7 ? "bg-signal" : "bg-cue",
+  ),
+  style: {
+    opacity: `clamp(0, calc((var(--vu-drive) - ${(index / 12).toFixed(4)}) * 24), 1)`,
+  },
+}));
 
 export function PeakLadder({ className }: { className?: string }) {
   return (
-    <div
-      aria-hidden
-      className={cn("flex items-end gap-[3px]", className)}
-    >
+    <div aria-hidden className={cn("flex items-end gap-[3px]", className)}>
       {LADDER.map((segment) => (
         <span key={segment.key} className="relative block h-4 w-[3px]">
           <span className="absolute inset-0 rounded-[1px] bg-rail/45" />
           <span
-            className={cn("absolute inset-0 rounded-[1px]", segment.tone)}
-            style={{
-              opacity: `clamp(0, calc((var(--vu-drive) - ${segment.threshold.toFixed(4)}) * 24), 1)`,
-            }}
+            data-vu="drive"
+            className={segment.className}
+            style={segment.style}
           />
         </span>
       ))}

@@ -13,8 +13,12 @@ import { cn } from "@/lib/utils";
  * trimmed to the bezel itself so the caller gets no invisible padding to fight
  * when it silkscreens the channel legend underneath.
  *
- * The whole face is static markup. Only the needle group reads `--vu-l` /
- * `--vu-r`, so the meter costs nothing until the engine moves it.
+ * The whole face is static markup. Two groups move: the needle and the peak
+ * lamp. Both carry `data-vu={channel}`, which is how the engine finds them.
+ * It writes `--vu-l` / `--vu-r` onto those groups rather than onto the document
+ * element, because a custom property set on the root invalidates computed style
+ * for every element in the page. Measured on this page: 2200ms of style recalc
+ * per 3s of movement from the root, 162ms writing to the readers instead.
  */
 
 const PIVOT_X = 154;
@@ -199,8 +203,8 @@ export function VuMeter({ channel, label, className }: VuMeterProps) {
             return (
               <text
                 key={`label-${db}`}
-                x={p.x}
-                y={p.y}
+                x={p.x.toFixed(2)}
+                y={p.y.toFixed(2)}
                 textAnchor="middle"
                 dominantBaseline="middle"
                 fill="#16150f"
@@ -238,7 +242,7 @@ export function VuMeter({ channel, label, className }: VuMeterProps) {
          * pointer stops: a pointer that overshoots its own scale reads as a
          * broken movement. Shadow first, because a real pointer sits above the
          * face and casts onto it, and both travel in the same rotated group. */}
-        <g className={channel === "l" ? "needle-l" : "needle-r"}>
+        <g className={channel === "l" ? "needle-l" : "needle-r"} data-vu={channel}>
           <path
             d="M 153.6 229.5 L 154.9 45.5 L 156.5 45.5 L 157.8 229.5 Z"
             fill="#16150f"
@@ -274,6 +278,7 @@ export function VuMeter({ channel, label, className }: VuMeterProps) {
 
       {/* Peak lamp: dark until the needle actually passes 0 VU. */}
       <g
+        data-vu={channel}
         style={{
           opacity: `clamp(0, calc((var(--vu-${channel}) - 0.708) * 7), 1)`,
         }}

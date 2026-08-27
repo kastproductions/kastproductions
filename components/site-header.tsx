@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import NextLink from "next/link";
 import dynamic from "next/dynamic";
 import { AlignRight } from "lucide-react";
+import { ChannelLegends } from "@/components/channel-legends";
 import { PeakLadder, Screw } from "@/components/desk/hardware";
 import { RecordButton } from "@/components/desk/record-button";
-import { NAV_ITEMS } from "@/lib/nav";
-import { cn } from "@/lib/utils";
 
 /* The sheet (radix Dialog + focus scope) loads only when the menu is used. */
 const MenuSheet = dynamic(() => import("@/components/menu-sheet"), {
@@ -26,38 +25,14 @@ function preloadMenuSheet() {
  * job here. The channel legends are the navigation, printed on label tape, and
  * the lamp beside the legend lights for the section you are actually in — so
  * the header is an instrument reading the page, not a bar sitting above it.
+ *
+ * The legends own that reading. Nothing here changes while you scroll, so
+ * nothing here re-renders while you scroll.
  */
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [menuMounted, setMenuMounted] = useState(false);
-  const [active, setActive] = useState<string | null>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const sections = NAV_ITEMS.map((item) =>
-      document.getElementById(item.id),
-    ).filter((element): element is HTMLElement => element !== null);
-    if (sections.length === 0) return;
-
-    // A thin band across the middle of the viewport is the root, so at most one
-    // section is ever "the one you are reading". The set is tracked rather than
-    // just latched on: latching leaves a lamp lit after you scroll back to the
-    // master section, which claims you are reading something you left.
-    const visible = new Set<string>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) visible.add(entry.target.id);
-          else visible.delete(entry.target.id);
-        }
-        const current = NAV_ITEMS.find((item) => visible.has(item.id));
-        setActive(current ? current.id : null);
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    for (const section of sections) observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <header className="panel-raised fixed inset-x-0 top-0 z-50 rounded-none">
@@ -99,42 +74,7 @@ export function SiteHeader() {
         </NextLink>
 
         {/* Channel legends. */}
-        <nav
-          aria-label="Sections"
-          className="hidden flex-1 items-center justify-center gap-1.5 lg:flex"
-        >
-          {NAV_ITEMS.map((item) => {
-            const isActive = active === item.id;
-            return (
-              <a
-                key={item.id}
-                href={`/#${item.id}`}
-                aria-current={isActive ? "true" : undefined}
-                className="group flex flex-col items-center gap-1.5 rounded-sm px-1 py-1"
-              >
-                <span
-                  aria-hidden
-                  className={cn(
-                    "h-1.5 w-1.5 rounded-full transition-colors duration-300",
-                    isActive
-                      ? "bg-signal shadow-[0_0_0_2px_rgba(232,160,32,0.18)]"
-                      : "bg-rail group-hover:bg-silk-dim",
-                  )}
-                />
-                <span
-                  className={cn(
-                    "tape legend-sm block px-2.5 py-1 transition-colors duration-300",
-                    isActive
-                      ? "text-ink"
-                      : "text-ink-dim group-hover:text-ink",
-                  )}
-                >
-                  {item.label}
-                </span>
-              </a>
-            );
-          })}
-        </nav>
+        <ChannelLegends />
 
         <div className="ml-auto flex items-center gap-3 sm:gap-4 md:gap-5 lg:ml-0">
           <div className="hidden flex-col items-end gap-1.5 sm:flex">

@@ -52,6 +52,7 @@ app/                    # Next.js App Router pages
   contact/page.tsx     # The output stage
 components/
   site-header.tsx      # The meter bridge; lazy-loads menu-sheet (client)
+  channel-legends.tsx  # The bridge nav; owns the scroll-driven lamp (client)
   menu-sheet.tsx       # Mobile nav Sheet, code-split via next/dynamic (client)
   analytics.tsx        # Google Analytics component
   desk/
@@ -61,7 +62,7 @@ components/
                        #   Tape, PeakLadder
     record-button.tsx  # The commit control (the only red)
     site-footer.tsx    # The chassis bottom plate
-  ui/                  # shadcn/ui primitives (button, sheet, avatar)
+  ui/                  # shadcn/ui primitives (button, sheet)
 lib/
   nav.ts               # Bridge legends (as ids) + the email constants
   utils.ts             # cn() helper (clsx + tailwind-merge)
@@ -113,6 +114,13 @@ short version. There is NO theme switching and no light mode.
   ballistics. Needles, lamps and the peak ladder read those. Do not add
   independent animations; extend the engine or use nothing. The engine never
   starts under `prefers-reduced-motion`.
+- **A `--vu-*` reader must carry `data-vu`.** The engine writes each number
+  onto the elements that read it, found by `data-vu="l" | "r" | "drive"`, and
+  never onto `:root`. A custom property set on the root invalidates computed
+  style for every element in the document on every frame: measured on the home
+  page, 973ms of style recalculation per 3s of movement from the root against
+  72ms writing to the 16 readers. Add a consumer without `data-vu` and it will
+  sit at its `@property` initial value and never move.
 - **`--bridge`** is the fixed header's height. Pages clear it with `desk-frame`;
   anchors clear it with `under-bridge`. Never hardcode the number.
 
@@ -159,9 +167,16 @@ import { cn } from "@/lib/utils";
 ### Component Patterns
 
 - Server components by default; `"use client"` only where state or events are
-  needed (currently `level-engine.tsx`, `site-header.tsx`, `menu-sheet.tsx` and
-  `analytics.tsx`). Every drawn part in `components/desk/` except the engine is
-  a server component, so the hardware ships as markup and costs no JS.
+  needed (currently `level-engine.tsx`, `site-header.tsx`, `channel-legends.tsx`,
+  `menu-sheet.tsx` and `analytics.tsx`). Nothing in `components/desk/` except the
+  engine declares `"use client"`, but a module a client component imports joins
+  the client graph anyway: `Screw`, `PeakLadder` and `RecordButton` reach the
+  browser through `site-header.tsx` and cost ~2.3KB. `Rail`, `PanelLink`,
+  `RackEar`, `Knob`, `Jack`, `Fader` and `Tape` are server-only and ship as
+  markup. Import a desk part into a client component and you ship it.
+- Keep scroll-driven state in the smallest component that reads it. The active
+  section lamp lives in `channel-legends.tsx`, not in `site-header.tsx`, so
+  scrolling re-renders 15 elements instead of the whole bridge's 78.
 - Colocate section components and content data in `app/page.tsx` until a
   second consumer exists.
 - Load interaction-only UI on demand: the mobile menu Sheet is imported via
@@ -207,7 +222,11 @@ This is a static site (`output: 'export'`). **DO NOT use**:
 - API routes (`app/api/`)
 - Server Actions
 - Dynamic routes without `generateStaticParams`
-- `next/image` optimization (config sets `unoptimized: true`)
+- `next/image`. `output: 'export'` forces `images.unoptimized`, so `next/image`
+  emits the same bare `<img>` a hand-written one does, with no `srcset`, and
+  charges ~14KB of client runtime on every route that imports it. Use a plain
+  `<img>` with `width`, `height`, `loading="lazy"` and `decoding="async"`. The
+  `@next/next/no-img-element` lint rule is off for this reason.
 
 ## Version Pins (do not "fix" these)
 

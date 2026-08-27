@@ -27,7 +27,6 @@
  * ==========================================================================
  */
 
-import Image from "next/image";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import {
   Fader,
@@ -677,11 +676,17 @@ function Returns() {
             {featured.message}
           </blockquote>
           <figcaption className="mt-8 flex items-center gap-4">
-            <Image
+            {/* A plain img, not next/image. `images.unoptimized` is forced by
+             * `output: "export"`, so next/image emits this exact markup with no
+             * srcset — and charges 14KB of client runtime on this route alone
+             * for the privilege. Both avatars are fixed-size and below the fold. */}
+            <img
               src={featured.imageUrl}
               alt=""
               width={112}
               height={112}
+              loading="lazy"
+              decoding="async"
               className="size-14 rounded-[2px] object-cover shadow-[0_1px_3px_rgba(0,0,0,0.35)] md:size-16"
             />
             <span className="flex flex-col gap-1">
@@ -703,11 +708,13 @@ function Returns() {
               className="grid gap-4 border-b border-face-line py-7 md:grid-cols-[16rem_1fr] md:gap-10 md:py-9"
             >
               <div className="flex items-center gap-3.5">
-                <Image
+                <img
                   src={item.imageUrl}
                   alt=""
                   width={96}
                   height={96}
+                  loading="lazy"
+                  decoding="async"
                   className="size-11 rounded-[2px] object-cover shadow-[0_1px_2px_rgba(0,0,0,0.3)]"
                 />
                 <span className="flex min-w-0 flex-col gap-1">
