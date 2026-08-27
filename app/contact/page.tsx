@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import NextLink from "next/link";
+import { ArrowLeft } from "lucide-react";
+import { Jack, PanelLink, Rail } from "@/components/desk/hardware";
+import { RecordButton } from "@/components/desk/record-button";
+import { SiteFooter } from "@/components/desk/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { EMAIL, EMAIL_HREF } from "@/lib/nav";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -14,28 +19,96 @@ export const metadata: Metadata = {
   },
 };
 
+/** The output stage on its own page: one destination, one control. */
 export default function Contact() {
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center gap-6 px-6 text-center">
-      <p className="flex items-center gap-2.5 font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">
-        <span aria-hidden className="size-1.5 rounded-full bg-klein" />
-        Contact — always open
-      </p>
-      <h1 className="font-display text-4xl font-semibold tracking-[-0.02em] text-balance md:text-6xl">
-        Say hello<span className="text-klein">.</span>
-      </h1>
-      <a
-        href="mailto:hello@kastproductions.com"
-        className="font-display text-xl font-medium tracking-tight underline decoration-2 underline-offset-8 transition-colors hover:text-klein md:text-3xl"
+    <>
+      <SiteHeader />
+      <main
+        id="top"
+        tabIndex={-1}
+        className="desk-frame outline-none"
       >
-        hello@kastproductions.com
-      </a>
-      <NextLink
-        href="/"
-        className="font-mono text-xs tracking-[0.14em] text-muted-foreground uppercase underline underline-offset-4 transition-colors hover:text-klein"
-      >
-        ← Back home
-      </NextLink>
-    </main>
+        <section className="mx-auto w-full max-w-[86rem] px-4 py-6 sm:px-6 md:px-10 md:py-10">
+          <div className="chassis-face plate-settle relative overflow-hidden rounded-sm">
+            <Rail
+              left="Master out"
+              right="Line level · balanced"
+              className="border-b border-[#191817]"
+            />
+
+            <div className="relative px-4 py-20 text-center md:px-10 md:py-28">
+              <svg
+                aria-hidden
+                viewBox="0 0 1200 320"
+                preserveAspectRatio="none"
+                className="pointer-events-none absolute inset-0 size-full opacity-70"
+              >
+                <path
+                  d="M 1080 96 C 900 96 980 268 760 268 C 520 268 420 150 120 150"
+                  fill="none"
+                  stroke="#131211"
+                  strokeWidth="13"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 1080 96 C 900 96 980 268 760 268 C 520 268 420 150 120 150"
+                  fill="none"
+                  stroke="#2e2b27"
+                  strokeWidth="9"
+                  strokeLinecap="round"
+                />
+                <path
+                  d="M 1080 94 C 900 94 980 266 760 266 C 520 266 420 148 120 148"
+                  fill="none"
+                  stroke="#413c36"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+
+              <div className="relative">
+                <h1
+                  className="badge-type text-balance text-silk"
+                  style={{ fontSize: "clamp(2.1rem, 5vw, 3.8rem)" }}
+                >
+                  Say hello
+                </h1>
+                <a
+                  href={EMAIL_HREF}
+                  className="group/mail badge-type mt-8 inline-block text-silk transition-colors duration-200 hover:text-face"
+                  style={{ fontSize: "clamp(1.25rem, 4.2vw, 3rem)" }}
+                >
+                  <span className="underline decoration-signal/50 decoration-[3px] underline-offset-[0.14em] transition-colors duration-200 group-hover/mail:decoration-signal">
+                    {EMAIL}
+                  </span>
+                </a>
+
+                <div className="mt-12 flex flex-col items-center gap-6">
+                  <RecordButton href={EMAIL_HREF} size="lg" />
+                  <span className="flex items-center gap-3">
+                    <Jack className="size-5" />
+                    <span className="legend-sm text-silk-dim">
+                      Vilnius, LT · available for new work
+                    </span>
+                  </span>
+                  <PanelLink href="/" className="mt-2">
+                    <ArrowLeft className="size-4" aria-hidden />
+                    Back to the desk
+                  </PanelLink>
+                </div>
+              </div>
+            </div>
+
+            <Rail
+              left="© KastProductions"
+              right="Output stage"
+              className="border-t border-[#3a3733]"
+            />
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
   );
 }

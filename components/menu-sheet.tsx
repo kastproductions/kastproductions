@@ -1,22 +1,15 @@
 "use client";
 
 import type { MouseEvent, RefObject } from "react";
-import { Button } from "@/components/ui/button";
+import { RecordButton } from "@/components/desk/record-button";
+import { Screw } from "@/components/desk/hardware";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-
-const EMAIL_HREF = "mailto:hello@kastproductions.com";
-
-const NAV_ITEMS = [
-  { label: "capabilities", href: "#capabilities" },
-  { label: "services", href: "#services" },
-  { label: "clients", href: "#clients" },
-  { label: "testimonials", href: "#testimonials" },
-];
+import { EMAIL_HREF, NAV_ITEMS } from "@/lib/nav";
 
 interface MenuSheetProps {
   open: boolean;
@@ -25,6 +18,7 @@ interface MenuSheetProps {
   returnFocusRef: RefObject<HTMLButtonElement | null>;
 }
 
+/** The bay pulled out of the rack: the same channel legends, stacked. */
 export default function MenuSheet({
   open,
   onOpenChange,
@@ -32,16 +26,20 @@ export default function MenuSheet({
 }: MenuSheetProps) {
   const handleNavClick = (
     event: MouseEvent<HTMLAnchorElement>,
-    href: string,
+    id: string,
   ) => {
+    const target = document.getElementById(id);
+    // On an interior page the section is not in this document, so let the
+    // anchor navigate home instead of swallowing the click.
+    if (!target) return;
     event.preventDefault();
     onOpenChange(false);
     // The sheet locks body scroll, so scroll only after it releases (~200ms
     // close animation). scroll-behavior comes from CSS (motion-safe), so
     // reduced-motion users get an instant jump.
     window.setTimeout(() => {
-      document.getElementById(href.slice(1))?.scrollIntoView({ block: "start" });
-      history.replaceState(null, "", href);
+      target.scrollIntoView({ block: "start" });
+      history.replaceState(null, "", `#${id}`);
     }, 240);
   };
 
@@ -49,42 +47,55 @@ export default function MenuSheet({
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="w-full max-w-full overscroll-contain sm:max-w-sm"
+        className="panel w-full max-w-full gap-0 overscroll-contain border-l-0 shadow-[inset_1px_0_0_#3d3936] sm:max-w-sm"
         onCloseAutoFocus={(event) => {
           event.preventDefault();
           returnFocusRef.current?.focus({ preventScroll: true });
         }}
       >
-        <SheetHeader>
-          <SheetTitle className="text-left font-mono text-xs font-medium tracking-[0.18em] uppercase">
-            KastProductions<span className="text-klein">.</span>
+        <SheetHeader className="flex-row items-center gap-2.5 px-4 pt-5 pb-5">
+          <span
+            aria-hidden
+            className="h-8 w-1.5 rounded-[1px] bg-gradient-to-b from-wood via-wood to-wood-dark"
+          />
+          <SheetTitle
+            className="text-left text-[21px] text-silk"
+            style={{
+              fontFamily: "var(--font-anybody), sans-serif",
+              fontVariationSettings: '"wdth" 84, "wght" 700',
+              letterSpacing: "0.02em",
+              textTransform: "uppercase",
+            }}
+          >
+            KastProductions
           </SheetTitle>
+          <Screw className="ml-auto" />
         </SheetHeader>
-        <nav aria-label="Sections" className="flex flex-col border-t">
-          {NAV_ITEMS.map((item, index) => (
+
+        <nav aria-label="Sections" className="flex flex-col gap-2 px-4">
+          {NAV_ITEMS.map((item) => (
             <a
-              key={item.href}
-              href={item.href}
-              onClick={(event) => handleNavClick(event, item.href)}
-              className="group flex items-baseline gap-4 border-b px-4 py-5 transition-colors hover:bg-muted active:bg-muted"
+              key={item.id}
+              href={`/#${item.id}`}
+              onClick={(event) => handleNavClick(event, item.id)}
+              className="group panel-recessed flex items-center gap-3 rounded-sm px-3 py-3.5"
             >
-              <span className="font-mono text-[11px] text-muted-foreground transition-colors group-hover:text-klein">
-                /0{index + 1}
-              </span>
-              <span className="font-display text-2xl font-medium capitalize transition-colors group-hover:text-klein">
+              <span
+                aria-hidden
+                className="size-2 shrink-0 rounded-full bg-rail transition-colors duration-300 group-hover:bg-signal group-active:bg-signal"
+              />
+              <span className="tape legend block flex-1 px-2.5 py-1.5 text-ink">
                 {item.label}
               </span>
             </a>
           ))}
         </nav>
-        <div className="mt-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-          <Button
-            asChild
-            variant="klein"
-            className="h-12 w-full font-mono text-[11px] tracking-[0.14em] uppercase"
-          >
-            <a href={EMAIL_HREF}>Start a project</a>
-          </Button>
+
+        <div className="mt-auto px-4 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
+          <RecordButton
+            href={EMAIL_HREF}
+            className="w-full justify-center py-4"
+          />
         </div>
       </SheetContent>
     </Sheet>

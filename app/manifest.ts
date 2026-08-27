@@ -4,14 +4,14 @@ export const dynamic = "force-static";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "KastProductions — Design & Frontend Engineering Studio",
+    name: "KastProductions — AI-native product studio",
     short_name: "KastProductions",
     description:
-      "Independent design and frontend engineering studio in Vilnius.",
+      "AI-native product studio in Vilnius. Senior judgment at the speed of AI.",
     start_url: "/",
     display: "standalone",
-    background_color: "#fbfbfb",
-    theme_color: "#fbfbfb",
+    background_color: "#151413",
+    theme_color: "#151413",
     icons: [{ src: "/favicon.ico", sizes: "any", type: "image/x-icon" }],
   };
 }

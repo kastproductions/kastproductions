@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Bricolage_Grotesque } from "next/font/google";
+import { Anybody, Archivo } from "next/font/google";
 import { Analytics } from "@/components/analytics";
+import { LevelEngine } from "@/components/desk/level-engine";
 import "./globals.css";
 
 const SITE_URL = "https://www.kastproductions.com";
@@ -8,35 +9,66 @@ const SITE_NAME = "KastProductions";
 const DESCRIPTION =
   "AI-native product studio in Vilnius. Senior designers and engineers who use AI across the build to ship high-quality websites, APIs and AI features — fast.";
 
+/*
+ * The direction contract, emitted into the built markup so it can be audited
+ * after the production build rather than taken on trust. React has no comment
+ * node, so it rides in a hidden element in the root layout — not inside a
+ * slotted child, where a compiler could strip it.
+ */
+const DIRECTION_CONTRACT = `
+  IMPECCABLE DIRECTION CONTRACT — seed key kastprod-redesign-01
+
+  THESIS: Speed and judgment are ganged on this desk, not traded against each
+  other. The page is the instrument that proves it. Refuses the agency default:
+  dark hero, bento capability cards, logo marquee, one neon accent.
+
+  OWN-WORLD: Anodised graphite chassis, machined bevels, ivory meter faces and
+  printed label tape, walnut end cheek, brass screws. Anybody condensed as
+  silkscreen legend, Archivo as body. Colour is hardware: amber = signal
+  present, green = routed, red = past 0 dB and the one committing action.
+
+  STORY: A founder recognises a real instrument, reads 17 patched clients and
+  six named references, and sends one email.
+
+  FIRST VIEWPORT: The master section. Two large VU meters centre stage, labelled
+  SPEED and JUDGMENT, with a lit LINK lamp between them; four corner readouts on
+  the frame; the claim set below in condensed badging; the red commit button at
+  the bottom of the module.
+
+  FORM: Mixing console / control surface — candidate 5 of 7 on the grounded
+  list, assigned by concept-seed, seed key kastprod-redesign-01.
+
+  FINISH: unreviewed and undocumented is unfinished; this build ends with the
+  finish review, the verdict, DESIGN.md, and every shipping raster carrying its
+  provenance.
+`;
+
 export const viewport: Viewport = {
-  themeColor: "#fbfbfb",
-  colorScheme: "light",
+  themeColor: "#151413",
+  colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
 };
 
-const geist = Geist({
+/* Anybody carries a width axis, so the console's condensed silkscreen is a
+ * real cut of the face rather than type squashed with a transform. */
+const anybody = Anybody({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-geist-sans",
+  axes: ["wdth"],
+  variable: "--font-anybody",
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const archivo = Archivo({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-geist-mono",
-  display: "swap",
-});
-
-const bricolage = Bricolage_Grotesque({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-bricolage",
+  variable: "--font-archivo",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "KastProductions — AI-Native Product Studio",
+    default: "KastProductions — AI-native product studio",
     template: "%s — KastProductions",
   },
   description: DESCRIPTION,
@@ -46,42 +78,44 @@ export const metadata: Metadata = {
   publisher: SITE_NAME,
   category: "technology",
   keywords: [
-    "AI-native studio",
-    "AI integration",
-    "AI development",
+    "AI-native product studio",
+    "AI product development",
     "LLM integration",
     "RAG",
     "AI agents",
-    "frontend development",
     "Next.js development",
     "React development",
+    "TypeScript",
     "UI/UX design",
-    "full-stack development",
+    "API development",
+    "React Native",
+    "Playwright testing",
     "Vilnius",
     "Lithuania",
+    "product studio",
   ],
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: SITE_URL,
+    url: "/",
     siteName: SITE_NAME,
-    title: "KastProductions — AI-Native Product Studio",
+    title: "KastProductions — AI-native product studio",
     description: DESCRIPTION,
+    locale: "en",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "KastProductions — AI-native product studio in Vilnius",
+        alt: "KastProductions — AI-native product studio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "KastProductions — AI-Native Product Studio",
+    title: "KastProductions — AI-native product studio",
     description: DESCRIPTION,
     images: ["/og.png"],
   },
@@ -91,9 +125,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
-      "max-video-preview": -1,
     },
   },
   icons: {
@@ -155,11 +189,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={`${geist.variable} ${geistMono.variable} ${bricolage.variable}`}
-    >
+    <html lang="en" className={`${archivo.variable} ${anybody.variable}`}>
       <body>
+        <div
+          hidden
+          dangerouslySetInnerHTML={{ __html: `<!--${DIRECTION_CONTRACT}-->` }}
+        />
+        <LevelEngine />
         {children}
         <script
           type="application/ld+json"

@@ -2,12 +2,42 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/*
+ * ==========================================================================
+ * THE DESK — KastProductions
+ * ==========================================================================
+ * A mastering room at night: overheads off, the room lit by the meter bridge
+ * and one desk lamp. The chassis is warm anodised graphite. The bright things
+ * are physical: ivory meter faces, white label tape, brass screws, a walnut
+ * end cheek. Colour is functional hardware, never mood — amber means signal
+ * present, green means routed, and red exists only past 0 dB and on the one
+ * irreversible action. Nothing here glows; things are lit.
+ * ==========================================================================
+ */
+
+/* Typed so the ballistics engine can push numbers 60x/second without the engine
+ * re-parsing strings, and so untouched needles have a resting value even before
+ * any script runs — which is the value reduced-motion users keep. The two
+ * channels rest apart on purpose; see REST_L / REST_R in level-engine.tsx. */
+@property --vu-l {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.07;
+}
+@property --vu-r {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0.098;
+}
+@property --vu-drive {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
-  --font-display: var(--font-bricolage);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-archivo);
+  --font-display: var(--font-anybody);
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -28,75 +58,138 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Klein — the single electric accent, used boldly as ink and as field. */
-  --color-klein: var(--klein);
-  --color-klein-foreground: var(--klein-foreground);
-  --color-klein-soft: var(--klein-soft);
-  /* Back-compat alias: existing markup used `blueprint` for the accent. */
-  --color-blueprint: var(--klein);
+  /* --- Chassis: the machined body of the desk ------------------------- */
+  --color-desk: var(--desk);
+  --color-panel-sunk: var(--panel-sunk);
+  --color-panel: var(--panel);
+  --color-panel-raised: var(--panel-raised);
+  --color-bevel: var(--bevel);
+  --color-rail: var(--rail);
+  --color-rail-lit: var(--rail-lit);
+  --color-shadow-deep: var(--shadow-deep);
+  --color-specular: var(--specular);
 
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  /* --- Ink on metal --------------------------------------------------- */
+  --color-silk: var(--silk);
+  --color-silk-dim: var(--silk-dim);
+
+  /* --- Paper: meter faces, tape, track sheets ------------------------- */
+  --color-face: var(--face);
+  --color-face-2: var(--face-2);
+  --color-face-line: var(--face-line);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-ink-faint: var(--ink-faint);
+
+  /* --- Materials ------------------------------------------------------ */
+  --color-wood: var(--wood);
+  --color-wood-dark: var(--wood-dark);
+  --color-brass: var(--brass);
+  --color-brass-dark: var(--brass-dark);
+
+  /* --- Functional colour. Three roles, no fourth. --------------------- */
+  --color-signal: var(--signal); /* amber — signal present, active strip */
+  --color-cue: var(--cue); /* green — routed, patched, available */
+  --color-over: var(--over); /* red — past 0 dB, and the commit action */
+
+  --radius-sm: 2px;
+  --radius-md: 3px;
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-  --animate-marquee: marquee var(--duration) infinite linear;
-  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
-  @keyframes marquee {
-  from {
-    transform: translateX(0);
-    }
-  to {
-    transform: translateX(calc(-100% - var(--gap)));
-    }
-  }
-  @keyframes marquee-vertical {
-  from {
-    transform: translateY(0);
-    }
-  to {
-    transform: translateY(calc(-100% - var(--gap)));
-    }
+  --radius-xl: 8px;
+  --radius-2xl: 12px;
+  --radius-3xl: 16px;
+}
+
+:root {
+  --desk: #151413; /* the shadow between bays */
+  --panel-sunk: #1c1a19; /* the bottom of a recess, below the panel face */
+  --panel: #232120; /* main panel face */
+  --panel-raised: #2c2a27; /* a module lifted off the panel */
+  --bevel: #3d3936; /* machined edge highlight */
+  --rail: #4a4641; /* rack rail, jack rings */
+  --rail-lit: #5d564e; /* the top edge of a ring or rail, catching the key */
+  --shadow-deep: #0a0908; /* the inside of a jack bore; never used as ink */
+  --specular: #ffffff; /* white light on glass, only ever at low opacity */
+
+  --silk: #d6d1c7; /* silkscreened legend — 10.5:1 on panel, 6.7:1 on raised */
+  --silk-dim: #9b958a; /* secondary legend — 5.4:1 on panel, 4.8:1 on raised */
+
+  --face: #efe9dc; /* meter face / paper field */
+  --face-2: #e6dfcf; /* second paper tone, track-sheet fill */
+  --face-line: #cfc6b2; /* ruled line on paper */
+  --ink: #16150f; /* working ink — 15:1 on face */
+  --ink-dim: #55524a; /* secondary ink — 6.4:1 on face */
+  --ink-faint: #6b675c; /* the faded print of a movement mark; non-essential */
+
+  --wood: #6d4526; /* walnut end cheek */
+  --wood-dark: #452a15;
+  --brass: #b39355; /* jack collars in full light */
+  --brass-dark: #8a7845; /* screw heads and collars in the panel's own shade */
+
+  --signal: #e8a020; /* 7.2:1 on panel */
+  --cue: #58b08a; /* 6.1:1 on panel */
+  --over: #d63a22; /* non-text / white-on-red only (4.7:1 reversed) */
+
+  /* shadcn semantics, mapped onto the chassis */
+  --background: var(--desk);
+  --foreground: var(--silk);
+  --card: var(--panel);
+  --card-foreground: var(--silk);
+  --popover: var(--panel-raised);
+  --popover-foreground: var(--silk);
+  --primary: var(--silk);
+  --primary-foreground: var(--desk);
+  --secondary: var(--panel-raised);
+  --secondary-foreground: var(--silk);
+  --muted: var(--panel);
+  --muted-foreground: var(--silk-dim);
+  --accent: var(--panel-raised);
+  --accent-foreground: var(--silk);
+  --destructive: var(--over);
+  --border: #35322e;
+  --input: #35322e;
+  --ring: var(--cue);
+
+  --radius: 4px;
+
+  /*
+   * Height of the fixed meter bridge: the flex row plus the 1px rail it is
+   * bolted to. Every page reserves this much space and every in-page anchor
+   * scrolls clear of it, so the number lives here once instead of being
+   * re-typed per route and drifting a pixel out of step with the header.
+   */
+  --bridge: 59px;
+}
+
+@media (width >= 48rem) {
+  :root {
+    --bridge: 75px;
   }
 }
 
 /*
- * Kinetic Craft — crisp near-white canvas, near-black ink, one electric
- * International-Klein-Blue accent (#1f16f0) used as both ink and full-bleed
- * color field. Neutrals stay cool so the blue reads as the personality.
+ * The paper field. Whole regions of the desk are covered by a track sheet or
+ * a tape box label, and every vendored component inside them has to flip with
+ * the surface — so the raw variables are redefined rather than the utilities
+ * overridden at each callsite.
  */
-:root {
-  --background: #fbfbfb; /* near-white, softened off pure */
-  --foreground: #0b0b0c; /* near-black ink */
-  --card: #ffffff;
-  --card-foreground: #0b0b0c;
-  --popover: #ffffff;
-  --popover-foreground: #0b0b0c;
-  --primary: #0b0b0c; /* ink CTA */
-  --primary-foreground: #fbfbfb;
-  --secondary: #f2f2f0;
-  --secondary-foreground: #0b0b0c;
-  --muted: #f2f2f0;
-  --muted-foreground: #56565d; /* AA on white for small text */
-  --accent: #f2f2f0;
-  --accent-foreground: #0b0b0c;
-  --destructive: #ff5b4f;
-  --border: #e6e6e3; /* whisper hairline */
-  --input: #e6e6e3;
-  --ring: #1f16f0; /* focus = klein */
-
-  --klein: #1f16f0; /* electric ultramarine accent */
-  --klein-foreground: #ffffff; /* text on a klein field (8.6:1) */
-  --klein-soft: #edecfd; /* faint klein wash for hover/tint */
-
-  --radius: 0.75rem;
+[data-field="paper"] {
+  --background: var(--face);
+  --foreground: var(--ink);
+  --card: var(--face-2);
+  --card-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: var(--face);
+  --muted: var(--face-2);
+  --muted-foreground: var(--ink-dim);
+  --border: var(--face-line);
+  --input: var(--face-line);
+  --ring: #1d6b4c;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border outline-ring/60;
   }
   a,
   button {
@@ -105,26 +198,247 @@
   }
   html {
     @apply font-sans motion-safe:scroll-smooth;
-    color-scheme: light;
+    color-scheme: dark;
+    background-color: var(--desk);
+    /* The desk is machined metal; text on it should not be re-hinted into
+     * mush by subpixel AA on a dark ground. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground;
   }
+
+  /* Browser furniture belongs to the design system too. */
   ::selection {
-    background-color: var(--klein);
-    color: var(--klein-foreground);
+    background-color: color-mix(in oklab, var(--signal) 82%, transparent);
+    color: var(--desk);
   }
-  ::-moz-selection {
-    background-color: var(--klein);
-    color: var(--klein-foreground);
+  [data-field="paper"] ::selection {
+    background-color: color-mix(in oklab, var(--signal) 55%, transparent);
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  /* Scrollbar as a fader track. */
+  @supports selector(::-webkit-scrollbar) {
+    ::-webkit-scrollbar {
+      width: 11px;
+      height: 11px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--desk);
+      box-shadow: inset 1px 0 0 #2e2b28;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--rail);
+      border: 3px solid var(--desk);
+      border-radius: 6px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #5d5852;
+    }
+  }
+  html {
+    scrollbar-color: var(--rail) var(--desk);
+  }
+  /* Data reads as data: measurements never reflow between values. */
+  [data-numerals="tabular"] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
   }
 }
 
-/* Load-in: gentle lift used for hero furniture and CTAs. */
-@keyframes rise {
+/*
+ * --------------------------------------------------------------------------
+ * Chassis utilities
+ * --------------------------------------------------------------------------
+ * One elevation system: a machined bevel. Panels are lit from above by inset
+ * lines, never by a border plus a shadow (that combination is the ghost card).
+ * Only genuinely lifted modules add a drop shadow, and it carries an offset
+ * and a blur like a real one.
+ */
+
+@utility panel {
+  background-color: var(--panel);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--bevel) 70%, transparent),
+    inset 0 -1px 0 #171514,
+    inset 1px 0 0 color-mix(in oklab, var(--bevel) 30%, transparent),
+    inset -1px 0 0 #1b1918;
+}
+
+@utility panel-raised {
+  background-color: var(--panel-raised);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--bevel) 90%, transparent),
+    inset 0 -1px 0 #171514,
+    0 2px 4px -1px rgb(0 0 0 / 0.5),
+    0 8px 20px -8px rgb(0 0 0 / 0.6);
+}
+
+@utility panel-recessed {
+  background-color: var(--panel-sunk);
+  box-shadow:
+    inset 0 2px 5px rgb(0 0 0 / 0.55),
+    inset 0 -1px 0 color-mix(in oklab, var(--bevel) 55%, transparent);
+}
+
+/*
+ * The desk's end cheeks. A console is not a page with margins; it is an object
+ * with walnut on both ends, so the frame is drawn on the scrolling body rather
+ * than pinned to the viewport.
+ *
+ * The walnut is a real raster, `/textures/walnut.webp`. It was a stack of
+ * repeating gradients, which read as periodic banding rather than grain — an
+ * imitation of a material instead of the material. The asset is 48x1024 with
+ * wandering grain lines and pore speckle, built so every along-length term is
+ * periodic in the tile height; it repeats down the page with no seam. It ships
+ * lossless, because lossy artefacts at the tile boundary would put a seam in a
+ * texture whose whole point is not having one. 14KB.
+ *
+ * The ground colour is declared explicitly. Without it the nearest resolvable
+ * background behind every unpanelled heading is the cheek, which is both wrong
+ * for contrast maths and a lie about what the text sits on.
+ */
+@utility desk-frame {
+  background-color: var(--desk);
+  /* Clears the fixed bridge exactly, at every breakpoint. */
+  padding-top: var(--bridge);
+
+  @media (width >= 64rem) {
+    padding-inline: 24px;
+    background-image:
+      url("/textures/walnut.webp"),
+      url("/textures/walnut.webp");
+    background-size: 24px 512px;
+    background-position:
+      left top,
+      right top;
+    background-repeat: repeat-y;
+  }
+}
+
+/*
+ * A chassis face: brushed anodised aluminium with one raking key light from the
+ * upper left, baked into `/textures/chassis.webp`. Stretched rather than tiled,
+ * because a single light must stay a single light.
+ *
+ * Every route's focal module wears this. It began as the home module's alone,
+ * which left three of four routes rendering their focal panel as flat paint
+ * while OWN-WORLD claims an anodised chassis. The machined bevel is part of the
+ * utility rather than repeated at four callsites.
+ */
+@utility chassis-face {
+  background-color: var(--panel);
+  background-image: url("/textures/chassis.webp");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--bevel) 70%, transparent),
+    inset 0 -1px 0 #171514,
+    inset 1px 0 0 color-mix(in oklab, var(--bevel) 30%, transparent),
+    inset -1px 0 0 #1b1918;
+}
+
+/* In-page anchors land below the bridge instead of behind it. */
+@utility under-bridge {
+  scroll-margin-top: calc(var(--bridge) + 1.5rem);
+}
+
+/* Legend type: the condensed silkscreen on a panel. Width axis does the
+ * compressing, so it stays a real cut rather than a squashed one.
+ *
+ * Both sizes sit above 11px. Real silkscreen legends are tiny, but tracked
+ * uppercase at 10px is below the point where this face stays comfortably
+ * readable, and a legend nobody can read is decoration. The character comes
+ * from the width axis and the tracking, not from shrinking it further. */
+@utility legend {
+  font-family: var(--font-display);
+  font-variation-settings:
+    "wdth" 82,
+    "wght" 600;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  font-size: 0.75rem;
+  line-height: 1.15;
+}
+
+@utility legend-sm {
+  font-family: var(--font-display);
+  font-variation-settings:
+    "wdth" 80,
+    "wght" 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.6875rem;
+  line-height: 1.15;
+}
+
+/*
+ * Engraved into the panel. A cut has its dark edge ABOVE the glyph, where the
+ * light does not reach, and a faint lit lip BELOW it. A single dark shadow
+ * under the glyph is the opposite: that is how raised lettering reads. This was
+ * inverted, so it embossed the legends it claimed to engrave.
+ */
+@utility engraved {
+  text-shadow:
+    0 -1px 0 rgb(0 0 0 / 0.6),
+    0 1px 0 rgb(255 255 255 / 0.055);
+}
+
+/* Label tape: the strip a studio prints and sticks on the bay. */
+@utility tape {
+  background-color: var(--face);
+  color: var(--ink);
+  box-shadow:
+    inset 0 -1px 0 color-mix(in oklab, var(--face-line) 90%, transparent),
+    0 1px 2px rgb(0 0 0 / 0.45);
+}
+
+/* Monumental display: the desk's own badging. */
+@utility badge-type {
+  font-family: var(--font-display);
+  font-variation-settings:
+    "wdth" 92,
+    "wght" 700;
+  letter-spacing: -0.03em;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+/*
+ * --------------------------------------------------------------------------
+ * The one authored moment: power-on
+ * --------------------------------------------------------------------------
+ * Real gear sweeps its needles to full scale and lets them fall back when you
+ * switch it on. The engine drives that sweep through the same second-order
+ * ballistics as everything else, so it is one motion system, not an entrance
+ * animation bolted on top. The CSS here only covers what the engine cannot:
+ * lamps warming and the bridge legend arriving.
+ */
+@keyframes lamp-warm {
   from {
     opacity: 0;
-    transform: translateY(16px);
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@utility lamp-warm {
+  animation: lamp-warm 1.4s cubic-bezier(0.33, 1, 0.68, 1) both;
+}
+
+@keyframes plate-settle {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -132,66 +446,42 @@
   }
 }
 
-@utility animate-rise {
-  animation: rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+@utility plate-settle {
+  animation: plate-settle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /*
- * Signature: masked line reveal for the hero headline. Each line wipes up
- * from a clip, staggered via inline animation-delay per line.
+ * The needle. Deflection is amplitude, not decibels: a VU face crowds its low
+ * marks because the pointer follows voltage, so the same mapping is used here
+ * and the scale it sweeps is a real one. 0 VU sits at 71% of the sweep, which
+ * is where the printed marks put it.
  */
-@keyframes unmask {
-  from {
-    opacity: 0;
-    transform: translateY(0.5em);
-    clip-path: inset(0 0 105% 0);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    clip-path: inset(0 0 -20% 0);
-  }
+@utility needle-l {
+  transform: rotate(calc((-30 + 60 * clamp(0, var(--vu-l), 1.02)) * 1deg));
+  transform-box: view-box;
+  transform-origin: 154px 228px;
 }
 
-@utility animate-unmask {
-  animation: unmask 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+@utility needle-r {
+  transform: rotate(calc((-30 + 60 * clamp(0, var(--vu-r), 1.02)) * 1deg));
+  transform-box: view-box;
+  transform-origin: 154px 228px;
 }
 
-/*
- * Scroll-driven reveal — progressive enhancement only. Browsers without
- * animation-timeline support (or reduced-motion users via the motion-safe
- * variant) simply see static content. Range capped at entry 30% so blocks
- * taller than the viewport still complete the animation.
- */
-@keyframes reveal {
-  from {
-    opacity: 0;
-    transform: translateY(24px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* A lamp that answers the signal instead of blinking on a timer. */
+@utility lamp-signal {
+  opacity: calc(0.28 + 0.72 * clamp(0, var(--vu-drive), 1));
 }
 
-@utility animate-reveal {
-  @supports (animation-timeline: view()) {
-    animation-name: reveal;
-    animation-duration: 1ms; /* progress driven by the timeline */
-    animation-timing-function: linear;
-    animation-fill-mode: both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 30%;
-  }
-}
-/*
- * Marquee (magicui component) is not gated behind motion-safe, so halt it
- * under reduced motion to preserve the quality floor. Un-layered rule wins
- * over the Tailwind utility, leaving the track static and legible.
- */
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee,
-  .animate-marquee-vertical {
-    animation: none;
+  /* The engine never starts under reduced motion, so the needles keep the
+   * registered initial values and every transition here is removed rather
+   * than shortened. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
