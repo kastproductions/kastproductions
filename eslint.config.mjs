@@ -1,15 +1,15 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
+  ...nextTs,
   {
     rules: {
-      /* `output: "export"` forces `images.unoptimized`, so `next/image`
-       * emits the same bare <img> a hand-written one does, with no srcset,
-       * while charging ~14KB of client runtime per route that uses it. The
-       * rule's advice is unavailable to this project, so it can only ever
-       * fire falsely here. */
+      /* `output: "export"` has no image optimizer, so `next/image` would emit
+       * the same bare <img> a hand-written one does, plus client runtime.
+       * The rule's advice cannot apply here. */
       "@next/next/no-img-element": "off",
     },
   },
