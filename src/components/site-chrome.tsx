@@ -1,0 +1,69 @@
+import Link from "next/link";
+import { brand, callHref, contactEmail, location } from "@/app/content";
+
+export function Brand() {
+  return (
+    <Link className="brand" href="/">
+      <span className="brand__mark" aria-hidden="true" />
+      {brand}
+    </Link>
+  );
+}
+
+/*
+ * One header for both pages. On the home page the section links stay relative
+ * hashes; anywhere else they point back at the home page, so `#method`,
+ * `#pricing` and `#questions` keep resolving from every route.
+ */
+export function SiteHeader({ home = false }: { home?: boolean }) {
+  const at = (hash: string) => (home ? hash : `/${hash}`);
+
+  return (
+    <div className="field" id="top">
+      <header className="wrap top__row">
+        <Brand />
+        <nav className="nav" aria-label="Sections">
+          <Link href={at("#method")}>Backlog runs</Link>
+          <Link href="/standing-agents">Standing agents</Link>
+          <Link href={at("#pricing")}>Pricing</Link>
+          <Link href={at("#questions")}>Questions</Link>
+        </nav>
+        <Link className="button button--paper" href={at("#contact")}>
+          Book a call
+        </Link>
+      </header>
+    </div>
+  );
+}
+
+export function SiteFooter() {
+  return (
+    <footer className="field close" id="contact">
+      <div className="wrap">
+        <div className="close__grid">
+          <h2>Bring us a brief.</h2>
+          <p className="lede">
+            Send the issue you would hand to a new senior engineer, or describe
+            the work you want an agent to take over. We reply within one working
+            day with a spec and a fixed price.
+          </p>
+          <div className="actions">
+            <a className="button button--paper" href={callHref}>
+              Book a 30-minute call
+            </a>
+          </div>
+          <p className="contact">
+            Or write to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+          </p>
+        </div>
+        <div className="foot">
+          <Brand />
+          <span>
+            Software development agency in {location.city}, {location.country}.
+            Copyright {new Date().getFullYear()}.
+          </span>
+        </div>
+      </div>
+    </footer>
+  );
+}

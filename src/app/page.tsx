@@ -1,19 +1,25 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { RunRecord } from "@/components/run-record";
+import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   brand,
-  callHref,
   clients,
-  contactEmail,
   description,
+  eyebrow,
   founder,
+  ladder,
   location,
+  mailtoFor,
   method,
   plans,
   proof,
   questions,
   reasons,
   references,
+  standingIntro,
+  standingReasons,
+  tiers,
   title,
   work,
 } from "./content";
@@ -32,43 +38,22 @@ export const metadata: Metadata = {
   },
 };
 
-function Brand() {
-  return (
-    <a className="brand" href="#top">
-      <span className="brand__mark" aria-hidden="true" />
-      {brand}
-    </a>
-  );
-}
-
 export default function Home() {
   return (
     <>
-      <div className="field" id="top">
-        <header className="wrap top__row">
-          <Brand />
-          <nav className="nav" aria-label="Sections">
-            <a href="#method">Method</a>
-            <a href="#work">Work</a>
-            <a href="#pricing">Pricing</a>
-            <a href="#questions">Questions</a>
-          </nav>
-          <a className="button button--paper" href="#contact">
-            Book a call
-          </a>
-        </header>
-      </div>
+      <SiteHeader home />
 
       <main id="main">
         <section className="hero field">
           <div className="wrap hero__grid">
             <div className="hero__copy">
-              <h1>Agents write the code. Engineers put their name on it.</h1>
+              <p className="eyebrow">{eyebrow}</p>
+              <h1>Agents do the work. Engineers put their name on it.</h1>
               <p className="lede">
                 {brand} is a software development agency in {location.city},{" "}
-                {location.country}. Coding agents work your backlog, and a
-                named engineer reviews every change before it merges. Each
-                feature is one run. You get the full record of that run.
+                {location.country}. Coding agents work your backlog and a named
+                engineer signs every merge. Or we build one agent for your own
+                team, shaped to how you already work, and keep it running.
               </p>
               <div className="actions">
                 <a className="button button--paper" href="#contact">
@@ -173,6 +158,45 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="section" id="agents" aria-labelledby="agents-title">
+          <div className="wrap">
+            <div className="section__head">
+              <h2 id="agents-title">{standingIntro.heading}</h2>
+              <p>{standingIntro.lede}</p>
+            </div>
+            <div className="reasons">
+              {standingReasons.map((reason) => (
+                <div className="reason" key={reason.title}>
+                  <h3>{reason.title}</h3>
+                  <p>{reason.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="section" aria-labelledby="doors-title">
+          <div className="wrap">
+            <div className="section__head">
+              <h2 id="doors-title">{ladder.heading}</h2>
+              <p>{ladder.lede}</p>
+            </div>
+            <ul className="doors">
+              {tiers.map((tier) => (
+                <li className="door" key={tier.name}>
+                  <h3>{tier.name}</h3>
+                  <p>{tier.promise}</p>
+                </li>
+              ))}
+            </ul>
+            <div className="actions">
+              <Link className="button button--ink" href="/standing-agents">
+                See what each tier does
+              </Link>
+            </div>
+          </div>
+        </section>
+
         <section
           className="section refs"
           id="reviewer"
@@ -218,10 +242,10 @@ export default function Home() {
         <section className="section" id="pricing" aria-labelledby="pricing-title">
           <div className="wrap">
             <div className="section__head">
-              <h2 id="pricing-title">Two ways to work with us</h2>
+              <h2 id="pricing-title">How to work with us</h2>
               <p>
-                Both use the same process, the same review, and the same run
-                records.
+                Backlog runs go by the sprint or by the month. A standing agent
+                is priced once to build and then monthly to operate.
               </p>
             </div>
             <div className="plans">
@@ -237,12 +261,23 @@ export default function Home() {
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
-                  <a className={`button ${plan.buttonStyle}`} href="#contact">
+                  <a
+                    className={`button ${plan.buttonStyle}`}
+                    href={mailtoFor(plan.subject)}
+                  >
                     {plan.cta}
                   </a>
                 </div>
               ))}
             </div>
+            <p className="note">
+              Standing agents have their own ladder, from a read-only Reporter
+              to a whole Department.{" "}
+              <Link href="/standing-agents">
+                See what each tier does and costs
+              </Link>
+              .
+            </p>
           </div>
         </section>
 
@@ -267,32 +302,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="field close" id="contact">
-        <div className="wrap">
-          <div className="close__grid">
-            <h2>Bring us a brief.</h2>
-            <p className="lede">
-              Send the issue you would hand to a new senior engineer. We reply
-              within one working day with a spec and a fixed price.
-            </p>
-            <div className="actions">
-              <a className="button button--paper" href={callHref}>
-                Book a 30-minute call
-              </a>
-            </div>
-            <p className="contact">
-              Or write to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
-            </p>
-          </div>
-          <div className="foot">
-            <Brand />
-            <span>
-              Software development agency in {location.city},{" "}
-              {location.country}. Copyright {new Date().getFullYear()}.
-            </span>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

@@ -82,6 +82,7 @@ export function RunRecord() {
           Run 4127
         </span>
         <span className="run__issue">ACME-212: Add CSV export to invoices</span>
+        <span className="tag">Example</span>
         <span className="run__state">
           <span className="dot" aria-hidden="true" />
           Merged

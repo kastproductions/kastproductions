@@ -94,6 +94,8 @@ const jsonLd = {
         "Software development",
         "AI coding agents",
         "Code review",
+        "Custom AI agents",
+        "Agent evaluation",
         "TypeScript",
         "React",
         "Next.js",

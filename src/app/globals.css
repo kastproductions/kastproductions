@@ -490,6 +490,159 @@ a { color: inherit; }
 }
 .foot .brand { font-size: 1rem; margin-right: 0; }
 
+/* Eyebrow above a hero headline */
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--signal);
+}
+
+/* Marks synthetic material as an example. See the Claims section of README.md */
+.tag {
+  font-family: var(--font-mono);
+  font-size: .7rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: .15rem .45rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-s);
+  color: var(--ink-2);
+}
+
+/* Mention example: the agent answering in a channel */
+.mention {
+  margin: 0;
+  padding: 1.1rem 1.25rem 1.4rem;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: var(--radius-m);
+}
+.mention__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: .9rem;
+  border-bottom: 1px solid var(--line);
+}
+.mention__thread {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1.35rem;
+  padding-top: 1.2rem;
+}
+.mention__turn { display: grid; gap: .4rem; justify-items: start; }
+.mention__turn b { display: flex; align-items: center; gap: .45rem; font-weight: 600; }
+.mention__turn p { margin: 0; }
+.mention__turn--agent {
+  border-left: 2px solid var(--signal);
+  padding-left: .9rem;
+}
+.mention__handle {
+  padding: 0 .25rem;
+  font-weight: 500;
+  background: var(--paper-2);
+  border-radius: var(--radius-s);
+}
+.mention__app {
+  font-family: var(--font-mono);
+  font-size: .66rem;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  padding: .1rem .3rem;
+  color: var(--ink-2);
+  background: var(--paper-2);
+  border-radius: var(--radius-s);
+}
+.mention__gate { color: var(--ink-2); font-size: .95rem; }
+.mention__approve {
+  padding: .3rem .75rem;
+  font-size: .92rem;
+  font-weight: 500;
+  border: 1px solid var(--ink);
+  border-radius: var(--radius-s);
+}
+
+/* The four doors, in short, on the home page */
+.doors { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.75rem; }
+.door {
+  display: grid;
+  gap: .35rem;
+  align-content: start;
+  padding-top: .9rem;
+  border-top: 2px solid var(--ink);
+}
+.door p { color: var(--ink-2); }
+
+/* The tier ladder */
+.tiers { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--ink); }
+.tier {
+  display: grid;
+  gap: 1.5rem;
+  padding-block: 2.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.tier__head { display: grid; gap: .55rem; align-content: start; }
+.tier__head h3 { font-size: 1.5rem; }
+.tier__head p { color: var(--ink-2); }
+.tier__boundary {
+  padding-left: .85rem;
+  border-left: 2px solid var(--signal);
+  color: var(--ink);
+}
+.tier__body { display: grid; gap: 1.15rem; align-content: start; }
+.tier__includes { padding-left: 1.1rem; list-style: square; display: grid; gap: .35rem; }
+.tier__kits {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: .5rem;
+  font-size: .94rem;
+  color: var(--ink-2);
+}
+.tier__kits a { color: var(--ink); }
+.tier__buy { display: grid; gap: .8rem; align-content: start; }
+.tier__price {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.tier__price small {
+  display: block;
+  font-size: .58em;
+  letter-spacing: 0;
+  color: var(--ink-2);
+}
+.tier__buy .button { justify-self: start; margin-top: .35rem; }
+
+/* Chips: channels, and the stack we build on */
+.chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.chip {
+  padding: .3rem .8rem;
+  font-size: .95rem;
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.chip a { color: inherit; }
+.chip--strong { color: var(--ink); font-weight: 500; border-color: var(--ink); }
+
+.split { display: grid; gap: 1.5rem; }
+.split .note { margin-top: 0; }
+
+.note {
+  margin-top: clamp(1.5rem, 3vw, 2.25rem);
+  max-width: 44em;
+  color: var(--ink-2);
+}
+
 /* Layout at wider viewports */
 @media (min-width: 720px) {
   .reasons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -499,10 +652,17 @@ a { color: inherit; }
   .plan { padding: 0 3rem 0 0; border-top: 0; }
   .plan + .plan { padding: 0 0 0 3rem; border-left: 1px solid var(--line); }
   .refs figure { grid-template-columns: minmax(0, 1fr) 15rem; gap: 2.5rem; }
+  .doors { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; align-items: start; }
 }
 
 @media (min-width: 960px) {
   .hero__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); }
+  .doors { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tier {
+    grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr) minmax(0, .7fr);
+    gap: 2.5rem;
+  }
 }
 
 /* Table stacks on narrow screens */
