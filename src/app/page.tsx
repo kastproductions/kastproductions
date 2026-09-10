@@ -4,21 +4,18 @@ import { RunRecord } from "@/components/run-record";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   brand,
+  callHref,
   clients,
   description,
-  eyebrow,
   founder,
-  ladder,
   location,
   mailtoFor,
   method,
   plans,
-  proof,
   questions,
   reasons,
   references,
   standingIntro,
-  standingReasons,
   tiers,
   title,
   work,
@@ -47,17 +44,16 @@ export default function Home() {
         <section className="hero field">
           <div className="wrap hero__grid">
             <div className="hero__copy">
-              <p className="eyebrow">{eyebrow}</p>
-              <h1>Agents do the work. Engineers put their name on it.</h1>
+              <h1>Coding agents do the work. Engineers put their name on it.</h1>
               <p className="lede">
-                {brand} is a software development agency in {location.city},{" "}
-                {location.country}. Coding agents work your backlog and a named
-                engineer signs every merge. Or we build one agent for your own
-                team, shaped to how you already work, and keep it running.
+                {brand} is a software factory on demand, based in{" "}
+                {location.city}, {location.country}. Coding agents work your
+                backlog and a named engineer signs every merge. Or we build one
+                standing agent for your team and keep it running.
               </p>
               <div className="actions">
-                <a className="button button--paper" href="#contact">
-                  Book a 30-minute call
+                <a className="button button--paper" href={callHref}>
+                  Book a call
                 </a>
                 <a className="button button--ghost" href="#method">
                   See how a run works
@@ -71,7 +67,7 @@ export default function Home() {
         <section className="clients" id="clients" aria-labelledby="clients-title">
           <div className="wrap">
             <h2 id="clients-title">
-              Teams we have shipped with, across three continents
+              Companies we have shipped for, across four continents
             </h2>
             <ul className="clients__list">
               {clients.map((client) => (
@@ -88,7 +84,7 @@ export default function Home() {
         <section className="section" aria-labelledby="why-title">
           <div className="wrap">
             <div className="section__head">
-              <h2 id="why-title">What changes when agents write the code</h2>
+              <h2 id="why-title">What changes when coding agents write the code</h2>
             </div>
             <div className="reasons">
               {reasons.map((reason) => (
@@ -98,7 +94,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <p className="proof">{proof}</p>
           </div>
         </section>
 
@@ -130,13 +125,15 @@ export default function Home() {
         <section className="section work" id="work" aria-labelledby="work-title">
           <div className="wrap">
             <div className="section__head">
-              <h2 id="work-title">Recent runs</h2>
+              <h2 id="work-title">
+                What a run looks like <span className="tag">Example</span>
+              </h2>
               <p>Days count from approved brief to merged pull request.</p>
             </div>
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Client</th>
+                  <th scope="col">Kind of company</th>
                   <th scope="col">Brief</th>
                   <th scope="col">Days</th>
                   <th scope="col">Result</th>
@@ -158,45 +155,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" id="agents" aria-labelledby="agents-title">
-          <div className="wrap">
-            <div className="section__head">
-              <h2 id="agents-title">{standingIntro.heading}</h2>
-              <p>{standingIntro.lede}</p>
-            </div>
-            <div className="reasons">
-              {standingReasons.map((reason) => (
-                <div className="reason" key={reason.title}>
-                  <h3>{reason.title}</h3>
-                  <p>{reason.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="section" aria-labelledby="doors-title">
-          <div className="wrap">
-            <div className="section__head">
-              <h2 id="doors-title">{ladder.heading}</h2>
-              <p>{ladder.lede}</p>
-            </div>
-            <ul className="doors">
-              {tiers.map((tier) => (
-                <li className="door" key={tier.name}>
-                  <h3>{tier.name}</h3>
-                  <p>{tier.promise}</p>
-                </li>
-              ))}
-            </ul>
-            <div className="actions">
-              <Link className="button button--ink" href="/standing-agents">
-                See what each tier does
-              </Link>
-            </div>
-          </div>
-        </section>
-
         <section
           className="section refs"
           id="reviewer"
@@ -206,9 +164,9 @@ export default function Home() {
             <div className="section__head">
               <h2 id="reviewer-title">Who puts their name on it</h2>
               <p>
-                {founder} founded {brand} and has shipped for the teams listed
-                above. He reviews runs himself. People who have worked with
-                him, quoted as written.
+                {founder} founded {brand} and has shipped for the companies
+                listed above. He reviews every run himself. Below are references
+                from people who have worked with him, quoted as written.
               </p>
             </div>
             <ul className="refs__list">
@@ -239,13 +197,36 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="section" id="agents" aria-labelledby="agents-title">
+          <div className="wrap">
+            <div className="section__head">
+              <h2 id="agents-title">{standingIntro.heading}</h2>
+              <p>{standingIntro.lede}</p>
+            </div>
+            <ul className="doors">
+              {tiers.map((tier) => (
+                <li className="door" key={tier.name}>
+                  <h3>{tier.name}</h3>
+                  <p>{tier.promise}</p>
+                </li>
+              ))}
+            </ul>
+            <div className="actions">
+              <Link className="button button--ink" href="/standing-agents">
+                See what each tier does
+              </Link>
+            </div>
+          </div>
+        </section>
+
         <section className="section" id="pricing" aria-labelledby="pricing-title">
           <div className="wrap">
             <div className="section__head">
               <h2 id="pricing-title">How to work with us</h2>
               <p>
                 Backlog runs go by the sprint or by the month. A standing agent
-                is priced once to build and then monthly to operate.
+                is priced once to build and then monthly to operate.{" "}
+                <Link href="/standing-agents">See what each tier does</Link>.
               </p>
             </div>
             <div className="plans">
@@ -270,14 +251,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <p className="note">
-              Standing agents have their own ladder, from a read-only Reporter
-              to a whole Department.{" "}
-              <Link href="/standing-agents">
-                See what each tier does and costs
-              </Link>
-              .
-            </p>
           </div>
         </section>
 

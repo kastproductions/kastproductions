@@ -4,7 +4,6 @@ import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   brand,
   channels,
-  eyebrow,
   fitDimensions,
   fitIntro,
   ladder,
@@ -17,7 +16,7 @@ import {
 
 const pageTitle = "Standing agents";
 const pageDescription =
-  "We build one agent for one company, on the workflow that company already has, deploy it into your own accounts, and operate it month to month.";
+  "We build one standing agent for your company, on the workflow you already have. We deploy it into your own accounts and operate it month to month.";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -44,20 +43,19 @@ export default function StandingAgents() {
         <section className="hero field">
           <div className="wrap hero__grid">
             <div className="hero__copy">
-              <p className="eyebrow">{eyebrow}</p>
-              <h1>One agent, built on how your company actually works.</h1>
+              <h1>One standing agent, built on how your company works.</h1>
               <p className="lede">
                 We build it, deploy it into your own accounts, and operate it
-                month to month. Your team reaches it by name in the channel they
-                already have open, and it waits for a name before anything
-                reaches your customers.
+                month to month. Your team calls it by name in the channel they
+                already have open. Before anything reaches your customers, a
+                named person at your company approves it.
               </p>
               <div className="actions">
                 <a
                   className="button button--paper"
                   href={mailtoFor("Standing agents: first call")}
                 >
-                  Book a 30-minute call
+                  Book a call
                 </a>
                 <a className="button button--ghost" href="#tiers">
                   See the four tiers
@@ -74,9 +72,9 @@ export default function StandingAgents() {
               <h2 id="fit-title">{fitIntro.heading}</h2>
               <p>{fitIntro.lede}</p>
             </div>
-            <div className="reasons">
+            <div className="specs">
               {fitDimensions.map((dimension) => (
-                <div className="reason" key={dimension.title}>
+                <div className="spec" key={dimension.title}>
                   <h3>{dimension.title}</h3>
                   <p>{dimension.body}</p>
                 </div>
@@ -89,12 +87,12 @@ export default function StandingAgents() {
           <div className="wrap">
             <div className="section__head">
               <h2 id="channels-title">
-                It lives where your team already works
+                Your standing agent lives where your team already works
               </h2>
               <p>
-                An agent nobody opens is worth nothing, so we put it in the
-                place your team is already in. It arrives as{" "}
-                {channels.primary.join(" or ")}, addressed by name.
+                People use an agent they can reach without opening anything
+                new. Yours arrives in {channels.primary.join(" or ")}, and your
+                team addresses it by name.
               </p>
             </div>
             <div className="split">
@@ -119,16 +117,17 @@ export default function StandingAgents() {
           <div className="wrap">
             <div className="section__head">
               <h2 id="mechanism-title">
-                How we prove it is right, and keep it right
+                How we prove your standing agent is right, and keep it right
               </h2>
               <p>
-                A generic agent has never been told what your company means by
-                correct, so it cannot be held to it. This is how yours is.
+                Nobody has told a generic agent what your company means by
+                correct, so nobody can hold it to that. We write your
+                definition down.
               </p>
             </div>
-            <div className="reasons">
+            <div className="specs">
               {mechanism.map((part) => (
-                <div className="reason" key={part.title}>
+                <div className="spec" key={part.title}>
                   <h3>{part.title}</h3>
                   <p>{part.body}</p>
                 </div>
@@ -193,7 +192,6 @@ export default function StandingAgents() {
               ))}
             </ol>
             <p className="note">{ladder.kitNote}</p>
-            <p className="proof">{ladder.bespokeInvite}</p>
           </div>
         </section>
 

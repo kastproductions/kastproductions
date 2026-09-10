@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { brand, callHref, contactEmail, location } from "@/app/content";
+import { brand, briefHref, callHref, contactEmail, location } from "@/app/content";
 
 export function Brand() {
   return (
@@ -24,11 +24,17 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
         <Brand />
         <nav className="nav" aria-label="Sections">
           <Link href={at("#method")}>Backlog runs</Link>
-          <Link href="/standing-agents">Standing agents</Link>
+          {/* Two routes, so anything that is not the home page is this one. */}
+          <Link
+            href="/standing-agents"
+            aria-current={home ? undefined : "page"}
+          >
+            Standing agents
+          </Link>
           <Link href={at("#pricing")}>Pricing</Link>
           <Link href={at("#questions")}>Questions</Link>
         </nav>
-        <Link className="button button--paper" href={at("#contact")}>
+        <Link className="button button--paper" href={callHref}>
           Book a call
         </Link>
       </header>
@@ -48,8 +54,11 @@ export function SiteFooter() {
             day with a spec and a fixed price.
           </p>
           <div className="actions">
-            <a className="button button--paper" href={callHref}>
-              Book a 30-minute call
+            <a className="button button--paper" href={briefHref}>
+              Send us a brief
+            </a>
+            <a className="button button--ghost" href={callHref}>
+              Book a call
             </a>
           </div>
           <p className="contact">

@@ -78,6 +78,10 @@ _Avoid_: boilerplate, scaffold, our platform, framework
 
 ## Tiers
 
+**Tier**:
+The authority a client hands to one standing agent. There are four: Reporter, Operator, Department and Bespoke.
+_Avoid_: ladder, level, plan, package
+
 **Reporter**:
 The tier where a standing agent reads the client's systems and reports what it finds. It takes no outward actions.
 _Avoid_: basic, starter, tier 1

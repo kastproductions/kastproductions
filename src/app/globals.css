@@ -7,6 +7,7 @@
   --on-ink: #f3f3ef;
   --on-ink-2: #b7bedf;
   --signal: #ffb92e;
+  --signal-ink: #a16b00;
   --pass: #1a6f45;
   --del: #a8382c;
   --del-bg: #f4e0dc;
@@ -67,10 +68,15 @@ p { max-width: var(--measure); }
 a { color: inherit; }
 
 :focus-visible {
-  outline: 3px solid var(--signal);
+  outline: 3px solid var(--ink);
   outline-offset: 3px;
-  border-radius: 2px;
 }
+/* The accent only clears 3:1 on the ink field. Paper cards sit inside that
+ * field, so they go back to ink. */
+.field :focus-visible { outline-color: var(--signal); }
+.run :focus-visible,
+.mention :focus-visible { outline-color: var(--ink); }
+.skip:focus-visible { outline-color: var(--signal); }
 
 .skip {
   position: absolute;
@@ -157,6 +163,13 @@ a { color: inherit; }
   font-weight: 500;
 }
 .nav a:hover { color: var(--on-ink); }
+.nav a[aria-current="page"] {
+  color: var(--on-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--signal);
+  text-decoration-thickness: 2px;
+  text-underline-offset: .35em;
+}
 
 .hero { padding-block: clamp(2.5rem, 6vw, 6rem) clamp(3.5rem, 7vw, 7rem); }
 
@@ -244,8 +257,9 @@ a { color: inherit; }
   font-weight: 500;
   color: var(--ink);
   text-decoration: underline;
-  text-decoration-color: var(--line);
+  text-decoration-color: var(--ink-2);
   text-underline-offset: .2em;
+  padding-block: .55rem;
 }
 .diff summary::-webkit-details-marker { display: none; }
 .diff summary:hover { text-decoration-color: var(--ink); }
@@ -267,7 +281,7 @@ a { color: inherit; }
 @media (prefers-reduced-motion: no-preference) {
   .run__head, .step {
     animation: settle .55s cubic-bezier(.2, .7, .2, 1) both;
-    animation-delay: calc(var(--i, 0) * 150ms + 250ms);
+    animation-delay: calc(var(--i, 0) * 90ms + 200ms);
   }
   @keyframes settle {
     from { opacity: 0; transform: translateY(.5rem); }
@@ -298,12 +312,19 @@ a { color: inherit; }
   font-weight: 500;
   font-size: 1.05rem;
 }
-.clients__list a { text-decoration: none; }
-.clients__list a:hover { text-decoration: underline; text-underline-offset: .2em; }
+.clients__list a {
+  text-decoration: underline;
+  text-decoration-color: var(--ink-2);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+}
+.clients__list a:hover { text-decoration-color: var(--ink); }
 
 /* Paper sections */
 .section { padding-block: clamp(4rem, 8vw, 7rem); }
 .section + .section { padding-top: 0; }
+/* The seam into the ink footer would otherwise carry two sections' padding. */
+main > .section:last-child { padding-bottom: clamp(2rem, 4vw, 3.25rem); }
 
 .section__head {
   display: grid;
@@ -320,13 +341,11 @@ a { color: inherit; }
 .reason { display: grid; gap: .6rem; align-content: start; }
 .reason p { color: var(--ink-2); }
 
-.proof {
-  margin-top: clamp(3rem, 6vw, 5rem);
-  font-size: clamp(1.35rem, 1rem + 1vw, 1.75rem);
-  line-height: 1.3;
-  letter-spacing: -0.012em;
-  max-width: 28em;
-}
+/* The five points we write down, and the five parts of the mechanism. A label
+ * column reads deliberate where a three-up grid leaves a hole. */
+.specs { display: grid; gap: 1.75rem; }
+.spec { display: grid; gap: .4rem; align-content: start; }
+.spec p { color: var(--ink-2); }
 
 /* Method */
 .steps {
@@ -490,27 +509,16 @@ a { color: inherit; }
 }
 .foot .brand { font-size: 1rem; margin-right: 0; }
 
-/* Eyebrow above a hero headline */
-.eyebrow {
-  margin: 0;
-  font-family: var(--font-mono);
-  font-size: .8rem;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-  color: var(--signal);
-}
-
 /* Marks synthetic material as an example. See the Claims section of README.md */
 .tag {
   font-family: var(--font-mono);
-  font-size: .7rem;
-  letter-spacing: .07em;
-  text-transform: uppercase;
+  font-size: .78rem;
   white-space: nowrap;
+  vertical-align: middle;
   padding: .15rem .45rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--ink-2);
   border-radius: var(--radius-s);
-  color: var(--ink-2);
+  color: var(--ink);
 }
 
 /* Mention example: the agent answering in a channel */
@@ -541,7 +549,7 @@ a { color: inherit; }
 .mention__turn b { display: flex; align-items: center; gap: .45rem; font-weight: 600; }
 .mention__turn p { margin: 0; }
 .mention__turn--agent {
-  border-left: 2px solid var(--signal);
+  border-left: 2px solid var(--signal-ink);
   padding-left: .9rem;
 }
 .mention__handle {
@@ -552,8 +560,8 @@ a { color: inherit; }
 }
 .mention__app {
   font-family: var(--font-mono);
-  font-size: .66rem;
-  letter-spacing: .07em;
+  font-size: .72rem;
+  letter-spacing: .05em;
   text-transform: uppercase;
   padding: .1rem .3rem;
   color: var(--ink-2);
@@ -579,6 +587,9 @@ a { color: inherit; }
   border-top: 2px solid var(--ink);
 }
 .door p { color: var(--ink-2); }
+/* .actions carries no margin of its own, because its other two uses are grid
+ * items whose parent gap already spaces them. */
+.doors + .actions { margin-top: clamp(2rem, 4vw, 3rem); }
 
 /* The tier ladder */
 .tiers { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--ink); }
@@ -593,7 +604,7 @@ a { color: inherit; }
 .tier__head p { color: var(--ink-2); }
 .tier__boundary {
   padding-left: .85rem;
-  border-left: 2px solid var(--signal);
+  border-left: 2px solid var(--signal-ink);
   color: var(--ink);
 }
 .tier__body { display: grid; gap: 1.15rem; align-content: start; }
@@ -631,7 +642,10 @@ a { color: inherit; }
   border: 1px solid var(--line);
   border-radius: 999px;
 }
-.chip a { color: inherit; }
+/* Where a chip holds a link, the padding belongs to the link, so the whole
+ * pill is the hit area and the focus ring follows the pill. */
+.chip:has(a) { padding: 0; }
+.chip a { display: block; padding: .3rem .8rem; border-radius: inherit; color: inherit; }
 .chip--strong { color: var(--ink); font-weight: 500; border-color: var(--ink); }
 
 .split { display: grid; gap: 1.5rem; }
@@ -639,7 +653,7 @@ a { color: inherit; }
 
 .note {
   margin-top: clamp(1.5rem, 3vw, 2.25rem);
-  max-width: 44em;
+  max-width: var(--measure);
   color: var(--ink-2);
 }
 
@@ -654,6 +668,8 @@ a { color: inherit; }
   .refs figure { grid-template-columns: minmax(0, 1fr) 15rem; gap: 2.5rem; }
   .doors { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; align-items: start; }
+  .specs { gap: 2rem; max-width: 52rem; }
+  .spec { grid-template-columns: 14rem minmax(0, 1fr); gap: 0 3rem; }
 }
 
 @media (min-width: 960px) {
@@ -668,6 +684,7 @@ a { color: inherit; }
 /* Table stacks on narrow screens */
 @media (max-width: 719px) {
   .work thead { display: none; }
+  .work table, .work tbody { display: block; }
   .work tr { display: grid; gap: .3rem; padding-block: 1.1rem; border-bottom: 1px solid var(--line); }
   .work td { display: block; padding: 0; border: 0; }
   .work td::before {
@@ -680,6 +697,8 @@ a { color: inherit; }
 }
 
 @media (max-width: 560px) {
-  .nav { width: 100%; order: 3; gap: 1.25rem; font-size: .95rem; }
-  .top__row { padding-block: 1.1rem; }
+  .nav { width: 100%; order: 3; gap: .75rem 1.25rem; flex-wrap: wrap; font-size: .95rem; }
+  .nav a { white-space: nowrap; }
+  .top__row { padding-block: 1.1rem; column-gap: 1rem; }
+  .brand { font-size: 1rem; }
 }

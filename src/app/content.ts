@@ -6,7 +6,8 @@ export const contactEmail = "hello@kastproductions.com";
  * our only analytics on this page and a machine-readable first line for @brief. */
 export const mailtoFor = (subject: string) =>
   `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`;
-export const callHref = mailtoFor("30-minute call with KastProductions");
+export const callHref = mailtoFor("First call");
+export const briefHref = mailtoFor("New brief");
 export const founder = "Karolis Stulgys";
 /* Public profiles that link back to this site. Search engines use them to tie the founder to the brand. */
 export const founderProfiles = ["https://github.com/kstulgys", "https://x.com/imkarolis"];
@@ -15,9 +16,9 @@ export const location = { city: "Vilnius", country: "Lithuania", countryCode: "L
 
 /* Search snippet copy. Title stays close to 60 characters, description under 160. */
 export const title = `${brand}: software factory on demand`;
-export const description = `Software factory on demand in ${location.city}, ${location.country}. Coding agents work your backlog, and we build one custom agent for your team. Engineers sign every change.`;
+export const description = `Software factory on demand in ${location.city}, ${location.country}. Coding agents work your backlog. We build one standing agent for your team. A named engineer signs every merge.`;
 
-/* Seventeen companies the studio has shipped for, across three continents. */
+/* Seventeen companies the studio has shipped for, across four continents. */
 export const clients = [
   { name: "Trustpilot", url: "https://www.trustpilot.com/" },
   { name: "Volkswagen Financial Services", url: "https://www.vwfs.com/" },
@@ -87,21 +88,17 @@ export const references = [
 export const reasons = [
   {
     title: "Speed you can audit",
-    body: "A run finishes in hours. The run record holds every tool call, test result, and decision. When you ask why the agents built something a certain way, the answer is in the record.",
+    body: "A run finishes in hours. The run record holds every tool call, test result and decision. When you ask why the coding agents chose an approach, the run record has the answer.",
   },
   {
-    title: "Review is the product",
-    body: "Agents are fast and confident, including when they are wrong. A named engineer reads every diff before it merges and rejects anything they would not have written themselves.",
+    title: "A named engineer reads every diff",
+    body: "Coding agents are fast and confident, including when they are wrong. A named engineer reads every diff before it merges. That engineer rejects anything they would not have written.",
   },
   {
     title: "Your repository, your rules",
     body: "We work in your repository, on your branches, through your CI. Nothing runs outside the conventions your team already has. You own every line from the first commit.",
   },
 ];
-
-/* Placeholder figures. Replace with real ones before launch. */
-export const proof =
-  "Since 2024 we have shipped 61 features for 9 clients. Median time from approved brief to merged pull request: 3.2 days.";
 
 export const method = [
   {
@@ -111,17 +108,17 @@ export const method = [
   },
   {
     title: "Plan",
-    body: "An agent reads your codebase and writes a plan: the files to change, the tests to add, and the risks it sees. An engineer edits the plan before anything runs.",
+    body: "A coding agent reads your codebase and writes a plan. The plan lists the files to change, the tests to add and the risks. A named engineer edits the plan before anything runs.",
     you: "nothing, unless the plan changes the scope.",
   },
   {
     title: "Build",
-    body: "Agents implement the plan on a branch and run your test suite. Every tool call and decision goes into the run record as they work.",
-    you: "watch the run in a shared channel if you like.",
+    body: "Coding agents implement the plan on a branch and run your test suite. Every tool call and decision goes into the run record as they work.",
+    you: "watch the run stream live if you like.",
   },
   {
     title: "Review",
-    body: "An engineer reads the whole diff and requests changes. The agents run again until the diff is right. Nothing merges without a named reviewer.",
+    body: "A named engineer reads the whole diff and requests changes. The coding agents run again until the diff is right. Nothing merges without that signature.",
     you: "review as well, or leave it to us.",
   },
   {
@@ -131,7 +128,7 @@ export const method = [
   },
 ];
 
-/* Placeholder engagements. Replace with real ones before launch. */
+/* Placeholder runs. Replace with real ones before launch. */
 export const work = [
   {
     client: "Series A logistics platform",
@@ -176,7 +173,7 @@ export const plans = [
   },
   {
     title: "Embedded",
-    body: "Our agents and one of our engineers on your backlog, month to month. Good for teams that want to ship weekly without hiring.",
+    body: "Our coding agents and one of our engineers on your backlog, month to month. Good for teams that want to ship weekly without hiring.",
     price: "From €10,000",
     per: "per month",
     includes: [
@@ -184,7 +181,7 @@ export const plans = [
       "Runs in your repository, your CI, your review process",
       "Cancel at the end of any month",
     ],
-    cta: "Talk about embedding",
+    cta: "Ask about Embedded",
     subject: "Backlog runs: Embedded",
     buttonStyle: "button--outline",
   },
@@ -197,19 +194,19 @@ export const questions = [
   },
   {
     q: "Which models and tools do you use?",
-    a: "Whichever fit the job, and we tell you which. Every model call and tool call is in the run record. Your code and data are never used to train a model.",
+    a: "Whichever fit the job, and we tell you which. Every model call and tool call is in the run record. We choose providers that never train on your code or data.",
   },
   {
-    q: "What happens when an agent gets it wrong?",
-    a: "The reviewer catches it. No change merges without a named engineer reading the whole diff, and the review comments are part of the run record. If a bug we merged reaches production, we fix it at no charge.",
+    q: "What happens when a coding agent gets it wrong?",
+    a: "The reviewer catches it. No change merges without a named engineer reading the whole diff. The review comments are part of the run record. If a bug we merged reaches production, we fix it at no charge.",
   },
   {
     q: "Can we watch a run while it happens?",
-    a: "Yes. Each run streams to a shared channel as it works. When it merges, we attach the full run record to the issue.",
+    a: "Yes. Each run streams live while it works. When it merges, we attach the full run record to the issue.",
   },
   {
     q: "Do you work in our stack?",
-    a: "Most likely. Recent runs have been in TypeScript, Python, Go, Ruby and Rust, on codebases from two months to twelve years old. Send the repository and we will tell you within a day.",
+    a: "Most likely. We work in TypeScript, Python, Go, Ruby and Rust, on codebases of any age. Send the repository and we answer within one working day.",
   },
 ];
 
@@ -223,27 +220,10 @@ export const questions = [
  * README.md.
  * ------------------------------------------------------------------------- */
 
-export const eyebrow = "Software factory on demand";
-
 export const standingIntro = {
   heading: "What fits everything fits nothing",
-  lede: "A generic agent knows your tools. It does not know how your company works. We build one agent for one company, on the workflow that company already has, and we keep it right after it is live.",
+  lede: "A generic agent knows your tools. It does not know how your company works. We build one standing agent for one company, on the workflow that company already has. We keep it right after it goes live. What you choose is how much authority it gets.",
 };
-
-export const standingReasons = [
-  {
-    title: "Built on your workflow",
-    body: "We start from how your team already works: who asks, who approves, and what finished means. The agent follows that, and not a template's idea of it.",
-  },
-  {
-    title: "Reached by name, where you work",
-    body: "It lives in Slack, Microsoft Teams, or wherever your team already talks. Someone types the agent's name and the work starts.",
-  },
-  {
-    title: "Held to a written standard",
-    body: "Every agent ships with its eval suite: the written definition of correct for that agent, run on every change we make to it.",
-  },
-];
 
 /* Labelled as an example until @brief is live in our own Slack. Then this
  * becomes a screenshot of a real exchange and the label comes off. */
@@ -269,21 +249,21 @@ export const channels = {
     "your own web app",
   ],
   teamsNote:
-    "Teams needs one step that Slack does not: an Azure Bot registration and an app password stored in your project. We do that work, and we quote it separately.",
+    "Teams needs one step that Slack does not: an Azure Bot registration and an app password stored in your project. We do that work and quote it as its own line.",
 };
 
 /* The idiom heads the standing agents section on the home page. The deep page
  * already carries the fit claim in its headline, so its own fit section is
  * named after what the five dimensions are. */
 export const fitIntro = {
-  heading: "What we shape it to",
-  lede: "Each of these comes out of your company rather than out of a template. We write them down before we build, and the agent follows what we wrote.",
+  heading: "What we shape your standing agent to",
+  lede: "We take each of the five points below from your company. We write them down before we build, and your agent follows what we wrote.",
 };
 
 export const fitDimensions = [
   {
     title: "Who asks",
-    body: "Which people can start the agent, from which channel, and what they are allowed to ask it for.",
+    body: "Which people can start your agent, from which channel, and what they may ask it for.",
   },
   {
     title: "Who approves",
@@ -291,15 +271,15 @@ export const fitDimensions = [
   },
   {
     title: "The systems it touches",
-    body: "The tools your team already runs, reached with each person's own permissions rather than one shared key.",
+    body: "The tools your team already runs. Your agent uses the permissions of the person who asked. There is no shared key.",
   },
   {
     title: "Your words",
-    body: "The names your company uses for things, taken from your issues, your docs and your channels, so the answers read like your team wrote them.",
+    body: "The names your company uses for things. We take them from your issues, your docs and your tickets. The answers then read like your team wrote them.",
   },
   {
     title: "What finished means",
-    body: "Your definition of a finished piece of work, written down, so the agent can be held to it.",
+    body: "Your definition of a finished piece of work. We write it down, so you can hold your agent to it.",
   },
 ];
 
@@ -310,29 +290,27 @@ export const mechanism = [
   },
   {
     title: "Approval gates",
-    body: "We approve changes inside the agent's own repository and deployment. Anything that reaches a customer, an inbox, a published page or a payment waits for a named person at your company. Every time.",
+    body: "We approve changes inside your agent's own repository and deployment. Every outward action waits for a named person at your company. That means anything reaching a customer, an inbox, a published page or a payment.",
   },
   {
     title: "A named engineer",
-    body: "One of our engineers owns your agent and answers inside business hours. The agent runs in your cloud account, so its uptime is your platform's, and we would rather say that than promise something we do not run.",
+    body: "One of our engineers owns your agent and answers inside business hours. Your agent runs in your cloud account, so its uptime is your platform's. We do not promise uptime for software we do not run.",
   },
   {
     title: "The spend cap",
-    body: "Every session has a ceiling on model cost, agreed with you. A session that reaches it and has someone to ask stops and asks. One running unattended stops and reports, rather than carrying on.",
+    body: "Every session has a spend cap that we agree with you. A session that reaches the cap and has someone to ask stops and asks. A session running unattended stops and reports.",
   },
   {
     title: "The monthly report",
-    body: "What the agent did, what it cost, what we changed, and what we would do next. Cancel at the end of any month: that stops our work, never your agent.",
+    body: "What your agent did, what it cost, what we changed, and what we would do next. Cancel at the end of any month. Our work stops and your agent keeps running.",
   },
 ];
 
 export const ladder = {
-  heading: "What the agent is allowed to do",
-  lede: "The tier is the authority you hand over. The price follows that authority, the number of specialists working behind the one name, and the number of systems the agent touches.",
+  heading: "The four tiers",
+  lede: "The tier is the authority you hand over. The price follows that authority. It also follows the number of subagents behind the one name, and the number of systems your agent touches.",
   kitNote:
-    "A starting kit is where a build starts and never what you buy. Adjusting one means rewriting its instructions and skills around your workflow, replacing its connections with your systems, setting the approval policy, and writing the eval suite that says what correct means for you.",
-  bespokeInvite:
-    "If none of these is the shape of your problem, describe the work anyway. We will tell you which tier it is, or that it is bespoke.",
+    "A starting kit is where a build starts. You buy the finished standing agent. Adapting a kit takes four jobs. We rewrite its instructions around your workflow. We connect it to your systems and set the approval policy. Then we write the eval suite that says what correct means for you.",
 };
 
 /* Prices are real evidence and must not be invented: see the Claims section of
@@ -356,14 +334,14 @@ export const tiers = [
       {
         name: "eve-sre-agent-template",
         url: "https://github.com/vercel-labs/eve-sre-agent-template",
-        note: "Vercel's incident-response agent. Slack-native, no subagents, read-only by default.",
+        note: "Vercel's incident-response template. Slack-native, no subagents, read-only by default.",
       },
     ],
     buttonStyle: "button--outline",
   },
   {
     name: "Operator",
-    promise: "Does the tasks your team hands it, and stops before anything leaves the building.",
+    promise: "Does the tasks your team hands it, and stops before anything reaches a customer.",
     boundary:
       "An Operator never takes an outward action without a named person approving it.",
     prices: [
@@ -380,14 +358,14 @@ export const tiers = [
       {
         name: "eve-content-agent-template",
         url: "https://github.com/vercel-labs/eve-content-agent-template",
-        note: "Vercel's content agent. Two subagents, drafts into Notion, deterministic style checks.",
+        note: "Vercel's content template. Two subagents, drafts into Notion, deterministic style checks.",
       },
     ],
     buttonStyle: "button--ink",
   },
   {
     name: "Department",
-    promise: "Runs one whole function of your company, with specialists behind one name.",
+    promise: "Runs one whole function of your company, with subagents behind one name.",
     boundary:
       "A Department owns a function and still stops at the same gate. Nothing reaches a customer without a named approval.",
     prices: [
@@ -395,21 +373,21 @@ export const tiers = [
       { amount: "On request", per: "a month to operate" },
     ],
     includes: [
-      "A lead agent and its specialists, each with its own tools and sandbox",
+      "A lead agent and its subagents, each with its own tools and sandbox",
       "Several connected systems, each with its own permissions",
       "Unattended work on a schedule, with the failure path written down",
-      "An eval suite per specialist, run before every deploy",
+      "An eval suite per subagent, run on every change we make",
     ],
     kits: [
       {
         name: "eve-software-factory-template",
         url: "https://github.com/vercel-labs/eve-software-factory-template",
-        note: "Vercel's software factory. Five subagents take an issue to a reviewed draft pull request.",
+        note: "Vercel's issue-to-pull-request template. Five subagents take an issue to a reviewed draft.",
       },
       {
         name: "marketing-team-eve-template",
         url: "https://github.com/vercel-labs/marketing-team-eve-template",
-        note: "Vercel's marketing team. A lead routes work to five specialists and hands back the deliverable.",
+        note: "Vercel's marketing template. A lead routes work to five subagents and hands back the result.",
       },
     ],
     buttonStyle: "button--outline",
@@ -418,10 +396,9 @@ export const tiers = [
     name: "Bespoke",
     promise:
       "Describe the work. You get a short spec and a fixed price within one working day.",
-    boundary:
-      "For a shape that sits past the top of the ladder, or beside it. This is the door.",
+    boundary: "For work that fits none of the three tiers above.",
     prices: [
-      { amount: "Let us scope it", per: "spec and fixed price in one working day" },
+      { amount: "On request", per: "spec and fixed price within one working day" },
     ],
     includes: [
       "A spec and a fixed price within one working day",
@@ -434,8 +411,8 @@ export const tiers = [
 ];
 
 export const stack = {
-  heading: "What we build it on",
-  body: "We build on eve, the open-source agent framework Vercel develops, and deploy it as an ordinary project in your own Vercel account. If you do not run on Vercel, we build on the AI SDK instead and deploy where you already are. Nothing is resold: the account, the keys and the code are yours.",
+  heading: "What we build your standing agent on",
+  body: "We build on eve, the open-source agent framework Vercel develops. We deploy your agent as an ordinary project in your own Vercel account. If you do not run on Vercel, we build on the AI SDK and deploy where you already are. We resell nothing: the account, the keys and the code are yours.",
   links: [
     { label: "eve", url: "https://eve.dev" },
     {
@@ -447,35 +424,35 @@ export const stack = {
 
 export const standingQuestions = [
   {
-    q: "Who owns the agent?",
-    a: "You do. It lives in your repository and deploys into your own accounts, with your model keys. Stop paying us and the agent keeps running; what stops is our work on it.",
+    q: "Who owns the standing agent?",
+    a: "You do. It lives in your repository and deploys into your own accounts, with your model keys. Stop paying us and your agent keeps running. What stops is our work on it.",
   },
   {
     q: "What stops it spending our money overnight?",
-    a: "Every session has a ceiling on model cost that we agree with you. A session that reaches the ceiling and has someone to ask stops and asks. One running unattended stops and reports instead of carrying on.",
+    a: "Every session has a spend cap that we agree with you. A session that reaches the cap stops and asks you. A session running unattended stops and reports.",
   },
   {
     q: "Who approves what the agent does?",
-    a: "We approve changes inside the agent's own repository and deployment. Anything that reaches a customer, an inbox, a published page or a payment is approved by a named person at your company, every time. We never put our name on something your customers see.",
+    a: "We approve changes inside your agent's own repository and deployment. A named person at your company approves every outward action. That covers anything reaching a customer, an inbox, a published page or a payment. Our name never goes on something your customers see.",
   },
   {
     q: "Do you promise uptime?",
-    a: "No, and nobody honestly can for software running in your own cloud account. We promise a named engineer, an answer inside business hours, the eval suite green on every change we make, and a monthly report of what the agent did.",
+    a: "No, and nobody honestly can for software running in your own cloud account. We promise four things. A named engineer. An answer inside business hours. A green eval suite on every change we make. A monthly report of what your agent did.",
   },
   {
     q: "Can it live in Microsoft Teams?",
-    a: "Yes. Teams needs one step that Slack does not: an Azure Bot registration and an app password stored in your project. We do that work and quote it as its own line, so the build price stays honest.",
+    a: "Yes. Teams needs one step that Slack does not: an Azure Bot registration and an app password stored in your project. We do that work and quote it as its own line.",
   },
   {
-    q: "Can one agent answer to several names?",
-    a: "No. One agent is one deployment with one name. A second name is a second agent, a second build and a second monthly line. One agent can still run several specialists behind its single name.",
+    q: "Can one standing agent answer to several names?",
+    a: "No. One agent is one deployment with one name. A second name is a second agent, a second build and a second monthly line. One agent can still run several subagents behind its single name.",
   },
   {
     q: "How do we know it is working?",
-    a: "Each agent has an eval suite: the written definition of correct for that agent, run on every change we make. You can read it. If we cannot write down what correct means for something you want, we tell you before we build it rather than after.",
+    a: "We write an eval suite for every agent: the written definition of correct, run on every change we make. You can read it. Sometimes we cannot write down what correct means for something you want. We tell you that before we build it.",
   },
   {
     q: "Why not clone a public template ourselves?",
-    a: "You can, and we link the ones we start from. The template is the easy part. What takes the work is shaping it to your workflow, setting the approval policy, writing the evals, and keeping it current while the framework moves under it.",
+    a: "You can, and we link the starting kits we begin from. The kit is the easy part. The work is shaping it to your workflow, setting the approval policy and writing the eval suite. Then keeping your agent current as eve moves under it.",
   },
 ];

@@ -57,7 +57,7 @@ vercel.json            # Redirects from retired URLs; content type for the Open 
 
 ## Content
 
-Brand name, domain, email, location, the client list, the references and the copy for both service lines live in `src/app/content.ts`. Three things in that file still need real figures before launch: the run table, the proof line, and the six tier prices in `tiers` (each currently reads "On request"). The vocabulary both lines use is fixed in `CONTEXT.md`, and the decisions behind the second line are in `docs/adr/`.
+Brand name, domain, email, location, the client list, the references and the copy for both service lines live in `src/app/content.ts`. Two things in that file still need real figures before launch: the run table, and the seven tier prices in `tiers` (each currently reads "On request"). The vocabulary both lines use is fixed in `CONTEXT.md`, and the decisions behind the second line are in `docs/adr/`.
 
 ## Claims
 
@@ -65,7 +65,7 @@ Every claim on the page is either verifiable or labelled as an example.
 
 Real, and may be stated as fact: the 17 client companies, the 6 references with portraits, and the prices. All of them live in `src/app/content.ts`.
 
-Synthetic, and labelled as an example wherever a visitor could read it as fact: the proof line, the recent runs table, and the hero run record in `src/components/run-record.tsx`. The standing agents line has no case study, metric, press mention or client yet. Do not invent one.
+Synthetic, and labelled as an example wherever a visitor could read it as fact: the run table under "What a run looks like", the hero run record in `src/components/run-record.tsx`, and the mention card in `src/components/mention-card.tsx`. Each one carries a visible `.tag` label. The standing agents line has no case study, metric, press mention or client yet. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
 
 Other people's names belong to them. Describe Vercel's `eve` framework and its templates accurately, by name, with a link, which is the descriptive use Apache-2.0 §6 permits. Never adopt a name from those repositories as a KastProductions product name, and never imply endorsement or partnership.
 

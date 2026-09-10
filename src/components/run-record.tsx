@@ -102,7 +102,7 @@ export function RunRecord() {
               {step.diff ? (
                 <details className="diff">
                   <summary>Show six lines of the diff</summary>
-                  <pre>
+                  <pre tabIndex={0} role="region" aria-label="Diff, scrolls sideways">
                     {step.diff.map((line) => (
                       <span key={line.text} className={line.kind}>
                         {line.text}
