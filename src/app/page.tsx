@@ -8,6 +8,7 @@ import {
   clients,
   description,
   founder,
+  ladder,
   location,
   mailtoFor,
   method,
@@ -226,6 +227,7 @@ export default function Home() {
               <p>
                 Backlog runs go by the sprint or by the month. A standing agent
                 is priced once to build and then monthly to operate.{" "}
+                {ladder.entry}{" "}
                 <Link href="/standing-agents">See what each tier does</Link>.
               </p>
             </div>

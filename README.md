@@ -57,7 +57,7 @@ vercel.json            # Redirects from retired URLs; content type for the Open 
 
 ## Content
 
-Brand name, domain, email, location, the client list, the references and the copy for both service lines live in `src/app/content.ts`. Two things in that file still need real figures before launch: the run table, and the seven tier prices in `tiers` (each currently reads "On request"). The vocabulary both lines use is fixed in `CONTEXT.md`, and the decisions behind the second line are in `docs/adr/`.
+Brand name, domain, email, location, the client list, the references and the copy for both service lines live in `src/app/content.ts`. The prices there are real: `plans` for backlog runs, `prices` on each entry in `tiers` for standing agents. A build price is a floor, because the work follows the number of systems the agent touches, and a monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it. The vocabulary both lines use is fixed in `CONTEXT.md`, and the decisions behind the second line are in `docs/adr/`.
 
 ## Claims
 

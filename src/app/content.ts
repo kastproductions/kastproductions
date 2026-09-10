@@ -309,20 +309,25 @@ export const mechanism = [
 export const ladder = {
   heading: "The four tiers",
   lede: "The tier is the authority you hand over. The price follows that authority. It also follows the number of subagents behind the one name, and the number of systems your agent touches.",
+  /* The one price the home page quotes for this line. It is the Reporter row
+   * below, written as a sentence, and it moves when that row moves. */
+  entry: "The smallest tier starts at €6,000, then €900 a month.",
   kitNote:
     "A starting kit is where a build starts. You buy the finished standing agent. Adapting a kit takes four jobs. We rewrite its instructions around your workflow. We connect it to your systems and set the approval policy. Then we write the eval suite that says what correct means for you.",
 };
 
 /* Prices are real evidence and must not be invented: see the Claims section of
- * README.md. Each cell below takes one edit once the number is agreed. */
+ * README.md. The build price is a floor, because the work follows the number of
+ * systems the agent touches. The monthly price buys the work in `mechanism`:
+ * the evals, the changes and the report. */
 export const tiers = [
   {
     name: "Reporter",
     promise: "Reads your systems and tells you what happened.",
     boundary: "A Reporter never acts on your systems.",
     prices: [
-      { amount: "On request", per: "to build" },
-      { amount: "On request", per: "a month to operate" },
+      { amount: "From €6,000", per: "to build" },
+      { amount: "From €900", per: "a month to operate" },
     ],
     includes: [
       "One agent, one channel, no subagents",
@@ -345,8 +350,8 @@ export const tiers = [
     boundary:
       "An Operator never takes an outward action without a named person approving it.",
     prices: [
-      { amount: "On request", per: "to build" },
-      { amount: "On request", per: "a month to operate" },
+      { amount: "From €14,000", per: "to build" },
+      { amount: "From €1,800", per: "a month to operate" },
     ],
     includes: [
       "One agent with a small number of subagents",
@@ -369,8 +374,8 @@ export const tiers = [
     boundary:
       "A Department owns a function and still stops at the same gate. Nothing reaches a customer without a named approval.",
     prices: [
-      { amount: "On request", per: "to build" },
-      { amount: "On request", per: "a month to operate" },
+      { amount: "From €30,000", per: "to build" },
+      { amount: "From €3,500", per: "a month to operate" },
     ],
     includes: [
       "A lead agent and its subagents, each with its own tools and sandbox",
@@ -397,9 +402,7 @@ export const tiers = [
     promise:
       "Describe the work. You get a short spec and a fixed price within one working day.",
     boundary: "For work that fits none of the three tiers above.",
-    prices: [
-      { amount: "On request", per: "spec and fixed price within one working day" },
-    ],
+    prices: [{ amount: "From €40,000", per: "to build" }],
     includes: [
       "A spec and a fixed price within one working day",
       "The same terms: your accounts, your keys, your code from the first commit",
