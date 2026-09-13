@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { ChannelsSection } from "@/components/channels-section";
 import { MentionCard } from "@/components/mention-card";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
@@ -12,6 +13,8 @@ import {
   fitIntro,
   founder,
   hero,
+  jobs,
+  jobsIntro,
   location,
   mailtoFor,
   mechanism,
@@ -68,7 +71,7 @@ export default function Home() {
                   Book a call
                 </a>
                 <a className="button button--ghost" href="#doors">
-                  See where your agent starts
+                  See the work we take
                 </a>
               </div>
             </div>
@@ -96,12 +99,16 @@ export default function Home() {
         <section className="section" id="doors" aria-labelledby="doors-title">
           <div className="wrap">
             <div className="section__head">
-              <h2 id="doors-title">Where your agent starts</h2>
-              <p>
-                Every build ends the same way: one standing agent, deployed
-                into your own accounts, answering to one name in a channel your
-                team already has open.
-              </p>
+              <h2 id="doors-title">{jobsIntro.heading}</h2>
+              <p>{jobsIntro.lede}</p>
+            </div>
+            <div className="specs">
+              {jobs.map((job) => (
+                <div className="spec" key={job.title}>
+                  <h3>{job.title}</h3>
+                  <p>{job.systems}</p>
+                </div>
+              ))}
             </div>
             <ul className="doors">
               {openDoors.map((door) => (
@@ -134,6 +141,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <ChannelsSection />
 
         <section className="section" id="mechanism" aria-labelledby="mechanism-title">
           <div className="wrap">

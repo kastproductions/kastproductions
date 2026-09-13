@@ -39,8 +39,9 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 src/app/
   layout.tsx           # Root layout: fonts, site-wide metadata, the site-wide graph,
                        #   analytics
-  page.tsx             # Home: hero, clients, the two doors, fit, mechanism and stack,
-                       #   reviewer, prices, questions; canonical URL and its own graph
+  page.tsx             # Home: hero, clients, the work we take and the doors, fit,
+                       #   channels, mechanism and stack, reviewer, prices, questions;
+                       #   canonical URL and its own graph
   custom/page.tsx      # The custom door: the jobs we take, channels, price, own graph
   content.ts           # Brand constants, search snippet copy, client list, founder
                        #   references, the written pages and their dates, and every
@@ -58,6 +59,7 @@ src/app/
   icon.svg             # Favicon
 src/components/
   site-chrome.tsx      # Header, footer and brand mark, shared by every page
+  channels-section.tsx # Where a standing agent is reachable, and what wakes it
   product-page.tsx     # One ready-made product, on its own page
   run-record.tsx       # The example run, on a product page
   mention-card.tsx     # The example mention, in the home page hero

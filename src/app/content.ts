@@ -365,6 +365,44 @@ export const work = [
   },
 ];
 
+export const jobsIntro = {
+  heading: "Work we take off your team",
+  lede: "Five jobs, with the systems each one touches. None is a product on a shelf: we build the agent for the company that asks. Your work does not have to be on this list.",
+};
+
+/* The five jobs. The home page indexes them by title and systems; the custom
+ * door describes each one. None of them is in the catalogue: each is work we
+ * shape an agent around once we have read the client's workflow. */
+export type Job = { title: string; systems: string; body: string };
+
+export const jobs: Job[] = [
+  {
+    title: "Brief to published post",
+    systems: "Notion, your CMS",
+    body: "A brief goes in, a drafted and edited page comes back, and publishing waits for a name.",
+  },
+  {
+    title: "Draft and schedule",
+    systems: "Slack, Typefully",
+    body: "Your team asks in a channel. The agent drafts, queues and reports what the last batch did.",
+  },
+  {
+    title: "Support triage",
+    systems: "Zendesk or Intercom, GitHub",
+    body: "Every new ticket gets read, grouped and answered where the answer is known, and filed as an issue where it is a bug.",
+  },
+  {
+    title: "Failed-payment follow-up",
+    systems: "Stripe, your outbox",
+    body: "Overnight failures come back as a summary and a drafted message per customer. Sending needs a signature.",
+  },
+  {
+    title: "Store operations",
+    systems: "Shopify",
+    body: "Stock, pricing and order exceptions watched on a schedule, with the ones that need a decision brought to a person.",
+  },
+];
+
 /* ---------------------------------------------------------------------------
  * The custom door
  * ------------------------------------------------------------------------- */
@@ -375,33 +413,6 @@ export const custom = {
   jobsHeading: "Work we take",
   jobsLede:
     "Five jobs we take, to measure your own against. Each one names the systems it touches. None of them is a product you can buy today, and none carries a price until we have read your workflow.",
-  jobs: [
-    {
-      title: "Brief to published post",
-      systems: "Notion, your CMS",
-      body: "A brief goes in, a drafted and edited page comes back, and publishing waits for a name.",
-    },
-    {
-      title: "Draft and schedule",
-      systems: "Slack, Typefully",
-      body: "Your team asks in a channel. The agent drafts, queues and reports what the last batch did.",
-    },
-    {
-      title: "Support triage",
-      systems: "Zendesk or Intercom, GitHub",
-      body: "Every new ticket gets read, grouped and answered where the answer is known, and filed as an issue where it is a bug.",
-    },
-    {
-      title: "Failed-payment follow-up",
-      systems: "Stripe, your outbox",
-      body: "Overnight failures come back as a summary and a drafted message per customer. Sending needs a signature.",
-    },
-    {
-      title: "Store operations",
-      systems: "Shopify",
-      body: "Stock, pricing and order exceptions watched on a schedule, with the ones that need a decision brought to a person.",
-    },
-  ],
   prices: [
     { amount: "From €10,000", per: "to build" },
     { amount: "From €1,500", per: "a month to operate" },
@@ -419,25 +430,10 @@ export const custom = {
 
 export const pricingIntro = {
   heading: "How to work with us",
-  lede: "Add it up before you call. A build price is a floor, because the work follows the number of systems your agent touches. Every monthly price buys the evals, the changes and the report.",
+  lede: "A build price is a floor, because the work follows the number of systems your agent touches. Every monthly price buys the evals, the changes and the report.",
 };
 
 export const prices = [
-  {
-    title: "Sprint",
-    body: "One brief, two weeks, one fixed price. Our own agents work it on your repository, and our reviewer signs the merge. Nothing is deployed and nothing is connected, so there is nothing for you to own yet.",
-    price: "From €4,000",
-    per: "per brief",
-    includes: [
-      "A fixed price before the two weeks start",
-      "Plan, build, review and ship, with the run recorded",
-      "30-day fix window on anything we merged",
-    ],
-    cta: "Start with a brief",
-    subject: "Sprint: one brief",
-    buttonStyle: "button--ink",
-    catalogue: false,
-  },
   {
     title: "Self-run",
     body: "We build your agent, deploy it into your own accounts and hand over the keys. Your team runs it and your engineers sign the merges.",
@@ -481,6 +477,21 @@ export const prices = [
     cta: "Describe the work",
     subject: "Custom agent",
     buttonStyle: "button--outline",
+    catalogue: false,
+  },
+  {
+    title: "Sprint",
+    body: "One brief, two weeks, one fixed price. Our own agents work it on your repository, and our reviewer signs the merge. Nothing is deployed and nothing is connected, so this buys one piece of finished work rather than an agent.",
+    price: "From €4,000",
+    per: "per brief",
+    includes: [
+      "A fixed price before the two weeks start",
+      "Plan, build, review and ship, with the run recorded",
+      "30-day fix window on anything we merged",
+    ],
+    cta: "Start with a brief",
+    subject: "Sprint: one brief",
+    buttonStyle: "button--ink",
     catalogue: false,
   },
 ];

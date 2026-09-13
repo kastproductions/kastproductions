@@ -334,7 +334,7 @@ main > .section:last-child { padding-bottom: clamp(2rem, 4vw, 3.25rem); }
 .section__head p { color: var(--ink-2); font-size: 1.1rem; }
 
 /* The five points we write down, the five parts of the mechanism, and the jobs
- * on the custom page. The label column reads deliberate at width. */
+ * on both live pages. The label column reads deliberate at width. */
 .specs { display: grid; gap: 1.75rem; }
 .spec { display: grid; gap: .4rem; align-content: start; }
 .spec p { color: var(--ink-2); }
@@ -575,7 +575,7 @@ main > .section:last-child { padding-bottom: clamp(2rem, 4vw, 3.25rem); }
 .doors {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: clamp(2.25rem, 5vw, 3.5rem) 0 0;
   display: grid;
   gap: 1.75rem;
   grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));

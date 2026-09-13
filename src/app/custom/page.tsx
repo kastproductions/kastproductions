@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { ChannelsSection } from "@/components/channels-section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   brand,
   callHref,
-  channels,
   custom,
+  jobs,
   mailtoFor,
 } from "../content";
 import { indexedRobots, openGraphImage } from "../head-directives";
@@ -68,7 +69,7 @@ export default function Custom() {
               <p>{custom.jobsLede}</p>
             </div>
             <div className="specs">
-              {custom.jobs.map((job) => (
+              {jobs.map((job) => (
                 <div className="spec" key={job.title}>
                   <div>
                     <h3>{job.title}</h3>
@@ -81,37 +82,7 @@ export default function Custom() {
           </div>
         </section>
 
-        <section className="section" id="channels" aria-labelledby="channels-title">
-          <div className="wrap">
-            <div className="section__head">
-              <h2 id="channels-title">{channels.heading}</h2>
-              <p>{channels.lede}</p>
-            </div>
-            <div className="split">
-              <div className="pair">
-                <h3>Reachable in</h3>
-                <ul className="chips">
-                  {channels.reachable.map((channel) => (
-                    <li className="chip chip--strong" key={channel}>
-                      {channel}
-                    </li>
-                  ))}
-                </ul>
-                <p className="note">{channels.teamsNote}</p>
-              </div>
-              <div className="pair">
-                <h3>Woken by events from</h3>
-                <ul className="chips">
-                  {channels.events.map((source) => (
-                    <li className="chip" key={source}>
-                      {source}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
+        <ChannelsSection />
 
         <section className="section" id="pricing" aria-labelledby="custom-price-title">
           <div className="wrap">
