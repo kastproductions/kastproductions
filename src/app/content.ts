@@ -258,6 +258,9 @@ export type Product = {
   prerequisites: { item: string; who: "You" | "We" }[];
   prices: { amount: string; per: string }[];
   subject: string;
+  /* The day this product's page copy last changed, written YYYY-MM-DD. The
+   * sitemap states it, so editing the copy above means editing this date. */
+  date: string;
 };
 
 export const issueToPullRequest: Product = {
@@ -304,6 +307,7 @@ export const issueToPullRequest: Product = {
     { amount: "From €3,500", per: "a month to operate" },
   ],
   subject: "Issue to pull request",
+  date: "2026-09-13",
 };
 
 export const products: Product[] = [];
@@ -499,3 +503,23 @@ export const questions = [
     a: "You can, and the framework is open source. The framework is the easy part. The work is shaping the agent to your workflow, setting the approval policy, writing the eval suite, and holding all three steady while the framework moves under it.",
   },
 ];
+
+/* ---------------------------------------------------------------------------
+ * When each page last changed
+ *
+ * The sitemap tells a crawler the day a page's copy last changed. That is a
+ * fact about the copy, so it lives here beside the copy, written the way a
+ * person writes a date: YYYY-MM-DD. Editing the words on a page means editing
+ * its date in the same commit, and nothing else sets it.
+ *
+ * A page nobody keeps a date for is left out of this list. The sitemap then
+ * states no date for it, because no date beats a wrong one: a crawler that
+ * learns our dates are worthless stops reading them.
+ *
+ * A product page is not here. Its date rides on its own record, above, so a
+ * product entering the catalogue brings its date with it.
+ * ------------------------------------------------------------------------- */
+export const routeDates: Record<string, string | undefined> = {
+  "/": "2026-09-13",
+  "/custom": "2026-09-13",
+};
