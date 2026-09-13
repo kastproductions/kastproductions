@@ -12,6 +12,7 @@ import {
   openGraphImage,
   work,
 } from "@/app/content";
+import { breadcrumbs, graphHtml, service, webPage } from "@/app/structured-data";
 
 /*
  * One ready-made product, on its own page. The markup lives here rather than in
@@ -40,6 +41,19 @@ export function productMetadata(product: Product): Metadata {
 }
 
 export function ProductPage({ product }: { product: Product }) {
+  /* The product's own nodes, built from its record, so adding a product to the
+   * catalogue gives its page a graph with no further edit. */
+  const page = {
+    path: `/${product.slug}`,
+    name: product.name,
+    description: product.promise,
+  };
+  const graph = graphHtml([
+    webPage(page),
+    service({ ...page, prices: product.prices }),
+    breadcrumbs(page),
+  ]);
+
   return (
     <>
       <SiteHeader />
@@ -222,6 +236,10 @@ export function ProductPage({ product }: { product: Product }) {
       </main>
 
       <SiteFooter />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: graph }}
+      />
     </>
   );
 }

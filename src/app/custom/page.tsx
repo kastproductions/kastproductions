@@ -9,6 +9,7 @@ import {
   mailtoFor,
   openGraphImage,
 } from "../content";
+import { breadcrumbs, graphHtml, service, webPage } from "../structured-data";
 
 const pageTitle = "Custom agents";
 
@@ -29,6 +30,16 @@ export const metadata: Metadata = {
     description: custom.lede,
   },
 };
+
+/* The door's own nodes, beside the site-wide ones the layout renders: the page
+ * itself, the service it sells with the prices it prints, and the way here
+ * from the home page. */
+const page = { path: "/custom", name: pageTitle, description: custom.lede };
+const graph = graphHtml([
+  webPage(page),
+  service({ ...page, prices: custom.prices }),
+  breadcrumbs(page),
+]);
 
 export default function Custom() {
   return (
@@ -150,6 +161,10 @@ export default function Custom() {
       </main>
 
       <SiteFooter />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: graph }}
+      />
     </>
   );
 }
