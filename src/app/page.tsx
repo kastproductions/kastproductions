@@ -12,10 +12,12 @@ import {
   fitIntro,
   founder,
   hero,
+  indexedRobots,
   location,
   mailtoFor,
   mechanism,
   mechanismIntro,
+  openGraphImage,
   prices,
   pricingIntro,
   products,
@@ -29,7 +31,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  robots: indexedRobots,
   openGraph: {
+    ...openGraphImage,
     type: "website",
     url: "/",
     siteName: brand,

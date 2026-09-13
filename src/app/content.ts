@@ -21,6 +21,33 @@ export const location = { city: "Vilnius", country: "Lithuania", countryCode: "L
 export const title = `${brand}: software factory on demand`;
 export const description = `Software factory on demand in ${location.city}, ${location.country}. We build agents that work the way your company works, deploy them into your own accounts and keep them right.`;
 
+/*
+ * Metadata every written page spreads into its own. Next.js merges metadata
+ * shallowly, so a page that declares an `openGraph` object of its own replaces
+ * the inherited one, the image with it, and a page that says nothing about
+ * robots takes whatever the layout says. The layout is the wrong place for
+ * both: the framework's not-found route inherits from it, and that route has
+ * to say `noindex` and nothing else.
+ */
+export const openGraphImage = {
+  images: [
+    { url: "/opengraph-image", width: 1200, height: 630, alt: title, type: "image/png" },
+  ],
+};
+
+/* What we ask a crawler to do with a page we publish. */
+export const indexedRobots = {
+  index: true,
+  follow: true,
+  googleBot: {
+    index: true,
+    follow: true,
+    "max-video-preview": -1,
+    "max-image-preview": "large",
+    "max-snippet": -1,
+  },
+} as const;
+
 /* The working days from a signed order to the agent answering in your own
  * channel. Printed next to every ready-made price. */
 export const leadTime = "five working days";

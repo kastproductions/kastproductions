@@ -1,6 +1,14 @@
 import type { Metadata } from "next";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import { brand, callHref, channels, custom, mailtoFor } from "../content";
+import {
+  brand,
+  callHref,
+  channels,
+  custom,
+  indexedRobots,
+  mailtoFor,
+  openGraphImage,
+} from "../content";
 
 const pageTitle = "Custom agents";
 
@@ -10,7 +18,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/custom",
   },
+  robots: indexedRobots,
   openGraph: {
+    ...openGraphImage,
     type: "website",
     url: "/custom",
     siteName: brand,

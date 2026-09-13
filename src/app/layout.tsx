@@ -37,7 +37,9 @@ export const viewport: Viewport = {
 /*
  * Site-wide defaults. Page-specific fields (canonical, og:url, og:title)
  * live in each page's `metadata` so a new page never inherits the home
- * page's canonical URL.
+ * page's canonical URL. Robots stays out for a different reason: the
+ * framework's not-found route inherits this object, and an `index, follow`
+ * here would sit next to the `noindex` that route emits.
  */
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -54,17 +56,6 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     creator: founderHandle,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
   formatDetection: {
     telephone: false,

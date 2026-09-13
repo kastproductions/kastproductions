@@ -2,7 +2,16 @@ import type { Metadata } from "next";
 import { RunRecord } from "@/components/run-record";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import type { Product } from "@/app/content";
-import { brand, callHref, channels, leadTime, mailtoFor, work } from "@/app/content";
+import {
+  brand,
+  callHref,
+  channels,
+  indexedRobots,
+  leadTime,
+  mailtoFor,
+  openGraphImage,
+  work,
+} from "@/app/content";
 
 /*
  * One ready-made product, on its own page. The markup lives here rather than in
@@ -17,7 +26,9 @@ export function productMetadata(product: Product): Metadata {
     title: product.name,
     description: product.promise,
     alternates: { canonical: `/${product.slug}` },
+    robots: indexedRobots,
     openGraph: {
+      ...openGraphImage,
       type: "website",
       url: `/${product.slug}`,
       siteName: brand,
