@@ -14,6 +14,9 @@ export const callHref = bookingUrl || mailtoFor("First call");
 export const founder = "Karolis Stulgys";
 /* Public profiles that link back to this site. Search engines use them to tie the founder to the brand. */
 export const founderProfiles = ["https://github.com/kstulgys", "https://x.com/imkarolis"];
+/* The company's own public profiles, as opposed to the founder's. A crawler
+ * reads them to corroborate that the company exists outside this website. */
+export const companyProfiles = ["https://github.com/kastproductions"];
 export const founderHandle = "@imkarolis";
 export const location = { city: "Vilnius", country: "Lithuania", countryCode: "LT" };
 
