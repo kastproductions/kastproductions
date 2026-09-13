@@ -9,52 +9,38 @@
  * down a second time: the suite tracks the copy instead of pinning it.
  */
 import { expect, test } from "bun:test";
-import { custom, products } from "../src/app/content";
-import { indexableRoutes, readExport, siteUrl } from "./export";
+import { custom, type Price, products } from "../src/app/content";
+import {
+  type GraphNode,
+  graphNodes,
+  indexableRoutes,
+  nodesOfType,
+  readExport,
+  siteUrl,
+} from "./export";
 
-type Node = Record<string, unknown>;
-
-/* Every node in every JSON-LD payload of a document. The script sits in the
- * body, so the whole document is read. */
-function nodes(document: string): Node[] {
-  const scripts = document.matchAll(
-    /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
-  );
-  return [...scripts].flatMap(([, json]) => {
-    const payload = JSON.parse(json) as Node;
-    return (payload["@graph"] as Node[]) ?? [];
-  });
-}
-
-function nodesOfType(document: string, type: string): Node[] {
-  return nodes(document).filter((node) => [node["@type"]].flat().includes(type));
-}
-
-function only(found: Node[], type: string, path: string): Node {
+function only(found: GraphNode[], type: string, path: string): GraphNode {
   if (found.length !== 1) {
     throw new Error(`${path} declares ${found.length} ${type} nodes; it promises one.`);
   }
   return found[0];
 }
 
-/* The currency each symbol in the price list means, as a reader reads it. */
-const currencyCodes: Record<string, string> = { "\u20ac": "EUR" };
-
 /*
- * What a printed price claims: `"From \u20ac40,000"` is a floor of 40000 EUR.
- * The suite reads the string the page prints, so it holds no second copy of a
- * number the business owns.
+ * What a printed price claims, read the way a person reads it: the digits are
+ * the number, and the euro sign is euros. This is deliberately not the way
+ * `src/app/structured-data.ts` reads a price. That module parses the string
+ * with one regular expression and a table of currency symbols; if the suite
+ * ran the same rule, it would only prove the graph agrees with a second copy
+ * of it, and a misreading of `"From \u20ac3,500"` would pass on both sides.
+ * Two different readings can disagree, which is the whole point of checking.
  */
-function claim(amount: string): { floor: boolean; currency: string; value: number } {
-  const match = /^(From )?(\p{Sc})\s?(\d[\d,]*)$/u.exec(amount);
-  if (!match || !currencyCodes[match[2]]) {
-    throw new Error(`the suite cannot read the price "${amount}"`);
+function claim(amount: string): { currency: string; value: number } {
+  const digits = amount.replace(/\D/g, "");
+  if (digits === "" || !amount.includes("\u20ac")) {
+    throw new Error(`the suite cannot read a number and a currency out of the price "${amount}"`);
   }
-  return {
-    floor: Boolean(match[1]),
-    currency: currencyCodes[match[2]],
-    value: Number(match[3].replaceAll(",", "")),
-  };
+  return { currency: "EUR", value: Number(digits) };
 }
 
 /*
@@ -63,7 +49,7 @@ function claim(amount: string): { floor: boolean; currency: string; value: numbe
  * own. A route the suite cannot answer for is a failure, not a skip: that is a
  * page shipped with nobody watching what it claims.
  */
-function pricesFor(path: string): { amount: string; per: string }[] | null {
+function pricesFor(path: string): Price[] | null {
   if (path === "/") return null;
   if (path === "/custom") return custom.prices;
   const product = products.find((entry) => `/${entry.slug}` === path);
@@ -97,18 +83,20 @@ for (const route of indexableRoutes) {
     }
     expect(sold[0].provider).toEqual({ "@id": `${siteUrl}/#organization` });
 
-    const offers = sold[0].offers as Node[];
+    const offers = sold[0].offers as GraphNode[];
     for (const price of prices) {
       const stated = claim(price.amount);
-      /* `From` is a floor, so the offer states a minimum and never a fixed
-       * price. The number and the currency come from the printed string. */
+      /* Every price the site prints is a floor, because the work follows the
+       * number of systems the agent touches, so the offer states a minimum and
+       * never a fixed price. The number and the currency come from the printed
+       * string, so a price edited in `content.ts` is checked here as written. */
       expect(offers).toContainEqual({
         "@type": "Offer",
         description: price.per,
         priceSpecification: {
           "@type": "PriceSpecification",
           priceCurrency: stated.currency,
-          ...(stated.floor ? { minPrice: stated.value } : { price: stated.value }),
+          minPrice: stated.value,
         },
       });
     }
@@ -120,7 +108,7 @@ for (const route of indexableRoutes) {
       "BreadcrumbList",
       route.path,
     );
-    const items = trail.itemListElement as Node[];
+    const items = trail.itemListElement as GraphNode[];
     expect(items.map((item) => item.item)).toEqual([siteUrl, route.url]);
     expect(items.map((item) => item.position)).toEqual([1, 2]);
   });
@@ -133,5 +121,5 @@ test("the home page offers nothing of its own", () => {
    * Offer. */
   const home = readExport("index.html");
   expect(nodesOfType(home, "Service")).toEqual([]);
-  expect(JSON.stringify(nodes(home))).not.toContain("Offer");
+  expect(JSON.stringify(graphNodes(home))).not.toContain("Offer");
 });

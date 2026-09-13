@@ -12,12 +12,10 @@ import {
   fitIntro,
   founder,
   hero,
-  indexedRobots,
   location,
   mailtoFor,
   mechanism,
   mechanismIntro,
-  openGraphImage,
   prices,
   pricingIntro,
   products,
@@ -26,6 +24,7 @@ import {
   stack,
   title,
 } from "./content";
+import { indexedRobots, openGraphImage } from "./head-directives";
 import { graphHtml, webPage } from "./structured-data";
 
 export const metadata: Metadata = {

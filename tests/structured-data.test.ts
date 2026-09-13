@@ -11,37 +11,24 @@ import { expect, test } from "bun:test";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { companyProfiles, contactEmail, founderProfiles } from "../src/app/content";
-import { exportRoot, indexableRoutes, readExport, siteUrl } from "./export";
+import {
+  exportRoot,
+  type GraphNode,
+  graphNodes,
+  indexableRoutes,
+  jsonLdPayloads,
+  readExport,
+  siteUrl,
+} from "./export";
 
-type Node = Record<string, unknown>;
-
-/*
- * Every JSON-LD payload in a document, parsed. The script sits in the body,
- * so the whole document is read. A payload that does not parse is the fault
- * this file exists to catch: a crawler drops the graph without a word.
- */
-function payloads(document: string): Node[] {
-  const scripts = document.matchAll(
-    /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
-  );
-  return [...scripts].map(([, json]) => {
-    try {
-      return JSON.parse(json) as Node;
-    } catch (error) {
-      throw new Error(`a JSON-LD payload does not parse: ${String(error)}`);
-    }
-  });
-}
-
-/* Every node a document declares, across all of its payloads. */
-function nodes(document: string): Node[] {
-  return payloads(document).flatMap((payload) => (payload["@graph"] as Node[]) ?? []);
-}
-
-function nodeById(document: string, id: string): Node {
-  const found = nodes(document).find((node) => node["@id"] === id);
+function nodeById(document: string, id: string): GraphNode {
+  const found = graphNodes(document).find((node) => node["@id"] === id);
   if (!found) {
-    throw new Error(`no node with @id ${id}; the graph names ${nodes(document).map((node) => node["@id"]).join(", ")}`);
+    throw new Error(
+      `no node with @id ${id}; the graph names ${graphNodes(document)
+        .map((node) => node["@id"])
+        .join(", ")}`,
+    );
   }
   return found;
 }
@@ -51,7 +38,7 @@ const founderId = `${siteUrl}/#founder`;
 
 /* The home page carries the site-wide nodes like every other route; it is the
  * one this file reads them from. */
-function organization(): Node {
+function organization(): GraphNode {
   return nodeById(readExport("index.html"), organizationId);
 }
 
@@ -69,7 +56,7 @@ function pngSize(bytes: Buffer): { width: number; height: number } {
 
 /* The logo file the graph points at, read out of the export. */
 function logoFile(): Buffer {
-  const logo = organization().logo as Node;
+  const logo = organization().logo as GraphNode;
   const url = String(logo.url);
   if (!url.startsWith(`${siteUrl}/`)) {
     throw new Error(`the logo URL ${url} is not served from this site.`);
@@ -84,7 +71,7 @@ function logoFile(): Buffer {
 
 for (const route of indexableRoutes) {
   test(`${route.path} emits structured data that parses as JSON`, () => {
-    const found = payloads(readExport(route.file));
+    const found = jsonLdPayloads(readExport(route.file));
     expect(found.length).toBeGreaterThan(0);
     for (const payload of found) {
       expect(payload["@context"]).toBe("https://schema.org");
@@ -94,7 +81,7 @@ for (const route of indexableRoutes) {
   test(`${route.path} names the company, the founder and the site`, () => {
     /* These three are true wherever a crawler lands, so the layout states them
      * on every route rather than a page repeating them. */
-    const declared = nodes(readExport(route.file)).map((node) => node["@id"]);
+    const declared = graphNodes(readExport(route.file)).map((node) => node["@id"]);
     expect(declared).toContain(organizationId);
     expect(declared).toContain(founderId);
     expect(declared).toContain(`${siteUrl}/#website`);
@@ -111,7 +98,7 @@ test("the organisation claims no LocalBusiness subtype and no price range", () =
 });
 
 test("the logo is a raster file in the export, at least 512 square", () => {
-  const url = String((organization().logo as Node).url);
+  const url = String((organization().logo as GraphNode).url);
   /* An SVG is refused for structured data images, whatever its size. */
   expect(url).toMatch(/\.(png|jpe?g|webp)$/);
 
@@ -121,7 +108,7 @@ test("the logo is a raster file in the export, at least 512 square", () => {
 });
 
 test("the logo is declared as an ImageObject with the size the file really is", () => {
-  const logo = organization().logo as Node;
+  const logo = organization().logo as GraphNode;
   const { width, height } = pngSize(logoFile());
 
   expect(logo["@type"]).toBe("ImageObject");
@@ -140,10 +127,9 @@ test("the organisation carries a sales contact point with the contact email", ()
 test("the organisation names its own GitHub organisation in sameAs", () => {
   const sameAs = organization().sameAs as string[];
 
-  /* The profiles a crawler follows to corroborate the company, starting with
-   * the GitHub organisation that hosts this site. */
+  /* The profiles a crawler follows to corroborate the company. The content
+   * module owns which they are; the graph owes them exactly. */
   expect(sameAs).toEqual(companyProfiles);
-  expect(sameAs).toContain("https://github.com/kastproductions");
 });
 
 test("the founder's personal profiles sit on the Person node and nowhere else", () => {

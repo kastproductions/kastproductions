@@ -30,5 +30,10 @@
     ".next/dev/types/**/*.ts",
     "**/*.mts"
   ],
+  /* `tests` is excluded because `import { test } from "bun:test"` has no types
+     without `@types/bun`, and this repository takes no dependency it does not
+     ship. `next build` type-checks everything this file includes, so the suite
+     would fail the build on that import. Nothing is lost: `bun test`
+     transpiles the suite without type-checking it either way. */
   "exclude": ["node_modules", "tests"]
 }

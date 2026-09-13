@@ -1,5 +1,13 @@
 export const brand = "KastProductions";
 export const siteUrl = "https://www.kastproductions.com";
+/* A page's absolute URL. The home page is the bare site URL with no trailing
+ * slash, and every other path maps straight across. The canonical tag, the
+ * sitemap and the structured data graph all state a page's URL, and a crawler
+ * reads two spellings of one page as two pages, so all three follow this one
+ * rule rather than each writing it out. */
+export function pageUrl(path: string): string {
+  return path === "/" ? siteUrl : `${siteUrl}${path}`;
+}
 export const contactEmail = "hello@kastproductions.com";
 /* Every call to action is a mailto, because the site is a static export with no
  * runtime. The subject says which door the reader came through, which is both
@@ -24,32 +32,9 @@ export const location = { city: "Vilnius", country: "Lithuania", countryCode: "L
 export const title = `${brand}: software factory on demand`;
 export const description = `Software factory on demand in ${location.city}, ${location.country}. We build agents that work the way your company works, deploy them into your own accounts and keep them right.`;
 
-/*
- * Metadata every written page spreads into its own. Next.js merges metadata
- * shallowly, so a page that declares an `openGraph` object of its own replaces
- * the inherited one, the image with it, and a page that says nothing about
- * robots takes whatever the layout says. The layout is the wrong place for
- * both: the framework's not-found route inherits from it, and that route has
- * to say `noindex` and nothing else.
- */
-export const openGraphImage = {
-  images: [
-    { url: "/opengraph-image", width: 1200, height: 630, alt: title, type: "image/png" },
-  ],
-};
-
-/* What we ask a crawler to do with a page we publish. */
-export const indexedRobots = {
-  index: true,
-  follow: true,
-  googleBot: {
-    index: true,
-    follow: true,
-    "max-video-preview": -1,
-    "max-image-preview": "large",
-    "max-snippet": -1,
-  },
-} as const;
+/* What a crawler and a social scraper are told about a page lives in
+ * `src/app/head-directives.ts`. Those are instructions to a machine, not words
+ * a reader sees, and this module is the copy. */
 
 /* The working days from a signed order to the agent answering in your own
  * channel. Printed next to every ready-made price. */
@@ -130,6 +115,12 @@ export const references = [
  * shape of the offer is in docs/adr/0005, the vocabulary in CONTEXT.md, and
  * what may be stated as fact in the Claims section of README.md.
  * ------------------------------------------------------------------------- */
+
+/* A price as a reader sees it, and the only place the number lives.
+ * `custom.prices` and the `prices` field on a product both hold these, and
+ * `src/app/structured-data.ts` reads the number and the currency back out of
+ * the string so the page and the graph cannot drift apart. */
+export type Price = { amount: string; per: string };
 
 export const hero = {
   heading: "What fits everything fits nothing.",
@@ -286,7 +277,7 @@ export type Product = {
   stations: { title: string; body: string }[];
   record: string;
   prerequisites: { item: string; who: "You" | "We" }[];
-  prices: { amount: string; per: string }[];
+  prices: Price[];
   subject: string;
   /* The day this product's page copy last changed, written YYYY-MM-DD. The
    * sitemap states it, so editing the copy above means editing this date. */
@@ -535,21 +526,28 @@ export const questions = [
 ];
 
 /* ---------------------------------------------------------------------------
- * When each page last changed
+ * The written pages
  *
- * The sitemap tells a crawler the day a page's copy last changed. That is a
- * fact about the copy, so it lives here beside the copy, written the way a
- * person writes a date: YYYY-MM-DD. Editing the words on a page means editing
- * its date in the same commit, and nothing else sets it.
+ * The pages we write by hand, as against the product pages the catalogue
+ * makes. This is the one list of them: `src/app/sitemap.ts` walks it, and so
+ * does the test suite. A page added here is therefore listed for a crawler and
+ * guarded by the suite in one edit. A written page that is not here has no
+ * sitemap entry, and nothing watching its canonical, its title, its
+ * description or its unfurl image.
  *
- * A page nobody keeps a date for is left out of this list. The sitemap then
- * states no date for it, because no date beats a wrong one: a crawler that
- * learns our dates are worthless stops reading them.
+ * A date is the day that page's copy last changed, written YYYY-MM-DD. It
+ * comes from the page file's history, `git log -1 --date=short -- <file>`, so
+ * editing the words on a page means editing its date in the same commit.
+ * Nothing else sets it: a date stamped at build time tells a crawler that
+ * every page changed on every deploy, and a crawler that learns our dates are
+ * worthless stops reading them.
  *
- * A product page is not here. Its date rides on its own record, above, so a
- * product entering the catalogue brings its date with it.
+ * A product page is not here. Its path and its date ride on its own record,
+ * above, so a product entering the catalogue brings both with it.
  * ------------------------------------------------------------------------- */
-export const routeDates: Record<string, string | undefined> = {
-  "/": "2026-09-13",
-  "/custom": "2026-09-13",
-};
+export type WrittenPage = { path: string; date: string };
+
+export const writtenPages: WrittenPage[] = [
+  { path: "/", date: "2026-09-13" },
+  { path: "/custom", date: "2026-09-13" },
+];

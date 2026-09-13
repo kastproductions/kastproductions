@@ -6,12 +6,11 @@ import {
   brand,
   callHref,
   channels,
-  indexedRobots,
   leadTime,
   mailtoFor,
-  openGraphImage,
   work,
 } from "@/app/content";
+import { indexedRobots, openGraphImage } from "@/app/head-directives";
 import { breadcrumbs, graphHtml, service, webPage } from "@/app/structured-data";
 
 /*

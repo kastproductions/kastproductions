@@ -15,12 +15,14 @@ import {
   founder,
   founderProfiles,
   location,
+  pageUrl,
+  type Price,
   siteUrl,
 } from "./content";
 
 /* A schema.org node. The shape is free-form on purpose: schema.org vocabulary
  * is wider than any type we would write here, and the graph is data, not code. */
-export type Node = Record<string, unknown>;
+export type GraphNode = Record<string, unknown>;
 
 /* Nodes point at each other by `@id`, so a page node can say it belongs to the
  * company without repeating the company. */
@@ -38,7 +40,7 @@ export const websiteId = `${siteUrl}/#website`;
  */
 const logo = { path: "/logo.png", width: 512, height: 512 };
 
-const organization: Node = {
+const organization: GraphNode = {
   "@type": "Organization",
   "@id": organizationId,
   name: brand,
@@ -84,7 +86,7 @@ const organization: Node = {
   },
 };
 
-const person: Node = {
+const person: GraphNode = {
   "@type": "Person",
   "@id": founderId,
   name: founder,
@@ -94,7 +96,7 @@ const person: Node = {
   sameAs: founderProfiles,
 };
 
-const website: Node = {
+const website: GraphNode = {
   "@type": "WebSite",
   "@id": websiteId,
   url: siteUrl,
@@ -106,7 +108,7 @@ const website: Node = {
 
 /* The nodes that are true on every route. The root layout renders these, and a
  * page adds its own on top rather than repeating them. */
-export const siteNodes: Node[] = [organization, person, website];
+export const siteNodes: GraphNode[] = [organization, person, website];
 
 /*
  * What a page knows about itself: the route it answers, the heading a reader
@@ -119,22 +121,12 @@ export type PageFacts = {
   description: string;
 };
 
-/* A printed price, the shape `content.ts` writes: `custom.prices` and the
- * `prices` field on a product both hold these. */
-type Price = { amount: string; per: string };
-
-/* The page's own URL, as its canonical states it. The home page is the bare
- * site URL with no trailing slash, so a node and a canonical never disagree. */
-function pageUrl(path: string): string {
-  return path === "/" ? siteUrl : `${siteUrl}${path}`;
-}
-
 /*
  * The page itself, as a node. It points at the site and the company by `@id`
  * rather than restating either: the layout already said both, on this route
  * and on every other one.
  */
-export function webPage(page: PageFacts): Node {
+export function webPage(page: PageFacts): GraphNode {
   return {
     "@type": "WebPage",
     "@id": `${pageUrl(page.path)}#webpage`,
@@ -151,9 +143,10 @@ export function webPage(page: PageFacts): Node {
  * for is a price the graph cannot state, and `printedPrice` throws on it. */
 const currencyCodes: Record<string, string> = { "\u20ac": "EUR" };
 
-/* A price as a reader sees it: an optional `From`, a currency symbol, then
- * digits grouped by commas. `"From \u20ac40,000"` is the whole grammar. */
-const priceFormat = /^(From )?(\p{Sc})\s?(\d[\d,]*)$/u;
+/* A price as a reader sees it: `From`, a currency symbol, then digits grouped
+ * by commas. `"From \u20ac40,000"` is the whole grammar, and the `From` is
+ * required: see `offer`. */
+const priceFormat = /^From (\p{Sc})\s?(\d[\d,]*)$/u;
 
 /*
  * The number and the currency a printed price states. The printed string is
@@ -164,30 +157,31 @@ const priceFormat = /^(From )?(\p{Sc})\s?(\d[\d,]*)$/u;
  * number and a currency is not an offer, and a new price format is worth a
  * loud failure rather than an offer nobody notices is missing.
  */
-function printedPrice(amount: string): { floor: boolean; currency: string; value: number } {
+function printedPrice(amount: string): { currency: string; value: number } {
   const match = priceFormat.exec(amount);
-  const currency = match ? currencyCodes[match[2]] : undefined;
+  const currency = match ? currencyCodes[match[1]] : undefined;
   if (!match || !currency) {
     throw new Error(
-      `Cannot read a number and a currency out of the price "${amount}". ` +
-        `An offer states both. Teach \`priceFormat\` and \`currencyCodes\` in ` +
+      `Cannot read a floor and a currency out of the price "${amount}". ` +
+        `Every price we print is a floor, and an offer states a number and a ` +
+        `currency. Teach \`priceFormat\` and \`currencyCodes\` in ` +
         `src/app/structured-data.ts the new format, or the graph loses the price.`,
     );
   }
-  return {
-    floor: Boolean(match[1]),
-    currency,
-    value: Number(match[3].replaceAll(",", "")),
-  };
+  return { currency, value: Number(match[2].replaceAll(",", "")) };
 }
 
 /*
- * One printed price as an offer. `From` means a floor, so it becomes a
- * `minPrice` rather than a `price`: a fixed price we do not hold to is the
- * kind of claim that costs trust.
+ * One printed price as an offer, always as a floor: `minPrice` and never
+ * `price`. Every price this company prints starts with `From`, because the
+ * work follows the number of systems the agent touches, which is the rule the
+ * Content section of README.md states. A price that is not a floor therefore
+ * fails the build on purpose: the alternative is a graph that quietly calls a
+ * fixed price a floor, and a price we do not hold to is the kind of claim that
+ * costs trust.
  */
-function offer(price: Price): Node {
-  const { floor, currency, value } = printedPrice(price.amount);
+function offer(price: Price): GraphNode {
+  const { currency, value } = printedPrice(price.amount);
   return {
     "@type": "Offer",
     /* What the money buys, in the words the page prints: "to build", "a month
@@ -196,7 +190,7 @@ function offer(price: Price): Node {
     priceSpecification: {
       "@type": "PriceSpecification",
       priceCurrency: currency,
-      ...(floor ? { minPrice: value } : { price: value }),
+      minPrice: value,
     },
   };
 }
@@ -205,7 +199,7 @@ function offer(price: Price): Node {
  * What the page sells, with the prices it prints. The company provides it, by
  * `@id`, so the service hangs off the same organisation everywhere.
  */
-export function service(page: PageFacts & { prices: Price[] }): Node {
+export function service(page: PageFacts & { prices: Price[] }): GraphNode {
   return {
     "@type": "Service",
     "@id": `${pageUrl(page.path)}#service`,
@@ -222,7 +216,7 @@ export function service(page: PageFacts & { prices: Price[] }): Node {
  * Where the page sits: the home page, then the page. Two levels is the whole
  * depth of this site, and a crumb trail that claims more than that is wrong.
  */
-export function breadcrumbs(page: PageFacts): Node {
+export function breadcrumbs(page: PageFacts): GraphNode {
   return {
     "@type": "BreadcrumbList",
     "@id": `${pageUrl(page.path)}#breadcrumbs`,
@@ -237,7 +231,7 @@ export function breadcrumbs(page: PageFacts): Node {
  * A graph, ready for the inner HTML of a `<script type="application/ld+json">`.
  * `<` becomes `\u003c` so no string in the graph can close the script tag.
  */
-export function graphHtml(nodes: Node[]): string {
+export function graphHtml(nodes: GraphNode[]): string {
   const graph = { "@context": "https://schema.org", "@graph": nodes };
   return JSON.stringify(graph).replace(/</g, "\\u003c");
 }

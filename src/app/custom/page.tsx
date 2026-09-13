@@ -5,10 +5,9 @@ import {
   callHref,
   channels,
   custom,
-  indexedRobots,
   mailtoFor,
-  openGraphImage,
 } from "../content";
+import { indexedRobots, openGraphImage } from "../head-directives";
 import { breadcrumbs, graphHtml, service, webPage } from "../structured-data";
 
 const pageTitle = "Custom agents";

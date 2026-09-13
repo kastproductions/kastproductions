@@ -5,12 +5,12 @@
  * object and no route handler is imported here.
  *
  * The content module is the exception, and it is imported for one reason: the
- * route list has to follow the same catalogue `src/app/sitemap.ts` follows, so
- * that a product entering the catalogue is covered with no test edit.
+ * route list has to follow the same two lists `src/app/sitemap.ts` follows, so
+ * that a page or a product added there is covered with no test edit.
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { products, siteUrl } from "../src/app/content";
+import { pageUrl, products, siteUrl, writtenPages } from "../src/app/content";
 
 /* The directory `output: "export"` writes. Run a build before the suite. */
 export const exportRoot = join(import.meta.dir, "..", "out");
@@ -27,25 +27,28 @@ export type Route = {
 };
 
 /*
- * The home page's canonical is the bare site URL, with no trailing slash,
- * while its file is `index.html`. Every other route maps straight across.
+ * A route, from its path. The URL follows `pageUrl`, the one rule the
+ * canonical, the sitemap and the graph all follow, so the suite never argues
+ * with the export about how a page's URL is spelled. The file is the export's
+ * own naming: the home page is `index.html`, and every other route maps
+ * straight across.
  */
 function route(path: string): Route {
   return {
     path,
-    url: path === "/" ? siteUrl : `${siteUrl}${path}`,
+    url: pageUrl(path),
     file: path === "/" ? "index.html" : `${path.slice(1)}.html`,
   };
 }
 
 /*
- * The routes a crawler should index. The two written pages, then one page per
- * product in the catalogue. This is the list `src/app/sitemap.ts` states, and
- * both follow from `products`.
+ * The routes a crawler should index: the pages we write by hand, then one page
+ * per product in the catalogue. These are the two lists `src/app/sitemap.ts`
+ * walks, so a written page or a product added to the content module is checked
+ * here, canonical, title, description, unfurl image and graph, with no edit.
  */
 export const indexableRoutes: Route[] = [
-  route("/"),
-  route("/custom"),
+  ...writtenPages.map((page) => route(page.path)),
   ...products.map((product) => route(`/${product.slug}`)),
 ];
 
@@ -116,4 +119,37 @@ export function linkHrefs(document: string, rel: string): string[] {
 export function tagTexts(document: string, tag: string): string[] {
   const pattern = new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)</${tag}>`, "g");
   return [...document.matchAll(pattern)].map(([, text]) => decodeEntities(text.trim()));
+}
+
+/* A node in a JSON-LD graph, read as free-form data: schema.org vocabulary is
+ * wider than a type written here would be. */
+export type GraphNode = Record<string, unknown>;
+
+/*
+ * Every JSON-LD payload in a document, parsed. The script sits in the body, so
+ * the whole document is read. A payload that does not parse is the fault this
+ * reader exists to catch: a crawler drops the graph without a word.
+ */
+export function jsonLdPayloads(document: string): GraphNode[] {
+  const scripts = document.matchAll(
+    /<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g,
+  );
+  return [...scripts].map(([, json]) => {
+    try {
+      return JSON.parse(json) as GraphNode;
+    } catch (error) {
+      throw new Error(`a JSON-LD payload does not parse: ${String(error)}`);
+    }
+  });
+}
+
+/* Every node a document declares, across all of its payloads. */
+export function graphNodes(document: string): GraphNode[] {
+  return jsonLdPayloads(document).flatMap((payload) => (payload["@graph"] as GraphNode[]) ?? []);
+}
+
+/* Every node of one `@type`. A node states one type or several, so both are
+ * read as a list. */
+export function nodesOfType(document: string, type: string): GraphNode[] {
+  return graphNodes(document).filter((node) => [node["@type"]].flat().includes(type));
 }

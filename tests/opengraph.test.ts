@@ -62,8 +62,13 @@ for (const route of indexableRoutes) {
     const directives = metaContents(readExport(route.file), "robots");
 
     expect(directives).toHaveLength(1);
-    expect(directives[0]).toContain("index");
-    expect(directives[0]).not.toContain("noindex");
+    /* A directive is a comma-separated list, so each one is read whole:
+     * `noindex` contains the four letters of `index` and means the opposite. */
+    const stated = directives[0].split(/\s*,\s*/);
+    expect(stated).toContain("index");
+    expect(stated).toContain("follow");
+    expect(stated).not.toContain("noindex");
+    expect(stated).not.toContain("none");
   });
 }
 
