@@ -333,19 +333,12 @@ main > .section:last-child { padding-bottom: clamp(2rem, 4vw, 3.25rem); }
 }
 .section__head p { color: var(--ink-2); font-size: 1.1rem; }
 
-.reasons {
-  display: grid;
-  gap: 2.5rem 3rem;
-  grid-template-columns: 1fr;
-}
-.reason { display: grid; gap: .6rem; align-content: start; }
-.reason p { color: var(--ink-2); }
-
-/* The five points we write down, and the five parts of the mechanism. A label
- * column reads deliberate where a three-up grid leaves a hole. */
+/* The five points we write down, the five parts of the mechanism, and the jobs
+ * on the custom page. The label column reads deliberate at width. */
 .specs { display: grid; gap: 1.75rem; }
 .spec { display: grid; gap: .4rem; align-content: start; }
 .spec p { color: var(--ink-2); }
+.spec__meta { font-family: var(--font-mono); font-size: .85rem; color: var(--ink-2); }
 
 /* Method */
 .steps {
@@ -441,13 +434,14 @@ main > .section:last-child { padding-bottom: clamp(2rem, 4vw, 3.25rem); }
 .refs__who span { color: var(--ink-2); font-size: .92rem; }
 
 /* Pricing */
-.plans { display: grid; grid-template-columns: 1fr; }
+.plans { display: grid; gap: 0 3rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr)); }
 .plan {
   display: grid;
   gap: 1.1rem;
   align-content: start;
   padding-block: 2rem;
   border-top: 1px solid var(--line);
+  max-width: 34rem;
 }
 .plan__price {
   font-size: 1.9rem;
@@ -455,7 +449,7 @@ main > .section:last-child { padding-bottom: clamp(2rem, 4vw, 3.25rem); }
   letter-spacing: -0.015em;
   font-weight: 500;
 }
-.plan__price small { font-size: .55em; font-weight: 400; color: var(--ink-2); letter-spacing: 0; }
+.plan__price small { display: block; font-size: .55em; font-weight: 400; color: var(--ink-2); letter-spacing: 0; }
 .plan p { color: var(--ink-2); }
 .plan ul { padding-left: 1.1rem; list-style: square; color: var(--ink); display: grid; gap: .35rem; }
 .plan .button { justify-self: start; margin-top: .5rem; }
@@ -577,61 +571,32 @@ main > .section:last-child { padding-bottom: clamp(2rem, 4vw, 3.25rem); }
   border-radius: var(--radius-s);
 }
 
-/* The four doors, in short, on the home page */
-.doors { list-style: none; padding: 0; margin: 0; display: grid; gap: 1.75rem; }
+/* The doors, in short, on the home page */
+.doors {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
 .door {
   display: grid;
   gap: .35rem;
   align-content: start;
   padding-top: .9rem;
   border-top: 2px solid var(--ink);
+  max-width: 34rem;
 }
 .door p { color: var(--ink-2); }
-/* .actions carries no margin of its own, because its other two uses are grid
- * items whose parent gap already spaces them. */
-.doors + .actions { margin-top: clamp(2rem, 4vw, 3rem); }
-
-/* The tier ladder */
-.tiers { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--ink); }
-.tier {
-  display: grid;
-  gap: 1.5rem;
-  padding-block: 2.25rem;
-  border-bottom: 1px solid var(--line);
+.door .door__promise { color: var(--ink); font-weight: 500; }
+.door__more {
+  justify-self: start;
+  margin-top: .6rem;
+  font-weight: 500;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
-.tier__head { display: grid; gap: .55rem; align-content: start; }
-.tier__head h3 { font-size: 1.5rem; }
-.tier__head p { color: var(--ink-2); }
-.tier__boundary {
-  padding-left: .85rem;
-  border-left: 2px solid var(--signal-ink);
-  color: var(--ink);
-}
-.tier__body { display: grid; gap: 1.15rem; align-content: start; }
-.tier__includes { padding-left: 1.1rem; list-style: square; display: grid; gap: .35rem; }
-.tier__kits {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  gap: .5rem;
-  font-size: .94rem;
-  color: var(--ink-2);
-}
-.tier__kits a { color: var(--ink); }
-.tier__buy { display: grid; gap: .8rem; align-content: start; }
-.tier__price {
-  margin: 0;
-  font-size: 1.35rem;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
-}
-.tier__price small {
-  display: block;
-  font-size: .58em;
-  letter-spacing: 0;
-  color: var(--ink-2);
-}
-.tier__buy .button { justify-self: start; margin-top: .35rem; }
 
 /* Chips: channels, and the stack we build on */
 .chips { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
@@ -657,16 +622,36 @@ main > .section:last-child { padding-bottom: clamp(2rem, 4vw, 3.25rem); }
   color: var(--ink-2);
 }
 
+/* The stack block under the mechanism, and the lists inside it */
+.pair { display: grid; gap: .8rem; align-content: start; }
+.pair h3 { font-size: 1.15rem; }
+.marks {
+  margin: 0;
+  padding-left: 1.1rem;
+  list-style: square;
+  display: grid;
+  gap: .6rem;
+  color: var(--ink);
+  max-width: var(--measure);
+}
+.stack {
+  margin-top: clamp(2.25rem, 5vw, 3.5rem);
+  padding-top: clamp(1.75rem, 4vw, 2.5rem);
+  border-top: 1px solid var(--line);
+}
+.note--boundary {
+  padding-left: .85rem;
+  border-left: 2px solid var(--signal-ink);
+  color: var(--ink);
+}
+.hero__copy--wide .lede { max-width: 38em; }
+
 /* Layout at wider viewports */
 @media (min-width: 720px) {
-  .reasons { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .steps li { grid-template-columns: 3rem minmax(0, 1.25fr) minmax(0, .85fr); gap: .75rem 1.5rem; }
   .steps .you { grid-column: 3; }
-  .plans { grid-template-columns: 1fr 1fr; }
-  .plan { padding: 0 3rem 0 0; border-top: 0; }
-  .plan + .plan { padding: 0 0 0 3rem; border-left: 1px solid var(--line); }
+  .steps--plain li { grid-template-columns: 3rem minmax(0, 1fr); }
   .refs figure { grid-template-columns: minmax(0, 1fr) 15rem; gap: 2.5rem; }
-  .doors { grid-template-columns: 1fr 1fr; gap: 2rem; }
   .split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; align-items: start; }
   .specs { gap: 2rem; max-width: 52rem; }
   .spec { grid-template-columns: 14rem minmax(0, 1fr); gap: 0 3rem; }
@@ -674,11 +659,6 @@ main > .section:last-child { padding-bottom: clamp(2rem, 4vw, 3.25rem); }
 
 @media (min-width: 960px) {
   .hero__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); }
-  .doors { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-  .tier {
-    grid-template-columns: minmax(0, .95fr) minmax(0, 1.15fr) minmax(0, .7fr);
-    gap: 2.5rem;
-  }
 }
 
 /* Table stacks on narrow screens */

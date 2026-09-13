@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: superseded by 0004-build-on-flue-and-name-it
 date: 2026-09-10
 ---
 

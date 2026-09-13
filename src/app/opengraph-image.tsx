@@ -6,8 +6,8 @@ export const alt = title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const HEADLINE = "Agents write the code. Engineers put their name on it.";
-const LINE = `Software development agency, ${location.city}, ${location.country}`;
+const HEADLINE = "An agent that works the way your company works.";
+const LINE = `Software factory on demand, ${location.city}, ${location.country}`;
 
 /*
  * Satori reads TTF only. Google Fonts serves a static, subset TTF when the

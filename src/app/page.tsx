@@ -1,25 +1,28 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { RunRecord } from "@/components/run-record";
+import { MentionCard } from "@/components/mention-card";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   brand,
   callHref,
   clients,
   description,
+  doors,
+  fitDimensions,
+  fitIntro,
   founder,
-  ladder,
+  hero,
   location,
   mailtoFor,
-  method,
-  plans,
+  mechanism,
+  mechanismIntro,
+  prices,
+  pricingIntro,
+  products,
   questions,
-  reasons,
   references,
-  standingIntro,
-  tiers,
+  stack,
   title,
-  work,
 } from "./content";
 
 export const metadata: Metadata = {
@@ -36,6 +39,11 @@ export const metadata: Metadata = {
   },
 };
 
+/* A door and a price that depend on a ready-made product stay off the page
+ * until one runs. See the Catalogue entry in CONTEXT.md. */
+const openDoors = doors.filter((door) => !door.catalogue || products.length > 0);
+const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
+
 export default function Home() {
   return (
     <>
@@ -45,23 +53,18 @@ export default function Home() {
         <section className="hero field">
           <div className="wrap hero__grid">
             <div className="hero__copy">
-              <h1>Coding agents do the work. Engineers put their name on it.</h1>
-              <p className="lede">
-                {brand} is a software factory on demand, based in{" "}
-                {location.city}, {location.country}. Coding agents work your
-                backlog and a named engineer signs every merge. Or we build one
-                standing agent for your team and keep it running.
-              </p>
+              <h1>{hero.heading}</h1>
+              <p className="lede">{hero.lede}</p>
               <div className="actions">
                 <a className="button button--paper" href={callHref}>
                   Book a call
                 </a>
-                <a className="button button--ghost" href="#method">
-                  See how a run works
+                <a className="button button--ghost" href="#doors">
+                  See where it starts
                 </a>
               </div>
             </div>
-            <RunRecord />
+            <MentionCard />
           </div>
         </section>
 
@@ -82,77 +85,87 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" aria-labelledby="why-title">
+        <section className="section" id="doors" aria-labelledby="doors-title">
           <div className="wrap">
             <div className="section__head">
-              <h2 id="why-title">What changes when coding agents write the code</h2>
+              <h2 id="doors-title">Where your agent starts</h2>
+              <p>
+                Every build ends the same way: one standing agent, deployed
+                into your own accounts, answering to one name in a channel your
+                team already has open.
+              </p>
             </div>
-            <div className="reasons">
-              {reasons.map((reason) => (
-                <div className="reason" key={reason.title}>
-                  <h3>{reason.title}</h3>
-                  <p>{reason.body}</p>
+            <ul className="doors">
+              {openDoors.map((door) => (
+                <li className="door" key={door.name}>
+                  <h3>{door.name}</h3>
+                  <p className="door__promise">{door.promise}</p>
+                  <p>{door.body}</p>
+                  <Link className="door__more" href={door.href}>
+                    {door.name === "Custom"
+                      ? "What custom looks like"
+                      : "What it does"}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="section" id="fit" aria-labelledby="fit-title">
+          <div className="wrap">
+            <div className="section__head">
+              <h2 id="fit-title">{fitIntro.heading}</h2>
+              <p>{fitIntro.lede}</p>
+            </div>
+            <div className="specs">
+              {fitDimensions.map((dimension) => (
+                <div className="spec" key={dimension.title}>
+                  <h3>{dimension.title}</h3>
+                  <p>{dimension.body}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section className="section" id="method" aria-labelledby="method-title">
+        <section className="section" id="mechanism" aria-labelledby="mechanism-title">
           <div className="wrap">
             <div className="section__head">
-              <h2 id="method-title">How a run works</h2>
-              <p>
-                Every feature goes through the same five steps. You can watch
-                any of them live.
-              </p>
+              <h2 id="mechanism-title">{mechanismIntro.heading}</h2>
+              <p>{mechanismIntro.lede}</p>
             </div>
-            <ol className="steps">
-              {method.map((step) => (
-                <li key={step.title}>
-                  <div>
-                    <h3>{step.title}</h3>
-                    <p>{step.body}</p>
-                  </div>
-                  <p className="you">
-                    <strong>You:</strong> {step.you}
-                  </p>
-                </li>
+            <div className="specs">
+              {mechanism.map((part) => (
+                <div className="spec" key={part.title}>
+                  <h3>{part.title}</h3>
+                  <p>{part.body}</p>
+                </div>
               ))}
-            </ol>
-          </div>
-        </section>
-
-        <section className="section work" id="work" aria-labelledby="work-title">
-          <div className="wrap">
-            <div className="section__head">
-              <h2 id="work-title">
-                What a run looks like <span className="tag">Example</span>
-              </h2>
-              <p>Days count from approved brief to merged pull request.</p>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Kind of company</th>
-                  <th scope="col">Brief</th>
-                  <th scope="col">Days</th>
-                  <th scope="col">Result</th>
-                </tr>
-              </thead>
-              <tbody>
-                {work.map((run) => (
-                  <tr key={run.brief}>
-                    <td data-label="Client">{run.client}</td>
-                    <td data-label="Brief">{run.brief}</td>
-                    <td data-label="Days" className="num">
-                      {run.days}
-                    </td>
-                    <td data-label="Result">{run.result}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="split stack">
+              <div className="pair">
+                <h3>{stack.heading}</h3>
+                <p>{stack.body}</p>
+                <ul className="chips">
+                  {stack.links.map((link) => (
+                    <li className="chip" key={link.url}>
+                      <a href={link.url} rel="noreferrer">
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="pair">
+                <h3>{stack.oursHeading}</h3>
+                <ul className="marks">
+                  {stack.ours.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -165,9 +178,11 @@ export default function Home() {
             <div className="section__head">
               <h2 id="reviewer-title">Who puts their name on it</h2>
               <p>
-                {founder} founded {brand} and has shipped for the companies
-                listed above. He reviews every run himself. Below are references
-                from people who have worked with him, quoted as written.
+                {founder} founded {brand} in {location.city} and has shipped for
+                the companies listed above. He owns the agents we build and
+                signs the merges we make on a client&apos;s repository. Below
+                are references from people who have worked with him, quoted as
+                written.
               </p>
             </div>
             <ul className="refs__list">
@@ -198,41 +213,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="section" id="agents" aria-labelledby="agents-title">
-          <div className="wrap">
-            <div className="section__head">
-              <h2 id="agents-title">{standingIntro.heading}</h2>
-              <p>{standingIntro.lede}</p>
-            </div>
-            <ul className="doors">
-              {tiers.map((tier) => (
-                <li className="door" key={tier.name}>
-                  <h3>{tier.name}</h3>
-                  <p>{tier.promise}</p>
-                </li>
-              ))}
-            </ul>
-            <div className="actions">
-              <Link className="button button--ink" href="/standing-agents">
-                See what each tier does
-              </Link>
-            </div>
-          </div>
-        </section>
-
         <section className="section" id="pricing" aria-labelledby="pricing-title">
           <div className="wrap">
             <div className="section__head">
-              <h2 id="pricing-title">How to work with us</h2>
-              <p>
-                Backlog runs go by the sprint or by the month. A standing agent
-                is priced once to build and then monthly to operate.{" "}
-                {ladder.entry}{" "}
-                <Link href="/standing-agents">See what each tier does</Link>.
-              </p>
+              <h2 id="pricing-title">{pricingIntro.heading}</h2>
+              <p>{pricingIntro.lede}</p>
             </div>
             <div className="plans">
-              {plans.map((plan) => (
+              {openPrices.map((plan) => (
                 <div className="plan" key={plan.title}>
                   <h3>{plan.title}</h3>
                   <p>{plan.body}</p>

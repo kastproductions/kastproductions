@@ -1,5 +1,12 @@
 import Link from "next/link";
-import { brand, briefHref, callHref, contactEmail, location } from "@/app/content";
+import {
+  brand,
+  briefHref,
+  callHref,
+  contactEmail,
+  location,
+  products,
+} from "@/app/content";
 
 export function Brand() {
   return (
@@ -11,9 +18,10 @@ export function Brand() {
 }
 
 /*
- * One header for both pages. On the home page the section links stay relative
- * hashes; anywhere else they point back at the home page, so `#method`,
- * `#pricing` and `#questions` keep resolving from every route.
+ * One header for every page. On the home page the section links stay relative
+ * hashes; anywhere else they point back at the home page, so `#doors`,
+ * `#pricing` and `#questions` keep resolving from every route. A ready-made
+ * product appears here the moment it enters `products`.
  */
 export function SiteHeader({ home = false }: { home?: boolean }) {
   const at = (hash: string) => (home ? hash : `/${hash}`);
@@ -23,20 +31,18 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
       <header className="wrap top__row">
         <Brand />
         <nav className="nav" aria-label="Sections">
-          <Link href={at("#method")}>Backlog runs</Link>
-          {/* Two routes, so anything that is not the home page is this one. */}
-          <Link
-            href="/standing-agents"
-            aria-current={home ? undefined : "page"}
-          >
-            Standing agents
-          </Link>
+          {products.map((product) => (
+            <Link href={`/${product.slug}`} key={product.slug}>
+              {product.name}
+            </Link>
+          ))}
+          <Link href="/custom">Custom</Link>
           <Link href={at("#pricing")}>Pricing</Link>
           <Link href={at("#questions")}>Questions</Link>
         </nav>
-        <Link className="button button--paper" href={callHref}>
+        <a className="button button--paper" href={callHref}>
           Book a call
-        </Link>
+        </a>
       </header>
     </div>
   );
