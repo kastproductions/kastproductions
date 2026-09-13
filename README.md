@@ -24,6 +24,9 @@ bun run dev
 # Build for production (static export to ./out)
 bun run build
 
+# Build the export, then read it with the test suite
+bun run test
+
 # Lint
 bun run lint
 ```
@@ -34,17 +37,24 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ```
 src/app/
-  layout.tsx           # Root layout: fonts, site-wide metadata, JSON-LD, analytics
+  layout.tsx           # Root layout: fonts, site-wide metadata, the site-wide graph,
+                       #   analytics
   page.tsx             # Home: hero, clients, the two doors, fit, mechanism and stack,
-                       #   reviewer, prices, questions; canonical URL
-  custom/page.tsx      # The custom door: the jobs we take, channels, price
+                       #   reviewer, prices, questions; canonical URL and its own graph
+  custom/page.tsx      # The custom door: the jobs we take, channels, price, own graph
   content.ts           # Brand constants, search snippet copy, client list, founder
-                       #   references, and every word of both doors
+                       #   references, the written pages and their dates, and every
+                       #   word of both doors
+  head-directives.ts   # What a page tells a machine in its head: the unfurl image
+                       #   and the indexing directive every written page spreads in
+  structured-data.ts   # The schema.org graph: the nodes true everywhere, and a builder
+                       #   for the page, service and breadcrumb nodes a page adds
   globals.css          # Design tokens and component styles
   opengraph-image.tsx  # Open Graph image, rendered at build time
   manifest.ts          # Web app manifest
   robots.ts            # robots.txt
-  sitemap.ts           # sitemap.xml, which follows the catalogue
+  sitemap.ts           # sitemap.xml, which follows the written pages and the
+                       #   catalogue, and states the dates content.ts holds
   icon.svg             # Favicon
 src/components/
   site-chrome.tsx      # Header, footer and brand mark, shared by every page
@@ -54,14 +64,48 @@ src/components/
   analytics.tsx        # Google Analytics (NEXT_PUBLIC_GA_ID)
 public/
   reviewers/           # Portraits for the reviewer section
+  logo.png             # 512px raster logo, for the Organization node in the graph
+tests/
+  export.ts            # Shared helpers: the export root, a file reader, tag parsing,
+                       #   a JSON-LD reader, and the indexable routes, which follow
+                       #   the written pages and the catalogue
+  head.test.ts         # One h1, a self-referencing canonical, a title and a
+                       #   description per route; the sitemap and the robots file
+  opengraph.test.ts    # An unfurl image per route, and one robots directive on the 404
+  sitemap.test.ts      # Real dates, no build time, and no Host directive
+  structured-data.test.ts  # The company states only what it can support
+  page-graph.test.ts   # Each route describes itself, with the printed prices as offers
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
+## Tests
+
+`bun run test` builds the export and then reads it with `bun test`. The suite has one seam: the
+files in `out/`. It asserts what a crawler sees, and it imports no page component, no metadata
+object and no route handler.
+
+That seam was chosen for a reason worth remembering. Next.js merges metadata shallowly, so a page
+that declares its own `openGraph` object silently loses the inherited image. Our metadata objects
+look correct while the built page unfurls blank, which means a test over the metadata objects
+would have passed through the whole fault. Only the build output shows it.
+
+The route list comes from `writtenPages` and `products`, the two lists the sitemap walks, so a
+page or a product added to the content module is covered with no test edit. A route the suite
+cannot find in the export is a failure, never a skip.
+
+What the suite is not for: the shape of a metadata object, the text of a source file, or a
+snapshot of a page. Copy changes often, and a suite that pins copy gets deleted.
+
+The Rich Results Test and the Search Console coverage report stay manual. A local suite tells you
+what the build emitted, never what Google accepted.
+
 ## Content
 
-Every word of both doors lives in `src/app/content.ts`. The vocabulary is fixed in `CONTEXT.md`, and the decisions behind the offer are in `docs/adr/`: the stack in 0004, the shape of the offer in 0005, product naming in 0006, the default host in 0007.
+Every word of both doors lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the written pages with the day each one last changed. What a page tells a machine rather than a reader is not there. The unfurl image and the indexing directive live in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`, and the decisions behind the offer are in `docs/adr/`: the stack in 0004, the shape of the offer in 0005, product naming in 0006, the default host in 0007.
 
 The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
+
+The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor.
 
 `bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, which is the only analytics this page has.
 
@@ -90,7 +134,7 @@ Turning a product on takes two edits, because `output: "export"` refuses a dynam
    }
    ```
 
-Nothing else moves. The door, the nav entry, the sitemap entry, the two ready-made prices and the product page all follow from the array.
+Nothing else moves. The door, the nav entry, the sitemap entry and its date, the two ready-made prices, the product page and its graph nodes all follow from the array.
 
 ## Claims
 

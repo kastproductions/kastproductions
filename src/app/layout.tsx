@@ -1,17 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@/components/analytics";
-import {
-  brand,
-  contactEmail,
-  description,
-  founder,
-  founderHandle,
-  founderProfiles,
-  location,
-  siteUrl,
-  title,
-} from "./content";
+import { brand, description, founder, founderHandle, siteUrl, title } from "./content";
+import { graphHtml, siteNodes } from "./structured-data";
 import "./globals.css";
 
 const bricolage = Bricolage_Grotesque({
@@ -37,7 +28,9 @@ export const viewport: Viewport = {
 /*
  * Site-wide defaults. Page-specific fields (canonical, og:url, og:title)
  * live in each page's `metadata` so a new page never inherits the home
- * page's canonical URL.
+ * page's canonical URL. Robots stays out for a different reason: the
+ * framework's not-found route inherits this object, and an `index, follow`
+ * here would sit next to the `noindex` that route emits.
  */
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -55,76 +48,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     creator: founderHandle,
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
-  },
   formatDetection: {
     telephone: false,
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": ["Organization", "ProfessionalService"],
-      "@id": `${siteUrl}/#organization`,
-      name: brand,
-      url: siteUrl,
-      email: contactEmail,
-      description,
-      founder: { "@id": `${siteUrl}/#founder` },
-      address: {
-        "@type": "PostalAddress",
-        addressLocality: location.city,
-        addressCountry: location.countryCode,
-      },
-      areaServed: "Worldwide",
-      priceRange: "€€€",
-      knowsAbout: [
-        "Standing agents",
-        "Agent development",
-        "Coding agents",
-        "Eval suites",
-        "Approval gates",
-        "Flue",
-        "Cloudflare Workers",
-        "TypeScript",
-        "Software development",
-      ],
-      logo: `${siteUrl}/icon.svg`,
-    },
-    {
-      "@type": "Person",
-      "@id": `${siteUrl}/#founder`,
-      name: founder,
-      jobTitle: "Founder",
-      url: siteUrl,
-      worksFor: { "@id": `${siteUrl}/#organization` },
-      sameAs: founderProfiles,
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${siteUrl}/#website`,
-      url: siteUrl,
-      name: brand,
-      description,
-      publisher: { "@id": `${siteUrl}/#organization` },
-      inLanguage: "en",
-    },
-  ],
-};
-
-/* `<` becomes `\u003c` so no string in the graph can close the script tag. */
-const jsonLdHtml = JSON.stringify(jsonLd).replace(/</g, "\\u003c");
+/* The nodes true on every route, serialised once. A page adds its own nodes in
+ * its own script rather than restating these. */
+const jsonLdHtml = graphHtml(siteNodes);
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

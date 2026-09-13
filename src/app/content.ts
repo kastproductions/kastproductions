@@ -1,5 +1,13 @@
 export const brand = "KastProductions";
 export const siteUrl = "https://www.kastproductions.com";
+/* A page's absolute URL. The home page is the bare site URL with no trailing
+ * slash, and every other path maps straight across. The canonical tag, the
+ * sitemap and the structured data graph all state a page's URL, and a crawler
+ * reads two spellings of one page as two pages, so all three follow this one
+ * rule rather than each writing it out. */
+export function pageUrl(path: string): string {
+  return path === "/" ? siteUrl : `${siteUrl}${path}`;
+}
 export const contactEmail = "hello@kastproductions.com";
 /* Every call to action is a mailto, because the site is a static export with no
  * runtime. The subject says which door the reader came through, which is both
@@ -14,12 +22,19 @@ export const callHref = bookingUrl || mailtoFor("First call");
 export const founder = "Karolis Stulgys";
 /* Public profiles that link back to this site. Search engines use them to tie the founder to the brand. */
 export const founderProfiles = ["https://github.com/kstulgys", "https://x.com/imkarolis"];
+/* The company's own public profiles, as opposed to the founder's. A crawler
+ * reads them to corroborate that the company exists outside this website. */
+export const companyProfiles = ["https://github.com/kastproductions"];
 export const founderHandle = "@imkarolis";
 export const location = { city: "Vilnius", country: "Lithuania", countryCode: "LT" };
 
 /* Search snippet copy. Title stays close to 60 characters, description under 160. */
 export const title = `${brand}: software factory on demand`;
 export const description = `Software factory on demand in ${location.city}, ${location.country}. We build agents that work the way your company works, deploy them into your own accounts and keep them right.`;
+
+/* What a crawler and a social scraper are told about a page lives in
+ * `src/app/head-directives.ts`. Those are instructions to a machine, not words
+ * a reader sees, and this module is the copy. */
 
 /* The working days from a signed order to the agent answering in your own
  * channel. Printed next to every ready-made price. */
@@ -100,6 +115,12 @@ export const references = [
  * shape of the offer is in docs/adr/0005, the vocabulary in CONTEXT.md, and
  * what may be stated as fact in the Claims section of README.md.
  * ------------------------------------------------------------------------- */
+
+/* A price as a reader sees it, and the only place the number lives.
+ * `custom.prices` and the `prices` field on a product both hold these, and
+ * `src/app/structured-data.ts` reads the number and the currency back out of
+ * the string so the page and the graph cannot drift apart. */
+export type Price = { amount: string; per: string };
 
 export const hero = {
   heading: "What fits everything fits nothing.",
@@ -256,8 +277,11 @@ export type Product = {
   stations: { title: string; body: string }[];
   record: string;
   prerequisites: { item: string; who: "You" | "We" }[];
-  prices: { amount: string; per: string }[];
+  prices: Price[];
   subject: string;
+  /* The day this product's page copy last changed, written YYYY-MM-DD. The
+   * sitemap states it, so editing the copy above means editing this date. */
+  date: string;
 };
 
 export const issueToPullRequest: Product = {
@@ -304,6 +328,7 @@ export const issueToPullRequest: Product = {
     { amount: "From €3,500", per: "a month to operate" },
   ],
   subject: "Issue to pull request",
+  date: "2026-09-13",
 };
 
 export const products: Product[] = [];
@@ -498,4 +523,31 @@ export const questions = [
     q: "Why not build it ourselves?",
     a: "You can, and the framework is open source. The framework is the easy part. The work is shaping the agent to your workflow, setting the approval policy, writing the eval suite, and holding all three steady while the framework moves under it.",
   },
+];
+
+/* ---------------------------------------------------------------------------
+ * The written pages
+ *
+ * The pages we write by hand, as against the product pages the catalogue
+ * makes. This is the one list of them: `src/app/sitemap.ts` walks it, and so
+ * does the test suite. A page added here is therefore listed for a crawler and
+ * guarded by the suite in one edit. A written page that is not here has no
+ * sitemap entry, and nothing watching its canonical, its title, its
+ * description or its unfurl image.
+ *
+ * A date is the day that page's copy last changed, written YYYY-MM-DD. It
+ * comes from the page file's history, `git log -1 --date=short -- <file>`, so
+ * editing the words on a page means editing its date in the same commit.
+ * Nothing else sets it: a date stamped at build time tells a crawler that
+ * every page changed on every deploy, and a crawler that learns our dates are
+ * worthless stops reading them.
+ *
+ * A product page is not here. Its path and its date ride on its own record,
+ * above, so a product entering the catalogue brings both with it.
+ * ------------------------------------------------------------------------- */
+export type WrittenPage = { path: string; date: string };
+
+export const writtenPages: WrittenPage[] = [
+  { path: "/", date: "2026-09-13" },
+  { path: "/custom", date: "2026-09-13" },
 ];

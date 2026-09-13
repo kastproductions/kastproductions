@@ -2,7 +2,16 @@ import type { Metadata } from "next";
 import { RunRecord } from "@/components/run-record";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import type { Product } from "@/app/content";
-import { brand, callHref, channels, leadTime, mailtoFor, work } from "@/app/content";
+import {
+  brand,
+  callHref,
+  channels,
+  leadTime,
+  mailtoFor,
+  work,
+} from "@/app/content";
+import { indexedRobots, openGraphImage } from "@/app/head-directives";
+import { breadcrumbs, graphHtml, service, webPage } from "@/app/structured-data";
 
 /*
  * One ready-made product, on its own page. The markup lives here rather than in
@@ -17,7 +26,9 @@ export function productMetadata(product: Product): Metadata {
     title: product.name,
     description: product.promise,
     alternates: { canonical: `/${product.slug}` },
+    robots: indexedRobots,
     openGraph: {
+      ...openGraphImage,
       type: "website",
       url: `/${product.slug}`,
       siteName: brand,
@@ -29,6 +40,19 @@ export function productMetadata(product: Product): Metadata {
 }
 
 export function ProductPage({ product }: { product: Product }) {
+  /* The product's own nodes, built from its record, so adding a product to the
+   * catalogue gives its page a graph with no further edit. */
+  const page = {
+    path: `/${product.slug}`,
+    name: product.name,
+    description: product.promise,
+  };
+  const graph = graphHtml([
+    webPage(page),
+    service({ ...page, prices: product.prices }),
+    breadcrumbs(page),
+  ]);
+
   return (
     <>
       <SiteHeader />
@@ -211,6 +235,10 @@ export function ProductPage({ product }: { product: Product }) {
       </main>
 
       <SiteFooter />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: graph }}
+      />
     </>
   );
 }

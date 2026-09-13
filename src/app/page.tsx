@@ -24,12 +24,16 @@ import {
   stack,
   title,
 } from "./content";
+import { indexedRobots, openGraphImage } from "./head-directives";
+import { graphHtml, webPage } from "./structured-data";
 
 export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  robots: indexedRobots,
   openGraph: {
+    ...openGraphImage,
     type: "website",
     url: "/",
     siteName: brand,
@@ -43,6 +47,10 @@ export const metadata: Metadata = {
  * until one runs. See the Catalogue entry in CONTEXT.md. */
 const openDoors = doors.filter((door) => !door.catalogue || products.length > 0);
 const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
+
+/* The home page's own node, beside the site-wide ones the layout renders. The
+ * home page sells no one thing, so it states that it is a page and stops. */
+const graph = graphHtml([webPage({ path: "/", name: title, description })]);
 
 export default function Home() {
   return (
@@ -266,6 +274,10 @@ export default function Home() {
       </main>
 
       <SiteFooter />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: graph }}
+      />
     </>
   );
 }
