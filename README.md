@@ -24,6 +24,9 @@ bun run dev
 # Build for production (static export to ./out)
 bun run build
 
+# Build the export, then read it with the test suite
+bun run test
+
 # Lint
 bun run lint
 ```
@@ -54,6 +57,11 @@ src/components/
   analytics.tsx        # Google Analytics (NEXT_PUBLIC_GA_ID)
 public/
   reviewers/           # Portraits for the reviewer section
+tests/
+  export.ts            # Shared helpers: the export root, a file reader, tag parsing,
+                       #   and the indexable routes, which follow the catalogue
+  head.test.ts         # One h1, a self-referencing canonical, a title and a
+                       #   description per route; the sitemap and the robots file
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
