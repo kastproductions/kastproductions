@@ -123,7 +123,7 @@ export const references = [
 export type Price = { amount: string; per: string };
 
 export const hero = {
-  heading: "What fits everything fits nothing.",
+  heading: "An agent that works the way your company works.",
   lede: "A generic agent knows your tools. It has never been told how your company works, so nobody can hold it to your definition of right. We build one standing agent for one company, deploy it into that company's own accounts, and keep it right after it is live.",
 };
 
@@ -135,13 +135,15 @@ export const doors = [
     href: "/issue-to-pull-request",
     promise: "An agent we have already built.",
     body: `We adapt it to your workflow, connect it to your systems and deploy it into your accounts. Live in ${leadTime}.`,
+    more: "What it does",
     catalogue: true,
   },
   {
-    name: "Custom",
+    name: "Custom agent",
     href: "/custom",
-    promise: "An agent shaped from your workflow.",
-    body: "You describe the work. We write the spec, name the price and build the agent around how your company already runs. A spec and a fixed price within one working day.",
+    promise: "An agent shaped around your workflow.",
+    body: "You describe the work. We write the spec, name a fixed price, and build the agent around how your company already runs.",
+    more: "What a custom agent looks like",
     catalogue: false,
   },
 ];
@@ -153,13 +155,13 @@ export const mention = {
   channel: "#payments",
   handle: "@atlas",
   ask: "summarise last night's failed payments and draft the follow-up to each customer",
-  reply: "Nine payments failed after 21:00, four of them over EUR 500. Nine drafts are ready in your outbox.",
+  reply: "Nine payments failed after 21:00, four of them over €500. Nine drafts are ready in your outbox.",
   gate: "Sending reaches your customers, so it needs a name on it.",
   approve: "Approve and send",
 };
 
 export const fitIntro = {
-  heading: "What we shape your agent to",
+  heading: "What we shape your agent around",
   lede: "We take each of the five points below from your company. We write them down before we build, and your agent follows what we wrote.",
 };
 
@@ -324,8 +326,8 @@ export const issueToPullRequest: Product = {
     { item: "The approval gates, the spend cap and the eval suite", who: "We" },
   ],
   prices: [
-    { amount: "From €30,000", per: "to build" },
-    { amount: "From €3,500", per: "a month to operate" },
+    { amount: "From €7,500", per: "to build" },
+    { amount: "From €1,500", per: "a month to operate" },
   ],
   subject: "Issue to pull request",
   date: "2026-09-13",
@@ -367,11 +369,11 @@ export const work = [
  * ------------------------------------------------------------------------- */
 
 export const custom = {
-  heading: "An agent shaped from how you already work",
+  heading: "An agent shaped around how you already work",
   lede: "No two companies work the same way, and the work you want taken over probably matches nothing on a shelf. Describe it. You get a short spec and a fixed price within one working day.",
   jobsHeading: "Work we take",
   jobsLede:
-    "Five jobs to measure your own against. Each one names the systems it touches. None of them is a product you can buy today, and none carries a price until we have read your workflow.",
+    "Five jobs we take, to measure your own against. Each one names the systems it touches. None of them is a product you can buy today, and none carries a price until we have read your workflow.",
   jobs: [
     {
       title: "Brief to published post",
@@ -400,8 +402,8 @@ export const custom = {
     },
   ],
   prices: [
-    { amount: "From €40,000", per: "to build" },
-    { amount: "From €3,500", per: "a month to operate" },
+    { amount: "From €10,000", per: "to build" },
+    { amount: "From €1,500", per: "a month to operate" },
   ],
   subject: "Custom agent",
 };
@@ -423,10 +425,10 @@ export const prices = [
   {
     title: "Sprint",
     body: "One brief, two weeks, one fixed price. Our own agents work it on your repository, and our reviewer signs the merge. Nothing is deployed and nothing is connected, so there is nothing for you to own yet.",
-    price: "From €6,000",
+    price: "From €4,000",
     per: "per brief",
     includes: [
-      "A spec and a fixed price within one working day",
+      "A fixed price before the two weeks start",
       "Plan, build, review and ship, with the run recorded",
       "30-day fix window on anything we merged",
     ],
@@ -438,8 +440,8 @@ export const prices = [
   {
     title: "Self-run",
     body: "We build your agent, deploy it into your own accounts and hand over the keys. Your team runs it and your engineers sign the merges.",
-    price: "From €30,000",
-    per: "to build, then from €3,500 a month",
+    price: "From €7,500",
+    per: "to build, then from €1,500 a month",
     includes: [
       `Live in your own channel in ${leadTime}`,
       "Your accounts, your keys, your code from the first commit",
@@ -453,8 +455,8 @@ export const prices = [
   {
     title: "Managed",
     body: "We build it and we run it. Our coding agents take the runs, our reviewer reads every diff, and the agent still lives in your accounts.",
-    price: "From €30,000",
-    per: "to build, then from €10,000 a month",
+    price: "From €7,500",
+    per: "to build, then from €4,000 a month",
     includes: [
       "As many briefs as the capacity allows, prioritised with you weekly",
       "A named engineer signs every merge",
@@ -466,10 +468,10 @@ export const prices = [
     catalogue: true,
   },
   {
-    title: "Custom",
+    title: "Custom agent",
     body: "For work that matches nothing we have built. You describe it, we write the spec and name the price, and the agent is shaped around your workflow.",
-    price: "From €40,000",
-    per: "to build, then from €3,500 a month",
+    price: "From €10,000",
+    per: "to build, then from €1,500 a month",
     includes: [
       "A spec and a fixed price within one working day",
       "The same terms: your accounts, your keys, your code",

@@ -36,7 +36,7 @@ export function SiteHeader({ home = false }: { home?: boolean }) {
               {product.name}
             </Link>
           ))}
-          <Link href="/custom">Custom</Link>
+          <Link href="/custom">Custom agents</Link>
           <Link href={at("#pricing")}>Pricing</Link>
           <Link href={at("#questions")}>Questions</Link>
         </nav>

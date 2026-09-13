@@ -68,7 +68,7 @@ export default function Home() {
                   Book a call
                 </a>
                 <a className="button button--ghost" href="#doors">
-                  See where it starts
+                  See where your agent starts
                 </a>
               </div>
             </div>
@@ -110,9 +110,7 @@ export default function Home() {
                   <p className="door__promise">{door.promise}</p>
                   <p>{door.body}</p>
                   <Link className="door__more" href={door.href}>
-                    {door.name === "Custom"
-                      ? "What custom looks like"
-                      : "What it does"}
+                    {door.more}
                   </Link>
                 </li>
               ))}

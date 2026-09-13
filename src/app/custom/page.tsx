@@ -125,11 +125,10 @@ export default function Custom() {
             </div>
             <div className="plans">
               <div className="plan">
-                <h3>Custom</h3>
+                <h3>Custom agent</h3>
                 <p>
-                  You describe the work. We write the spec and name the price
-                  within one working day, then build the agent around how your
-                  company already runs.
+                  You describe the work. We write the spec and name the price,
+                  then build the agent around how your company already runs.
                 </p>
                 <div className="plan__price">
                   {custom.prices[0].amount} <small>{custom.prices[0].per}</small>
@@ -138,7 +137,7 @@ export default function Custom() {
                   {custom.prices[1].amount} <small>{custom.prices[1].per}</small>
                 </div>
                 <ul>
-                  <li>A spec and a fixed price within one working day</li>
+                  <li>A fixed price before we write any code</li>
                   <li>Your accounts, your keys, your code from the first commit</li>
                   <li>An eval suite, approval gates and a spend cap written for you</li>
                 </ul>

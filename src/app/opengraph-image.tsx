@@ -1,12 +1,14 @@
 import { ImageResponse } from "next/og";
-import { brand, contactEmail, location, title } from "./content";
+import { brand, contactEmail, hero, location, title } from "./content";
 
 export const dynamic = "force-static";
 export const alt = title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const HEADLINE = "An agent that works the way your company works.";
+/* The same sentence the home page leads with, so a link preview and the page a
+ * reader lands on cannot say two different things. */
+const HEADLINE = hero.heading;
 const LINE = `Software factory on demand, ${location.city}, ${location.country}`;
 
 /*
