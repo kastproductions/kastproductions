@@ -101,7 +101,7 @@ what the build emitted, never what Google accepted.
 
 ## Content
 
-Every word of both doors lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the written pages with the day each one last changed. What a page tells a machine rather than a reader is not there. The unfurl image and the indexing directive live in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`, and the decisions behind the offer are in `docs/adr/`: the stack in 0004, the shape of the offer in 0005, product naming in 0006, the default host in 0007.
+Every word of both doors lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the written pages with the day each one last changed. What a page tells a machine rather than a reader is not there. The unfurl image and the indexing directive live in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`.
 
 The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
 
@@ -146,7 +146,7 @@ Also checkable, and worth keeping checkable: the channel lists in `channels` are
 
 Synthetic, and labelled as an example wherever a visitor could read it as fact: the mention card in `src/components/mention-card.tsx`, the hero run record in `src/components/run-record.tsx`, and the `work` table on a product page. Each one carries a visible `.tag` label. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
 
-Other people's names belong to them. Flue is Apache-2.0, and §6 of that licence permits the descriptive use of the name, so we write "Flue" in text with a link, never as a logo, and never in a way that implies Flue endorses us. Never adopt a name from somebody else's repository as a KastProductions product name: products are named for the outcome they deliver, which is the rule in `docs/adr/0006`.
+Other people's names belong to them. Flue is Apache-2.0, and §6 of that licence permits the descriptive use of the name, so we write "Flue" in text with a link, never as a logo, and never in a way that implies Flue endorses us. Never adopt a name from somebody else's repository as a KastProductions product name: a product is named for the outcome it delivers.
 
 ## Deployment
 

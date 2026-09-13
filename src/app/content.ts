@@ -111,9 +111,10 @@ export const references = [
  * The offer
  *
  * One promise, two doors. Fit leads, convenience follows, and correctness sits
- * under both as the mechanism: the claim order is fixed in docs/adr/0003. The
- * shape of the offer is in docs/adr/0005, the vocabulary in CONTEXT.md, and
- * what may be stated as fact in the Claims section of README.md.
+ * under both as the mechanism. That order is deliberate: a generic agent has
+ * never been told what this company's correct is, so fit is the reason to buy
+ * and the mechanism is the evidence. The vocabulary is fixed in CONTEXT.md,
+ * and what may be stated as fact is in the Claims section of README.md.
  * ------------------------------------------------------------------------- */
 
 /* A price as a reader sees it, and the only place the number lives.
@@ -218,7 +219,7 @@ export const mechanism = [
 
 /* The stack, and the line between what Flue does and what we write. Named
  * because a reader cannot check "we keep your agent current" against a
- * framework we refuse to name: see docs/adr/0004 and docs/adr/0007. */
+ * framework we refuse to name. */
 export const stack = {
   heading: "What your agent is built on",
   body: "We build on Flue, the open agent harness the Astro organisation publishes. Your agent deploys into your own Cloudflare account, or onto Node.js where your platform needs it there instead. We resell nothing: the account, the keys and the code are yours.",
