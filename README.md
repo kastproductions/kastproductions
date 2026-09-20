@@ -105,7 +105,8 @@ src/components/
   run-record.tsx       # The example run, on a product page
   agent-console.tsx    # The example agent in the home page hero: its nameplate, the
                        #   exchange, and the gate it stops at
-  analytics.tsx        # Google Analytics (NEXT_PUBLIC_GA_ID)
+  analytics.tsx        # Vercel Web Analytics: the tracker this deployment serves,
+                       #   and one event per call to action clicked
 public/
   reviewers/           # Portraits for the reviewer section
   logo.png             # 512px raster logo, for the Organization node in the graph
@@ -120,14 +121,15 @@ tests/
   sitemap.test.ts      # Real dates, no build time, and no Host directive
   structured-data.test.ts  # The company states only what it can support
   page-graph.test.ts   # Each route describes itself, with the printed prices as offers
+  analytics.test.ts    # Every page loads the tracker and counts a mailto click
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
 ## Tests
 
 `bun run test` builds the export and then reads it with `bun test`. The suite has one seam: the
-files in `out/`. It asserts what a crawler sees, and it imports no page component, no metadata
-object and no route handler.
+files in `out/`. It asserts what a crawler sees and what the page tells the tracker, and it
+imports no page component, no metadata object and no route handler.
 
 That seam was chosen for a reason worth remembering. Next.js merges metadata shallowly, so a page
 that declares its own `openGraph` object silently loses the inherited image. Our metadata objects
@@ -152,7 +154,7 @@ The prices there are real: `prices` for the four ways to buy, and the `prices` f
 
 The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor.
 
-`bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, which is the only analytics this page has.
+`bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, so a click on it still names the door the reader came through.
 
 ## Adding a page
 
@@ -259,6 +261,14 @@ On another host, port both settings to that host's configuration.
 
 The Open Graph image fetches Archivo from Google Fonts during `bun run build`, so the build machine needs network access. It is drawn from the same tokens as the page, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
 
+## Analytics
+
+The site counts visits with Vercel Web Analytics. The processor is Vercel Inc., the company that already serves the site: the tracker sets no cookie and stores nothing on the visitor's device, a visitor is identified by a hash of the incoming request, and the session that hash belongs to is discarded after 24 hours. That is why the site carries no consent banner. The data points it keeps per visit are listed in [Vercel's privacy documentation](https://vercel.com/docs/analytics/privacy-policy), which is the source a privacy policy should state, rather than this file.
+
+`src/components/analytics.tsx` writes two tags into every page the build emits: the queue stub Vercel documents for plain HTML, and a deferred `script` tag for `/_vercel/insights/script.js`. The deployment serves that path itself, so no third-party host is contacted, and the path exists only once Web Analytics is turned on for the project in the Vercel dashboard. A page view counts both on a fresh load and on a client-side move between pages. An ad blocker that blocks `/_vercel/insights/*` drops the visit: the per-deployment script path that works around this needs the `@vercel/analytics` package and a seed the package reads at build time, and we render the tags ourselves.
+
+Every call to action on the site is a `mailto:` link, so a click on one is the nearest thing to a conversion the site can observe. One delegated listener counts them all as a `mailto` event. Its `door` is the mail subject the link carries, which is how this site names the door a reader came through, and its `page` is the path they clicked from. Custom events need a Vercel Pro plan. Page views do not, so a project on the Hobby plan counts visits and drops events.
+
 ## Environment Variables
 
-- `NEXT_PUBLIC_GA_ID`: Google Analytics ID (optional)
+None. The site reads no build variable, and analytics is turned on for the project in the Vercel dashboard rather than by a key in this repository.

@@ -110,6 +110,22 @@ export function linkHrefs(document: string, rel: string): string[] {
 }
 
 /*
+ * Every `<script>` a document carries, in document order: the attributes of
+ * the tag, and the code between the tags. A tag that loads a file has a `src`
+ * and an empty body; a tag that carries code has a body and no `src`. Both
+ * matter here, so both are read, and a boolean attribute such as `defer`
+ * reads as an empty string.
+ */
+export type ScriptTag = { attributes: Record<string, string>; body: string };
+
+export function scriptTags(document: string): ScriptTag[] {
+  return [...document.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)].map(([, tag, body]) => ({
+    attributes: attributes(tag),
+    body,
+  }));
+}
+
+/*
  * The inner text of every occurrence of one tag. Serves `<title>` and `<h1>`
  * in a page and `<loc>` in the sitemap. The whole document is parsed, not just
  * the head: the JSON-LD script sits in the body.

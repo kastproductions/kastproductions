@@ -10,8 +10,9 @@ export function pageUrl(path: string): string {
 }
 export const contactEmail = "hello@kastproductions.com";
 /* Every call to action is a mailto, because the site is a static export with no
- * runtime. The subject says which door the reader came through, which is both
- * our only analytics on this page and a machine-readable first line for @brief. */
+ * runtime. The subject says which door the reader came through, so it is both
+ * the door a click on the link is counted under and a machine-readable first
+ * line for @brief. */
 export const mailtoFor = (subject: string) =>
   `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`;
 export const briefHref = mailtoFor("New brief");
