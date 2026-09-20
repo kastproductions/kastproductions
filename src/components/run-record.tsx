@@ -84,11 +84,11 @@ export function RunRecord() {
         <span className="run__issue">ACME-212: Add CSV export to invoices</span>
         <span className="tag">Example</span>
         <span className="run__state">
-          <span className="dot" aria-hidden="true" />
+          <span className="lamp" aria-hidden="true" />
           Merged
         </span>
       </figcaption>
-      <ol className="run__steps">
+      <ol>
         {STEPS.map((step, index) => (
           <li
             key={step.datetime}

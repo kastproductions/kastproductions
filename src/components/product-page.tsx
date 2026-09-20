@@ -55,22 +55,22 @@ export function ProductPage({ product }: { product: Product }) {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader route={page.path} />
 
       <main id="main">
-        <section className="hero field">
+        <section className="band band--flush hero">
           <div className="wrap hero__grid">
             <div className="hero__copy">
               <h1>{product.name}</h1>
               <p className="lede">{product.lede}</p>
               <div className="actions">
                 <a
-                  className="button button--paper"
+                  className="btn btn--signal"
                   href={mailtoFor(product.subject)}
                 >
                   Ask about this one
                 </a>
-                <a className="button button--ghost" href={callHref}>
+                <a className="btn btn--line" href={callHref}>
                   Book a call
                 </a>
               </div>
@@ -79,69 +79,73 @@ export function ProductPage({ product }: { product: Product }) {
           </div>
         </section>
 
-        <section className="section" id="stations" aria-labelledby="stations-title">
-          <div className="wrap">
-            <div className="section__head">
+        <section className="band" id="stations" aria-labelledby="stations-title">
+          <div className="wrap unit">
+            <div className="unit__head">
               <h2 id="stations-title">How a run works</h2>
               <p>{product.stationsIntro}</p>
             </div>
-            <ol className="steps steps--plain">
-              {product.stations.map((station) => (
-                <li key={station.title}>
-                  <div>
-                    <h3>{station.title}</h3>
-                    <p>{station.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <div className="split">
-              <p className="note note--boundary">{product.boundary}</p>
+            <div className="unit__body">
+              {/* Numbered, because a run really is four steps in order. */}
+              <ol className="rows rows--seq">
+                {product.stations.map((station) => (
+                  <li key={station.title}>
+                    <div className="row row--stack">
+                      <span className="row__label">{station.title}</span>
+                      <p>{station.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <p className="note note--gate">{product.boundary}</p>
               <p className="note">{product.record}</p>
             </div>
           </div>
         </section>
 
-        <section className="section work" id="work" aria-labelledby="work-title">
-          <div className="wrap">
-            <div className="section__head">
-              <h2 id="work-title">
-                What a run looks like <span className="tag">Example</span>
-              </h2>
-              <p>Days count from approved brief to a signed merge.</p>
+        <section className="band" id="work" aria-labelledby="work-title">
+          <div className="wrap unit">
+            <div className="unit__head">
+              <h2 id="work-title">What a run looks like</h2>
+              <p>
+                <span className="tag">Example</span> Days count from approved
+                brief to a signed merge.
+              </p>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Kind of company</th>
-                  <th scope="col">Brief</th>
-                  <th scope="col">Days</th>
-                  <th scope="col">Result</th>
-                </tr>
-              </thead>
-              <tbody>
-                {work.map((run) => (
-                  <tr key={run.brief}>
-                    <td data-label="Client">{run.client}</td>
-                    <td data-label="Brief">{run.brief}</td>
-                    <td data-label="Days" className="num">
-                      {run.days}
-                    </td>
-                    <td data-label="Result">{run.result}</td>
+            <div className="unit__body">
+              <table className="sheet-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Kind of company</th>
+                    <th scope="col">Brief</th>
+                    <th scope="col">Days</th>
+                    <th scope="col">Result</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {work.map((run) => (
+                    <tr key={run.brief}>
+                      <td data-label="Client">{run.client}</td>
+                      <td data-label="Brief">{run.brief}</td>
+                      <td data-label="Days" className="num">
+                        {run.days}
+                      </td>
+                      <td data-label="Result">{run.result}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
 
         <section
-          className="section work"
+          className="band"
           id="prerequisites"
           aria-labelledby="prereq-title"
         >
-          <div className="wrap">
-            <div className="section__head">
+          <div className="wrap unit">
+            <div className="unit__head">
               <h2 id="prereq-title">What it needs before it works</h2>
               <p>
                 Deploying the code is quick. Connecting it to your company is
@@ -149,51 +153,57 @@ export function ProductPage({ product }: { product: Product }) {
                 the rows marked You are in place.
               </p>
             </div>
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Who</th>
-                  <th scope="col">What</th>
-                </tr>
-              </thead>
-              <tbody>
-                {product.prerequisites.map((prerequisite) => (
-                  <tr key={prerequisite.item}>
-                    <td data-label="Who">{prerequisite.who}</td>
-                    <td data-label="What">{prerequisite.item}</td>
+            <div className="unit__body">
+              <table className="sheet-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Who</th>
+                    <th scope="col">What</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {product.prerequisites.map((prerequisite) => (
+                    <tr key={prerequisite.item}>
+                      <td data-label="Who" className="who">
+                        {prerequisite.who}
+                      </td>
+                      <td data-label="What">{prerequisite.item}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </section>
 
         <ChannelsSection />
 
         <section
-          className="section"
+          className="band band--panel"
           id="pricing"
           aria-labelledby="product-price-title"
         >
-          <div className="wrap">
-            <div className="section__head">
+          <div className="wrap unit">
+            <div className="unit__head">
               <h2 id="product-price-title">What it costs</h2>
               <p>
                 {product.authority} The build price is a floor, because the work
                 follows the number of systems your agent touches.
               </p>
             </div>
-            <div className="plans">
+            <div className="unit__body plans">
               <div className="plan">
                 <h3>{product.name}</h3>
                 <p>{product.promise}</p>
-                {product.prices.map((price) => (
-                  <div className="plan__price" key={price.per}>
-                    {price.amount} <small>{price.per}</small>
-                  </div>
-                ))}
+                <div className="plan__figures">
+                  {product.prices.map((price) => (
+                    <div className="plan__price" key={price.per}>
+                      {price.amount} <span>{price.per}</span>
+                    </div>
+                  ))}
+                </div>
                 <a
-                  className="button button--ink"
+                  className="btn btn--line"
                   href={mailtoFor(product.subject)}
                 >
                   Ask about this one
@@ -204,7 +214,7 @@ export function ProductPage({ product }: { product: Product }) {
         </section>
       </main>
 
-      <SiteFooter />
+      <SiteFooter route={page.path} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: graph }}

@@ -1,17 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import { brand, description, founder, founderHandle, siteUrl, title } from "./content";
 import { graphHtml, siteNodes } from "./structured-data";
 import "./globals.css";
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+/*
+ * One text family, used through its width axis: the display sizes run expanded,
+ * the prose runs normal, and a spec label runs narrowed. The width axis does
+ * the work a second family or an all-caps label would otherwise do.
+ */
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-  axes: ["opsz"],
+  axes: ["wdth"],
   display: "swap",
 });
 
+/* Machine-emitted text only: a handle, a channel, a timestamp, a diff, a path. */
 const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   weight: "400",
@@ -20,7 +26,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#1b2b63",
+  themeColor: "#0d1330",
   width: "device-width",
   initialScale: 1,
 };
@@ -59,7 +65,7 @@ const jsonLdHtml = graphHtml(siteNodes);
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${plexMono.variable}`}>
       <body>
         <a className="skip" href="#main">
           Skip to content

@@ -44,49 +44,55 @@ const graph = graphHtml([
 export default function Custom() {
   return (
     <>
-      <SiteHeader />
+      <SiteHeader route="/custom" />
 
       <main id="main">
-        <section className="hero field">
-          <div className="wrap hero__copy hero__copy--wide">
+        <section className="band band--flush hero">
+          <div className="wrap hero__copy">
             <h1>{custom.heading}</h1>
-            <p className="lede">{custom.lede}</p>
+            <p className="lede lede--wide">{custom.lede}</p>
             <div className="actions">
-              <a className="button button--paper" href={mailtoFor(custom.subject)}>
+              <a className="btn btn--signal" href={mailtoFor(custom.subject)}>
                 Describe the work
               </a>
-              <a className="button button--ghost" href={callHref}>
+              <a className="btn btn--line" href={callHref}>
                 Book a call
               </a>
             </div>
           </div>
         </section>
 
-        <section className="section" id="jobs" aria-labelledby="jobs-title">
-          <div className="wrap">
-            <div className="section__head">
+        <section className="band" id="jobs" aria-labelledby="jobs-title">
+          <div className="wrap unit">
+            <div className="unit__head">
               <h2 id="jobs-title">{custom.jobsHeading}</h2>
               <p>{custom.jobsLede}</p>
             </div>
-            <div className="specs">
-              {jobs.map((job) => (
-                <div className="spec" key={job.title}>
-                  <div>
-                    <h3>{job.title}</h3>
-                    <p className="spec__meta">{job.systems}</p>
-                  </div>
-                  <p>{job.body}</p>
-                </div>
-              ))}
+            <div className="unit__body">
+              <ul className="rows">
+                {jobs.map((job) => (
+                  <li key={job.title}>
+                    <div className="row">
+                      <span className="row__label">{job.title}</span>
+                      <p>{job.body}</p>
+                      <span className="row__note">{job.systems}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </section>
 
         <ChannelsSection />
 
-        <section className="section" id="pricing" aria-labelledby="custom-price-title">
-          <div className="wrap">
-            <div className="section__head">
+        <section
+          className="band band--panel"
+          id="pricing"
+          aria-labelledby="custom-price-title"
+        >
+          <div className="wrap unit">
+            <div className="unit__head">
               <h2 id="custom-price-title">What a custom build costs</h2>
               <p>
                 The build price is a floor, because the work follows the number
@@ -94,42 +100,43 @@ export default function Custom() {
                 suite, the changes and the report.
               </p>
             </div>
-            <div className="plans">
+            <div className="unit__body plans">
               <div className="plan">
                 <h3>Custom agent</h3>
                 <p>
                   You describe the work. We write the spec and name the price,
                   then build the agent around how your company already runs.
                 </p>
-                <div className="plan__price">
-                  {custom.prices[0].amount} <small>{custom.prices[0].per}</small>
+                <div className="plan__figures">
+                  {custom.prices.map((price) => (
+                    <div className="plan__price" key={price.per}>
+                      {price.amount} <span>{price.per}</span>
+                    </div>
+                  ))}
+                  <ul className="plan__includes">
+                    <li>A fixed price before we write any code</li>
+                    <li>Your accounts, your keys, your code from the first commit</li>
+                    <li>An eval suite, approval gates and a spend cap written for you</li>
+                  </ul>
                 </div>
-                <div className="plan__price">
-                  {custom.prices[1].amount} <small>{custom.prices[1].per}</small>
-                </div>
-                <ul>
-                  <li>A fixed price before we write any code</li>
-                  <li>Your accounts, your keys, your code from the first commit</li>
-                  <li>An eval suite, approval gates and a spend cap written for you</li>
-                </ul>
                 <a
-                  className="button button--ink"
+                  className="btn btn--line"
                   href={mailtoFor(custom.subject)}
                 >
                   Describe the work
                 </a>
               </div>
+              <p className="note">
+                Which accounts you need depends on the systems your agent
+                touches. The spec names every one of them, next to the price,
+                before you commit to anything.
+              </p>
             </div>
-            <p className="note">
-              Which accounts you need depends on the systems your agent touches.
-              The spec names every one of them, next to the price, before you
-              commit to anything.
-            </p>
           </div>
         </section>
       </main>
 
-      <SiteFooter />
+      <SiteFooter route="/custom" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: graph }}

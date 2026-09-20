@@ -26,7 +26,7 @@ import { title } from "./content";
  */
 export const openGraphImage = {
   images: [
-    { url: "/opengraph-image", width: 1200, height: 630, alt: title, type: "image/png" },
+    { url: "/opengraph-image?v=2", width: 1200, height: 630, alt: title, type: "image/png" },
   ],
 };
 

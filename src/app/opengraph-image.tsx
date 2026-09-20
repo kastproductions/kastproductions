@@ -11,27 +11,36 @@ export const contentType = "image/png";
 const HEADLINE = hero.heading;
 const LINE = `Software factory on demand, ${location.city}, ${location.country}`;
 
+/* The page's own tokens. A preview that drifts from the site it links to is a
+ * broken promise before a reader has clicked. */
+const FIELD = "#0d1330";
+const TYPE = "#e9eaf4";
+const TYPE_2 = "#98a2cf";
+const RULE = "#2f3b73";
+const SIGNAL = "#ffb92e";
+
 /*
  * Satori reads TTF only. Google Fonts serves a static, subset TTF when the
- * request comes from a non-browser client, so the font is fetched once at
- * build time with just the glyphs this image uses.
+ * request comes from a non-browser client, so the face is fetched once at build
+ * time with just the glyphs this image uses. The display weight and width match
+ * the page's own display setting.
  */
-async function loadBricolage(text: string): Promise<ArrayBuffer> {
+async function loadArchivo(text: string): Promise<ArrayBuffer> {
   const css = await fetch(
-    `https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@96,600&text=${encodeURIComponent(text)}`,
+    `https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@118,600&text=${encodeURIComponent(text)}`,
   ).then((response) => response.text());
   const url = css.match(/src: url\((.+?)\) format\('truetype'\)/)?.[1];
   if (!url) {
-    throw new Error("opengraph-image: Google Fonts returned no TTF source for Bricolage Grotesque");
+    throw new Error("opengraph-image: Google Fonts returned no TTF source for Archivo");
   }
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`opengraph-image: ${response.status} fetching Bricolage Grotesque`);
+    throw new Error(`opengraph-image: ${response.status} fetching Archivo`);
   }
   return response.arrayBuffer();
 }
 
-const bricolage = await loadBricolage(`${brand}${HEADLINE}${LINE}${contactEmail}`);
+const archivo = await loadArchivo(`${brand}${HEADLINE}${LINE}${contactEmail}`);
 
 export default function Image() {
   return new ImageResponse(
@@ -43,21 +52,23 @@ export default function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "64px 72px",
-          background: "#1b2b63",
-          color: "#f3f3ef",
-          fontFamily: "Bricolage Grotesque",
+          padding: "60px 72px",
+          background: FIELD,
+          color: TYPE,
+          fontFamily: "Archivo",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 18, fontSize: 34 }}>
-          <div style={{ width: 24, height: 24, background: "#ffb92e", borderRadius: 2 }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 32 }}>
+          <div style={{ width: 11, height: 34, background: SIGNAL }} />
           {brand}
         </div>
         <div
           style={{
-            fontSize: 80,
+            display: "flex",
+            fontSize: 78,
             lineHeight: 1.02,
-            letterSpacing: "-0.028em",
+            letterSpacing: "-0.03em",
+            maxWidth: 900,
           }}
         >
           {HEADLINE}
@@ -66,8 +77,10 @@ export default function Image() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            fontSize: 28,
-            color: "#b7bedf",
+            paddingTop: 26,
+            borderTop: `1px solid ${RULE}`,
+            fontSize: 26,
+            color: TYPE_2,
           }}
         >
           <span>{LINE}</span>
@@ -77,7 +90,7 @@ export default function Image() {
     ),
     {
       ...size,
-      fonts: [{ name: "Bricolage Grotesque", data: bricolage, weight: 600, style: "normal" }],
+      fonts: [{ name: "Archivo", data: archivo, weight: 600, style: "normal" }],
     },
   );
 }

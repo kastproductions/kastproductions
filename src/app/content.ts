@@ -149,14 +149,26 @@ export const doors = [
   },
 ];
 
-/* Labelled as an example until @brief is live in our own Slack. Then this
+/* The hero console: one standing agent, answering in a channel and stopping at
+ * its gate. The three nameplate readings are the vocabulary the rest of the
+ * page uses, so a reader meets `channel`, `authority` and the deployment in
+ * the first object they see.
+ *
+ * Labelled as an example until @brief is live in our own Slack. Then this
  * becomes a screenshot of a real exchange and the label comes off. */
 export const mention = {
   label: "Example",
   channel: "#payments",
   handle: "@atlas",
+  readings: [
+    { label: "Channel", value: "#payments", mono: true, note: "where the finance team already works" },
+    { label: "Authority", value: "Acts behind an approval gate" },
+    { label: "Runs in", value: "Your own Cloudflare account" },
+  ],
+  asker: "Nadia",
   ask: "summarise last night's failed payments and draft the follow-up to each customer",
   reply: "Nine payments failed after 21:00, four of them over €500. Nine drafts are ready in your outbox.",
+  state: "Waiting on a named person",
   gate: "Sending reaches your customers, so it needs a name on it.",
   approve: "Approve and send",
 };
@@ -562,6 +574,6 @@ export const questions = [
 export type WrittenPage = { path: string; date: string };
 
 export const writtenPages: WrittenPage[] = [
-  { path: "/", date: "2026-09-13" },
-  { path: "/custom", date: "2026-09-13" },
+  { path: "/", date: "2026-09-18" },
+  { path: "/custom", date: "2026-09-18" },
 ];

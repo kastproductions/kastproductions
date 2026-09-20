@@ -8,9 +8,43 @@ Live at [www.kastproductions.com](https://www.kastproductions.com).
 
 - **Framework**: Next.js 16 (App Router, static export)
 - **Styling**: hand-written CSS in `src/app/globals.css`, no framework
-- **Fonts**: Bricolage Grotesque (text), IBM Plex Mono (run record)
+- **Fonts**: Archivo (one family, variable `wght` and `wdth`), IBM Plex Mono
 - **Language**: TypeScript (strict)
 - **Runtime**: Bun
+
+## The design
+
+The page is drawn as the instrument sheet of the thing we sell: a machine that
+runs unattended and stops at a gate. Three rules hold it together, and breaking
+one is a bug rather than a variation.
+
+1. **A hairline is the only divider.** No card, no shadow, no corner radius.
+   Structure carries information: a rule separates two readings, the rule down
+   the middle of a unit separates a label from its reading, and a band is one
+   course of the sheet. Nothing is drawn for looks.
+2. **`--signal` means someone must act.** The amber marks the gate the agent
+   stops at, and the one action a reader can take in a view: the primary
+   button, the underline on a link that leads somewhere, the marker on a
+   question that opens. It is the approval gate in colour, so spending it on
+   decoration spends the one signal the page has. A rule, a number or a table
+   cell is never amber.
+3. **`--font-mono` means a machine wrote this string.** A handle, a channel, a
+   timestamp, a diff, a path. A label a person wrote is set in the text face,
+   narrowed, never in mono and never in tracked capitals.
+
+One family carries the voice through its width axis, so `font-stretch` is a
+type token here and not a tweak: `--wide` (118%) for display, normal for prose,
+`--narrow` (88%) for a spec label. The narrowing does the job a tracked
+all-caps eyebrow would otherwise do, without shouting.
+
+Motion is one orchestrated entrance per page, on load: the hero console rises
+part by part and lands on the gate lamp, or the run record ticks in on a
+product page. A page carries one or the other, never both, and nothing else on
+the site moves unless a reader asks it to. `prefers-reduced-motion` gets the
+end state immediately.
+
+A number in front of a row means the rows are a sequence. Only the four
+stations of a run earn `.rows--seq`, because only they are one.
 
 ## Getting Started
 
@@ -50,19 +84,24 @@ src/app/
                        #   and the indexing directive every written page spreads in
   structured-data.ts   # The schema.org graph: the nodes true everywhere, and a builder
                        #   for the page, service and breadcrumb nodes a page adds
-  globals.css          # Design tokens and component styles
+  globals.css          # The sheet: design tokens and component styles. Its header
+                       #   states the three rules the design holds to
   opengraph-image.tsx  # Open Graph image, rendered at build time
   manifest.ts          # Web app manifest
   robots.ts            # robots.txt
   sitemap.ts           # sitemap.xml, which follows the written pages and the
                        #   catalogue, and states the dates content.ts holds
-  icon.svg             # Favicon
+  not-found.tsx        # The page a wrong address lands on. Carries no canonical and
+                       #   no robots directive of its own: the framework writes the
+                       #   `noindex` there, and a second beside it is a contradiction
+  icon.svg             # Favicon, drawn as the brand mark
 src/components/
   site-chrome.tsx      # Header, footer and brand mark, shared by every page
   channels-section.tsx # Where a standing agent is reachable, and what wakes it
   product-page.tsx     # One ready-made product, on its own page
   run-record.tsx       # The example run, on a product page
-  mention-card.tsx     # The example mention, in the home page hero
+  agent-console.tsx    # The example agent in the home page hero: its nameplate, the
+                       #   exchange, and the gate it stops at
   analytics.tsx        # Google Analytics (NEXT_PUBLIC_GA_ID)
 public/
   reviewers/           # Portraits for the reviewer section
@@ -146,7 +185,7 @@ Real, and may be stated as fact: the 17 client companies, the 6 references with 
 
 Also checkable, and worth keeping checkable: the channel lists in `channels` are the channels [Flue](https://flueframework.com/docs/ecosystem/) verifies, split into the chat channels a person addresses an agent in and the services that wake one with an event. The four items in `stack.ours` are the pieces Flue does not provide, so we write them. If Flue's ecosystem or its feature set moves, these lists move with it.
 
-Synthetic, and labelled as an example wherever a visitor could read it as fact: the mention card in `src/components/mention-card.tsx`, the hero run record in `src/components/run-record.tsx`, and the `work` table on a product page. Each one carries a visible `.tag` label. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
+Synthetic, and labelled as an example wherever a visitor could read it as fact: the agent console in `src/components/agent-console.tsx`, the hero run record in `src/components/run-record.tsx`, and the `work` table on a product page. Each one carries a visible `.tag` label. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
 
 Other people's names belong to them. Flue is Apache-2.0, and §6 of that licence permits the descriptive use of the name, so we write "Flue" in text with a link, never as a logo, and never in a way that implies Flue endorses us. Never adopt a name from somebody else's repository as a KastProductions product name: a product is named for the outcome it delivers.
 
@@ -161,7 +200,7 @@ The site runs on Vercel, and `vercel.json` carries two settings the static expor
 
 On another host, port both settings to that host's configuration.
 
-The Open Graph image fetches Bricolage Grotesque from Google Fonts during `bun run build`, so the build machine needs network access.
+The Open Graph image fetches Archivo from Google Fonts during `bun run build`, so the build machine needs network access. It is drawn from the same tokens as the page, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
 
 ## Environment Variables
 
