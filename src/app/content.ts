@@ -28,11 +28,12 @@ export const companyProfiles = ["https://github.com/kastproductions"];
 export const founderHandle = "@imkarolis";
 export const location = { city: "Vilnius", country: "Lithuania", countryCode: "LT" };
 
-/* Search snippet copy. Title stays close to 60 characters, description under 160. */
-export const title = `${brand}: software factory on demand`;
-export const description = `Software factory on demand in ${location.city}, ${location.country}. We build agents that work the way your company works, deploy them into your own accounts and keep them right.`;
-
-/* What a crawler and a social scraper are told about a page lives in
+/* The search snippet copy of every page lives on that page's record, at the
+ * foot of this file. The home page's title and description are the site's as
+ * well, so the manifest, the unfurl image and the company's own nodes in the
+ * graph read them from `homePage` rather than holding a second copy.
+ *
+ * What a crawler and a social scraper are told about a page lives in
  * `src/app/head-directives.ts`. Those are instructions to a machine, not words
  * a reader sees, and this module is the copy. */
 
@@ -552,14 +553,22 @@ export const questions = [
 ];
 
 /* ---------------------------------------------------------------------------
- * The written pages
+ * The page records
  *
- * The pages we write by hand, as against the product pages the catalogue
- * makes. This is the one list of them: `src/app/sitemap.ts` walks it, and so
- * does the test suite. A page added here is therefore listed for a crawler and
- * guarded by the suite in one edit. A written page that is not here has no
- * sitemap entry, and nothing watching its canonical, its title, its
- * description or its unfurl image.
+ * One record per page, and the one place that page's path, title, description
+ * and copy date are written. Everything a machine reads about the page is
+ * derived from the record: `src/app/head-directives.ts` builds the page's
+ * metadata from it, `src/app/structured-data.ts` builds the nodes the page
+ * adds to the graph, and `src/app/sitemap.ts` builds its sitemap entry. The
+ * test suite walks the same list. Adding a page is therefore one record here
+ * and one route file, which the Adding a page section of README.md sets out.
+ *
+ * A title is the page's own, and `pageMetadata` puts the brand after it, the
+ * way a search result reads. A result prints about 60 characters of the title
+ * and about 160 of the description, and cuts the rest, so a new page aims
+ * under both. The custom door misses that today: its description is the lede
+ * the page prints, at 181 characters, which is a copy question rather than a
+ * machine one and belongs to whoever rewrites the copy.
  *
  * A date is the day that page's copy last changed, written YYYY-MM-DD. It
  * comes from the page file's history, `git log -1 --date=short -- <file>`, so
@@ -567,13 +576,59 @@ export const questions = [
  * Nothing else sets it: a date stamped at build time tells a crawler that
  * every page changed on every deploy, and a crawler that learns our dates are
  * worthless stops reading them.
- *
- * A product page is not here. Its path and its date ride on its own record,
- * above, so a product entering the catalogue brings both with it.
  * ------------------------------------------------------------------------- */
-export type WrittenPage = { path: string; date: string };
+export type PageRecord = {
+  /* The path a crawler asks for, as the canonical URL states it. */
+  path: string;
+  /* The page's own title, which is also the name its node carries in the
+   * graph and the crumb a reader follows back. */
+  title: string;
+  /* The sentence under the title in a search result, and in an unfurl. */
+  description: string;
+  /* The day the copy on this page last changed. */
+  date: string;
+};
 
-export const writtenPages: WrittenPage[] = [
-  { path: "/", date: "2026-09-18" },
-  { path: "/custom", date: "2026-09-18" },
-];
+/* The home page. Its title is stated whole, brand and all, because it is the
+ * site's title as well: the manifest, the unfurl image and the not-found page
+ * all take it, and `pageMetadata` adds no brand to it a second time. */
+export const homePage: PageRecord = {
+  path: "/",
+  title: `${brand}: software factory on demand`,
+  description: `Software factory on demand in ${location.city}, ${location.country}. We build agents that work the way your company works, deploy them into your own accounts and keep them right.`,
+  date: "2026-09-18",
+};
+
+export const customPage: PageRecord = {
+  path: "/custom",
+  title: "Custom agents",
+  /* The lede the page prints, which is also what a search result shows. One
+   * string doing two jobs, and it does the second one badly: at 181
+   * characters a result cuts it. Splitting the two is a copy change. */
+  description: custom.lede,
+  date: "2026-09-18",
+};
+
+/* The pages we write by hand, as against the product pages the catalogue
+ * makes. */
+export const writtenPages: PageRecord[] = [homePage, customPage];
+
+/* The record of a product's page. A product already states its slug, its
+ * name, its promise and the day its copy changed, so its page record is read
+ * off the catalogue rather than written a second time. */
+export function productPage(product: Product): PageRecord {
+  return {
+    path: `/${product.slug}`,
+    title: product.name,
+    description: product.promise,
+    date: product.date,
+  };
+}
+
+/* Every page a crawler should index: the pages we write by hand, then one
+ * page per product in the catalogue. The sitemap walks this list and so does
+ * the suite, so a page added above is listed for a crawler and guarded by the
+ * suite in that one edit. A page that is not here has no sitemap entry, and
+ * nothing watching its canonical, its title, its description or its unfurl
+ * image. */
+export const indexablePages: PageRecord[] = [...writtenPages, ...products.map(productPage)];

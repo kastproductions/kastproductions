@@ -5,6 +5,8 @@ import {
   briefHref,
   callHref,
   contactEmail,
+  customPage,
+  homePage,
   location,
   products,
 } from "@/app/content";
@@ -24,7 +26,11 @@ type Chrome = { route?: string };
  */
 export function Brand({ route }: Chrome) {
   return (
-    <Link className="brand" href="/" prefetch={route === "/" ? false : undefined}>
+    <Link
+      className="brand"
+      href={homePage.path}
+      prefetch={route === homePage.path ? false : undefined}
+    >
       <span className="brand__mark" aria-hidden="true" />
       {brand}
     </Link>
@@ -61,7 +67,7 @@ function SectionLink({
  * A ready-made product appears here the moment it enters `products`.
  */
 export function SiteHeader({ route }: Chrome) {
-  const home = route === "/";
+  const home = route === homePage.path;
 
   return (
     <div className="top" id="top">
@@ -77,7 +83,9 @@ export function SiteHeader({ route }: Chrome) {
               {product.name}
             </Link>
           ))}
-          <Link href="/custom" prefetch={route === "/custom" ? false : undefined}>
+          {/* The nav says the door's name in the chrome's own words. A page
+              title is written for a search result, and is longer. */}
+          <Link href={customPage.path} prefetch={route === customPage.path ? false : undefined}>
             Custom agents
           </Link>
           <SectionLink home={home} hash="#pricing">

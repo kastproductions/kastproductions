@@ -11,10 +11,11 @@ import {
   brand,
   companyProfiles,
   contactEmail,
-  description,
   founder,
   founderProfiles,
+  homePage,
   location,
+  type PageRecord,
   pageUrl,
   type Price,
   siteUrl,
@@ -46,7 +47,7 @@ const organization: GraphNode = {
   name: brand,
   url: siteUrl,
   email: contactEmail,
-  description,
+  description: homePage.description,
   founder: { "@id": founderId },
   /* The city we work from. There is no street address and no telephone, which
    * is why this is an Organization and not a LocalBusiness subtype: nobody
@@ -101,7 +102,7 @@ const website: GraphNode = {
   "@id": websiteId,
   url: siteUrl,
   name: brand,
-  description,
+  description: homePage.description,
   publisher: { "@id": organizationId },
   inLanguage: "en",
 };
@@ -111,27 +112,16 @@ const website: GraphNode = {
 export const siteNodes: GraphNode[] = [organization, person, website];
 
 /*
- * What a page knows about itself: the route it answers, the heading a reader
- * sees at the top of it and the sentence underneath. Every per-page node is
- * built from this, so a page states one set of facts and not three.
- */
-export type PageFacts = {
-  path: string;
-  name: string;
-  description: string;
-};
-
-/*
  * The page itself, as a node. It points at the site and the company by `@id`
  * rather than restating either: the layout already said both, on this route
  * and on every other one.
  */
-export function webPage(page: PageFacts): GraphNode {
+function webPage(page: PageRecord): GraphNode {
   return {
     "@type": "WebPage",
     "@id": `${pageUrl(page.path)}#webpage`,
     url: pageUrl(page.path),
-    name: page.name,
+    name: page.title,
     description: page.description,
     isPartOf: { "@id": websiteId },
     about: { "@id": organizationId },
@@ -199,11 +189,11 @@ function offer(price: Price): GraphNode {
  * What the page sells, with the prices it prints. The company provides it, by
  * `@id`, so the service hangs off the same organisation everywhere.
  */
-export function service(page: PageFacts & { prices: Price[] }): GraphNode {
+function service(page: PageRecord & { prices: Price[] }): GraphNode {
   return {
     "@type": "Service",
     "@id": `${pageUrl(page.path)}#service`,
-    name: page.name,
+    name: page.title,
     description: page.description,
     url: pageUrl(page.path),
     provider: { "@id": organizationId },
@@ -216,15 +206,32 @@ export function service(page: PageFacts & { prices: Price[] }): GraphNode {
  * Where the page sits: the home page, then the page. Two levels is the whole
  * depth of this site, and a crumb trail that claims more than that is wrong.
  */
-export function breadcrumbs(page: PageFacts): GraphNode {
+function breadcrumbs(page: PageRecord): GraphNode {
   return {
     "@type": "BreadcrumbList",
     "@id": `${pageUrl(page.path)}#breadcrumbs`,
     itemListElement: [
       { "@type": "ListItem", position: 1, name: brand, item: siteUrl },
-      { "@type": "ListItem", position: 2, name: page.name, item: pageUrl(page.path) },
+      { "@type": "ListItem", position: 2, name: page.title, item: pageUrl(page.path) },
     ],
   };
+}
+
+/*
+ * The nodes one page adds to the site-wide ones, from that page's record: the
+ * page itself, the thing it sells where it prints a price for it, and the
+ * trail back to the home page.
+ *
+ * A page that prints no price passes none and states no offer. The home page
+ * carries no trail, because it is where every trail starts, and a crumb trail
+ * of one item claims a depth this site does not have.
+ */
+export function pageNodes(page: PageRecord, prices?: Price[]): GraphNode[] {
+  return [
+    webPage(page),
+    ...(prices ? [service({ ...page, prices })] : []),
+    ...(page.path === homePage.path ? [] : [breadcrumbs(page)]),
+  ];
 }
 
 /*

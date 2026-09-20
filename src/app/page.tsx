@@ -1,5 +1,4 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { AgentConsole } from "@/components/agent-console";
 import { ChannelsSection } from "@/components/channels-section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
@@ -7,12 +6,12 @@ import {
   brand,
   callHref,
   clients,
-  description,
   doors,
   fitDimensions,
   fitIntro,
   founder,
   hero,
+  homePage,
   jobs,
   jobsIntro,
   location,
@@ -25,40 +24,24 @@ import {
   questions,
   references,
   stack,
-  title,
 } from "./content";
-import { indexedRobots, openGraphImage } from "./head-directives";
-import { graphHtml, webPage } from "./structured-data";
+import { pageMetadata } from "./head-directives";
+import { graphHtml, pageNodes } from "./structured-data";
 
-export const metadata: Metadata = {
-  alternates: {
-    canonical: "/",
-  },
-  robots: indexedRobots,
-  openGraph: {
-    ...openGraphImage,
-    type: "website",
-    url: "/",
-    siteName: brand,
-    locale: "en_GB",
-    title,
-    description,
-  },
-};
+export const metadata = pageMetadata(homePage);
 
 /* A door and a price that depend on a ready-made product stay off the page
  * until one runs. See the Catalogue entry in CONTEXT.md. */
 const openDoors = doors.filter((door) => !door.catalogue || products.length > 0);
 const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
 
-/* The home page's own node, beside the site-wide ones the layout renders. The
- * home page sells no one thing, so it states that it is a page and stops. */
-const graph = graphHtml([webPage({ path: "/", name: title, description })]);
+/* The home page's own nodes, beside the site-wide ones the layout renders. */
+const graph = graphHtml(pageNodes(homePage));
 
 export default function Home() {
   return (
     <>
-      <SiteHeader route="/" />
+      <SiteHeader route={homePage.path} />
 
       <main id="main">
         <section className="band band--flush hero">
@@ -290,7 +273,7 @@ export default function Home() {
         </section>
       </main>
 
-      <SiteFooter route="/" />
+      <SiteFooter route={homePage.path} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: graph }}

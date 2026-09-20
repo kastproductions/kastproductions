@@ -9,7 +9,14 @@
 import { statSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { exportRoot, indexableRoutes, metaContents, readExport, siteUrl } from "./export";
+import {
+  exportRoot,
+  indexableRoutes,
+  metaContents,
+  readExport,
+  siteUrl,
+  tagTexts,
+} from "./export";
 
 /*
  * The two files one 404 is written to. `out/404.html` is what a static host
@@ -53,6 +60,17 @@ for (const route of indexableRoutes) {
       }
       expect(bytes).toBeGreaterThan(0);
     }
+  });
+
+  test(`${route.path} unfurls with its own title and description`, () => {
+    const document = readExport(route.file);
+
+    /* Next.js merges metadata shallowly, so a page that declares an
+     * `openGraph` object of its own and forgets a field unfurls with the
+     * field missing rather than with the one the layout states. Both come
+     * from the page record, so both are read back against it. */
+    expect(metaContents(document, "og:title")).toEqual(tagTexts(document, "title"));
+    expect(metaContents(document, "og:description")).toEqual([route.description]);
   });
 
   test(`${route.path} asks to be indexed, once`, () => {

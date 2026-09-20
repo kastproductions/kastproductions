@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@/components/analytics";
-import { brand, description, founder, founderHandle, siteUrl, title } from "./content";
+import { brand, founder, founderHandle, homePage, siteUrl } from "./content";
 import { graphHtml, siteNodes } from "./structured-data";
 import "./globals.css";
 
@@ -46,19 +46,24 @@ export const viewport: Viewport = {
 };
 
 /*
- * Site-wide defaults. Page-specific fields (canonical, og:url, og:title)
- * live in each page's `metadata` so a new page never inherits the home
- * page's canonical URL. Robots stays out for a different reason: the
- * framework's not-found route inherits this object, and an `index, follow`
- * here would sit next to the `noindex` that route emits.
+ * Site-wide defaults. Every written page states its own title, description,
+ * canonical URL and unfurl fields through `pageMetadata`, so what is left
+ * here is what holds for the whole site.
+ *
+ * The title serves the one route with no page record: the framework's
+ * not-found route, which states its own heading and takes the brand from the
+ * template. The default beside it is the home page's title, which is the
+ * site's. Robots stays out for a different reason: that same not-found route
+ * inherits this object, and an `index, follow` here would sit next to the
+ * `noindex` the route emits.
  */
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: title,
+    default: homePage.title,
     template: `%s | ${brand}`,
   },
-  description,
+  description: homePage.description,
   applicationName: brand,
   authors: [{ name: founder, url: siteUrl }],
   creator: founder,

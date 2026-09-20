@@ -7,8 +7,8 @@
  * Everything here reads the emitted export.
  */
 import { expect, test } from "bun:test";
-import { products, writtenPages } from "../src/app/content";
-import { readExport, siteUrl, tagTexts } from "./export";
+import { indexablePages, pageUrl } from "../src/app/content";
+import { readExport, tagTexts } from "./export";
 
 type Entry = { url: string; lastModified: string | undefined };
 
@@ -23,13 +23,10 @@ function sitemapEntries(): Entry[] {
 }
 
 /* The date the content module holds for a URL, and `undefined` where it holds
- * none. A written page and a product are both looked up by their own record,
- * so a page or a product added to the content module is covered here with no
- * test edit. */
+ * none. Every page states its date on its own record, so a page added to the
+ * content module is covered here with no test edit. */
 function contentDate(url: string): string | undefined {
-  const path = url === siteUrl ? "/" : url.slice(siteUrl.length);
-  const product = products.find((candidate) => path === `/${candidate.slug}`);
-  return product ? product.date : writtenPages.find((page) => page.path === path)?.date;
+  return indexablePages.find((page) => pageUrl(page.path) === url)?.date;
 }
 
 test("every sitemap entry states the date the content module holds, or no date", () => {

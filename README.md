@@ -75,22 +75,25 @@ src/app/
                        #   analytics
   page.tsx             # Home: hero, clients, the work we take and the doors, fit,
                        #   channels, mechanism and stack, reviewer, prices, questions;
-                       #   canonical URL and its own graph
-  custom/page.tsx      # The custom door: the jobs we take, channels, price, own graph
-  content.ts           # Brand constants, search snippet copy, client list, founder
-                       #   references, the written pages and their dates, and every
-                       #   word of both doors
-  head-directives.ts   # What a page tells a machine in its head: the unfurl image
-                       #   and the indexing directive every written page spreads in
-  structured-data.ts   # The schema.org graph: the nodes true everywhere, and a builder
-                       #   for the page, service and breadcrumb nodes a page adds
+                       #   metadata and graph built from its page record
+  custom/page.tsx      # The custom door: the jobs we take, channels, price; metadata
+                       #   and graph built from its page record
+  content.ts           # Brand constants, client list, founder references, every word
+                       #   of both doors, and the page records: the path, title,
+                       #   description and copy date of every page we write by hand
+  head-directives.ts   # What a page tells a machine in its head. `pageMetadata` builds
+                       #   all of it from a page record: title, description, canonical
+                       #   URL, indexing directive and unfurl fields
+  structured-data.ts   # The schema.org graph: the nodes true everywhere, and
+                       #   `pageNodes`, which builds the page, service and breadcrumb
+                       #   nodes a page adds from that same record
   globals.css          # The sheet: design tokens and component styles. Its header
                        #   states the three rules the design holds to
   opengraph-image.tsx  # Open Graph image, rendered at build time
   manifest.ts          # Web app manifest
   robots.ts            # robots.txt
-  sitemap.ts           # sitemap.xml, which follows the written pages and the
-                       #   catalogue, and states the dates content.ts holds
+  sitemap.ts           # sitemap.xml, one entry per page record, stating the date each
+                       #   record holds
   not-found.tsx        # The page a wrong address lands on. Carries no canonical and
                        #   no robots directive of its own: the framework writes the
                        #   `noindex` there, and a second beside it is a contradiction
@@ -109,10 +112,11 @@ public/
 tests/
   export.ts            # Shared helpers: the export root, a file reader, tag parsing,
                        #   a JSON-LD reader, and the indexable routes, which follow
-                       #   the written pages and the catalogue
-  head.test.ts         # One h1, a self-referencing canonical, a title and a
-                       #   description per route; the sitemap and the robots file
-  opengraph.test.ts    # An unfurl image per route, and one robots directive on the 404
+                       #   the page records
+  head.test.ts         # One h1, a self-referencing canonical, and the title and
+                       #   description each record states; the sitemap and robots file
+  opengraph.test.ts    # An unfurl image, title and description per route, and one
+                       #   robots directive on the 404
   sitemap.test.ts      # Real dates, no build time, and no Host directive
   structured-data.test.ts  # The company states only what it can support
   page-graph.test.ts   # Each route describes itself, with the printed prices as offers
@@ -130,7 +134,7 @@ that declares its own `openGraph` object silently loses the inherited image. Our
 look correct while the built page unfurls blank, which means a test over the metadata objects
 would have passed through the whole fault. Only the build output shows it.
 
-The route list comes from `writtenPages` and `products`, the two lists the sitemap walks, so a
+The route list comes from `indexablePages`, the list of page records the sitemap walks, so a
 page or a product added to the content module is covered with no test edit. A route the suite
 cannot find in the export is a failure, never a skip.
 
@@ -142,13 +146,65 @@ what the build emitted, never what Google accepted.
 
 ## Content
 
-Every word of both doors lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the written pages with the day each one last changed. What a page tells a machine rather than a reader is not there. The unfurl image and the indexing directive live in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`.
+Every word of both doors lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the page records with the day each page's copy last changed. What a page tells a machine rather than a reader is not there. The metadata each page derives from its record, with the unfurl image and the indexing directive, lives in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`.
 
 The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
 
 The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor.
 
 `bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, which is the only analytics this page has.
+
+## Adding a page
+
+A page is one record and one route file. The record is the one place its path, title,
+description and copy date are written, and everything a machine reads follows from it: the
+canonical URL, the indexing directive, the unfurl fields, the sitemap entry with its date, the
+page's own graph nodes, and the suite's coverage of all of them.
+
+1. Add the record in the page records section of `src/app/content.ts`, and put it in
+   `writtenPages`:
+
+   ```ts
+   export const aboutPage: PageRecord = {
+     path: "/about",
+     title: "Who builds the agents",
+     description: "The sentence a search result prints under the title, under 160 characters.",
+     date: "2026-09-20",
+   };
+
+   export const writtenPages: PageRecord[] = [homePage, customPage, aboutPage];
+   ```
+
+2. Add the route file at the path the record states, here `src/app/about/page.tsx`:
+
+   ```tsx
+   import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+   import { aboutPage } from "../content";
+   import { pageMetadata } from "../head-directives";
+   import { graphHtml, pageNodes } from "../structured-data";
+
+   export const metadata = pageMetadata(aboutPage);
+
+   const graph = graphHtml(pageNodes(aboutPage));
+
+   export default function About() {
+     return (
+       <>
+         <SiteHeader route={aboutPage.path} />
+         <main id="main">{/* the page */}</main>
+         <SiteFooter route={aboutPage.path} />
+         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: graph }} />
+       </>
+     );
+   }
+   ```
+
+Nothing else moves. A page that prints a price passes it, `pageNodes(aboutPage, prices)`, and
+gets the service node with one offer per price; a page that prints none states no offer. The
+title on the record is the page's own and `pageMetadata` puts the brand after it, so keep the
+two together under about 60 characters. The date is the day the copy last changed, read with
+`git log -1 --date=short -- <file>`, so editing the words on a page means editing its date in
+the same commit.
 
 ## The catalogue
 
@@ -165,17 +221,18 @@ Turning a product on takes two edits, because `output: "export"` refuses a dynam
 2. Add its route, named after its `slug`, in `src/app/issue-to-pull-request/page.tsx`:
 
    ```tsx
-   import { ProductPage, productMetadata } from "@/components/product-page";
-   import { issueToPullRequest } from "../content";
+   import { ProductPage } from "@/components/product-page";
+   import { issueToPullRequest, productPage } from "../content";
+   import { pageMetadata } from "../head-directives";
 
-   export const metadata = productMetadata(issueToPullRequest);
+   export const metadata = pageMetadata(productPage(issueToPullRequest));
 
    export default function Page() {
      return <ProductPage product={issueToPullRequest} />;
    }
    ```
 
-Nothing else moves. The door, the nav entry, the sitemap entry and its date, the two ready-made prices, the product page and its graph nodes all follow from the array.
+Nothing else moves. The door, the nav entry, the sitemap entry and its date, the two ready-made prices, the product page and its graph nodes all follow from the array. A product page keeps no record of its own: `productPage` reads one off the product, so the path, the title, the description and the date arrive with it.
 
 ## Claims
 

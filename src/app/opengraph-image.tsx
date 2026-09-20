@@ -1,8 +1,8 @@
 import { ImageResponse } from "next/og";
-import { brand, contactEmail, hero, location, title } from "./content";
+import { brand, contactEmail, hero, homePage, location } from "./content";
 
 export const dynamic = "force-static";
-export const alt = title;
+export const alt = homePage.title;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

@@ -1,50 +1,20 @@
-import type { Metadata } from "next";
 import { ChannelsSection } from "@/components/channels-section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import {
-  brand,
-  callHref,
-  custom,
-  jobs,
-  mailtoFor,
-} from "../content";
-import { indexedRobots, openGraphImage } from "../head-directives";
-import { breadcrumbs, graphHtml, service, webPage } from "../structured-data";
+import { callHref, custom, customPage, jobs, mailtoFor } from "../content";
+import { pageMetadata } from "../head-directives";
+import { graphHtml, pageNodes } from "../structured-data";
 
-const pageTitle = "Custom agents";
+export const metadata = pageMetadata(customPage);
 
-export const metadata: Metadata = {
-  title: pageTitle,
-  description: custom.lede,
-  alternates: {
-    canonical: "/custom",
-  },
-  robots: indexedRobots,
-  openGraph: {
-    ...openGraphImage,
-    type: "website",
-    url: "/custom",
-    siteName: brand,
-    locale: "en_GB",
-    title: `${pageTitle} | ${brand}`,
-    description: custom.lede,
-  },
-};
-
-/* The door's own nodes, beside the site-wide ones the layout renders: the page
- * itself, the service it sells with the prices it prints, and the way here
- * from the home page. */
-const page = { path: "/custom", name: pageTitle, description: custom.lede };
-const graph = graphHtml([
-  webPage(page),
-  service({ ...page, prices: custom.prices }),
-  breadcrumbs(page),
-]);
+/* The door's own nodes, beside the site-wide ones the layout renders: the
+ * page itself, the service it sells with the prices it prints, and the way
+ * here from the home page. */
+const graph = graphHtml(pageNodes(customPage, custom.prices));
 
 export default function Custom() {
   return (
     <>
-      <SiteHeader route="/custom" />
+      <SiteHeader route={customPage.path} />
 
       <main id="main">
         <section className="band band--flush hero">
@@ -136,7 +106,7 @@ export default function Custom() {
         </section>
       </main>
 
-      <SiteFooter route="/custom" />
+      <SiteFooter route={customPage.path} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: graph }}

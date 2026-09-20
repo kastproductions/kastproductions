@@ -6,6 +6,7 @@
  * Every assertion reads the emitted export. Nothing here pins page copy.
  */
 import { expect, test } from "bun:test";
+import { brand } from "../src/app/content";
 import { indexableRoutes, linkHrefs, metaContents, readExport, siteUrl, tagTexts } from "./export";
 
 for (const route of indexableRoutes) {
@@ -19,17 +20,22 @@ for (const route of indexableRoutes) {
     expect(linkHrefs(readExport(route.file), "canonical")).toEqual([route.url]);
   });
 
-  test(`${route.path} emits one title and one description`, () => {
+  test(`${route.path} emits the title and the description its record states`, () => {
     const document = readExport(route.file);
 
+    /* One each: a second of either leaves the crawler to choose the search
+     * result a person reads. */
     const titles = tagTexts(document, "title");
     expect(titles).toHaveLength(1);
-    expect(titles[0]).not.toBe("");
 
-    /* Both are the search result a person decides to click on. */
-    const descriptions = metaContents(document, "description");
-    expect(descriptions).toHaveLength(1);
-    expect(descriptions[0]).not.toBe("");
+    /* The page record is the one place the title and the description are
+     * written, so the export is read back against it rather than against a
+     * copy of the words. The title the record states is the page's own, and
+     * the brand follows it, which is how a search result reads. */
+    expect(titles[0]).toContain(route.title);
+    expect(titles[0]).toContain(brand);
+
+    expect(metaContents(document, "description")).toEqual([route.description]);
   });
 }
 

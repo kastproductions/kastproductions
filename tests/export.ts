@@ -10,16 +10,16 @@
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { pageUrl, products, siteUrl, writtenPages } from "../src/app/content";
+import { indexablePages, type PageRecord, pageUrl, siteUrl } from "../src/app/content";
 
 /* The directory `output: "export"` writes. Run a build before the suite. */
 export const exportRoot = join(import.meta.dir, "..", "out");
 
 export { siteUrl };
 
-export type Route = {
-  /* The path a crawler asks for, as the canonical URL states it. */
-  path: string;
+/* A route the suite reads: the record the content module holds for that page,
+ * and where the export puts it. */
+export type Route = PageRecord & {
   /* The absolute URL the page must name as its canonical. */
   url: string;
   /* The file the build emits for it, relative to the export root. */
@@ -27,30 +27,28 @@ export type Route = {
 };
 
 /*
- * A route, from its path. The URL follows `pageUrl`, the one rule the
+ * A route, from its page record. The URL follows `pageUrl`, the one rule the
  * canonical, the sitemap and the graph all follow, so the suite never argues
  * with the export about how a page's URL is spelled. The file is the export's
  * own naming: the home page is `index.html`, and every other route maps
  * straight across.
  */
-function route(path: string): Route {
+function route(page: PageRecord): Route {
   return {
-    path,
-    url: pageUrl(path),
-    file: path === "/" ? "index.html" : `${path.slice(1)}.html`,
+    ...page,
+    url: pageUrl(page.path),
+    file: page.path === "/" ? "index.html" : `${page.path.slice(1)}.html`,
   };
 }
 
 /*
  * The routes a crawler should index: the pages we write by hand, then one page
- * per product in the catalogue. These are the two lists `src/app/sitemap.ts`
- * walks, so a written page or a product added to the content module is checked
- * here, canonical, title, description, unfurl image and graph, with no edit.
+ * per product in the catalogue. That is `indexablePages`, the list
+ * `src/app/sitemap.ts` walks, so a written page or a product added to the
+ * content module is checked here, canonical, title, description, unfurl image
+ * and graph, with no edit.
  */
-export const indexableRoutes: Route[] = [
-  ...writtenPages.map((page) => route(page.path)),
-  ...products.map((product) => route(`/${product.slug}`)),
-];
+export const indexableRoutes: Route[] = indexablePages.map(route);
 
 /*
  * Reads a file from the export. A missing file throws, because a route the
