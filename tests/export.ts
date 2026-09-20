@@ -51,6 +51,13 @@ function route(page: PageRecord): Route {
 export const indexableRoutes: Route[] = indexablePages.map(route);
 
 /*
+ * The two files one 404 is written to. `out/404.html` is what a static host
+ * serves; `out/_not-found.html` is the route file the build also emits. They
+ * are byte-identical, and both are cheap to check.
+ */
+export const notFoundFiles = ["404.html", "_not-found.html"];
+
+/*
  * Reads a file from the export. A missing file throws, because a route the
  * build did not emit is the fault this suite exists to catch, never a skip.
  */

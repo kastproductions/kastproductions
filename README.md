@@ -257,13 +257,13 @@ The site runs on Vercel, and `vercel.json` carries two settings the static expor
 - Permanent redirects from the retired `/about`, `/work`, `/contact`, `/standing-agents` and `/og.png` URLs to the matching page or section.
 - A `Content-Type: image/png` header for `/opengraph-image`. Next.js writes that file without an extension, and a static host would otherwise serve it as a download.
 
-On another host, port both settings to that host's configuration.
+On another host, port both settings to that host's configuration, and expect the analytics tracker to stop working: `## Analytics` below explains why the path every page requests is one only a Vercel deployment serves.
 
 The Open Graph image fetches Archivo from Google Fonts during `bun run build`, so the build machine needs network access. It is drawn from the same tokens as the page, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
 
 ## Analytics
 
-The site counts visits with Vercel Web Analytics. The processor is Vercel Inc., the company that already serves the site: the tracker sets no cookie and stores nothing on the visitor's device, a visitor is identified by a hash of the incoming request, and the session that hash belongs to is discarded after 24 hours. That is why the site carries no consent banner. The data points it keeps per visit are listed in [Vercel's privacy documentation](https://vercel.com/docs/analytics/privacy-policy), which is the source a privacy policy should state, rather than this file.
+The site counts visits with Vercel Web Analytics. The processor is Vercel Inc., the company that already serves the site: the tracker sets no cookie and stores nothing on the visitor's device, a visitor is identified by a hash of the incoming request, and that hash is discarded 24 hours later. That is why the site carries no consent banner. The data points it keeps per visit are listed in [Vercel's privacy documentation](https://vercel.com/docs/analytics/privacy-policy), which is the source a privacy policy should state, rather than this file.
 
 `src/components/analytics.tsx` writes two tags into every page the build emits: the queue stub Vercel documents for plain HTML, and a deferred `script` tag for `/_vercel/insights/script.js`. The deployment serves that path itself, so no third-party host is contacted, and the path exists only once Web Analytics is turned on for the project in the Vercel dashboard. A page view counts both on a fresh load and on a client-side move between pages. An ad blocker that blocks `/_vercel/insights/*` drops the visit: the per-deployment script path that works around this needs the `@vercel/analytics` package and a seed the package reads at build time, and we render the tags ourselves.
 

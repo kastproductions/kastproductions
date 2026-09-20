@@ -19,7 +19,7 @@
  * for. In `bun run dev` the path is not served and the request 404s, because
  * only a deployment has a tracker to serve.
  */
-const script = "/_vercel/insights/script.js";
+const tracker = "/_vercel/insights/script.js";
 
 /*
  * Every call to action on this site is a mailto link, so a click on one is the
@@ -51,7 +51,7 @@ export function Analytics() {
   return (
     <>
       <script dangerouslySetInnerHTML={{ __html: events }} />
-      <script defer src={script} />
+      <script defer src={tracker} />
     </>
   );
 }

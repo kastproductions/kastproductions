@@ -63,14 +63,21 @@ One delegated click listener counts every `mailto:` link, rather than a handler 
 Clicked through the served export at a 390 px viewport, home page, one real mouse click on the header call to action and then every link in turn:
 
 ```
-door "New brief"        page "/"   header and footer, Send us a brief
-door "First call"       page "/"   hero and footer, Book a call
-door "Custom agent"     page "/"   the custom door, and its price row
-door "Sprint: one brief" page "/"  the Sprint price row
-door "address"          page "/"   the bare hello@ link in the footer
+door "New brief"         page "/"   header and footer, Send us a brief
+door "First call"        page "/"   hero and footer, Book a call
+door "Custom agent"      page "/"   the custom price row, Describe the work
+door "Sprint: one brief" page "/"   the Sprint price row, Start with a brief
+door "address"           page "/"   the bare hello@ link in the footer
 ```
 
-The custom page gives the same five doors with `page "/custom"`. A click on any other link, a nav link or a client's website, queues nothing.
+Seven links on the home page, five doors. The custom door in the home page's
+door section is a `next/link` to `/custom` rather than a mailto, so it counts
+nothing here and the page view on `/custom` records the move instead.
+
+The custom page gives four of those doors with `page "/custom"`: New brief,
+Custom agent (twice, the hero and the closing call), First call and address.
+`Sprint: one brief` is a price row the home page alone prints. A click on any
+other link, a nav link or a client's website, queues nothing.
 
 Plan note: Vercel bills custom events to the Pro plan. Page views are counted on Hobby; events are not. The wiring is correct either way, and the owner's plan decides whether the dashboard shows the events.
 
@@ -90,3 +97,8 @@ The tool does not move it: the after runs sit inside the before band, the Larges
 1. Turn Web Analytics on for the project. Until then `/_vercel/insights/script.js` is not served and nothing is counted.
 2. Deploy, visit the site in a normal browser, and confirm the page view. This cannot be checked from here: the tracker reads `navigator.webdriver` and the user agent and refuses to run under automation, so no driven browser can produce a real page view.
 3. Decide on Pro if the `mailto` events are wanted in the dashboard.
+
+`Status: done` covers the code. These three steps need the owner's Vercel
+account, and the second acceptance box stays unticked until step 2 is done. A
+reader who wants that box ticked should run step 2 and tick it here, rather
+than reopen the ticket.

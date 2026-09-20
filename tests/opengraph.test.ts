@@ -13,17 +13,11 @@ import {
   exportRoot,
   indexableRoutes,
   metaContents,
+  notFoundFiles,
   readExport,
   siteUrl,
   tagTexts,
 } from "./export";
-
-/*
- * The two files one 404 is written to. `out/404.html` is what a static host
- * serves; `out/_not-found.html` is the route file the build also emits. They
- * are byte-identical, and both are cheap to check.
- */
-const notFoundFiles = ["404.html", "_not-found.html"];
 
 /*
  * The file an image URL asks for. The Open Graph route carries no extension
