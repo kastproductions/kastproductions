@@ -219,7 +219,7 @@ export default function Home() {
                     <figcaption>
                       <img
                         src={reference.portrait}
-                        alt=""
+                        alt={`${reference.name}, ${reference.position}`}
                         width={176}
                         height={176}
                         loading="lazy"
