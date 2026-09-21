@@ -81,9 +81,9 @@ src/app/
   content-publishing/page.tsx
   social-scheduling/page.tsx
   support-ticket-triage/page.tsx
-  about/page.tsx       # Who is behind the work: the founder, the companies he shipped
-                       #   for before the company existed, and the six references with
-                       #   their portraits, which print here and nowhere else
+  about/page.tsx       # Who is behind the work: the founder, the companies he has
+                       #   shipped for, and the six references with their portraits,
+                       #   which print here and nowhere else
   failed-payment-recovery/page.tsx
   shopify-operations/page.tsx
                        # The five jobs, one per page. Each route hands its record to the
@@ -134,6 +134,8 @@ src/components/
                        #   terms, the imprint and the contact page from every page
   channels-section.tsx # Where a standing agent is reachable, and what wakes it
   product-page.tsx     # One ready-made product, on its own page
+  clients-strip.tsx    # The client companies as one strip, on the home page and the
+                       #   about page
   job-page.tsx         # One job we take, on its own page
   job-rows.tsx         # The jobs we take, as rows, on the home page and the door
   run-record.tsx       # The example run, on a product page
@@ -142,7 +144,7 @@ src/components/
   analytics.tsx        # Vercel Web Analytics: the tracker this deployment serves,
                        #   and one event per call to action clicked
 public/
-  reviewers/           # Portraits for the reviewer section
+  reviewers/           # Portraits for the references on the about page
   logo.png             # 512px raster logo, for the Organization node in the graph
 tests/
   export.ts            # Shared helpers: the export root, a file reader, tag parsing,

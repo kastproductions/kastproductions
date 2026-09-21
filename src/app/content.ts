@@ -1001,7 +1001,7 @@ export const explainerPages: PageRecord[] = [evalSuitePage];
 export const aboutPage: PageRecord = {
   path: "/about",
   title: `${founder}, founder`,
-  description: `${founder} founded ${brand} in ${location.city} and signs every merge. The seventeen companies he has shipped for, and six references quoted as written.`,
+  description: `${founder} founded ${brand} in ${location.city} and signs the merges we make. Seventeen companies he has shipped for, and six references quoted as written.`,
   date: "2026-09-21",
 };
 

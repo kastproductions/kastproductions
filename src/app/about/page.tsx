@@ -1,9 +1,9 @@
 import Link from "next/link";
+import { ClientsStrip } from "@/components/clients-strip";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   aboutPage,
   brand,
-  clients,
   company,
   founder,
   founderProfiles,
@@ -13,6 +13,13 @@ import {
 } from "../content";
 import { pageMetadata } from "../head-directives";
 import { graphHtml, pageNodes } from "../structured-data";
+
+/* A profile as the page prints it: the host and the path, which is the
+ * string a person types, without the scheme. */
+const profiles = founderProfiles.map((href) => {
+  const url = new URL(href);
+  return { href, label: `${url.host}${url.pathname}` };
+});
 
 export const metadata = pageMetadata(aboutPage);
 
@@ -28,7 +35,7 @@ const graph = graphHtml(pageNodes(aboutPage));
  * carries. A host name is a string a machine reads, so it is set in mono.
  *
  * The seventeen companies and the six references are the founder's earlier
- * work, before this company existed, and this page is where that is said.
+ * work, before this offer existed, and this page is where that is said.
  * The quotes are printed as written: the content module forbids editing
  * them, and `tests/about.test.ts` reads each one back out of the export.
  */
@@ -54,8 +61,8 @@ export default function About() {
             <div className="unit__head">
               <h2 id="founder-title">The founder</h2>
               <p>
-                One engineer answers for every agent we build. Where he works,
-                what the register holds, and where else to find him.
+                He owns the agents we build. Where he works, what the register
+                holds, and where else to find him.
               </p>
             </div>
             <div className="unit__body">
@@ -76,9 +83,9 @@ export default function About() {
                 <div className="row row--stack">
                   <dt className="row__label">Profiles</dt>
                   <dd>His own, as against the company&apos;s. Both link back here.</dd>
-                  {founderProfiles.map((profile) => (
-                    <a className="pull mono" href={profile} rel="me noreferrer" key={profile}>
-                      {`${new URL(profile).host}${new URL(profile).pathname}`}
+                  {profiles.map((profile) => (
+                    <a className="pull mono" href={profile.href} rel="me noreferrer" key={profile.href}>
+                      {profile.label}
                     </a>
                   ))}
                 </div>
@@ -87,31 +94,15 @@ export default function About() {
           </div>
         </section>
 
-        <section className="band strip" id="clients" aria-labelledby="clients-title">
-          <div className="wrap strip__grid">
-            <h2 id="clients-title">
-              Before {brand}, {founder} shipped for these companies, across
-              four continents
-            </h2>
-            <ul className="strip__list">
-              {clients.map((client) => (
-                <li key={client.name}>
-                  <a href={client.url} rel="noreferrer">
-                    {client.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+        <ClientsStrip heading={`Companies ${founder} has shipped for, across four continents`} />
 
         <section className="band" id="references" aria-labelledby="references-title">
           <div className="wrap unit">
             <div className="unit__head">
               <h2 id="references-title">Six references, quoted as written</h2>
               <p>
-                People who worked with {founder} before {brand} wrote these
-                about that work. Nothing in them is edited.
+                People who worked with {founder} wrote these about his earlier
+                work. Nothing in them is edited.
               </p>
             </div>
             <ul className="unit__body refs">

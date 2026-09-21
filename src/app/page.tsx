@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { AgentConsole } from "@/components/agent-console";
 import { ChannelsSection } from "@/components/channels-section";
+import { ClientsStrip } from "@/components/clients-strip";
 import { JobRows } from "@/components/job-rows";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   aboutPage,
   brand,
   callHref,
-  clients,
   doors,
   evalSuitePage,
   fitDimensions,
@@ -64,22 +64,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="band strip" id="clients" aria-labelledby="clients-title">
-          <div className="wrap strip__grid">
-            <h2 id="clients-title">
-              Companies we have shipped for, across four continents
-            </h2>
-            <ul className="strip__list">
-              {clients.map((client) => (
-                <li key={client.name}>
-                  <a href={client.url} rel="noreferrer">
-                    {client.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+        <ClientsStrip heading="Companies we have shipped for, across four continents" />
 
         <section className="band" id="work" aria-labelledby="work-title">
           <div className="wrap unit">
