@@ -126,8 +126,9 @@ src/app/
   robots.ts            # robots.txt
   sitemap.ts           # sitemap.xml, one entry per page record, stating the date each
                        #   record holds
-  llms.txt/route.ts    # llms.txt, the plain-text index an answer engine reads: one
-                       #   Markdown link per page record, with its description
+  llms.txt/route.ts    # llms.txt, the plain-text index an answer engine (a model that
+                       #   answers a question from the web) reads: one Markdown link per
+                       #   page record, with its description
   not-found.tsx        # The page a wrong address lands on. Carries no canonical and
                        #   no robots directive of its own: the framework writes the
                        #   `noindex` there, and a second beside it is a contradiction
@@ -208,7 +209,7 @@ what the build emitted, never what Google accepted.
 
 ## Content
 
-Every word of both doors and of every job we take lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the page records with the day each page's copy last changed. What a page tells a machine rather than a reader is not there, and neither is the prose a shared component prints on every page of a kind. The metadata each page derives from its record, with the unfurl image and the indexing directive, lives in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`.
+Every word of both doors and of every job we take lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the page records with the day each page's copy last changed. What a page tells a machine rather than a reader is not there, and neither is the prose a shared component prints on every page of a kind. The metadata each page derives from its record, with the unfurl image and the indexing directive, lives in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`, and the decisions that shape the site, the test seam and where prose lives among them, are recorded in `docs/adr/`.
 
 The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
 
@@ -404,7 +405,7 @@ The site counts visits with Vercel Web Analytics. The processor is Vercel Inc., 
 
 `src/components/analytics.tsx` writes two tags into every page the build emits: the queue stub Vercel documents for plain HTML, and a deferred `script` tag for `/_vercel/insights/script.js`. The deployment serves that path itself, so no third-party host is contacted, and the path exists only once Web Analytics is turned on for the project in the Vercel dashboard. A page view counts both on a fresh load and on a client-side move between pages. An ad blocker that blocks `/_vercel/insights/*` drops the visit: the per-deployment script path that works around this needs the `@vercel/analytics` package and a seed the package reads at build time, and we render the tags ourselves.
 
-Every call to action on the site is a `mailto:` link, so a click on one is the nearest thing to a conversion the site can observe. One delegated listener counts them all as a `mailto` event. Its `door` is the mail subject the link carries, which is how this site names the door a reader came through, and its `page` is the path they clicked from. Custom events need a Vercel Pro plan. Page views do not, so a project on the Hobby plan counts visits and drops events.
+While `bookingUrl` is empty, every call to action on the site is a `mailto:` link, so a click on one is the nearest thing to a conversion the site can observe. One delegated listener counts them all as a `mailto` event. Its `door` is the mail subject the link carries, which is how this site names the door a reader came through, and its `page` is the path they clicked from. Custom events need a Vercel Pro plan. Page views do not, so a project on the Hobby plan counts visits and drops events.
 
 ## Environment Variables
 

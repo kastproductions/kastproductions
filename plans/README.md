@@ -5,6 +5,30 @@ covered the sections and the copy of the two pages that build today, `/` and
 `/custom`. It did not cover the structured-data layer, the test suite, the build
 configuration, the dependencies or the stylesheet's architecture.
 
+> **Note, 2026-09-21.** The `feat/search-visibility` branch (fifteen tickets under
+> `.scratch/search-visibility/issues/`) resolved part of what is recorded below,
+> so the next audit can start from here rather than find it again:
+>
+> - **Publish `issueToPullRequest`** (direction): done, ticket 09. `products` holds
+>   it, `src/app/issue-to-pull-request/page.tsx` serves it, and the ready-made door
+>   and the self-run and managed plans are back on the home page and the terms.
+> - **No lead time and no prerequisites on a live page** (finding): resolved by the
+>   same ticket. The product page prints both next to its price, so the FAQ answer
+>   at `questions` is now true. `/custom` still says which accounts depend on the
+>   systems, but each of the five job pages (tickets 14 and 15) names the systems
+>   its agent touches. **Print the prerequisites on `/custom`** as a table is
+>   still open.
+> - **`/custom` is the only live door** (finding): retired with the second door.
+>   That `/custom` carries no proof of its own is still open.
+> - **The clients strip and the six references credit the founder's earlier work**
+>   (two findings): the references now print on `/about` only, under a line that
+>   says they are about his earlier work, and the about page heads the strip with
+>   his name (ticket 11). The home page strip still says "we".
+>
+> Still open as written: "Fit is the promise", one action with four names, one
+> control with three wordings, the two repeating FAQ answers, and the "first
+> week" section.
+
 Each executor: read the plan fully before starting, honour its STOP conditions,
 and update your row when done.
 

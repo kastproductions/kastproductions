@@ -9,7 +9,7 @@ The company's promise, covering everything KastProductions sells. It is not the 
 _Avoid_: factory model, AI factory
 
 **AI agent development**:
-The buyer's own name for the work we sell: building a standing agent and deploying it into a company's systems. It is software factory on demand named from outside, so it leads a title and the heading that answers the search, and the custom door carries it as custom AI agent development.
+The buyer's name for the work we sell: building a standing agent and deploying it into that buyer's own systems. It is software factory on demand named from outside; through the custom door it is custom AI agent development.
 _Avoid_: AI development services, agentic AI, AI automation agency
 
 **Standing agent**:
@@ -33,10 +33,7 @@ The list of ready-made products. It holds only a product that runs today. A job 
 _Avoid_: marketplace, store, library, gallery
 
 **Job**:
-A piece of work a company wants taken off its team, named the way that company
-would name it. A job names the systems it touches, and a job we take often has
-a page of its own, because it is also what a buyer types into a search engine.
-It is never one piece of work a standing agent does: that is a session.
+A piece of work a company wants taken off its team, named the way that company would name it and by the systems it touches. It is never one piece of work a standing agent does: that is a session.
 _Avoid_: use case, service, vertical
 
 **Brief**:
