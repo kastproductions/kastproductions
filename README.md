@@ -402,8 +402,8 @@ On another host, port both settings to that host's configuration, and expect the
 The Open Graph image fetches Archivo from Google Fonts during `bun run build`, so the build machine needs network access. It is drawn from the same tokens as the page, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
 
 The connected Netlify project also builds pull request previews. `netlify.toml` runs
-`bun run build`, publishes `out`, and carries the same retired-URL redirects and Open Graph
-content type as `vercel.json`. Netlify uses 301 for these permanent redirects.
+`bun run build` with Node.js 22, publishes `out`, and carries the same retired-URL redirects
+and Open Graph content type as `vercel.json`. Netlify uses 301 for these permanent redirects.
 Its UI-installed Next.js Runtime v3.9.2 detects the removed `next export` command but
 does not recognize `output: "export"`, so `NEXT_PLUGIN_FORCE_RUN = "false"` disables
 that serverless adapter. The static build still runs; no Netlify Functions are needed.
@@ -419,6 +419,6 @@ While `bookingUrl` is empty, every call to action on the site is a `mailto:` lin
 
 ## Environment Variables
 
-The site reads no build variable. `netlify.toml` sets `NEXT_PLUGIN_FORCE_RUN` for Netlify's
-build plugin only. Web Analytics is enabled in the Vercel dashboard and needs no key
-in this repository.
+The site reads no build variable. `netlify.toml` sets `NODE_VERSION` for the build and
+`NEXT_PLUGIN_FORCE_RUN` for Netlify's build plugin. Web Analytics is enabled in the
+Vercel dashboard and needs no key in this repository.

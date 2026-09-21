@@ -3,6 +3,7 @@
   publish = "out"
 
 [build.environment]
+  NODE_VERSION = "22"
   # Runtime v3 detects `next export`, not Next.js's `output: "export"`.
   # This site needs no serverless runtime.
   NEXT_PLUGIN_FORCE_RUN = "false"
