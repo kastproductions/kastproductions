@@ -134,11 +134,11 @@ export const siteNodes: GraphNode[] = [organization, person, website];
  * the same list the page renders, so an answer engine that lifts the answer
  * lifts what a reader reads.
  */
-function question(asked: Question): GraphNode {
+function question(item: Question): GraphNode {
   return {
     "@type": "Question",
-    name: asked.q,
-    acceptedAnswer: { "@type": "Answer", text: asked.a },
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
   };
 }
 
@@ -260,23 +260,23 @@ function breadcrumbs(page: PageRecord): GraphNode {
 }
 
 /*
- * The nodes one page adds to the site-wide ones, from that page's record: the
- * page itself, the thing it sells where it prints a price for it, and the
- * trail back to the home page.
+ * The nodes one page adds to the site-wide ones, from that page's record and
+ * from what the page prints: the page itself with the questions it answers, the
+ * thing it sells where it prints a price for it, and the trail back to the home
+ * page.
  *
- * A page that prints no price passes none and states no offer, and a page that
- * answers no question passes no question. The home page carries no trail,
+ * A page states no offer where it prints no price, and no question where it
+ * answers none, so it passes only what it has. The home page carries no trail,
  * because it is where every trail starts, and a crumb trail of one item claims
  * a depth this site does not have.
  */
 export function pageNodes(
   page: PageRecord,
-  prices?: Price[],
-  questions?: Question[],
+  printed: { prices?: Price[]; questions?: Question[] } = {},
 ): GraphNode[] {
   return [
-    webPage(page, questions),
-    ...(prices ? [service({ ...page, prices })] : []),
+    webPage(page, printed.questions),
+    ...(printed.prices ? [service({ ...page, prices: printed.prices })] : []),
     ...(page.path === homePage.path ? [] : [breadcrumbs(page)]),
   ];
 }

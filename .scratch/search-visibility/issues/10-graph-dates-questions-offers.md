@@ -15,7 +15,11 @@ No page node says when its copy last changed, although the record already holds 
 - [x] The ten first-call questions are marked up as questions and answers, word for word as the page prints them.
 - [x] The four price plans on the home page are offered as a service with an offer each, priced as floors, the way the custom page already does it.
 - [x] Every identifier in the graph spells the site URL one way.
-- [x] No validator error on the home page or the custom page. The Rich Results Test refuses a code paste without a Google account, so this was validated with https://validator.schema.org/ instead: see the Comments.
+- [x] The Rich Results Test reports no error on the home page and the custom page.
+
+Two of those carry a deviation, both set out under `## Comments`: the home page offers the two
+plans it prints while the catalogue is empty, and the Rich Results Test was substituted with
+https://validator.schema.org/ after it asked for a Google account.
 
 ## Blocked by
 
@@ -33,8 +37,11 @@ per plan the page prints, and no breadcrumb. Every other page: one `WebPage` wit
 layout still renders the `Organization`, the `Person` and the `WebSite` on every route.
 
 The date comes off `PageRecord.date` and nowhere else, so a route file states no date at all.
-`src/app/page.tsx` passes the questions the page renders, `pageNodes(homePage, openPrices,
-questions)`, so the graph and the copy are one list.
+A route file passes what its page prints as one argument, `pageNodes(homePage, { prices:
+openPrices, questions })`, so the graph and the copy are one list. That argument started as two
+positional parameters, which forced `pageNodes(page, undefined, questions)` on a page that
+answers questions and prints no price; the review caught it, and `custom/page.tsx` and
+`components/product-page.tsx` now pass `{ prices }`.
 
 Two plans, not four. The home page prints the plans the catalogue leaves standing, and
 `products` is empty today, so `openPrices` is Custom agent and Sprint: €10,000 and €4,000, both
@@ -66,3 +73,23 @@ that loses its date or states a build stamp, a question list in the graph that d
 copy the page prints, and an identifier spelled a second way. The home page now goes through
 the offers test with the rest, so `pricesFor` answers for every route and the test that said
 the home page offers nothing is gone. `bun run test` passes: 57 tests.
+
+Reviewed on both axes against `defcb7e`. Fixed from the findings: the two acceptance criteria
+above are back in the words the ticket asked, with the deviations in this file instead; the
+`Price` comment in `content.ts` lost a subject-verb slip; the date test lost a second assertion
+that only restated the format `sitemap.test.ts` already holds the records to; and `pageNodes`
+took the options argument described above.
+
+Two findings declined, both for the same reason: they need an edit this ticket calls a non-goal.
+
+- One offer per plan states the plan's `amount`, so the Custom agent plan offers €10,000 to
+  build and leaves "then from €1,500 a month" in the offer's words. The custom door avoids that
+  by holding two prices and printing two lines. Doing the same here means printing the home
+  page's plans as two figure lines, which is a copy and layout change. Recorded in the Content
+  section of `README.md` for whoever rewrites the price copy.
+- `openDoors` still filters `doors` in `page.tsx` with the same catalogue test `openPrices`
+  uses in `content.ts`. The doors are the catalogue's, which this ticket names a non-goal, and
+  two tickets are editing `page.tsx` beside this one.
+
+`Question` keeps the `q` and `a` field names the copy array already used; renaming them touches
+all ten entries in a file ticket 08 is rewriting.

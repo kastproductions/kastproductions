@@ -9,7 +9,7 @@ export const metadata = pageMetadata(customPage);
 /* The door's own nodes, beside the site-wide ones the layout renders: the
  * page itself, the service it sells with the prices it prints, and the way
  * here from the home page. */
-const graph = graphHtml(pageNodes(customPage, custom.prices));
+const graph = graphHtml(pageNodes(customPage, { prices: custom.prices }));
 
 export default function Custom() {
   return (

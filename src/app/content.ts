@@ -119,7 +119,7 @@ export const references = [
  * and what may be stated as fact is in the Claims section of README.md.
  * ------------------------------------------------------------------------- */
 
-/* A price as a reader sees it, and the only place the number lives. Each way to
+/* A price as a reader sees it, and the only place the number lives. The ways to
  * buy in `prices`, `custom.prices` and the `prices` field on a product all hold
  * these, and `src/app/structured-data.ts` reads the number and the currency
  * back out of the string so the page and the graph cannot drift apart. */

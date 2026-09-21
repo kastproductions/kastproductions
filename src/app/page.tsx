@@ -37,7 +37,7 @@ const openDoors = doors.filter((door) => !door.catalogue || products.length > 0)
 
 /* The home page's own nodes, beside the site-wide ones the layout renders: the
  * page with the questions it answers, and the plans it prints as offers. */
-const graph = graphHtml(pageNodes(homePage, openPrices, questions));
+const graph = graphHtml(pageNodes(homePage, { prices: openPrices, questions }));
 
 export default function Home() {
   return (

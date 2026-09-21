@@ -19,7 +19,7 @@ export function ProductPage({ product }: { product: Product }) {
    * adding a product to the catalogue gives its page a graph with no further
    * edit. */
   const page = productPage(product);
-  const graph = graphHtml(pageNodes(page, product.prices));
+  const graph = graphHtml(pageNodes(page, { prices: product.prices }));
 
   return (
     <>

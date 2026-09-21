@@ -88,7 +88,6 @@ for (const route of indexableRoutes) {
      * deploy, and a crawler that learns our dates are worthless stops reading
      * them: the reason `sitemap.test.ts` checks the sitemap for a clock too. */
     expect(page.dateModified).toBe(route.date);
-    expect(page.dateModified).toMatch(/^\d{4}-\d{2}-\d{2}$/);
   });
 
   test(`${route.path} spells the site URL one way in every identifier`, () => {

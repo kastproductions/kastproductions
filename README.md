@@ -160,7 +160,7 @@ Every word of both doors lives in `src/app/content.ts`, along with the facts the
 
 The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
 
-The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `openPrices`, which is the plans the catalogue leaves standing, so a plan the page keeps back is a plan the graph does not claim.
+The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `openPrices`, which is the plans the catalogue leaves standing, so a plan the page keeps back is a plan the graph does not claim. One offer states one number, which is the `amount`, so a way to buy whose `per` words carry a second figure ("to build, then from €1,500 a month") offers its build floor and leaves the monthly one in prose. `custom.prices` and a product's prices avoid that by holding the build and the monthly price as two prices, and a way to buy would have to print them as two lines to do the same.
 
 `bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, so a click on it still names the door the reader came through.
 
@@ -209,15 +209,16 @@ line in `llms.txt`, the page's own graph nodes, and the suite's coverage of all 
    }
    ```
 
-Nothing else moves. A page that prints a price passes it, `pageNodes(aboutPage, prices)`, and
-gets the service node with one offer per price; a page that prints none states no offer. A page
-that answers questions passes the list it prints as well, `pageNodes(aboutPage, prices,
-questions)`, and its node says it is an FAQ page and carries every question and answer; pass
-the same array the page renders, because a second list drifts from the copy on the first edit.
-The title on the record is the page's own and `pageMetadata` puts the brand after it, so keep
-the two together under about 60 characters. The date is the day the copy last changed, read
-with `git log -1 --date=short -- <file>`, so editing the words on a page means editing its date
-in the same commit; the route file states it nowhere, because the graph and the sitemap both
+Nothing else moves. The second argument is what the page prints, and a page passes only what it
+has. A page that prints a price passes `pageNodes(aboutPage, { prices })` and gets the service
+node with one offer per price; a page that prints none states no offer. A page that answers
+questions passes `pageNodes(aboutPage, { questions })`, or both keys together, and its node says
+it is an FAQ page and carries every question with its answer. Pass the same array the page
+renders, because a second list drifts from the copy on the first edit. The title on the record
+is the page's own and `pageMetadata` puts the brand after it, so keep the two together under
+about 60 characters. The date is the day the copy last changed, read with
+`git log -1 --date=short -- <file>`, so editing the words on a page means editing its date in
+the same commit; the route file states the date nowhere, because the graph and the sitemap both
 read it off the record.
 
 ## The catalogue
