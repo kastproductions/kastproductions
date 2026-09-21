@@ -18,7 +18,7 @@ import {
   products,
   slackPage,
 } from "../src/app/content";
-import { decodeEntities, indexableRoutes, readExport } from "./export";
+import { decodeEntities, fileFor, mainOf, readExport } from "./export";
 
 /* Every path a piece of markup links to, in document order. */
 function linkedPaths(markup: string): string[] {
@@ -33,21 +33,7 @@ function linkedPaths(markup: string): string[] {
  * page leading to another is one the page itself writes.
  */
 function bodyPaths(file: string): string[] {
-  const document = readExport(file);
-  const body = /<main\b[^>]*>([\s\S]*?)<\/main>/.exec(document);
-  if (!body) {
-    throw new Error(`${file} carries no main element, so it has no page body to read.`);
-  }
-  return linkedPaths(body[1]);
-}
-
-/* Where the export put a page the content module holds a record for. */
-function fileFor(path: string): string {
-  const route = indexableRoutes.find((candidate) => candidate.path === path);
-  if (!route) {
-    throw new Error(`${path} is not a route this site asks anyone to index.`);
-  }
-  return route.file;
+  return linkedPaths(mainOf(file));
 }
 
 for (const job of jobPages) {

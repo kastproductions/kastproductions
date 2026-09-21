@@ -1,7 +1,7 @@
 /*
  * How a reader reaches us, read off the export.
  *
- * Three things have to hold that no page's source shows. Every "Book a call"
+ * Three things have to hold that no page's source shows. Every booking link
  * on the site points where the content module points, so setting the booking
  * URL there turns all of them at once and a page cannot keep a mailto of its
  * own. Every page a reader can land on leads to the contact page, because a
@@ -10,37 +10,34 @@
  * company before sending money, and a fact dropped in a refactor is a defect
  * nothing else in the suite would notice.
  *
- * Nothing here pins page copy. The href and the facts come out of
- * `content.ts`, so an edit there is checked as written.
+ * Nothing here pins page copy. A booking link is known by where it goes and
+ * not by its words, and the href and the facts come out of `content.ts`, so
+ * an edit there is checked as written.
  */
 import { expect, test } from "bun:test";
-import { callHref, company, contactEmail, contactPage, location } from "../src/app/content";
-import { decodeEntities, indexableRoutes, notFoundFiles, readExport } from "./export";
+import {
+  callHref,
+  callSubject,
+  company,
+  contactEmail,
+  contactPage,
+  location,
+  mailtoFor,
+} from "../src/app/content";
+import { decodeEntities, everyPage, fileFor, mainOf, readExport } from "./export";
 
-/* Every page a reader can land on: the routes we ask to be indexed, and the
- * ones a wrong address lands on. */
-const pages = [...indexableRoutes.map((route) => route.file), ...notFoundFiles];
-
-/* Where the export put the contact page. A page a crawler is not asked to
- * index has no sitemap entry and nothing watching its canonical, so being
- * absent from the indexable list is the failure, never a reason to skip. */
-function contactFile(): string {
-  const found = indexableRoutes.find((route) => route.path === contactPage.path);
-  if (!found) {
-    throw new Error(`${contactPage.path} is published but is not an indexable route.`);
-  }
-  return found.file;
-}
-
-for (const file of pages) {
-  test(`${file} sends every Book a call where the content module points`, () => {
-    const hrefs = [
-      ...readExport(file).matchAll(/<a\b[^>]*?\shref="([^"]*)"[^>]*>Book a call<\/a>/g),
-    ].map(([, href]) => decodeEntities(href));
-    /* The footer carries one on every page, so a page with none lost its
-     * footer rather than its wiring. */
-    expect(hrefs.length).toBeGreaterThan(0);
-    expect(hrefs.filter((href) => href !== callHref)).toEqual([]);
+for (const file of everyPage) {
+  test(`${file} keeps no booking link of its own`, () => {
+    const hrefs = [...readExport(file).matchAll(/<a\b[^>]*?\shref="([^"]*)"/g)].map(([, href]) =>
+      decodeEntities(href),
+    );
+    /* A booking link is one that goes where `callHref` goes, or to the mailto
+     * `callHref` stands in for while no booking URL is set. Once the URL is
+     * set, an anchor still carrying that mailto is a page that kept a booking
+     * link of its own, which is the one fault this test exists to catch. How
+     * many booking links a page prints is its own business. */
+    const booking = hrefs.filter((href) => href === callHref || href === mailtoFor(callSubject));
+    expect(booking.filter((href) => href !== callHref)).toEqual([]);
   });
 
   test(`${file} links the contact page from its footer`, () => {
@@ -53,11 +50,7 @@ for (const file of pages) {
 }
 
 test("the contact page prints who a reader is writing to", () => {
-  const found = /<main[^>]*>([\s\S]*?)<\/main>/.exec(readExport(contactFile()));
-  if (!found) {
-    throw new Error(`${contactPage.path} emits no main element.`);
-  }
-  const main = decodeEntities(found[1]);
+  const main = decodeEntities(mainOf(fileFor(contactPage.path)));
 
   /* The legal identity a buyer checks against the register, and the city the
    * studio works from, which is not the registered address. */

@@ -5,9 +5,9 @@ export const dynamic = "force-static";
 
 /*
  * One entry per page a crawler should index: the pages we write by hand, then
- * one page per product in the catalogue. That is `indexablePages` in the
- * content module, so a page added to a record there is listed here with no
- * edit.
+ * the jobs that have a page of their own, then one page per product in the
+ * catalogue. That is `indexablePages` in the content module, so a page added
+ * to a record there is listed here with no edit.
  *
  * An entry states the date that page's copy last changed, which the page's
  * own record holds. The build clock never touches it: a date stamped at build

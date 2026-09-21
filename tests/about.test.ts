@@ -16,41 +16,11 @@
  */
 import { expect, test } from "bun:test";
 import { aboutPage, clients, founder, pageUrl, references } from "../src/app/content";
-import {
-  decodeEntities,
-  graphNodes,
-  indexableRoutes,
-  notFoundFiles,
-  readExport,
-  siteUrl,
-} from "./export";
+import { decodeEntities, everyPage, fileFor, graphNodes, mainOf, readExport, siteUrl } from "./export";
 
 const founderId = `${siteUrl}/#founder`;
 
-/* Where the export put the about page. Being absent from the indexable list
- * is the failure, never a reason to skip. */
-function aboutFile(): string {
-  const found = indexableRoutes.find((route) => route.path === aboutPage.path);
-  if (!found) {
-    throw new Error(`${aboutPage.path} is published but is not an indexable route.`);
-  }
-  return found.file;
-}
-
-/* The page's own copy, without the chrome. */
-function aboutMain(): string {
-  const found = /<main[^>]*>([\s\S]*?)<\/main>/.exec(readExport(aboutFile()));
-  if (!found) {
-    throw new Error(`${aboutPage.path} emits no main element.`);
-  }
-  return decodeEntities(found[1]);
-}
-
-/* Every page a reader can land on: the routes we ask to be indexed, and the
- * ones a wrong address lands on. */
-const pages = [...indexableRoutes.map((route) => route.file), ...notFoundFiles];
-
-for (const file of pages) {
+for (const file of everyPage) {
   test(`${file} links the about page from its header`, () => {
     const found = /<header[^>]*>([\s\S]*?)<\/header>/.exec(readExport(file));
     if (!found) {
@@ -71,7 +41,7 @@ test("the founder node points at the about page", () => {
 });
 
 test("the about page prints the founder, every client and every reference as written", () => {
-  const main = aboutMain();
+  const main = decodeEntities(mainOf(fileFor(aboutPage.path)));
   expect(main).toContain(founder);
 
   for (const client of clients) {

@@ -151,9 +151,10 @@ public/
   reviewers/           # Portraits for the references on the about page
   logo.png             # 512px raster logo, for the Organization node in the graph
 tests/
-  export.ts            # Shared helpers: the export root, a file reader, tag parsing,
-                       #   a JSON-LD reader, and the indexable routes, which follow
-                       #   the page records
+  export.ts            # Shared helpers: the export root, a file reader, the file a
+                       #   record's page was written to, the body of a page, tag parsing,
+                       #   a JSON-LD reader, the indexable routes, which follow the page
+                       #   records, and every page a reader can land on
   head.test.ts         # One h1, a self-referencing canonical, and the title and
                        #   description each record states, each unique and short
                        #   enough to print whole; the sitemap and robots file
@@ -172,7 +173,7 @@ tests/
   links.test.ts        # No page is an orphan: both job lists lead to a job page and it
                        #   leads on to the custom door; the ready-made door leads to
                        #   every product in the catalogue
-  contact.test.ts      # Every "Book a call" points where `callHref` points, every page
+  contact.test.ts      # Every booking link points where `callHref` points, every page
                        #   leads to the contact page, and the contact page prints the
                        #   company it names
   about.test.ts        # The founder node points at the about page, every header links
@@ -193,8 +194,11 @@ look correct while the built page unfurls blank, which means a test over the met
 would have passed through the whole fault. Only the build output shows it.
 
 The route list comes from `indexablePages`, the list of page records the sitemap walks, so a
-page or a product added to the content module is covered with no test edit. A route the suite
-cannot find in the export is a failure, never a skip.
+page or a product added to the content module is covered with no test edit. What a page may
+offer comes off the same lists: the two doors and a product page offer the prices they print,
+a job page the door's, and every other written page offers nothing, so a page added to
+`writtenPages` is held to stating no offer in that one edit. A route the suite cannot find in
+the export is a failure, never a skip.
 
 What the suite is not for: the shape of a metadata object, the text of a source file, or a
 snapshot of a page. Copy changes often, and a suite that pins copy gets deleted.
@@ -212,13 +216,13 @@ The printed price is also the only source for the machine-readable offer in the 
 
 `company` holds what the Lithuanian register of legal entities holds: the legal name, the legal form, the registration code, the VAT number, the registered address and the director. The imprint prints those six, and `contactEmail` under them so a reader who has finished checking can write; nothing else goes on that page. `tests/legal.test.ts` fails if one of the six stops appearing there. A reader is on that page to check us against the register, so a detail we cannot point at in the register does not go in. Note that `company.registeredAddress` is not `location`: the copy says Vilnius, where the studio works, and the register holds an address in the Lazdijai district.
 
-`legalPages` is privacy, terms and the imprint, in the order the footer prints them. It is one list because four things read it: `writtenPages`, the footer, the suite's footer check, and the graph suite's list of pages that state no offer, which `contactPage` joins there because it prints no price either. A fourth page of this kind is a record and a route file, as any page is.
+`legalPages` is privacy, terms and the imprint, in the order the footer prints them. It is one list because three things read it: `writtenPages`, the footer, and the suite's footer check. A fourth page of this kind is a record and a route file, as any page is.
 
-`explainerPages` is the explainers: one page each on one part of the mechanism, written for the reader who searches the part. The first is `/eval-suite`. An explainer sells nothing and prints no price, so the graph suite's list of pages that state no offer reads this list beside `legalPages`; it stays out of the header and the footer, and the home page hands a reader on to it from the section it explains. A second explainer is a record in this list and a route file.
+`evalSuitePage` is the first explainer: one page on one part of the mechanism, written for the reader who searches the part. An explainer sells nothing and prints no price, so it states no offer, as every written page that is not a door does; it stays out of the header and the footer, and the home page hands a reader on to it from the section it explains. A second explainer is a record in `writtenPages` and a route file.
 
 `openPrices` is `prices` with the catalogue rule applied: a way to buy that depends on a ready-made product stays off every page until one runs. The home page and the terms page both print that list, so neither can print a price the other does not.
 
-`bookingUrl` is the one constant the owner sets once a booking link exists. `callHref` reads it, and every "Book a call" on the site, the contact page's included, is `callHref`: set the URL and all of them point at it in the next build, with no other edit. While it is empty, `callHref` falls back to a `mailto:` with the subject "First call", so a click on it still names the door the reader came through; once it is set, that click leaves the site instead of opening a mail client, and the `mailto` event in `## Analytics` below stops counting it. `contactEmail` is the mailbox the whole site uses, the privacy page included: it is the route by which a visitor's own words reach us. The contact page prints it with `contactSubject`, so a mail written from there says so.
+`bookingUrl` is the one constant the owner sets once a booking link exists. `callHref` reads it, and every booking link on the site, the contact page's included, is `callHref`: set the URL and all of them point at it in the next build, with no other edit. While it is empty, `callHref` falls back to a `mailto:` with `callSubject`, "First call", so a click on it still names the door the reader came through; once it is set, that click leaves the site instead of opening a mail client, and the `mailto` event in `## Analytics` below stops counting it. `tests/contact.test.ts` knows a booking link by that destination and not by its words, so once the URL is set, a page still carrying the fallback mailto fails there. `contactEmail` is the mailbox the whole site uses, the privacy page included: it is the route by which a visitor's own words reach us. The contact page prints it with `contactSubject`, so a mail written from there says so.
 
 ## Adding a page
 
@@ -266,10 +270,12 @@ line in `llms.txt`, the page's own graph nodes, and the suite's coverage of all 
    }
    ```
 
-Nothing else moves. The second argument is what the page prints, and a page passes only what it
-has. A page that prints a price passes `pageNodes(aboutPage, { prices })` and gets the service
-node with one offer per price; a page that prints none states no offer. A page that answers
-questions passes `pageNodes(aboutPage, { questions })`, or both keys together, and its node says
+Nothing else moves: the graph suite reads what a written page may offer off `writtenPages`, so
+a page that prints no price is held to stating no offer with no test edit. The second argument
+is what the page prints, and a page passes only what it has. A page that prints a price passes
+`pageNodes(aboutPage, { prices })` and gets the service node with one offer per price; a page
+that prints none states no offer. A page that answers questions passes
+`pageNodes(aboutPage, { questions })`, or both keys together, and its node says
 it is an FAQ page and carries every question with its answer. Pass the same array the page
 renders, because a second list drifts from the copy on the first edit. The title on the record
 is the page's own and `pageMetadata` puts the brand after it, so keep the two together under

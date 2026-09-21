@@ -14,53 +14,10 @@
  * facts come out of `content.ts`, so an edit there is checked as written.
  */
 import { expect, test } from "bun:test";
-import {
-  company,
-  contactEmail,
-  imprintPage,
-  legalPages,
-  type PageRecord,
-  privacyPage,
-} from "../src/app/content";
-import {
-  decodeEntities,
-  indexableRoutes,
-  notFoundFiles,
-  readExport,
-  type Route,
-} from "./export";
+import { company, contactEmail, imprintPage, legalPages, privacyPage } from "../src/app/content";
+import { decodeEntities, everyPage, fileFor, mainOf, readExport } from "./export";
 
-/*
- * A legal page as a route. A page a crawler is not asked to index has no
- * sitemap entry and nothing watching its canonical, so being absent from the
- * indexable list is the failure, never a reason to skip.
- */
-function routeFor(page: PageRecord): Route {
-  const found = indexableRoutes.find((route) => route.path === page.path);
-  if (!found) {
-    throw new Error(`${page.path} is published but is not an indexable route.`);
-  }
-  return found;
-}
-
-/*
- * The page's own copy, without the chrome. The footer gives the mailbox and
- * the legal links on every page, so a reader of the whole document cannot tell
- * whether the page itself answers.
- */
-function mainOf(page: PageRecord): string {
-  const found = /<main[^>]*>([\s\S]*?)<\/main>/.exec(readExport(routeFor(page).file));
-  if (!found) {
-    throw new Error(`${page.path} emits no main element.`);
-  }
-  return decodeEntities(found[1]);
-}
-
-/* Every page a reader can land on: the routes we ask to be indexed, and the
- * ones a wrong address lands on. */
-const pages = [...indexableRoutes.map((route) => route.file), ...notFoundFiles];
-
-for (const file of pages) {
+for (const file of everyPage) {
   test(`${file} links every legal page from its footer`, () => {
     const found = /<footer[^>]*>([\s\S]*?)<\/footer>/.exec(readExport(file));
     if (!found) {
@@ -75,7 +32,7 @@ for (const file of pages) {
 }
 
 test("the imprint prints every register fact the content module holds", () => {
-  const imprint = mainOf(imprintPage);
+  const imprint = decodeEntities(mainOf(fileFor(imprintPage.path)));
 
   for (const [field, fact] of Object.entries(company)) {
     if (!imprint.includes(fact)) {
@@ -92,5 +49,5 @@ test("the privacy page gives the mailbox as the way to ask", () => {
    * reader no address to ask at is the one fault here that costs the company
    * something. The address comes from `content.ts`, so this tracks the
    * mailbox rather than the sentence around it. */
-  expect(mainOf(privacyPage)).toContain(`mailto:${contactEmail}`);
+  expect(decodeEntities(mainOf(fileFor(privacyPage.path)))).toContain(`mailto:${contactEmail}`);
 });

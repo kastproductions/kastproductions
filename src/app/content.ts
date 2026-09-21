@@ -19,7 +19,12 @@ export const briefHref = mailtoFor("New brief");
 /* Put a booking URL here and "Book a call" points at it instead of the mailbox.
  * Empty until one exists, because a dead link costs more than a mailto. */
 export const bookingUrl = "";
-export const callHref = bookingUrl || mailtoFor("First call");
+/* The mail subject the booking link falls back to while `bookingUrl` is
+ * empty, which is how the analytics event names that door. `callHref` is
+ * the one source every booking link reads, and `tests/contact.test.ts`
+ * holds every page to it. */
+export const callSubject = "First call";
+export const callHref = bookingUrl || mailtoFor(callSubject);
 export const founder = "Karolis Stulgys";
 /* Public profiles that link back to this site. Search engines use them to tie the founder to the brand. */
 export const founderProfiles = ["https://github.com/kstulgys", "https://x.com/imkarolis"];
@@ -724,6 +729,9 @@ export const custom = {
   jobsHeading: "Work we take",
   jobsLede:
     "Five jobs we take, to measure your own against. Each one names the systems it touches. None of them is a product you can buy today, and none carries a price until we have read your workflow.",
+  /* Written for the search the door's title answers, the way
+   * `pricingIntro.heading` is on the home page. */
+  pricingHeading: "What custom AI agent development costs",
   prices: [
     { amount: "From €10,000", per: "to build" },
     { amount: "From €1,500", per: "a month to operate" },
@@ -975,12 +983,12 @@ export const contactSubject = "Contact page";
 
 export const legalPages: PageRecord[] = [privacyPage, termsPage, imprintPage];
 
-/* The explainers: one page each on one part of the mechanism, written for the
- * reader who searches the part rather than the company. An explainer sells
- * nothing and prints no price, so the graph suite's list of pages that state
- * no offer reads this list beside `legalPages`. It stays out of the header
- * and the footer: the home page hands a reader on to it from the section it
- * explains. A second explainer is a record here and a route file.
+/* The first explainer: one page on one part of the mechanism, written for
+ * the reader who searches the part rather than the company. An explainer
+ * sells nothing and prints no price, so it states no offer, as any written
+ * page that is not a door does. It stays out of the header and the footer:
+ * the home page hands a reader on to it from the section it explains. A
+ * second explainer is a record here, in `writtenPages`, and a route file.
  *
  * The eval suite page targets "AI agent eval suite". A buyer who has been
  * offered an autonomous agent and asks how anyone knows it is right types
@@ -994,8 +1002,6 @@ export const evalSuitePage: PageRecord = {
     "What an AI agent eval suite is: the written definition of correct for one agent, run on every change, and what we do when correct cannot be written down.",
   date: "2026-09-21",
 };
-
-export const explainerPages: PageRecord[] = [evalSuitePage];
 
 /* The page that says who is behind the work: the founder, the companies he
  * has shipped for and the six references, which live on this page and not on
@@ -1029,13 +1035,15 @@ export const slackPage: PageRecord = {
  * how the analytics event names the door a reader came through. */
 export const slackSubject = "Agent in Slack";
 
-/* The pages we write by hand, as against the product pages the catalogue
- * makes. */
+/* The pages we write by hand, as against the job pages the jobs hold and the
+ * product pages the catalogue makes. The two doors are the written pages
+ * that print a price; every other page here states no offer, and the graph
+ * suite reads that off this list. */
 export const writtenPages: PageRecord[] = [
   homePage,
   customPage,
   ...legalPages,
-  ...explainerPages,
+  evalSuitePage,
   aboutPage,
   contactPage,
   slackPage,

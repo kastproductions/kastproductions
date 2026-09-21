@@ -11,17 +11,15 @@
  */
 import { expect, test } from "bun:test";
 import {
-  aboutPage,
-  contactPage,
   custom,
-  explainerPages,
+  customPage,
+  homePage,
   jobPages,
-  legalPages,
   openPrices,
   type Price,
   products,
   questions,
-  slackPage,
+  writtenPages,
 } from "../src/app/content";
 import {
   type GraphNode,
@@ -69,39 +67,29 @@ function claim(amount: string): { currency: string; value: number } {
 }
 
 /*
- * The offers a route owes, from the content module. A door and a product page
- * each sell one thing and state it, and the home page offers the plans it
- * prints. A legal page offers nothing: the terms print the same list of plans
- * to say what a build buys, which is a description and not an offer, and the
- * other two print no price at all. An explainer offers nothing either: it
- * explains one part of the mechanism and prints no price. The about page and
- * the contact page print none either, and neither does the Slack page: an
- * agent in Slack is custom work, and it sends the reader to the door for one.
+ * The offers a route owes, read off the lists the content module already
+ * keeps. The home page offers the plans it prints, and the custom door the
+ * door's own prices. A job page sells the custom door's work at the door's
+ * own prices: a job we shape an agent around carries no price of its own,
+ * and a second number for it would be one the door does not state. A product
+ * page offers the product's own. Every other page we write by hand offers
+ * nothing: a legal page, an explainer, the about page, the contact page and
+ * the Slack page print no price, or print the plans only to say what a build
+ * buys, which is a description and not an offer. So a new written page is
+ * covered here in the one edit that adds it to `writtenPages`.
  *
- * A route the suite cannot answer for is a failure, not a skip: that is a
- * page shipped with nobody watching what it claims.
+ * A route in none of those lists is a failure, not a skip: `indexablePages`
+ * grew a fourth kind of page, and that is a page shipped with nobody watching
+ * what it claims.
  */
-const statesNoOffer = [
-  ...legalPages,
-  ...explainerPages,
-  aboutPage,
-  contactPage,
-  slackPage,
-].map((page) => page.path);
-
 function pricesFor(path: string): Price[] | null {
-  if (statesNoOffer.includes(path)) return null;
-  if (path === "/") return openPrices;
-  if (path === "/custom") return custom.prices;
-  /* A job page sells the custom door's work at the door's own prices: a job
-   * we shape an agent around carries no price of its own, and a second number
-   * for it would be one the door does not state. */
+  if (path === homePage.path) return openPrices;
+  if (path === customPage.path) return custom.prices;
   if (jobPages.some((job) => job.path === path)) return custom.prices;
   const product = products.find((entry) => `/${entry.slug}` === path);
-  if (!product) {
-    throw new Error(`${path} is an indexable route the suite knows no price list for.`);
-  }
-  return product.prices;
+  if (product) return product.prices;
+  if (writtenPages.some((page) => page.path === path)) return null;
+  throw new Error(`${path} is an indexable route the suite knows no price list for.`);
 }
 
 for (const route of indexableRoutes) {

@@ -5,8 +5,8 @@
  * object and no route handler is imported here.
  *
  * The content module is the exception, and it is imported for one reason: the
- * route list has to follow the same two lists `src/app/sitemap.ts` follows, so
- * that a page or a product added there is covered with no test edit.
+ * route list has to follow `indexablePages`, the list `src/app/sitemap.ts`
+ * walks, so that a page or a product added there is covered with no test edit.
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -42,13 +42,28 @@ function route(page: PageRecord): Route {
 }
 
 /*
- * The routes a crawler should index: the pages we write by hand, then one page
- * per product in the catalogue. That is `indexablePages`, the list
- * `src/app/sitemap.ts` walks, so a written page or a product added to the
- * content module is checked here, canonical, title, description, unfurl image
- * and graph, with no edit.
+ * The routes a crawler should index: the pages we write by hand, then the
+ * jobs that have a page of their own, then one page per product in the
+ * catalogue. That is `indexablePages`, the list `src/app/sitemap.ts` walks,
+ * so a written page, a job page or a product added to the content module is
+ * checked here, canonical, title, description, unfurl image and graph, with
+ * no edit.
  */
 export const indexableRoutes: Route[] = indexablePages.map(route);
+
+/*
+ * Where the export put a page the content module holds a record for. A page
+ * a crawler is not asked to index has no sitemap entry and nothing watching
+ * its canonical, so being absent from the indexable list is the failure,
+ * never a reason to skip.
+ */
+export function fileFor(path: string): string {
+  const found = indexableRoutes.find((candidate) => candidate.path === path);
+  if (!found) {
+    throw new Error(`${path} is published but is not a route this site asks anyone to index.`);
+  }
+  return found.file;
+}
 
 /*
  * The two files one 404 is written to. `out/404.html` is what a static host
@@ -56,6 +71,10 @@ export const indexableRoutes: Route[] = indexablePages.map(route);
  * are byte-identical, and both are cheap to check.
  */
 export const notFoundFiles = ["404.html", "_not-found.html"];
+
+/* Every page a reader can land on: the routes we ask to be indexed, and the
+ * ones a wrong address lands on. */
+export const everyPage = [...indexableRoutes.map((route) => route.file), ...notFoundFiles];
 
 /*
  * Reads a file from the export. A missing file throws, because a route the
@@ -69,6 +88,21 @@ export function readExport(file: string): string {
       `${file} is missing from the export. Build first with \`bun run build\`; a route that emits no file is a failure.`,
     );
   }
+}
+
+/*
+ * A page's own copy, without the chrome: the markup inside `<main>`, as the
+ * build wrote it. The header and the footer link the doors, the mailbox and
+ * the legal pages on every page, so a reader of the whole document cannot
+ * tell whether the page itself answers. A page with no main element has no
+ * body to read, which is a failure and never an empty result.
+ */
+export function mainOf(file: string): string {
+  const found = /<main\b[^>]*>([\s\S]*?)<\/main>/.exec(readExport(file));
+  if (!found) {
+    throw new Error(`${file} emits no main element.`);
+  }
+  return found[1];
 }
 
 /* React escapes these five when it writes an attribute or a text node. */

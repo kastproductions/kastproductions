@@ -16,16 +16,10 @@
  * can answer a click.
  */
 import { expect, test } from "bun:test";
-import { indexableRoutes, notFoundFiles, readExport, scriptTags } from "./export";
+import { everyPage, readExport, scriptTags } from "./export";
 
 /* The path Vercel serves the tracker from once Web Analytics is on. */
 const tracker = "/_vercel/insights/script.js";
-
-/*
- * Every page a reader can land on: the routes we ask to be indexed, and the
- * ones a wrong address lands on. A visit counts wherever it arrives.
- */
-const pages = [...indexableRoutes.map((route) => route.file), ...notFoundFiles];
 
 /* What the tracker's queue holds: the call name, then its payload. */
 type Call = [string, { name: string; data?: Record<string, string> }];
@@ -84,7 +78,9 @@ function shippedPage(document: string) {
   };
 }
 
-for (const file of pages) {
+/* A visit counts wherever it arrives, so every page a reader can land on
+ * loads the tracker. */
+for (const file of everyPage) {
   test(`${file} loads the tracker from this deployment`, () => {
     const loaded = scriptTags(readExport(file))
       .map(({ attributes }) => attributes)
