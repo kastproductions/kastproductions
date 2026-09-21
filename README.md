@@ -181,6 +181,8 @@ tests/
                        #   it, and the page prints every client and every reference
                        #   as `content.ts` holds them
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
+netlify.toml           # Netlify preview builds: publish the export without the Next.js runtime;
+                       #   the same retired URLs and Open Graph content type as Vercel
 ```
 
 ## Tests
@@ -399,6 +401,14 @@ On another host, port both settings to that host's configuration, and expect the
 
 The Open Graph image fetches Archivo from Google Fonts during `bun run build`, so the build machine needs network access. It is drawn from the same tokens as the page, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
 
+The connected Netlify project also builds pull request previews. `netlify.toml` runs
+`bun run build`, publishes `out`, and carries the same retired-URL redirects and Open Graph
+content type as `vercel.json`. Netlify uses 301 for these permanent redirects.
+Its UI-installed Next.js Runtime v3.9.2 detects the removed `next export` command but
+does not recognize `output: "export"`, so `NEXT_PLUGIN_FORCE_RUN = "false"` disables
+that serverless adapter. The static build still runs; no Netlify Functions are needed.
+Vercel Web Analytics is unavailable on Netlify previews.
+
 ## Analytics
 
 The site counts visits with Vercel Web Analytics. The processor is Vercel Inc., the company that already serves the site: the tracker sets no cookie and stores nothing on the visitor's device, a visitor is identified by a hash of the incoming request, and that hash is discarded 24 hours later. That is why the site carries no consent banner. The data points it keeps per visit are listed in [Vercel's privacy documentation](https://vercel.com/docs/analytics/privacy-policy), which is the source a privacy policy should state, rather than this file.
@@ -409,4 +419,6 @@ While `bookingUrl` is empty, every call to action on the site is a `mailto:` lin
 
 ## Environment Variables
 
-None. The site reads no build variable, and analytics is turned on for the project in the Vercel dashboard rather than by a key in this repository.
+The site reads no build variable. `netlify.toml` sets `NEXT_PLUGIN_FORCE_RUN` for Netlify's
+build plugin only. Web Analytics is enabled in the Vercel dashboard and needs no key
+in this repository.
