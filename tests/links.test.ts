@@ -6,10 +6,18 @@
  * is where the ready-made door leads. A page the lists or the door stop
  * linking to is an orphan a crawler discovers last and a reader never at all,
  * and nothing in the export says so out loud, which is why this reads the
- * emitted HTML rather than the lists.
+ * emitted HTML rather than the lists. The Slack page is found the same way,
+ * from the channels section, and hands on to the same door.
  */
 import { expect, test } from "bun:test";
-import { customPage, evalSuitePage, jobPages, productPage, products } from "../src/app/content";
+import {
+  customPage,
+  evalSuitePage,
+  jobPages,
+  productPage,
+  products,
+  slackPage,
+} from "../src/app/content";
 import { decodeEntities, indexableRoutes, readExport } from "./export";
 
 /* Every path a piece of markup links to, in document order. */
@@ -77,4 +85,20 @@ test(`${evalSuitePage.path} is linked from the mechanism section of the home pag
     throw new Error("The home page carries no mechanism section.");
   }
   expect(linkedPaths(section[1])).toContain(evalSuitePage.path);
+});
+
+/* The pages that print the channels section, which is where the Slack page is
+ * linked from: the home page, the custom door and every job page. */
+const printChannels = ["/", customPage.path, ...jobPages.map((job) => job.path)];
+
+test(`${slackPage.path} is linked from every page that prints the channels section`, () => {
+  for (const path of printChannels) {
+    expect(bodyPaths(fileFor(path))).toContain(slackPage.path);
+  }
+});
+
+test(`${slackPage.path} leads on to the custom door`, () => {
+  /* An agent in Slack is custom work, and the page prints no price of its
+   * own, so it has to hand the reader to the door that names one. */
+  expect(bodyPaths(fileFor(slackPage.path))).toContain(customPage.path);
 });

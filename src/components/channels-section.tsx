@@ -1,4 +1,5 @@
-import { channels } from "@/app/content";
+import Link from "next/link";
+import { channels, slackPage } from "@/app/content";
 
 /*
  * Where a standing agent is reachable, and what wakes it. Both lists are what
@@ -7,7 +8,9 @@ import { channels } from "@/app/content";
  * than a bag of pills, because a compatibility list is what they are.
  *
  * Every page that describes an agent shows it, so it lives here rather than in
- * three page files.
+ * three page files. The Slack page is the one channel with a page of its own,
+ * and this section is where a reader finds it, so the link is here rather than
+ * on each of those pages.
  */
 export function ChannelsSection() {
   return (
@@ -26,6 +29,11 @@ export function ChannelsSection() {
                   <li key={channel}>{channel}</li>
                 ))}
               </ul>
+              <p className="note">
+                <Link className="pull" href={slackPage.path}>
+                  {channels.slackMore}
+                </Link>
+              </p>
               <p className="note">{channels.teamsNote}</p>
             </div>
             <div className="pair">

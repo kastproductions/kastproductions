@@ -295,6 +295,10 @@ export const channels = {
     "Resend",
     "Salesforce Marketing Cloud",
   ],
+  /* The words the section links the Slack page with. Slack is the channel most
+   * buyers name, so it is the one with a page: `slackPage`, at the foot of
+   * this file. */
+  slackMore: "How an agent works in Slack",
   teamsNote:
     "Teams needs one step that Slack does not: an Azure Bot registration and an app password stored in your project. We do that work and quote it as its own line.",
 };
@@ -1005,6 +1009,22 @@ export const aboutPage: PageRecord = {
   date: "2026-09-21",
 };
 
+/* The Slack page. A buyer names the channel as often as the job, and Slack is
+ * the channel most of them name, so it is the one channel with a page. It is
+ * a channel page and not a job page: it prints no steps, no systems and no
+ * price, and hands the reader to the custom door, so it is a record here and
+ * a route file, as any page we write by hand is. The title leads with the
+ * phrase a buyer types, and the page's own heading is in the site's voice.
+ * Every sentence it states about Slack is one Flue's Slack channel
+ * documentation states, which the page links. */
+export const slackPage: PageRecord = {
+  path: "/slack",
+  title: "AI agent for Slack",
+  description:
+    "An AI agent for Slack, built for one company: your team addresses it by name in a channel, and every outward action waits for a named person's approval.",
+  date: "2026-09-21",
+};
+
 /* The pages we write by hand, as against the product pages the catalogue
  * makes. */
 export const writtenPages: PageRecord[] = [
@@ -1014,6 +1034,7 @@ export const writtenPages: PageRecord[] = [
   ...explainerPages,
   aboutPage,
   contactPage,
+  slackPage,
 ];
 
 /* The record of a product's page. A product already states its slug, its

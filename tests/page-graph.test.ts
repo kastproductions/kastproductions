@@ -21,6 +21,7 @@ import {
   type Price,
   products,
   questions,
+  slackPage,
 } from "../src/app/content";
 import {
   type GraphNode,
@@ -74,14 +75,19 @@ function claim(amount: string): { currency: string; value: number } {
  * to say what a build buys, which is a description and not an offer, and the
  * other two print no price at all. An explainer offers nothing either: it
  * explains one part of the mechanism and prints no price. The about page and
- * the contact page print none either.
+ * the contact page print none either, and neither does the Slack page: an
+ * agent in Slack is custom work, and it sends the reader to the door for one.
  *
  * A route the suite cannot answer for is a failure, not a skip: that is a
  * page shipped with nobody watching what it claims.
  */
-const statesNoOffer = [...legalPages, ...explainerPages, aboutPage, contactPage].map(
-  (page) => page.path,
-);
+const statesNoOffer = [
+  ...legalPages,
+  ...explainerPages,
+  aboutPage,
+  contactPage,
+  slackPage,
+].map((page) => page.path);
 
 function pricesFor(path: string): Price[] | null {
   if (statesNoOffer.includes(path)) return null;
