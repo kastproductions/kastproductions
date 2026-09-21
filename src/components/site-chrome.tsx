@@ -5,6 +5,7 @@ import {
   briefHref,
   callHref,
   contactEmail,
+  contactPage,
   customPage,
   homePage,
   legalPages,
@@ -125,6 +126,11 @@ export function SiteFooter({ route }: Chrome) {
           </div>
           <p className="contact">
             Or write to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+            What follows, and who you are writing to, is on the{" "}
+            <Link href={contactPage.path} prefetch={route === contactPage.path ? false : undefined}>
+              contact page
+            </Link>
+            .
           </p>
         </div>
         <div className="foot">

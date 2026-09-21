@@ -96,6 +96,8 @@ src/app/
   imprint/page.tsx     # The register entry: legal name, legal form, code, VAT number,
                        #   registered address, director. It prints `company` and the
                        #   mailbox under it, and nothing else
+  contact/page.tsx     # The two ways to reach us, what follows a message, and who the
+                       #   reader is writing to, printed from `company` and `location`
   content.ts           # Brand constants, client list, founder references, every word
                        #   of both doors and of every job, and the page records: the
                        #   path, title, description and copy date of every page we
@@ -122,7 +124,8 @@ src/app/
   icon.svg             # Favicon, drawn as the brand mark
 src/components/
   site-chrome.tsx      # Header, footer and brand mark, shared by every page. The
-                       #   footer links privacy, terms and the imprint from every page
+                       #   footer links privacy, terms, the imprint and the contact page
+                       #   from every page
   channels-section.tsx # Where a standing agent is reachable, and what wakes it
   product-page.tsx     # One ready-made product, on its own page
   job-page.tsx         # One job we take, on its own page
@@ -157,6 +160,9 @@ tests/
   links.test.ts        # No page is an orphan: both job lists lead to a job page and it
                        #   leads on to the custom door; the ready-made door leads to
                        #   every product in the catalogue
+  contact.test.ts      # Every "Book a call" points where `callHref` points, every page
+                       #   leads to the contact page, and the contact page prints the
+                       #   company it names
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
@@ -195,7 +201,7 @@ The printed price is also the only source for the machine-readable offer in the 
 
 `openPrices` is `prices` with the catalogue rule applied: a way to buy that depends on a ready-made product stays off every page until one runs. The home page and the terms page both print that list, so neither can print a price the other does not.
 
-`bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, so a click on it still names the door the reader came through. `contactEmail` is the mailbox the whole site uses, the privacy page included: it is the route by which a visitor's own words reach us.
+`bookingUrl` is the one constant the owner sets once a booking link exists. `callHref` reads it, and every "Book a call" on the site, the contact page's included, is `callHref`: set the URL and all of them point at it in the next build, with no other edit. While it is empty, `callHref` falls back to a `mailto:` with the subject "First call", so a click on it still names the door the reader came through; once it is set, that click leaves the site instead of opening a mail client, and the `mailto` event in `## Analytics` below stops counting it. `contactEmail` is the mailbox the whole site uses, the privacy page included: it is the route by which a visitor's own words reach us. The contact page prints it with `contactSubject`, so a mail written from there says so.
 
 ## Adding a page
 
@@ -359,7 +365,7 @@ The site is a static export (`output: "export"` in `next.config.ts`). Deploy `./
 
 The site runs on Vercel, and `vercel.json` carries two settings the static export cannot express on its own:
 
-- Permanent redirects from the retired `/about`, `/work`, `/contact`, `/standing-agents` and `/og.png` URLs to the matching page or section.
+- Permanent redirects from the retired `/about`, `/work`, `/standing-agents` and `/og.png` URLs to the matching page or section. `/contact` is a page now, so nothing redirects it.
 - A `Content-Type: image/png` header for `/opengraph-image`. Next.js writes that file without an extension, and a static host would otherwise serve it as a download.
 
 `llms.txt` needs no such header. The build writes it under its own name, extension and all, so a static host reads the content type off the `.txt` the way it already does for `robots.txt`.

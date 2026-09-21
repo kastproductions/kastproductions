@@ -3,7 +3,6 @@
   "redirects": [
     { "source": "/about", "destination": "/#reviewer", "permanent": true },
     { "source": "/work", "destination": "/#doors", "permanent": true },
-    { "source": "/contact", "destination": "/#contact", "permanent": true },
     { "source": "/standing-agents", "destination": "/custom", "permanent": true },
     { "source": "/og.png", "destination": "/opengraph-image", "permanent": true }
   ],

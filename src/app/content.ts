@@ -952,11 +952,25 @@ export const imprintPage: PageRecord = {
   date: "2026-09-21",
 };
 
+/* The contact page: the two ways to reach us, what follows a message, and who
+ * the reader is writing to. It prints no price, so it states no offer. The
+ * footer links it from every page, next to the mailbox, because that is where
+ * a reader looks for a way in. Its own mailto carries `contactSubject`, so a
+ * click on it is counted under this door. */
+export const contactPage: PageRecord = {
+  path: "/contact",
+  title: "Contact",
+  description:
+    "Book a call or write to KastProductions. What you get within one working day of writing, and the registered company you are writing to.",
+  date: "2026-09-21",
+};
+export const contactSubject = "Contact page";
+
 export const legalPages: PageRecord[] = [privacyPage, termsPage, imprintPage];
 
 /* The pages we write by hand, as against the product pages the catalogue
  * makes. */
-export const writtenPages: PageRecord[] = [homePage, customPage, ...legalPages];
+export const writtenPages: PageRecord[] = [homePage, customPage, ...legalPages, contactPage];
 
 /* The record of a product's page. A product already states its slug, its
  * name, its promise and the day its copy changed, so its page record is read

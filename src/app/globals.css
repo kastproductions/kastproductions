@@ -861,20 +861,23 @@ a { color: inherit; }
 .foot__legal a:hover { color: var(--type); }
 
 /* ---------------------------------------------------------------------------
- * The legal pages
+ * The legal pages, and the contact page
  * ------------------------------------------------------------------------- */
 
 /* A link in the prose of a legal page leads somewhere else: the imprint, the
  * mailbox, a processor's own notice. It reads as the `.strip__list` link
  * does, hairline underline in the rules, signal only under the pointer,
  * because following one is the reader's action and nothing else on these
- * pages is. */
-.legal a {
+ * pages is. The contact page's prose reads the same way; its buttons are its
+ * actions and stay buttons. */
+.legal a,
+.contact-page a:not(.btn) {
   text-decoration: underline;
   text-decoration-color: var(--rule-2);
   text-underline-offset: .25em;
 }
-.legal a:hover { text-decoration-color: var(--signal); }
+.legal a:hover,
+.contact-page a:not(.btn):hover { text-decoration-color: var(--signal); }
 
 @media (max-width: 620px) {
   /* Brand and the one action on the first row, the sections on a rule below
