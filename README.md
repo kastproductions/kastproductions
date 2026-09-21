@@ -181,8 +181,6 @@ tests/
                        #   it, and the page prints every client and every reference
                        #   as `content.ts` holds them
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
-netlify.toml           # Netlify preview builds: publish the export without the Next.js runtime;
-                       #   the same retired URLs and Open Graph content type as Vercel
 ```
 
 ## Tests
@@ -388,7 +386,7 @@ Other people's names belong to them. Flue is Apache-2.0, and §6 of that licence
 
 ## Deployment
 
-The site is a static export (`output: "export"` in `next.config.ts`). Deploy `./out` to any static host.
+The site is a static export (`output: "export"` in `next.config.ts`). Vercel hosts production and pull request previews from `./out`.
 
 The site runs on Vercel, and `vercel.json` carries two settings the static export cannot express on its own:
 
@@ -397,17 +395,7 @@ The site runs on Vercel, and `vercel.json` carries two settings the static expor
 
 `llms.txt` needs no such header. The build writes it under its own name, extension and all, so a static host reads the content type off the `.txt` the way it already does for `robots.txt`.
 
-On another host, port both settings to that host's configuration, and expect the analytics tracker to stop working: `## Analytics` below explains why the path every page requests is one only a Vercel deployment serves.
-
 The Open Graph image fetches Archivo from Google Fonts during `bun run build`, so the build machine needs network access. It is drawn from the same tokens as the page, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
-
-The connected Netlify project also builds pull request previews. `netlify.toml` runs
-`bun run build` with Node.js 22, publishes `out`, and carries the same retired-URL redirects
-and Open Graph content type as `vercel.json`. Netlify uses 301 for these permanent redirects.
-Its UI-installed Next.js Runtime v3.9.2 detects the removed `next export` command but
-does not recognize `output: "export"`, so `NEXT_PLUGIN_FORCE_RUN = "false"` disables
-that serverless adapter. The static build still runs; no Netlify Functions are needed.
-Vercel Web Analytics is unavailable on Netlify previews.
 
 ## Analytics
 
@@ -419,6 +407,4 @@ While `bookingUrl` is empty, every call to action on the site is a `mailto:` lin
 
 ## Environment Variables
 
-The site reads no build variable. `netlify.toml` sets `NODE_VERSION` for the build and
-`NEXT_PLUGIN_FORCE_RUN` for Netlify's build plugin. Web Analytics is enabled in the
-Vercel dashboard and needs no key in this repository.
+None. The site reads no build variable, and analytics is turned on for the project in the Vercel dashboard rather than by a key in this repository.
