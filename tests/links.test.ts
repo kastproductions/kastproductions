@@ -8,7 +8,7 @@
  * reads the emitted HTML rather than the lists.
  */
 import { expect, test } from "bun:test";
-import { customPage, jobPages } from "../src/app/content";
+import { customPage, jobPages, products } from "../src/app/content";
 import { decodeEntities, indexableRoutes, readExport } from "./export";
 
 /*
@@ -49,5 +49,14 @@ for (const job of jobPages) {
     /* The job is not in the catalogue, so the page a reader lands on has to
      * hand them to the door that sells the work. */
     expect(bodyPaths(fileFor(job.path))).toContain(customPage.path);
+  });
+}
+
+for (const product of products) {
+  test(`/${product.slug} is linked from the ready-made door`, () => {
+    /* The door on the home page is the one body link to a product page, and
+     * it is written by hand while the route follows the slug, so a renamed
+     * slug would leave the door pointing at a page the build no longer emits. */
+    expect(bodyPaths(fileFor("/"))).toContain(`/${product.slug}`);
   });
 }

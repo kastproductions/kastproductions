@@ -300,9 +300,11 @@ export const channels = {
  * The catalogue
  *
  * `products` holds only a product that runs today: the rule is in CONTEXT.md
- * under Catalogue. `issueToPullRequest` is written and waiting. Putting it in
- * the array turns on the ready-made door, its page, its prices, its sitemap
- * entry and the example run table, all at once.
+ * under Catalogue. A product in the array has its page, its nav entry, its
+ * sitemap entry and its example run table, and it holds the ready-made door
+ * and the two ready-made plans on the home page open. The route file a product
+ * page needs is the one edit the array cannot make: see the Catalogue section
+ * of README.md.
  * ------------------------------------------------------------------------- */
 
 export type Product = {
@@ -370,7 +372,7 @@ export const issueToPullRequest: Product = {
   date: "2026-09-13",
 };
 
-export const products: Product[] = [];
+export const products: Product[] = [issueToPullRequest];
 
 /* Placeholder runs on the product page. Labelled as an example wherever a
  * visitor could read them as fact: see the Claims section of README.md. */

@@ -82,6 +82,10 @@ src/app/
                        # One job on its own page. The route hands the record to the
                        #   component; the record and every word about that job live on
                        #   the job in content.ts
+  issue-to-pull-request/page.tsx
+                       # One ready-made product on its own page. The route hands the
+                       #   product to the component; every word of the product and its
+                       #   copy date live on the product in content.ts
   privacy/page.tsx     # What the site collects, who processes it, how long it is kept
   terms/page.tsx       # What a build buys and what the monthly work covers, from the
                        #   prices and the lead time the content module holds
@@ -146,8 +150,9 @@ tests/
   analytics.test.ts    # Every page loads the tracker and counts a mailto click
   legal.test.ts        # Every page links privacy, terms and the imprint, and the
                        #   imprint prints every register fact `company` holds
-  links.test.ts        # No job page is an orphan: both job lists lead to it, and it
-                       #   leads on to the custom door
+  links.test.ts        # No page is an orphan: both job lists lead to a job page and it
+                       #   leads on to the custom door; the ready-made door leads to
+                       #   every product in the catalogue
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
@@ -304,9 +309,9 @@ the door.
 
 ## The catalogue
 
-`products` holds only a product that runs today. A job we have not built yet belongs on the custom page. While the array is empty the home page shows one door, the ready-made prices stay off the price list and out of the offers in its graph, and no product appears in the nav or the sitemap.
+`products` holds only a product that runs today, and today it holds issue to pull request. A job we have not built yet belongs to the custom door, on the custom page or on a job page of its own. Were the array empty, the home page would show one door, the self-run and managed plans would stay off the home page's price list, out of the offers in its graph and off the terms, and no product would appear in the nav, the sitemap or `llms.txt`. `openPrices` and the home page's `openDoors` both read the array's length, so the plans and the door switch together.
 
-Turning a product on takes two edits, because `output: "export"` refuses a dynamic route segment that generates no paths:
+A product takes two edits, because `output: "export"` refuses a dynamic route segment that generates no paths. Issue to pull request is the worked example:
 
 1. Add it to `products` in `src/app/content.ts`:
 
@@ -328,7 +333,7 @@ Turning a product on takes two edits, because `output: "export"` refuses a dynam
    }
    ```
 
-Nothing else moves. The door, the nav entry, the sitemap entry and its date, the two ready-made prices, the product page and its graph nodes all follow from the array. A product page keeps no record of its own: `productPage` reads one off the product, so the path, the title, the description and the date arrive with it.
+Nothing else moves. The door, the nav entry, the sitemap entry and its date, the `llms.txt` line, the two ready-made plans, the product page, its canonical, its unfurl and its graph nodes with the service and one offer per price all follow from the array. A product page keeps no record of its own: `productPage` reads one off the product, so the path, the title, the description and the date arrive with it, and `indexablePages` carries it to the sitemap and the suite. The `date` on the product is the day its words last changed, and it moves with them the way a written page's date does. `tests/links.test.ts` holds the ready-made door to leading to every product in the array, because the door's `href` is written by hand and the route follows the slug.
 
 ## Claims
 
