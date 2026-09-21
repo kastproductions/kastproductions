@@ -191,6 +191,9 @@ a { color: inherit; }
     gap: .3rem var(--split);
   }
   .row__label { grid-row: span 2; }
+  /* A row that leads somewhere keeps its link in the reading column, under
+     the body it belongs to, rather than under the label. */
+  .row > .pull { grid-column: 2; }
   .row--stack .row__label { grid-row: auto; }
 }
 
@@ -850,6 +853,31 @@ a { color: inherit; }
   font-stretch: var(--narrow);
 }
 .foot .brand { margin-right: 0; font-size: .97rem; color: var(--type); }
+
+/* The three pages a buyer checks before a first call. Quiet by design: they
+ * are not the action on any page, so they never take the signal. */
+.foot__legal { display: flex; flex-wrap: wrap; gap: .2rem 1.35rem; }
+.foot__legal a { text-decoration: none; }
+.foot__legal a:hover { color: var(--type); }
+
+/* ---------------------------------------------------------------------------
+ * The legal pages, and the contact page
+ * ------------------------------------------------------------------------- */
+
+/* A link in the prose of a legal page leads somewhere else: the imprint, the
+ * mailbox, a processor's own notice. It reads as the `.strip__list` link
+ * does, hairline underline in the rules, signal only under the pointer,
+ * because following one is the reader's action and nothing else on these
+ * pages is. The contact page's prose reads the same way; its buttons are its
+ * actions and stay buttons. */
+.legal a,
+.contact-page a:not(.btn) {
+  text-decoration: underline;
+  text-decoration-color: var(--rule-2);
+  text-underline-offset: .25em;
+}
+.legal a:hover,
+.contact-page a:not(.btn):hover { text-decoration-color: var(--signal); }
 
 @media (max-width: 620px) {
   /* Brand and the one action on the first row, the sections on a rule below

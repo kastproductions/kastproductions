@@ -10,15 +10,21 @@ export function pageUrl(path: string): string {
 }
 export const contactEmail = "hello@kastproductions.com";
 /* Every call to action is a mailto, because the site is a static export with no
- * runtime. The subject says which door the reader came through, which is both
- * our only analytics on this page and a machine-readable first line for @brief. */
+ * runtime. The subject says which door the reader came through, so it is both
+ * the door a click on the link is counted under and a machine-readable first
+ * line for @brief. */
 export const mailtoFor = (subject: string) =>
   `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`;
 export const briefHref = mailtoFor("New brief");
 /* Put a booking URL here and "Book a call" points at it instead of the mailbox.
  * Empty until one exists, because a dead link costs more than a mailto. */
 export const bookingUrl = "";
-export const callHref = bookingUrl || mailtoFor("First call");
+/* The mail subject the booking link falls back to while `bookingUrl` is
+ * empty, which is how the analytics event names that door. `callHref` is
+ * the one source every booking link reads, and `tests/contact.test.ts`
+ * holds every page to it. */
+export const callSubject = "First call";
+export const callHref = bookingUrl || mailtoFor(callSubject);
 export const founder = "Karolis Stulgys";
 /* Public profiles that link back to this site. Search engines use them to tie the founder to the brand. */
 export const founderProfiles = ["https://github.com/kstulgys", "https://x.com/imkarolis"];
@@ -28,11 +34,34 @@ export const companyProfiles = ["https://github.com/kastproductions"];
 export const founderHandle = "@imkarolis";
 export const location = { city: "Vilnius", country: "Lithuania", countryCode: "LT" };
 
-/* Search snippet copy. Title stays close to 60 characters, description under 160. */
-export const title = `${brand}: software factory on demand`;
-export const description = `Software factory on demand in ${location.city}, ${location.country}. We build agents that work the way your company works, deploy them into your own accounts and keep them right.`;
+/* The company as the Lithuanian register of legal entities holds it. The
+ * imprint prints these six lines, and `contactEmail` under them so a reader
+ * who has checked us can write; nothing else goes on that page. The privacy
+ * page names the same company as the one a visitor's data reaches. Read from
+ * the register entry at https://rekvizitai.vz.lt/en/company/kast_productions/,
+ * and edited only when the register changes.
+ *
+ * The registered address is not `location`. `location` is Vilnius, where the
+ * studio works and where the copy says we are; the register holds the address
+ * below. An imprint states the registered address, because that is the one a
+ * reader is checking against the register. */
+export const company = {
+  legalName: "Kast productions, MB",
+  /* What the two letters after the name mean, for a reader outside Lithuania. */
+  legalForm: "mažoji bendrija, a Lithuanian small partnership",
+  registrationCode: "305830693",
+  vatNumber: "LT100020218411",
+  registeredAddress: "Mokyklos g. 13, Verstaminų k., Lazdijų r., Lithuania",
+  /* The one person the register names, who is also the founder above. */
+  director: founder,
+};
 
-/* What a crawler and a social scraper are told about a page lives in
+/* The search snippet copy of every page lives on that page's record, at the
+ * foot of this file. The home page's title and description are the site's as
+ * well, so the manifest, the unfurl image and the company's own nodes in the
+ * graph read them from `homePage` rather than holding a second copy.
+ *
+ * What a crawler and a social scraper are told about a page lives in
  * `src/app/head-directives.ts`. Those are instructions to a machine, not words
  * a reader sees, and this module is the copy. */
 
@@ -117,10 +146,10 @@ export const references = [
  * and what may be stated as fact is in the Claims section of README.md.
  * ------------------------------------------------------------------------- */
 
-/* A price as a reader sees it, and the only place the number lives.
- * `custom.prices` and the `prices` field on a product both hold these, and
- * `src/app/structured-data.ts` reads the number and the currency back out of
- * the string so the page and the graph cannot drift apart. */
+/* A price as a reader sees it, and the only place the number lives. The ways to
+ * buy in `prices`, `custom.prices` and the `prices` field on a product all hold
+ * these, and `src/app/structured-data.ts` reads the number and the currency
+ * back out of the string so the page and the graph cannot drift apart. */
 export type Price = { amount: string; per: string };
 
 export const hero = {
@@ -201,9 +230,12 @@ export const fitDimensions = [
   },
 ];
 
+/* `more` is the words the section links the eval suite explainer with, as a
+ * door's `more` links its page. The path is on `evalSuitePage`, below. */
 export const mechanismIntro = {
   heading: "How we keep it right",
   lede: "Fit is the promise. These five are how we prove it, every month, for as long as we operate your agent.",
+  more: "What an eval suite is",
 };
 
 export const mechanism = [
@@ -268,6 +300,10 @@ export const channels = {
     "Resend",
     "Salesforce Marketing Cloud",
   ],
+  /* The words the section links the Slack page with. Slack is the channel most
+   * buyers name, so it is the one with a page: `slackPage`, at the foot of
+   * this file. */
+  slackMore: "How an agent works in Slack",
   teamsNote:
     "Teams needs one step that Slack does not: an Azure Bot registration and an app password stored in your project. We do that work and quote it as its own line.",
 };
@@ -276,9 +312,11 @@ export const channels = {
  * The catalogue
  *
  * `products` holds only a product that runs today: the rule is in CONTEXT.md
- * under Catalogue. `issueToPullRequest` is written and waiting. Putting it in
- * the array turns on the ready-made door, its page, its prices, its sitemap
- * entry and the example run table, all at once.
+ * under Catalogue. A product in the array has its page, its nav entry, its
+ * sitemap entry and its example run table, and it holds the ready-made door
+ * and the two ready-made plans on the home page open. The route file a product
+ * page needs is the one edit the array cannot make: see the Catalogue section
+ * of README.md.
  * ------------------------------------------------------------------------- */
 
 export type Product = {
@@ -346,7 +384,7 @@ export const issueToPullRequest: Product = {
   date: "2026-09-13",
 };
 
-export const products: Product[] = [];
+export const products: Product[] = [issueToPullRequest];
 
 /* Placeholder runs on the product page. Labelled as an example wherever a
  * visitor could read them as fact: see the Claims section of README.md. */
@@ -385,35 +423,301 @@ export const jobsIntro = {
 /* The five jobs. The home page indexes them by title and systems; the custom
  * door describes each one. None of them is in the catalogue: each is work we
  * shape an agent around once we have read the client's workflow. */
-export type Job = { title: string; systems: string; body: string };
+export type Job = {
+  title: string;
+  systems: string;
+  body: string;
+  /* The page that expands this job, where it has one. A job with no page is a
+   * row on the two lists and nothing more; a job with one is linked from both
+   * of them, and the link follows the record rather than being written out. */
+  page?: JobPage;
+};
+
+/* One job on its own page: the page's record and the words that page prints
+ * about the job. The record fields are the ones `PageRecord` names, so a job
+ * page needs no second record written for it, and the canonical URL, the
+ * sitemap entry with its date, the line in `llms.txt` and the page's graph
+ * nodes all follow from this object the way they follow from a written page's
+ * record. A job page is therefore one of these and one route file, which the
+ * A job page section of README.md sets out. The prose every job page shares,
+ * the section headings among it, is in `src/components/job-page.tsx`, which
+ * draws them all.
+ *
+ * The heading and the record's title are two different sentences on purpose:
+ * a title is written for a search result, and a heading is written for the
+ * reader who clicked it. */
+export type JobPage = PageRecord & {
+  /* The h1, in the site's own voice. */
+  heading: string;
+  lede: string;
+  /* What the agent may do on its own. One of the three authorities in
+   * CONTEXT.md, and never a fourth. */
+  authority: string;
+  /* Where the agent stops and waits for a named person. */
+  gate: string;
+  /* What the agent does, in the order it does it. */
+  steps: { title: string; body: string }[];
+  /* The systems the job names, and what the agent does in each. */
+  systems: { name: string; role: string }[];
+  /* The mail subject every call to action on the page carries, which is how
+   * the analytics event names the door a reader came through. */
+  subject: string;
+  /* The words the two job lists link to this page with. Its own, so a reader
+   * meeting five of these rows hears five different links. */
+  more: string;
+};
+
+export const contentPublishing: JobPage = {
+  path: "/content-publishing",
+  title: "Content publishing agent",
+  description:
+    "Content publishing, run by a standing agent: a brief in Notion comes back as a drafted and edited page in your CMS, and publishing waits for a name.",
+  date: "2026-09-21",
+  heading: "An agent that turns a brief into a page ready to publish.",
+  lede: "A brief in Notion comes back as a drafted and edited page, waiting unpublished in your CMS. Nothing goes live until a named person publishes it.",
+  authority:
+    "It acts behind an approval gate. Reading the brief, drafting the page and editing the draft against the brief needs nobody, and the finished draft then stops.",
+  gate: "The gate sits before a page is published. A published page reaches everyone outside your company, so a named person reads it and publishes it.",
+  steps: [
+    {
+      title: "Reads the brief",
+      body: "A new brief in Notion wakes the agent. It reads what the page is for, who it is for and what it must say, in the words the brief uses.",
+    },
+    {
+      title: "Drafts the page",
+      body: "The draft goes into your CMS as an unpublished page, laid out the way your team already lays out a page there. Nothing is live yet.",
+    },
+    {
+      title: "Edits the draft against the brief",
+      body: "A second pass reads the whole draft as a reader would, checks it against every line of the brief, and edits it. The edited draft waits where the first one did.",
+    },
+    {
+      title: "Reports the page as ready",
+      body: "One message in the channel your team already works in: which brief, where the draft waits, and what the edit pass changed. Publishing waits for a name.",
+    },
+  ],
+  systems: [
+    {
+      name: "Notion",
+      role: "Where the brief lives, and what wakes the agent: a new brief starts it, and the brief is what the draft is checked against.",
+    },
+    {
+      name: "Your CMS",
+      role: "Where the draft waits, unpublished, in the place your team already writes. The agent writes the draft and stops there.",
+    },
+  ],
+  subject: "Content publishing",
+  more: "How a brief becomes a page",
+};
+
+export const socialScheduling: JobPage = {
+  path: "/social-scheduling",
+  title: "Social scheduling agent",
+  description:
+    "Social scheduling, run by a standing agent: your team asks in Slack, the agent drafts in Typefully, and a post joins the queue once a named person approves it.",
+  date: "2026-09-21",
+  heading: "An agent that drafts and schedules your posts from a channel.",
+  lede: "Your team asks for a post in the channel they already work in. The agent drafts it in Typefully, and it joins the queue once a named person approves it. Every batch comes back as one summary of what went out.",
+  authority:
+    "It acts behind an approval gate. Reading the ask, drafting the post and reporting the batch needs nobody, and every draft then stops.",
+  gate: "The gate sits before a post joins the queue. A queued post goes out under your name at its time, so a named person reads the draft and approves it.",
+  steps: [
+    {
+      title: "Takes the ask in the channel",
+      body: "A person addresses the agent by name in Slack and says what the post is about and for which account. Anything the ask leaves out, the agent asks back in the same channel.",
+    },
+    {
+      title: "Drafts in Typefully",
+      body: "The draft goes into Typefully as a draft, in the length and shape that account posts in. Nothing is scheduled yet.",
+    },
+    {
+      title: "Queues once a name approves",
+      body: "The draft comes back to the channel for a name. Approved, the agent puts it in the Typefully queue; sent back with changes, it drafts again.",
+    },
+    {
+      title: "Reports the batch",
+      body: "When a batch has gone out, one message in the channel says which posts went out and when, and what is still waiting for a name.",
+    },
+  ],
+  systems: [
+    {
+      name: "Slack",
+      role: "Where your team asks, and where every draft comes back for a name. Slack delivers the button press that moves a draft into the queue.",
+    },
+    {
+      name: "Typefully",
+      role: "Where the draft is written and, once approved, queued. The agent writes into the drafts and the queue, and nothing else there.",
+    },
+  ],
+  subject: "Social scheduling",
+  more: "How a post gets drafted and queued",
+};
+
+export const supportTicketTriage: JobPage = {
+  path: "/support-ticket-triage",
+  title: "Support ticket triage agent",
+  description:
+    "Support ticket triage, run by a standing agent: every new ticket read and grouped, a reply drafted where the answer is known, a GitHub issue where it is a bug.",
+  date: "2026-09-21",
+  heading: "An agent that reads every support ticket before your team does.",
+  lede: "Every new ticket in Zendesk or Intercom is read and grouped as it arrives. Where the answer is already written down, the reply is drafted in the ticket and waits for a name. Where the ticket is a bug, it is filed as a GitHub issue.",
+  authority:
+    "It acts behind an approval gate. Reading the ticket, grouping it, drafting the reply and filing the issue needs nobody, and every reply then stops.",
+  gate: "The gate sits before a reply reaches your customer. A drafted reply waits in the ticket, and a named person on your support team reads it and sends it. An issue in your own repository crosses no gate.",
+  steps: [
+    {
+      title: "Reads the ticket as it arrives",
+      body: "The new ticket wakes the agent. It reads what the customer wrote and what your team has already told that customer.",
+    },
+    {
+      title: "Groups it with the tickets like it",
+      body: "A question your help centre answers, a bug three people have hit this morning and a request nobody has seen before are three different queues. The agent puts the ticket in the one it belongs to.",
+    },
+    {
+      title: "Drafts the reply where the answer is known",
+      body: "Where the answer is already written down, in your help centre or in a reply your team sent before, the agent writes it into the ticket as a draft, in your team's own wording. The draft waits for a name.",
+    },
+    {
+      title: "Files the bug",
+      body: "Where the ticket is a bug, the agent opens an issue in your GitHub repository: what the customer did, what happened, and which tickets report it. A bug three people report is one issue with three tickets on it.",
+    },
+  ],
+  systems: [
+    {
+      name: "Zendesk or Intercom",
+      role: "The new ticket wakes the agent, and this is where it reads, groups and drafts. Every draft waits here, unsent, for a named person.",
+    },
+    {
+      name: "GitHub",
+      role: "Where a bug becomes an issue in your own repository, linked back to every ticket that reports it. Your engineers read it where they already work.",
+    },
+  ],
+  subject: "Support ticket triage",
+  more: "How the triage works",
+};
+
+export const failedPaymentRecovery: JobPage = {
+  path: "/failed-payment-recovery",
+  title: "Failed payment recovery agent",
+  /* The description leads with the phrase a buyer types, because a result is
+   * read left to right. The title carries the same words. */
+  description:
+    "Failed payment recovery, run by a standing agent: every charge Stripe failed comes back as a drafted message that waits for your approval.",
+  date: "2026-09-21",
+  heading: "An agent that works last night's failed payments.",
+  lede: "Every charge Stripe failed overnight comes back as one summary, with a drafted message per customer waiting in your outbox. Nothing reaches a customer until a named person approves it.",
+  authority:
+    "It acts behind an approval gate. Reading Stripe, sorting the failures and writing the drafts needs nobody, and every draft then stops.",
+  gate: "The gate sits before a message leaves your company. A follow-up reaches your customer, so a named person reads it and sends it.",
+  steps: [
+    {
+      title: "Reads the night's failures",
+      body: "The failed charge itself wakes the agent. It reads the amount, the reason the card gave, the invoice behind it and how long that customer has been paying you.",
+    },
+    {
+      title: "Sorts them by what went wrong",
+      body: "An expired card, a bank that declined once and a subscription on its fourth retry are three different messages. The agent groups the night before it writes anything.",
+    },
+    {
+      title: "Drafts one message per customer",
+      body: "Each draft names the invoice, the amount and the next retry, in the wording your team already uses. They wait in your outbox, unsent.",
+    },
+    {
+      title: "Reports the night in one place",
+      body: "One summary in the channel your finance team already works in: how many charges failed, how much is waiting, and which drafts need a name.",
+    },
+  ],
+  systems: [
+    {
+      name: "Stripe",
+      role: "The event that wakes the agent, and where it reads the failed charge, the decline reason, the invoice and the retry schedule.",
+    },
+    {
+      name: "Your outbox",
+      role: "Where every draft waits, under the address your customers already hear from. The agent writes the draft and stops there.",
+    },
+  ],
+  subject: "Failed payment recovery",
+  more: "How the follow-up works",
+};
+
+export const shopifyOperations: JobPage = {
+  path: "/shopify-operations",
+  title: "Shopify operations agent",
+  description:
+    "Shopify operations, run by a standing agent: stock, pricing and order exceptions watched on a schedule, and the ones that need a decision brought to a person.",
+  date: "2026-09-21",
+  heading: "An agent that watches your store, so a person sees only the exceptions.",
+  lede: "On the schedule you set, the agent reads your Shopify store for what is out of line: stock running low, a price outside the range you set, an order that stalled. It reports what it found in one place and brings the ones that need a decision to a named person.",
+  authority:
+    "It reads and reports. Nothing in your store changes because the agent looked: it reads Shopify, sorts what it found and writes one summary. Every change is a person's to make.",
+  gate: "The gate sits in front of every change to the store, and this agent stops there every time. An exception that needs a decision comes to a named person with the product, the order or the price it concerns and the choices open, and that person makes the change in Shopify.",
+  steps: [
+    {
+      title: "Reads the store on a schedule",
+      body: "At the times you set, the agent reads Shopify: inventory levels, product prices and the orders that changed since it last looked.",
+    },
+    {
+      title: "Sorts what is out of line",
+      body: "Stock below the level you set, a price outside the range you set, an order that has not moved in the time you set. What counts as an exception is written in the spec with you, and the agent applies that and nothing else.",
+    },
+    {
+      title: "Reports what it found in one place",
+      body: "One message in the channel your operations team already works in: what it read, what it found out of line, and which of those need a decision.",
+    },
+    {
+      title: "Brings a decision to a person",
+      body: "An exception that needs a decision comes to a named person with everything the decision needs: the product, the order or the price, and what the choices are. The change is that person's to make, in Shopify.",
+    },
+  ],
+  systems: [
+    {
+      name: "Shopify",
+      role: "The store it reads: inventory, products and their prices, and orders. The agent reads, and writes nothing back.",
+    },
+  ],
+  subject: "Shopify operations",
+  more: "How the store is watched",
+};
 
 export const jobs: Job[] = [
   {
     title: "Brief to published post",
     systems: "Notion, your CMS",
     body: "A brief goes in, a drafted and edited page comes back, and publishing waits for a name.",
+    page: contentPublishing,
   },
   {
     title: "Draft and schedule",
     systems: "Slack, Typefully",
     body: "Your team asks in a channel. The agent drafts, queues and reports what the last batch did.",
+    page: socialScheduling,
   },
   {
     title: "Support triage",
     systems: "Zendesk or Intercom, GitHub",
     body: "Every new ticket gets read, grouped and answered where the answer is known, and filed as an issue where it is a bug.",
+    page: supportTicketTriage,
   },
   {
     title: "Failed-payment follow-up",
     systems: "Stripe, your outbox",
     body: "Overnight failures come back as a summary and a drafted message per customer. Sending needs a signature.",
+    page: failedPaymentRecovery,
   },
   {
     title: "Store operations",
     systems: "Shopify",
     body: "Stock, pricing and order exceptions watched on a schedule, with the ones that need a decision brought to a person.",
+    page: shopifyOperations,
   },
 ];
+
+/* The jobs that have a page, in the order the lists print them. A crawler
+ * reads these the way it reads a page we write by hand: `indexablePages`
+ * carries them, so a job page added above is in the sitemap, in `llms.txt`
+ * and under the test suite in that one edit. */
+export const jobPages: JobPage[] = jobs.flatMap((job) => job.page ?? []);
 
 /* ---------------------------------------------------------------------------
  * The custom door
@@ -425,6 +729,9 @@ export const custom = {
   jobsHeading: "Work we take",
   jobsLede:
     "Five jobs we take, to measure your own against. Each one names the systems it touches. None of them is a product you can buy today, and none carries a price until we have read your workflow.",
+  /* Written for the search the door's title answers, the way
+   * `pricingIntro.heading` is on the home page. */
+  pricingHeading: "What custom AI agent development costs",
   prices: [
     { amount: "From €10,000", per: "to build" },
     { amount: "From €1,500", per: "a month to operate" },
@@ -441,7 +748,7 @@ export const custom = {
  * ------------------------------------------------------------------------- */
 
 export const pricingIntro = {
-  heading: "How to work with us",
+  heading: "What AI agent development costs",
   lede: "A build price is a floor, because the work follows the number of systems your agent touches. Every monthly price buys the evals, the changes and the report.",
 };
 
@@ -449,7 +756,7 @@ export const prices = [
   {
     title: "Self-run",
     body: "We build your agent, deploy it into your own accounts and hand over the keys. Your team runs it and your engineers sign the merges.",
-    price: "From €7,500",
+    amount: "From €7,500",
     per: "to build, then from €1,500 a month",
     includes: [
       `Live in your own channel in ${leadTime}`,
@@ -464,7 +771,7 @@ export const prices = [
   {
     title: "Managed",
     body: "We build it and we run it. Our coding agents take the runs, our reviewer reads every diff, and the agent still lives in your accounts.",
-    price: "From €7,500",
+    amount: "From €7,500",
     per: "to build, then from €4,000 a month",
     includes: [
       "As many briefs as the capacity allows, prioritised with you weekly",
@@ -479,7 +786,7 @@ export const prices = [
   {
     title: "Custom agent",
     body: "For work that matches nothing we have built. You describe it, we write the spec and name the price, and the agent is shaped around your workflow.",
-    price: "From €10,000",
+    amount: "From €10,000",
     per: "to build, then from €1,500 a month",
     includes: [
       "A spec and a fixed price within one working day",
@@ -494,7 +801,7 @@ export const prices = [
   {
     title: "Sprint",
     body: "One brief, two weeks, one fixed price. Our own agents work it on your repository, and our reviewer signs the merge. Nothing is deployed and nothing is connected, so this buys one piece of finished work rather than an agent.",
-    price: "From €4,000",
+    amount: "From €4,000",
     per: "per brief",
     includes: [
       "A fixed price before the two weeks start",
@@ -508,7 +815,19 @@ export const prices = [
   },
 ];
 
-export const questions = [
+/* The ways to buy the site prints today. A plan that prices a ready-made
+ * product waits until the catalogue holds one: see the Catalogue entry in
+ * CONTEXT.md. The home page prints this list and its graph offers it, and the
+ * terms state what it buys, so none of the three can state a plan the others
+ * do not. */
+export const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
+
+/* One question the home page answers, in the words it prints. The page renders
+ * this list and the graph marks the same list up as questions and answers, so
+ * neither can state a question the other leaves out. */
+export type Question = { q: string; a: string };
+
+export const questions: Question[] = [
   {
     q: "Who owns the agent and the code?",
     a: "You do. It lives in your repository and deploys into your own accounts, with your keys. Stop paying us and your agent keeps running. What stops is our work on it.",
@@ -552,14 +871,22 @@ export const questions = [
 ];
 
 /* ---------------------------------------------------------------------------
- * The written pages
+ * The page records
  *
- * The pages we write by hand, as against the product pages the catalogue
- * makes. This is the one list of them: `src/app/sitemap.ts` walks it, and so
- * does the test suite. A page added here is therefore listed for a crawler and
- * guarded by the suite in one edit. A written page that is not here has no
- * sitemap entry, and nothing watching its canonical, its title, its
- * description or its unfurl image.
+ * One record per page, and the one place that page's path, title, description
+ * and copy date are written. Everything a machine reads about the page is
+ * derived from the record: `src/app/head-directives.ts` builds the page's
+ * metadata from it, `src/app/structured-data.ts` builds the nodes the page
+ * adds to the graph, and `src/app/sitemap.ts` builds its sitemap entry. The
+ * test suite walks the same list. Adding a page is therefore one record here
+ * and one route file, which the Adding a page section of README.md sets out.
+ *
+ * A title is the page's own, and `pageMetadata` puts the brand after it, the
+ * way a search result reads. A result prints about 60 characters of the title
+ * and about 160 of the description, and cuts the rest, so both stay under
+ * those counts and `tests/head.test.ts` measures what the export emits. A
+ * title also leads with the words a buyer types, because a result is read
+ * left to right and the brand is the part nobody searches for.
  *
  * A date is the day that page's copy last changed, written YYYY-MM-DD. It
  * comes from the page file's history, `git log -1 --date=short -- <file>`, so
@@ -567,13 +894,182 @@ export const questions = [
  * Nothing else sets it: a date stamped at build time tells a crawler that
  * every page changed on every deploy, and a crawler that learns our dates are
  * worthless stops reading them.
- *
- * A product page is not here. Its path and its date ride on its own record,
- * above, so a product entering the catalogue brings both with it.
  * ------------------------------------------------------------------------- */
-export type WrittenPage = { path: string; date: string };
+export type PageRecord = {
+  /* The path a crawler asks for, as the canonical URL states it. */
+  path: string;
+  /* The page's own title, which is also the name its node carries in the
+   * graph and the crumb a reader follows back. */
+  title: string;
+  /* The sentence under the title in a search result, and in an unfurl. */
+  description: string;
+  /* The day the copy on this page last changed. */
+  date: string;
+};
 
-export const writtenPages: WrittenPage[] = [
-  { path: "/", date: "2026-09-18" },
-  { path: "/custom", date: "2026-09-18" },
+/* The home page. Its title is stated whole, brand and all, because it is the
+ * site's title as well: the manifest, the unfurl image and the not-found page
+ * all take it, and `pageMetadata` adds no brand to it a second time. It
+ * therefore spells out the separator the other pages get from `pageMetadata`,
+ * and it reaches further than a search result: the manifest name, the unfurl
+ * title and the unfurl image's alt text all read this one string.
+ *
+ * The title leads with "AI agent development company", which is what a buyer
+ * types and what every competing page in this category is titled. The brand
+ * follows it: two other companies crowd the name in search, so leading with
+ * it wins a reader we already have. "Software factory on demand" is still the
+ * promise, and `CONTEXT.md` still fixes it, but no page states it in words
+ * now: the unfurl image draws it, and that is the only place it is written. */
+export const homePage: PageRecord = {
+  path: "/",
+  title: `AI agent development company | ${brand}`,
+  description: `An AI agent development company in ${location.city}, ${location.country}. We build one standing agent for one company, deploy it into your own accounts and keep it right.`,
+  date: "2026-09-21",
+};
+
+/* The custom door. Its description is its own sentence rather than the lede
+ * the page prints: one string cannot both open a page and fit a search
+ * result, and the lede is 181 characters long. */
+export const customPage: PageRecord = {
+  path: "/custom",
+  title: "Custom AI agent development",
+  description:
+    "Custom AI agent development for work that matches nothing on a shelf. Describe it and get a short spec and a fixed price within one working day.",
+  date: "2026-09-21",
+};
+
+/* The pages a buyer reads before a first call. They state no offer, they
+ * carry no promotional copy, and they stay out of the header, which carries
+ * the doors a reader walks through. The footer links the list from every
+ * page, which is where a reader looks for them, and the suite walks the same
+ * list, so a fourth one of these is a record here and a route file. */
+export const privacyPage: PageRecord = {
+  path: "/privacy",
+  title: "Privacy",
+  description:
+    "What this site collects, who processes it, how long it is kept, and how to ask us to delete it.",
+  date: "2026-09-21",
+};
+
+export const termsPage: PageRecord = {
+  path: "/terms",
+  title: "Terms of service",
+  description:
+    "What a build buys, what the monthly work covers, and the terms both sides work to.",
+  date: "2026-09-21",
+};
+
+export const imprintPage: PageRecord = {
+  path: "/imprint",
+  title: "Imprint",
+  description:
+    "The company behind this site: legal name, registration code, VAT number, registered address and director.",
+  date: "2026-09-21",
+};
+
+/* The contact page: the two ways to reach us, what follows a message, and who
+ * the reader is writing to. It prints no price, so it states no offer. The
+ * footer links it from every page, next to the mailbox, because that is where
+ * a reader looks for a way in. Its own mailto carries `contactSubject`, so a
+ * click on it is counted under this door. */
+export const contactPage: PageRecord = {
+  path: "/contact",
+  title: "Contact",
+  description:
+    "Book a call or write to KastProductions. What you get within one working day of writing, and the registered company you are writing to.",
+  date: "2026-09-21",
+};
+export const contactSubject = "Contact page";
+
+export const legalPages: PageRecord[] = [privacyPage, termsPage, imprintPage];
+
+/* The first explainer: one page on one part of the mechanism, written for
+ * the reader who searches the part rather than the company. An explainer
+ * sells nothing and prints no price, so it states no offer, as any written
+ * page that is not a door does. It stays out of the header and the footer:
+ * the home page hands a reader on to it from the section it explains. A
+ * second explainer is a record here, in `writtenPages`, and a route file.
+ *
+ * The eval suite page targets "AI agent eval suite". A buyer who has been
+ * offered an autonomous agent and asks how anyone knows it is right types
+ * the word the field uses for that, and no competing page in this category
+ * answers it. The title leads with the phrase; the heading on the page reads
+ * in the site's voice, the way `mechanismIntro.heading` does. */
+export const evalSuitePage: PageRecord = {
+  path: "/eval-suite",
+  title: "AI agent eval suite: what correct means",
+  description:
+    "What an AI agent eval suite is: the written definition of correct for one agent, run on every change, and what we do when correct cannot be written down.",
+  date: "2026-09-21",
+};
+
+/* The page that says who is behind the work: the founder, the companies he
+ * has shipped for and the six references, which live on this page and not on
+ * the home page. Its title leads with his name, which is what a buyer
+ * checking who signs the merge types into a search engine, and the founder
+ * node in the graph points here. It states no offer. */
+export const aboutPage: PageRecord = {
+  path: "/about",
+  title: `${founder}, founder`,
+  description: `${founder} founded ${brand} in ${location.city} and signs the merges we make. Seventeen companies he has shipped for, and six references quoted as written.`,
+  date: "2026-09-21",
+};
+
+/* The Slack page. A buyer names the channel as often as the job, and Slack is
+ * the channel most of them name, so it is the one channel with a page. It is
+ * a channel page and not a job page: it prints no steps, no systems and no
+ * price, and hands the reader to the custom door, so it is a record here and
+ * a route file, as any page we write by hand is. The title leads with the
+ * phrase a buyer types, and the page's own heading is in the site's voice.
+ * Every sentence it states about Slack is one Flue's Slack channel
+ * documentation states, which the page links. */
+export const slackPage: PageRecord = {
+  path: "/slack",
+  title: "AI agent for Slack",
+  description:
+    "An AI agent for Slack, built for one company: your team addresses it by name in a channel, and every outward action waits for a named person's approval.",
+  date: "2026-09-21",
+};
+
+/* The mail subject every call to action on the Slack page carries, which is
+ * how the analytics event names the door a reader came through. */
+export const slackSubject = "Agent in Slack";
+
+/* The pages we write by hand, as against the job pages the jobs hold and the
+ * product pages the catalogue makes. The two doors are the written pages
+ * that state an offer; every other page here states none, the terms
+ * included, which print the plans to say what a build buys and not to sell
+ * one. The graph suite reads that off this list. */
+export const writtenPages: PageRecord[] = [
+  homePage,
+  customPage,
+  ...legalPages,
+  evalSuitePage,
+  aboutPage,
+  contactPage,
+  slackPage,
+];
+
+/* The record of a product's page. A product already states its slug, its
+ * name, its promise and the day its copy changed, so its page record is read
+ * off the catalogue rather than written a second time. */
+export function productPage(product: Product): PageRecord {
+  return {
+    path: `/${product.slug}`,
+    title: product.name,
+    description: product.promise,
+    date: product.date,
+  };
+}
+
+/* Every page a crawler should index: the pages we write by hand, then the
+ * jobs that have a page of their own, then one page per product in the
+ * catalogue. The sitemap walks this list and so does the suite, so a page
+ * added above is listed for a crawler and guarded by the suite in that one
+ * edit. A page that is not here has no sitemap entry, and nothing watching
+ * its canonical, its title, its description or its unfurl image. */
+export const indexablePages: PageRecord[] = [
+  ...writtenPages,
+  ...jobPages,
+  ...products.map(productPage),
 ];

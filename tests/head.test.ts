@@ -6,7 +6,16 @@
  * Every assertion reads the emitted export. Nothing here pins page copy.
  */
 import { expect, test } from "bun:test";
-import { indexableRoutes, linkHrefs, metaContents, readExport, siteUrl, tagTexts } from "./export";
+import { brand } from "../src/app/content";
+import {
+  indexableRoutes,
+  linkHrefs,
+  metaContents,
+  readExport,
+  siteUrl,
+  sitemapUrls,
+  tagTexts,
+} from "./export";
 
 for (const route of indexableRoutes) {
   test(`${route.path} emits one h1`, () => {
@@ -19,22 +28,49 @@ for (const route of indexableRoutes) {
     expect(linkHrefs(readExport(route.file), "canonical")).toEqual([route.url]);
   });
 
-  test(`${route.path} emits one title and one description`, () => {
+  test(`${route.path} emits the title and the description its record states`, () => {
     const document = readExport(route.file);
 
+    /* One each: a second of either leaves the crawler to choose the search
+     * result a person reads. */
     const titles = tagTexts(document, "title");
     expect(titles).toHaveLength(1);
-    expect(titles[0]).not.toBe("");
 
-    /* Both are the search result a person decides to click on. */
-    const descriptions = metaContents(document, "description");
-    expect(descriptions).toHaveLength(1);
-    expect(descriptions[0]).not.toBe("");
+    /* The page record is the one place the title and the description are
+     * written, so the export is read back against it rather than against a
+     * copy of the words. The title the record states is the page's own, and
+     * the brand follows it, which is how a search result reads. */
+    expect(titles[0]).toContain(route.title);
+    expect(titles[0]).toContain(brand);
+
+    expect(metaContents(document, "description")).toEqual([route.description]);
+  });
+
+  test(`${route.path} states a title and a description a search result prints whole`, () => {
+    const document = readExport(route.file);
+
+    /* A result prints about 60 characters of the title and about 160 of the
+     * description, and cuts the rest mid-word. The custom door shipped a
+     * 181-character description for months, because nothing measured one. */
+    expect(tagTexts(document, "title")[0].length).toBeLessThan(60);
+    expect(metaContents(document, "description")[0].length).toBeLessThan(160);
   });
 }
 
+test("no two routes state the same title or description", () => {
+  /* One snippet on two pages leaves a crawler to choose which of them answers
+   * the query, and it may choose neither. Every record is written by hand,
+   * and copying a neighbour's line is the easy mistake. */
+  const documents = indexableRoutes.map((route) => readExport(route.file));
+  const titles = documents.map((document) => tagTexts(document, "title")[0]);
+  const descriptions = documents.map((document) => metaContents(document, "description")[0]);
+
+  expect(new Set(titles).size).toBe(titles.length);
+  expect(new Set(descriptions).size).toBe(descriptions.length);
+});
+
 test("the sitemap lists exactly the indexable routes", () => {
-  const listed = tagTexts(readExport("sitemap.xml"), "loc");
+  const listed = sitemapUrls();
 
   /* A crawler spends a fetch on every URL here, and misses any route we leave
    * out, so the list has to be the routes and nothing else. */
@@ -42,7 +78,7 @@ test("the sitemap lists exactly the indexable routes", () => {
 });
 
 test("every sitemap entry resolves to an emitted page", () => {
-  for (const listed of tagTexts(readExport("sitemap.xml"), "loc")) {
+  for (const listed of sitemapUrls()) {
     const route = indexableRoutes.find((candidate) => candidate.url === listed);
     if (!route) {
       throw new Error(`the sitemap lists ${listed}, which is not a route this site has.`);

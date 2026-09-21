@@ -1,50 +1,21 @@
-import type { Metadata } from "next";
 import { ChannelsSection } from "@/components/channels-section";
+import { JobRows } from "@/components/job-rows";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import {
-  brand,
-  callHref,
-  custom,
-  jobs,
-  mailtoFor,
-} from "../content";
-import { indexedRobots, openGraphImage } from "../head-directives";
-import { breadcrumbs, graphHtml, service, webPage } from "../structured-data";
+import { callHref, custom, customPage, mailtoFor } from "../content";
+import { pageMetadata } from "../head-directives";
+import { graphHtml, pageNodes } from "../structured-data";
 
-const pageTitle = "Custom agents";
+export const metadata = pageMetadata(customPage);
 
-export const metadata: Metadata = {
-  title: pageTitle,
-  description: custom.lede,
-  alternates: {
-    canonical: "/custom",
-  },
-  robots: indexedRobots,
-  openGraph: {
-    ...openGraphImage,
-    type: "website",
-    url: "/custom",
-    siteName: brand,
-    locale: "en_GB",
-    title: `${pageTitle} | ${brand}`,
-    description: custom.lede,
-  },
-};
-
-/* The door's own nodes, beside the site-wide ones the layout renders: the page
- * itself, the service it sells with the prices it prints, and the way here
- * from the home page. */
-const page = { path: "/custom", name: pageTitle, description: custom.lede };
-const graph = graphHtml([
-  webPage(page),
-  service({ ...page, prices: custom.prices }),
-  breadcrumbs(page),
-]);
+/* The door's own nodes, beside the site-wide ones the layout renders: the
+ * page itself, the service it sells with the prices it prints, and the way
+ * here from the home page. */
+const graph = graphHtml(pageNodes(customPage, { prices: custom.prices }));
 
 export default function Custom() {
   return (
     <>
-      <SiteHeader route="/custom" />
+      <SiteHeader route={customPage.path} />
 
       <main id="main">
         <section className="band band--flush hero">
@@ -69,17 +40,7 @@ export default function Custom() {
               <p>{custom.jobsLede}</p>
             </div>
             <div className="unit__body">
-              <ul className="rows">
-                {jobs.map((job) => (
-                  <li key={job.title}>
-                    <div className="row">
-                      <span className="row__label">{job.title}</span>
-                      <p>{job.body}</p>
-                      <span className="row__note">{job.systems}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <JobRows />
             </div>
           </div>
         </section>
@@ -93,7 +54,7 @@ export default function Custom() {
         >
           <div className="wrap unit">
             <div className="unit__head">
-              <h2 id="custom-price-title">What a custom build costs</h2>
+              <h2 id="custom-price-title">{custom.pricingHeading}</h2>
               <p>
                 The build price is a floor, because the work follows the number
                 of systems your agent touches. The monthly price buys the eval
@@ -136,7 +97,7 @@ export default function Custom() {
         </section>
       </main>
 
-      <SiteFooter route="/custom" />
+      <SiteFooter route={customPage.path} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: graph }}

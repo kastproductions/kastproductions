@@ -75,64 +75,131 @@ src/app/
                        #   analytics
   page.tsx             # Home: hero, clients, the work we take and the doors, fit,
                        #   channels, mechanism and stack, reviewer, prices, questions;
-                       #   canonical URL and its own graph
-  custom/page.tsx      # The custom door: the jobs we take, channels, price, own graph
-  content.ts           # Brand constants, search snippet copy, client list, founder
-                       #   references, the written pages and their dates, and every
-                       #   word of both doors
-  head-directives.ts   # What a page tells a machine in its head: the unfurl image
-                       #   and the indexing directive every written page spreads in
-  structured-data.ts   # The schema.org graph: the nodes true everywhere, and a builder
-                       #   for the page, service and breadcrumb nodes a page adds
+                       #   metadata and graph built from its page record
+  custom/page.tsx      # The custom door: the jobs we take, channels, price; metadata
+                       #   and graph built from its page record
+  content-publishing/page.tsx
+  social-scheduling/page.tsx
+  support-ticket-triage/page.tsx
+  about/page.tsx       # Who is behind the work: the founder, the companies he has
+                       #   shipped for, and the six references with their portraits,
+                       #   which print here and nowhere else
+  failed-payment-recovery/page.tsx
+  shopify-operations/page.tsx
+                       # The five jobs, one per page. Each route hands its record to the
+                       #   component; the record and every word about that job live on
+                       #   the job in content.ts
+  issue-to-pull-request/page.tsx
+                       # One ready-made product on its own page. The route hands the
+                       #   product to the component; every word of the product and its
+                       #   copy date live on the product in content.ts
+  slack/page.tsx       # The one channel with a page: how a person addresses an agent in
+                       #   Slack, what the gate looks like there, what the client provides,
+                       #   and what Teams needs that Slack does not. Every sentence about
+                       #   either channel is one Flue's documentation states
+  privacy/page.tsx     # What the site collects, who processes it, how long it is kept
+  terms/page.tsx       # What a build buys and what the monthly work covers, from the
+                       #   prices and the lead time the content module holds
+  imprint/page.tsx     # The register entry: legal name, legal form, code, VAT number,
+                       #   registered address, director. It prints `company` and the
+                       #   mailbox under it, and nothing else
+  contact/page.tsx     # The two ways to reach us, what follows a message, and who the
+                       #   reader is writing to, printed from `company` and `location`
+  eval-suite/page.tsx  # The first explainer: what an eval suite is, how it runs on every
+                       #   change, and what happens when correct cannot be written down.
+                       #   It sells nothing and prints no price
+  content.ts           # Brand constants, client list, founder references, every word
+                       #   of both doors and of every job, and the page records: the
+                       #   path, title, description and copy date of every page we
+                       #   write by hand
+  head-directives.ts   # What a page tells a machine in its head. `pageMetadata` builds
+                       #   all of it from a page record: title, description, canonical
+                       #   URL, indexing directive and unfurl fields
+  structured-data.ts   # The schema.org graph: the nodes true everywhere, and
+                       #   `pageNodes`, which builds what a page adds from that same
+                       #   record: the page with the date its copy changed and the
+                       #   questions it answers, the service it sells, the breadcrumb
   globals.css          # The sheet: design tokens and component styles. Its header
                        #   states the three rules the design holds to
   opengraph-image.tsx  # Open Graph image, rendered at build time
   manifest.ts          # Web app manifest
   robots.ts            # robots.txt
-  sitemap.ts           # sitemap.xml, which follows the written pages and the
-                       #   catalogue, and states the dates content.ts holds
+  sitemap.ts           # sitemap.xml, one entry per page record, stating the date each
+                       #   record holds
+  llms.txt/route.ts    # llms.txt, the plain-text index an answer engine (a model that
+                       #   answers a question from the web) reads: one Markdown link per
+                       #   page record, with its description
   not-found.tsx        # The page a wrong address lands on. Carries no canonical and
                        #   no robots directive of its own: the framework writes the
                        #   `noindex` there, and a second beside it is a contradiction
   icon.svg             # Favicon, drawn as the brand mark
 src/components/
-  site-chrome.tsx      # Header, footer and brand mark, shared by every page
+  site-chrome.tsx      # Header, footer and brand mark, shared by every page. The
+                       #   header links the about page, and the footer links privacy,
+                       #   terms, the imprint and the contact page from every page
   channels-section.tsx # Where a standing agent is reachable, and what wakes it
   product-page.tsx     # One ready-made product, on its own page
+  clients-strip.tsx    # The client companies as one strip, on the home page and the
+                       #   about page
+  job-page.tsx         # One job we take, on its own page
+  job-rows.tsx         # The jobs we take, as rows, on the home page and the door
   run-record.tsx       # The example run, on a product page
   agent-console.tsx    # The example agent in the home page hero: its nameplate, the
                        #   exchange, and the gate it stops at
-  analytics.tsx        # Google Analytics (NEXT_PUBLIC_GA_ID)
+  analytics.tsx        # Vercel Web Analytics: the tracker this deployment serves,
+                       #   and one event per call to action clicked
 public/
-  reviewers/           # Portraits for the reviewer section
+  reviewers/           # Portraits for the references on the about page
   logo.png             # 512px raster logo, for the Organization node in the graph
 tests/
-  export.ts            # Shared helpers: the export root, a file reader, tag parsing,
-                       #   a JSON-LD reader, and the indexable routes, which follow
-                       #   the written pages and the catalogue
-  head.test.ts         # One h1, a self-referencing canonical, a title and a
-                       #   description per route; the sitemap and the robots file
-  opengraph.test.ts    # An unfurl image per route, and one robots directive on the 404
+  export.ts            # Shared helpers: the export root, a file reader, the file a
+                       #   record's page was written to, the body of a page, tag parsing,
+                       #   a JSON-LD reader, the indexable routes, which follow the page
+                       #   records, and every page a reader can land on
+  head.test.ts         # One h1, a self-referencing canonical, and the title and
+                       #   description each record states, each unique and short
+                       #   enough to print whole; the sitemap and robots file
+  opengraph.test.ts    # An unfurl image, title and description per route, and one
+                       #   robots directive on the 404
   sitemap.test.ts      # Real dates, no build time, and no Host directive
+  llms-txt.test.ts     # The plain-text index lists the URLs the sitemap lists, with
+                       #   the description each record states
   structured-data.test.ts  # The company states only what it can support
-  page-graph.test.ts   # Each route describes itself, with the printed prices as offers
+  page-graph.test.ts   # Each route describes itself: the date its copy changed, the
+                       #   printed prices as offers, the questions the home page
+                       #   answers, and one spelling of the site URL in every identifier
+  analytics.test.ts    # Every page loads the tracker and counts a mailto click
+  legal.test.ts        # Every page links privacy, terms and the imprint, and the
+                       #   imprint prints every register fact `company` holds
+  links.test.ts        # No page is an orphan: both job lists lead to a job page and it
+                       #   leads on to the custom door; the ready-made door leads to
+                       #   every product in the catalogue
+  contact.test.ts      # Every booking link points where `callHref` points, every page
+                       #   leads to the contact page, and the contact page prints the
+                       #   company it names
+  about.test.ts        # The founder node points at the about page, every header links
+                       #   it, and the page prints every client and every reference
+                       #   as `content.ts` holds them
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
 ## Tests
 
 `bun run test` builds the export and then reads it with `bun test`. The suite has one seam: the
-files in `out/`. It asserts what a crawler sees, and it imports no page component, no metadata
-object and no route handler.
+files in `out/`. It asserts what a crawler sees and what the page tells the tracker, and it
+imports no page component, no metadata object and no route handler.
 
 That seam was chosen for a reason worth remembering. Next.js merges metadata shallowly, so a page
 that declares its own `openGraph` object silently loses the inherited image. Our metadata objects
 look correct while the built page unfurls blank, which means a test over the metadata objects
 would have passed through the whole fault. Only the build output shows it.
 
-The route list comes from `writtenPages` and `products`, the two lists the sitemap walks, so a
-page or a product added to the content module is covered with no test edit. A route the suite
-cannot find in the export is a failure, never a skip.
+The route list comes from `indexablePages`, the list of page records the sitemap walks, so a
+page or a product added to the content module is covered with no test edit. What a page may
+offer comes off the same lists: the two doors and a product page offer the prices they print,
+a job page the door's, and every other written page offers nothing, so a page added to
+`writtenPages` is held to stating no offer in that one edit. A route the suite cannot find in
+the export is a failure, never a skip.
 
 What the suite is not for: the shape of a metadata object, the text of a source file, or a
 snapshot of a page. Copy changes often, and a suite that pins copy gets deleted.
@@ -142,19 +209,144 @@ what the build emitted, never what Google accepted.
 
 ## Content
 
-Every word of both doors lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the written pages with the day each one last changed. What a page tells a machine rather than a reader is not there. The unfurl image and the indexing directive live in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`.
+Every word of both doors and of every job we take lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the page records with the day each page's copy last changed. What a page tells a machine rather than a reader is not there, and neither is the prose a shared component prints on every page of a kind. The metadata each page derives from its record, with the unfurl image and the indexing directive, lives in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`, and the decisions that shape the site, the test seam and where prose lives among them, are recorded in `docs/adr/`.
 
 The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
 
-The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor.
+The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `openPrices`, which is the plans the catalogue leaves standing, so a plan the page keeps back is a plan the graph does not claim. One offer states one number, which is the `amount`, so a way to buy whose `per` words carry a second figure ("to build, then from €1,500 a month") offers its build floor and leaves the monthly one in prose. `custom.prices` and a product's prices avoid that by holding the build and the monthly price as two prices, and a way to buy would have to print them as two lines to do the same.
 
-`bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, which is the only analytics this page has.
+`company` holds what the Lithuanian register of legal entities holds: the legal name, the legal form, the registration code, the VAT number, the registered address and the director. The imprint prints those six, and `contactEmail` under them so a reader who has finished checking can write; nothing else goes on that page. `tests/legal.test.ts` fails if one of the six stops appearing there. A reader is on that page to check us against the register, so a detail we cannot point at in the register does not go in. Note that `company.registeredAddress` is not `location`: the copy says Vilnius, where the studio works, and the register holds an address in the Lazdijai district.
+
+`legalPages` is privacy, terms and the imprint, in the order the footer prints them. It is one list because three things read it: `writtenPages`, the footer, and the suite's footer check. A fourth page of this kind is a record and a route file, as any page is.
+
+`evalSuitePage` is the first explainer: one page on one part of the mechanism, written for the reader who searches the part. An explainer sells nothing and prints no price, so it states no offer, as every written page that is not a door does; it stays out of the header and the footer, and the home page hands a reader on to it from the section it explains. A second explainer is a record in `writtenPages` and a route file.
+
+`openPrices` is `prices` with the catalogue rule applied: a way to buy that depends on a ready-made product stays off every page until one runs. The home page and the terms page both print that list, so neither can print a price the other does not.
+
+`bookingUrl` is the one constant the owner sets once a booking link exists. `callHref` reads it, and every booking link on the site, the contact page's included, is `callHref`: set the URL and all of them point at it in the next build, with no other edit. While it is empty, `callHref` falls back to a `mailto:` with `callSubject`, "First call", so a click on it still names the door the reader came through; once it is set, that click leaves the site instead of opening a mail client, and the `mailto` event in `## Analytics` below stops counting it. `tests/contact.test.ts` knows a booking link by that destination and not by its words, so once the URL is set, a page still carrying the fallback mailto fails there. `contactEmail` is the mailbox the whole site uses, the privacy page included: it is the route by which a visitor's own words reach us. The contact page prints it with `contactSubject`, so a mail written from there says so.
+
+## Adding a page
+
+A page is one record and one route file. The record is the one place its path, title,
+description and copy date are written, and everything a machine reads follows from it: the
+canonical URL, the indexing directive, the unfurl fields, the sitemap entry with its date, the
+line in `llms.txt`, the page's own graph nodes, and the suite's coverage of all of them.
+
+1. Add the record in the page records section of `src/app/content.ts`, and put it in
+   `writtenPages`. The about page is the worked example, and `src/app/about/page.tsx` is
+   what the route file below grew into:
+
+   ```ts
+   export const aboutPage: PageRecord = {
+     path: "/about",
+     title: `${founder}, founder`,
+     description: "The sentence a search result prints under the title, under 160 characters.",
+     date: "2026-09-21",
+   };
+
+   export const writtenPages: PageRecord[] = [homePage, customPage, ...legalPages, aboutPage];
+   ```
+
+2. Add the route file at the path the record states, here `src/app/about/page.tsx`:
+
+   ```tsx
+   import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+   import { aboutPage } from "../content";
+   import { pageMetadata } from "../head-directives";
+   import { graphHtml, pageNodes } from "../structured-data";
+
+   export const metadata = pageMetadata(aboutPage);
+
+   const graph = graphHtml(pageNodes(aboutPage));
+
+   export default function About() {
+     return (
+       <>
+         <SiteHeader route={aboutPage.path} />
+         <main id="main">{/* the page */}</main>
+         <SiteFooter route={aboutPage.path} />
+         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: graph }} />
+       </>
+     );
+   }
+   ```
+
+Nothing else moves: the graph suite reads what a written page may offer off `writtenPages`, so
+a page that prints no price is held to stating no offer with no test edit. The second argument
+is what the page prints, and a page passes only what it has. A page that prints a price passes
+`pageNodes(aboutPage, { prices })` and gets the service node with one offer per price; a page
+that prints none states no offer. A page that answers questions passes
+`pageNodes(aboutPage, { questions })`, or both keys together, and its node says
+it is an FAQ page and carries every question with its answer. Pass the same array the page
+renders, because a second list drifts from the copy on the first edit. The title on the record
+is the page's own and `pageMetadata` puts the brand after it, so keep the two together under
+about 60 characters. The date is the day the copy last changed, read with
+`git log -1 --date=short -- <file>`, so editing the words on a page means editing its date in
+the same commit; the route file states the date nowhere, because the graph and the sitemap both
+read it off the record.
+
+## A job page
+
+The home page lists the five jobs we take, and a job is also the phrase a buyer types into a
+search engine, so a job earns a page of its own. That page is still one record and one route
+file, and the record is the `page` field on the job in `src/app/content.ts`: a `JobPage` is a
+page record with the words that page prints about the job added to it, so nothing about the
+job is written twice. The prose the five pages share, their section headings among it, is in
+`src/components/job-page.tsx`, which draws them all.
+
+1. Write the page on the job, in the jobs section of `src/app/content.ts`:
+
+   ```ts
+   export const failedPaymentRecovery: JobPage = {
+     path: "/failed-payment-recovery",
+     title: "Failed payment recovery agent", // written for a search result
+     description: "...",
+     date: "2026-09-21",
+     heading: "An agent that works last night's failed payments.", // written for the reader
+     lede: "...",
+     authority: "It acts behind an approval gate. ...", // one of the three in CONTEXT.md
+     gate: "The gate sits before a message leaves your company. ...",
+     steps: [{ title: "Reads the night's failures", body: "..." }],
+     systems: [{ name: "Stripe", role: "..." }],
+     subject: "Failed payment recovery", // the mail subject, and the door in an event
+     more: "How the follow-up works", // the words the two job lists link with
+   };
+   ```
+
+   Then hang it off the job: `{ title: "Failed-payment follow-up", ..., page: failedPaymentRecovery }`.
+
+2. Add the route file at the path the record states, here
+   `src/app/failed-payment-recovery/page.tsx`:
+
+   ```tsx
+   import { JobPage } from "@/components/job-page";
+   import { failedPaymentRecovery } from "../content";
+   import { pageMetadata } from "../head-directives";
+
+   export const metadata = pageMetadata(failedPaymentRecovery);
+
+   export default function Page() {
+     return <JobPage page={failedPaymentRecovery} />;
+   }
+   ```
+
+Nothing else moves. `jobPages` reads the pages off `jobs` and `indexablePages` carries them, so
+the sitemap entry, the `llms.txt` line, the canonical, the unfurl and the graph nodes follow;
+`src/components/job-rows.tsx` links the page from the home page and from the custom door,
+because the job holds it; and `src/components/job-page.tsx` draws every job page, so five jobs
+stay one page in five voices rather than five pages drifting apart.
+
+A job page prints the custom door's prices, read from `custom.prices`, and no number of its
+own: a job we shape an agent around is custom work, and the door is where it is priced. It
+states one of the three authorities in `CONTEXT.md` and the gate that authority stops at.
+`tests/links.test.ts` holds it to being reachable: both job lists link to it and it leads on to
+the door.
 
 ## The catalogue
 
-`products` holds only a product that runs today. A job we have not built yet belongs on the custom page. While the array is empty the home page shows one door, the ready-made prices stay off the price list, and no product appears in the nav or the sitemap.
+`products` holds only a product that runs today, and today it holds issue to pull request. A job we have not built yet belongs to the custom door, on the custom page or on a job page of its own. Were the array empty, the home page would show one door, the self-run and managed plans would stay off the home page's price list, out of the offers in its graph and off the terms, and no product would appear in the nav, the sitemap or `llms.txt`. `openPrices` and the home page's `openDoors` both read the array's length, so the plans and the door switch together.
 
-Turning a product on takes two edits, because `output: "export"` refuses a dynamic route segment that generates no paths:
+A product takes two edits, because `output: "export"` refuses a dynamic route segment that generates no paths. Issue to pull request is the worked example:
 
 1. Add it to `products` in `src/app/content.ts`:
 
@@ -165,17 +357,18 @@ Turning a product on takes two edits, because `output: "export"` refuses a dynam
 2. Add its route, named after its `slug`, in `src/app/issue-to-pull-request/page.tsx`:
 
    ```tsx
-   import { ProductPage, productMetadata } from "@/components/product-page";
-   import { issueToPullRequest } from "../content";
+   import { ProductPage } from "@/components/product-page";
+   import { issueToPullRequest, productPage } from "../content";
+   import { pageMetadata } from "../head-directives";
 
-   export const metadata = productMetadata(issueToPullRequest);
+   export const metadata = pageMetadata(productPage(issueToPullRequest));
 
    export default function Page() {
      return <ProductPage product={issueToPullRequest} />;
    }
    ```
 
-Nothing else moves. The door, the nav entry, the sitemap entry and its date, the two ready-made prices, the product page and its graph nodes all follow from the array.
+Nothing else moves. The door, the nav entry, the sitemap entry and its date, the `llms.txt` line, the two ready-made plans, the product page, its canonical, its unfurl and its graph nodes with the service and one offer per price all follow from the array. A product page keeps no record of its own: `productPage` reads one off the product, so the path, the title, the description and the date arrive with it, and `indexablePages` carries it to the sitemap and the suite. The `date` on the product is the day its words last changed, and it moves with them the way a written page's date does. `tests/links.test.ts` holds the ready-made door to leading to every product in the array, because the door's `href` is written by hand and the route follows the slug.
 
 ## Claims
 
@@ -183,7 +376,9 @@ Every claim on the page is either verifiable or labelled as an example.
 
 Real, and may be stated as fact: the 17 client companies, the 6 references with portraits, and the prices. All of them live in `src/app/content.ts`.
 
-Also checkable, and worth keeping checkable: the channel lists in `channels` are the channels [Flue](https://flueframework.com/docs/ecosystem/) verifies, split into the chat channels a person addresses an agent in and the services that wake one with an event. The four items in `stack.ours` are the pieces Flue does not provide, so we write them. If Flue's ecosystem or its feature set moves, these lists move with it.
+The strictest case is `company`, which the imprint prints: every line of it is in the Lithuanian register of legal entities, and the reader is there to check one against the other. A legal page that states a fact the register does not hold is worse than no legal page, so nothing goes on the imprint, the privacy page or the terms that is not already in `content.ts` or in the register. That rule kept four things off those pages: a named supervisory authority, a governing law, a fixed retention period for mail, and the name of whoever runs the mailbox. The privacy page states the retention it can state, which is the 24 hours the analytics hash lives and a deletion on request, and it points at Vercel's own privacy notice for what the host keeps rather than summarising a document we do not control. Each of the four is the owner's to decide before the site states it.
+
+Also checkable, and worth keeping checkable: the channel lists in `channels` are the channels [Flue](https://flueframework.com/docs/ecosystem/) verifies, split into the chat channels a person addresses an agent in and the services that wake one with an event. The Slack page at `src/app/slack/page.tsx` says how one of those channels behaves, and every sentence it states about Slack or Teams is one Flue's [Slack](https://flueframework.com/docs/ecosystem/channels/slack/) or [Teams](https://flueframework.com/docs/ecosystem/channels/teams/) channel documentation states; the page links both so a reader can check. The four items in `stack.ours` are the pieces Flue does not provide, so we write them. If Flue's ecosystem or its feature set moves, these lists and that page move with it.
 
 Synthetic, and labelled as an example wherever a visitor could read it as fact: the agent console in `src/components/agent-console.tsx`, the hero run record in `src/components/run-record.tsx`, and the `work` table on a product page. Each one carries a visible `.tag` label. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
 
@@ -191,17 +386,25 @@ Other people's names belong to them. Flue is Apache-2.0, and §6 of that licence
 
 ## Deployment
 
-The site is a static export (`output: "export"` in `next.config.ts`). Deploy `./out` to any static host.
+The site is a static export (`output: "export"` in `next.config.ts`). Vercel hosts production and pull request previews from `./out`.
 
 The site runs on Vercel, and `vercel.json` carries two settings the static export cannot express on its own:
 
-- Permanent redirects from the retired `/about`, `/work`, `/contact`, `/standing-agents` and `/og.png` URLs to the matching page or section.
+- Permanent redirects from the retired `/work`, `/standing-agents` and `/og.png` URLs to the matching page or section. `/about` and `/contact` are pages now, so nothing redirects them.
 - A `Content-Type: image/png` header for `/opengraph-image`. Next.js writes that file without an extension, and a static host would otherwise serve it as a download.
 
-On another host, port both settings to that host's configuration.
+`llms.txt` needs no such header. The build writes it under its own name, extension and all, so a static host reads the content type off the `.txt` the way it already does for `robots.txt`.
 
 The Open Graph image fetches Archivo from Google Fonts during `bun run build`, so the build machine needs network access. It is drawn from the same tokens as the page, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
 
+## Analytics
+
+The site counts visits with Vercel Web Analytics. The processor is Vercel Inc., the company that already serves the site: the tracker sets no cookie and stores nothing on the visitor's device, a visitor is identified by a hash of the incoming request, and that hash is discarded 24 hours later. That is why the site carries no consent banner. The data points it keeps per visit are listed in [Vercel's privacy documentation](https://vercel.com/docs/analytics/privacy-policy), which is the source a privacy policy should state, rather than this file.
+
+`src/components/analytics.tsx` writes two tags into every page the build emits: the queue stub Vercel documents for plain HTML, and a deferred `script` tag for `/_vercel/insights/script.js`. The deployment serves that path itself, so no third-party host is contacted, and the path exists only once Web Analytics is turned on for the project in the Vercel dashboard. A page view counts both on a fresh load and on a client-side move between pages. An ad blocker that blocks `/_vercel/insights/*` drops the visit: the per-deployment script path that works around this needs the `@vercel/analytics` package and a seed the package reads at build time, and we render the tags ourselves.
+
+While `bookingUrl` is empty, every call to action on the site is a `mailto:` link, so a click on one is the nearest thing to a conversion the site can observe. One delegated listener counts them all as a `mailto` event. Its `door` is the mail subject the link carries, which is how this site names the door a reader came through, and its `page` is the path they clicked from. Custom events need a Vercel Pro plan. Page views do not, so a project on the Hobby plan counts visits and drops events.
+
 ## Environment Variables
 
-- `NEXT_PUBLIC_GA_ID`: Google Analytics ID (optional)
+None. The site reads no build variable, and analytics is turned on for the project in the Vercel dashboard rather than by a key in this repository.

@@ -1,10 +1,15 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import {
+  aboutPage,
   brand,
   briefHref,
   callHref,
   contactEmail,
+  contactPage,
+  customPage,
+  homePage,
+  legalPages,
   location,
   products,
 } from "@/app/content";
@@ -24,7 +29,11 @@ type Chrome = { route?: string };
  */
 export function Brand({ route }: Chrome) {
   return (
-    <Link className="brand" href="/" prefetch={route === "/" ? false : undefined}>
+    <Link
+      className="brand"
+      href={homePage.path}
+      prefetch={route === homePage.path ? false : undefined}
+    >
       <span className="brand__mark" aria-hidden="true" />
       {brand}
     </Link>
@@ -61,7 +70,7 @@ function SectionLink({
  * A ready-made product appears here the moment it enters `products`.
  */
 export function SiteHeader({ route }: Chrome) {
-  const home = route === "/";
+  const home = route === homePage.path;
 
   return (
     <div className="top" id="top">
@@ -77,7 +86,9 @@ export function SiteHeader({ route }: Chrome) {
               {product.name}
             </Link>
           ))}
-          <Link href="/custom" prefetch={route === "/custom" ? false : undefined}>
+          {/* The nav says the door's name in the chrome's own words. A page
+              title is written for a search result, and is longer. */}
+          <Link href={customPage.path} prefetch={route === customPage.path ? false : undefined}>
             Custom agents
           </Link>
           <SectionLink home={home} hash="#pricing">
@@ -86,6 +97,12 @@ export function SiteHeader({ route }: Chrome) {
           <SectionLink home={home} hash="#questions">
             Questions
           </SectionLink>
+          {/* Who is behind the work. A buyer weighing a build looks for this
+              from whichever page brought them in, so it is in the header and
+              not with the legal pages in the footer. */}
+          <Link href={aboutPage.path} prefetch={route === aboutPage.path ? false : undefined}>
+            About
+          </Link>
         </nav>
         <a className="btn btn--signal" href={briefHref}>
           Send us a brief
@@ -116,10 +133,29 @@ export function SiteFooter({ route }: Chrome) {
           </div>
           <p className="contact">
             Or write to <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+            What happens after you write, and who you are writing to, is on the{" "}
+            <Link href={contactPage.path} prefetch={route === contactPage.path ? false : undefined}>
+              contact page
+            </Link>
+            .
           </p>
         </div>
         <div className="foot">
           <Brand route={route} />
+          {/* Quiet by design: these are not the action on any page, and they
+              are in the footer rather than the header because they are doors
+              to nothing. See `legalPages` in the content module. */}
+          <nav className="foot__legal" aria-label="Legal">
+            {legalPages.map((page) => (
+              <Link
+                href={page.path}
+                key={page.path}
+                prefetch={route === page.path ? false : undefined}
+              >
+                {page.title}
+              </Link>
+            ))}
+          </nav>
           <span>
             Software development agency in {location.city}, {location.country}.
             Copyright {new Date().getFullYear()}.

@@ -1,0 +1,90 @@
+/*
+ * Whether a reader can get to a page, and back out of it.
+ *
+ * A job page exists to be found: a buyer searches the job, lands on it, and
+ * the page hands them on to the door where the work is priced. A product page
+ * is where the ready-made door leads. A page the lists or the door stop
+ * linking to is an orphan a crawler discovers last and a reader never at all,
+ * and nothing in the export says so out loud, which is why this reads the
+ * emitted HTML rather than the lists. The Slack page is found the same way,
+ * from the channels section, and hands on to the same door.
+ */
+import { expect, test } from "bun:test";
+import {
+  customPage,
+  evalSuitePage,
+  jobPages,
+  productPage,
+  products,
+  slackPage,
+} from "../src/app/content";
+import { decodeEntities, fileFor, mainOf, readExport } from "./export";
+
+/* Every path a piece of markup links to, in document order. */
+function linkedPaths(markup: string): string[] {
+  return [...markup.matchAll(/<a\b[^>]*?\shref="([^"]*)"/g)].map(([, href]) =>
+    decodeEntities(href),
+  );
+}
+
+/*
+ * Every path the page body links to, in document order. The header and the
+ * footer link the door from every route already, so a link that counts as one
+ * page leading to another is one the page itself writes.
+ */
+function bodyPaths(file: string): string[] {
+  return linkedPaths(mainOf(file));
+}
+
+for (const job of jobPages) {
+  test(`${job.path} is linked from both lists that print the job`, () => {
+    /* The home page indexes the jobs and the custom door describes them, so
+     * both rows lead here. */
+    for (const path of ["/", customPage.path]) {
+      expect(bodyPaths(fileFor(path))).toContain(job.path);
+    }
+  });
+
+  test(`${job.path} leads on to the custom door`, () => {
+    /* The job is not in the catalogue, so the page a reader lands on has to
+     * hand them to the door that sells the work. */
+    expect(bodyPaths(fileFor(job.path))).toContain(customPage.path);
+  });
+}
+
+for (const page of products.map(productPage)) {
+  test(`${page.path} is linked from the ready-made door`, () => {
+    /* The door on the home page is the one body link to a product page, and
+     * it is written by hand while the route follows the slug, so a renamed
+     * slug would leave the door pointing at a page the build no longer emits. */
+    expect(bodyPaths(fileFor("/"))).toContain(page.path);
+  });
+}
+
+test(`${evalSuitePage.path} is linked from the mechanism section of the home page`, () => {
+  /* The explainer is the fuller answer to the one line the mechanism section
+   * gives on the eval suite, so that section is where a reader is handed on.
+   * A link elsewhere on the page is not that. */
+  const home = readExport(fileFor("/"));
+  const section = /<section\b[^>]*\bid="mechanism"[^>]*>([\s\S]*?)<\/section>/.exec(home);
+  if (!section) {
+    throw new Error("The home page carries no mechanism section.");
+  }
+  expect(linkedPaths(section[1])).toContain(evalSuitePage.path);
+});
+
+/* The pages that print the channels section, which is where the Slack page is
+ * linked from: the home page, the custom door and every job page. */
+const printChannels = ["/", customPage.path, ...jobPages.map((job) => job.path)];
+
+test(`${slackPage.path} is linked from every page that prints the channels section`, () => {
+  for (const path of printChannels) {
+    expect(bodyPaths(fileFor(path))).toContain(slackPage.path);
+  }
+});
+
+test(`${slackPage.path} leads on to the custom door`, () => {
+  /* An agent in Slack is custom work, and the page prints no price of its
+   * own, so it has to hand the reader to the door that names one. */
+  expect(bodyPaths(fileFor(slackPage.path))).toContain(customPage.path);
+});

@@ -5,21 +5,21 @@
  * object and no route handler is imported here.
  *
  * The content module is the exception, and it is imported for one reason: the
- * route list has to follow the same two lists `src/app/sitemap.ts` follows, so
- * that a page or a product added there is covered with no test edit.
+ * route list has to follow `indexablePages`, the list `src/app/sitemap.ts`
+ * walks, so that a page or a product added there is covered with no test edit.
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { pageUrl, products, siteUrl, writtenPages } from "../src/app/content";
+import { indexablePages, type PageRecord, pageUrl, siteUrl } from "../src/app/content";
 
 /* The directory `output: "export"` writes. Run a build before the suite. */
 export const exportRoot = join(import.meta.dir, "..", "out");
 
 export { siteUrl };
 
-export type Route = {
-  /* The path a crawler asks for, as the canonical URL states it. */
-  path: string;
+/* A route the suite reads: the record the content module holds for that page,
+ * and where the export puts it. */
+export type Route = PageRecord & {
   /* The absolute URL the page must name as its canonical. */
   url: string;
   /* The file the build emits for it, relative to the export root. */
@@ -27,30 +27,54 @@ export type Route = {
 };
 
 /*
- * A route, from its path. The URL follows `pageUrl`, the one rule the
+ * A route, from its page record. The URL follows `pageUrl`, the one rule the
  * canonical, the sitemap and the graph all follow, so the suite never argues
  * with the export about how a page's URL is spelled. The file is the export's
  * own naming: the home page is `index.html`, and every other route maps
  * straight across.
  */
-function route(path: string): Route {
+function route(page: PageRecord): Route {
   return {
-    path,
-    url: pageUrl(path),
-    file: path === "/" ? "index.html" : `${path.slice(1)}.html`,
+    ...page,
+    url: pageUrl(page.path),
+    file: page.path === "/" ? "index.html" : `${page.path.slice(1)}.html`,
   };
 }
 
 /*
- * The routes a crawler should index: the pages we write by hand, then one page
- * per product in the catalogue. These are the two lists `src/app/sitemap.ts`
- * walks, so a written page or a product added to the content module is checked
- * here, canonical, title, description, unfurl image and graph, with no edit.
+ * The routes a crawler should index: the pages we write by hand, then the
+ * jobs that have a page of their own, then one page per product in the
+ * catalogue. That is `indexablePages`, the list `src/app/sitemap.ts` walks,
+ * so a written page, a job page or a product added to the content module is
+ * checked here, canonical, title, description, unfurl image and graph, with
+ * no edit.
  */
-export const indexableRoutes: Route[] = [
-  ...writtenPages.map((page) => route(page.path)),
-  ...products.map((product) => route(`/${product.slug}`)),
-];
+export const indexableRoutes: Route[] = indexablePages.map(route);
+
+/*
+ * Where the export put a page the content module holds a record for. A page
+ * a crawler is not asked to index has no sitemap entry and nothing watching
+ * its canonical, so being absent from the indexable list is the failure,
+ * never a reason to skip.
+ */
+export function fileFor(path: string): string {
+  const found = indexableRoutes.find((candidate) => candidate.path === path);
+  if (!found) {
+    throw new Error(`${path} is published but is not a route this site asks anyone to index.`);
+  }
+  return found.file;
+}
+
+/*
+ * The two files one 404 is written to. `out/404.html` is what a static host
+ * serves; `out/_not-found.html` is the route file the build also emits. They
+ * are byte-identical, and both are cheap to check.
+ */
+export const notFoundFiles = ["404.html", "_not-found.html"];
+
+/* Every page a reader can land on: the routes we ask to be indexed, and the
+ * ones a wrong address lands on. */
+export const everyPage = [...indexableRoutes.map((route) => route.file), ...notFoundFiles];
 
 /*
  * Reads a file from the export. A missing file throws, because a route the
@@ -64,6 +88,21 @@ export function readExport(file: string): string {
       `${file} is missing from the export. Build first with \`bun run build\`; a route that emits no file is a failure.`,
     );
   }
+}
+
+/*
+ * A page's own copy, without the chrome: the markup inside `<main>`, as the
+ * build wrote it. The header and the footer link the doors, the mailbox and
+ * the legal pages on every page, so a reader of the whole document cannot
+ * tell whether the page itself answers. A page with no main element has no
+ * body to read, which is a failure and never an empty result.
+ */
+export function mainOf(file: string): string {
+  const found = /<main\b[^>]*>([\s\S]*?)<\/main>/.exec(readExport(file));
+  if (!found) {
+    throw new Error(`${file} emits no main element.`);
+  }
+  return found[1];
 }
 
 /* React escapes these five when it writes an attribute or a text node. */
@@ -112,6 +151,22 @@ export function linkHrefs(document: string, rel: string): string[] {
 }
 
 /*
+ * Every `<script>` a document carries, in document order: the attributes of
+ * the tag, and the code between the tags. A tag that loads a file has a `src`
+ * and an empty body; a tag that carries code has a body and no `src`. Both
+ * matter here, so both are read, and a boolean attribute such as `defer`
+ * reads as an empty string.
+ */
+export type ScriptTag = { attributes: Record<string, string>; body: string };
+
+export function scriptTags(document: string): ScriptTag[] {
+  return [...document.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/g)].map(([, tag, body]) => ({
+    attributes: attributes(tag),
+    body,
+  }));
+}
+
+/*
  * The inner text of every occurrence of one tag. Serves `<title>` and `<h1>`
  * in a page and `<loc>` in the sitemap. The whole document is parsed, not just
  * the head: the JSON-LD script sits in the body.
@@ -119,6 +174,16 @@ export function linkHrefs(document: string, rel: string): string[] {
 export function tagTexts(document: string, tag: string): string[] {
   const pattern = new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)</${tag}>`, "g");
   return [...document.matchAll(pattern)].map(([, text]) => decodeEntities(text.trim()));
+}
+
+/*
+ * Every URL the built sitemap lists, in the order it states them. The sitemap
+ * is the list of routes a crawler is asked to fetch, so three files read it:
+ * one checks it against the page records, one checks each entry resolves to a
+ * page, and one checks the plain-text index states the same URLs.
+ */
+export function sitemapUrls(): string[] {
+  return tagTexts(readExport("sitemap.xml"), "loc");
 }
 
 /* A node in a JSON-LD graph, read as free-form data: schema.org vocabulary is

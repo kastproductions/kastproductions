@@ -1,64 +1,49 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import { AgentConsole } from "@/components/agent-console";
 import { ChannelsSection } from "@/components/channels-section";
+import { ClientsStrip } from "@/components/clients-strip";
+import { JobRows } from "@/components/job-rows";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
+  aboutPage,
   brand,
   callHref,
-  clients,
-  description,
   doors,
+  evalSuitePage,
   fitDimensions,
   fitIntro,
   founder,
   hero,
-  jobs,
+  homePage,
   jobsIntro,
   location,
   mailtoFor,
   mechanism,
   mechanismIntro,
-  prices,
+  openPrices,
   pricingIntro,
   products,
   questions,
-  references,
   stack,
-  title,
 } from "./content";
-import { indexedRobots, openGraphImage } from "./head-directives";
-import { graphHtml, webPage } from "./structured-data";
+import { pageMetadata } from "./head-directives";
+import { graphHtml, pageNodes } from "./structured-data";
 
-export const metadata: Metadata = {
-  alternates: {
-    canonical: "/",
-  },
-  robots: indexedRobots,
-  openGraph: {
-    ...openGraphImage,
-    type: "website",
-    url: "/",
-    siteName: brand,
-    locale: "en_GB",
-    title,
-    description,
-  },
-};
+export const metadata = pageMetadata(homePage);
 
-/* A door and a price that depend on a ready-made product stay off the page
- * until one runs. See the Catalogue entry in CONTEXT.md. */
+/* A door that depends on a ready-made product stays off the page until one
+ * runs. See the Catalogue entry in CONTEXT.md. `openPrices` is the same rule
+ * over the ways to buy, and the terms page prints the same list. */
 const openDoors = doors.filter((door) => !door.catalogue || products.length > 0);
-const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
 
-/* The home page's own node, beside the site-wide ones the layout renders. The
- * home page sells no one thing, so it states that it is a page and stops. */
-const graph = graphHtml([webPage({ path: "/", name: title, description })]);
+/* The home page's own nodes, beside the site-wide ones the layout renders: the
+ * page with the questions it answers, and the plans it prints as offers. */
+const graph = graphHtml(pageNodes(homePage, { prices: openPrices, questions }));
 
 export default function Home() {
   return (
     <>
-      <SiteHeader route="/" />
+      <SiteHeader route={homePage.path} />
 
       <main id="main">
         <section className="band band--flush hero">
@@ -79,22 +64,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="band strip" id="clients" aria-labelledby="clients-title">
-          <div className="wrap strip__grid">
-            <h2 id="clients-title">
-              Companies we have shipped for, across four continents
-            </h2>
-            <ul className="strip__list">
-              {clients.map((client) => (
-                <li key={client.name}>
-                  <a href={client.url} rel="noreferrer">
-                    {client.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+        <ClientsStrip heading="Companies we have shipped for, across four continents" />
 
         <section className="band" id="work" aria-labelledby="work-title">
           <div className="wrap unit">
@@ -103,17 +73,7 @@ export default function Home() {
               <p>{jobsIntro.lede}</p>
             </div>
             <div className="unit__body">
-              <ul className="rows">
-                {jobs.map((job) => (
-                  <li key={job.title}>
-                    <div className="row">
-                      <span className="row__label">{job.title}</span>
-                      <p>{job.body}</p>
-                      <span className="row__note">{job.systems}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <JobRows />
               <ul className="doors" id="doors">
                 {openDoors.map((door) => (
                   <li className="door" key={door.name}>
@@ -170,6 +130,9 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+              <Link className="pull" href={evalSuitePage.path}>
+                {mechanismIntro.more}
+              </Link>
             </div>
           </div>
         </section>
@@ -205,35 +168,16 @@ export default function Home() {
               <p>
                 {founder} founded {brand} in {location.city} and has shipped for
                 the companies listed above. He owns the agents we build and
-                signs the merges we make on a client&apos;s repository. The
-                references below are quoted as written.
+                signs the merges we make on a client&apos;s repository.
               </p>
             </div>
-            <ul className="unit__body refs">
-              {references.map((reference) => (
-                <li key={reference.name}>
-                  <figure>
-                    <blockquote>
-                      <p>{reference.quote}</p>
-                    </blockquote>
-                    <figcaption>
-                      <img
-                        src={reference.portrait}
-                        alt=""
-                        width={176}
-                        height={176}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span className="refs__who">
-                        <b>{reference.name}</b>
-                        <span>{reference.position}</span>
-                      </span>
-                    </figcaption>
-                  </figure>
-                </li>
-              ))}
-            </ul>
+            <div className="unit__body">
+              {/* The six references and their portraits live on the about
+                  page, which is the one place they are printed. */}
+              <Link className="pull" href={aboutPage.path}>
+                Who he is, and six references quoted as written
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -254,7 +198,7 @@ export default function Home() {
                   <p>{plan.body}</p>
                   <div className="plan__figures">
                     <div className="plan__price">
-                      {plan.price} <span>{plan.per}</span>
+                      {plan.amount} <span>{plan.per}</span>
                     </div>
                     <ul className="plan__includes">
                       {plan.includes.map((item) => (
@@ -290,7 +234,7 @@ export default function Home() {
         </section>
       </main>
 
-      <SiteFooter route="/" />
+      <SiteFooter route={homePage.path} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: graph }}

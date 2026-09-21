@@ -1,57 +1,25 @@
-import type { Metadata } from "next";
 import { ChannelsSection } from "@/components/channels-section";
 import { RunRecord } from "@/components/run-record";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import type { Product } from "@/app/content";
-import {
-  brand,
-  callHref,
-  leadTime,
-  mailtoFor,
-  work,
-} from "@/app/content";
-import { indexedRobots, openGraphImage } from "@/app/head-directives";
-import { breadcrumbs, graphHtml, service, webPage } from "@/app/structured-data";
+import { callHref, leadTime, mailtoFor, productPage, work } from "@/app/content";
+import { graphHtml, pageNodes } from "@/app/structured-data";
 
 /*
  * One ready-made product, on its own page. The markup lives here rather than in
  * a route, because `output: "export"` refuses a dynamic segment that generates
- * no paths, and the catalogue is empty until a product runs. Turning a product
- * on takes two edits, both listed in the Catalogue section of README.md: add it
- * to `products`, then add a route file that calls this component.
+ * no paths, and the catalogue holds only a product that runs today. A product
+ * takes two edits, both listed in the Catalogue section of README.md: add it
+ * to `products`, then add a route file that calls this component and builds its
+ * metadata from `productPage`, the way a written page builds its own.
  */
 
-export function productMetadata(product: Product): Metadata {
-  return {
-    title: product.name,
-    description: product.promise,
-    alternates: { canonical: `/${product.slug}` },
-    robots: indexedRobots,
-    openGraph: {
-      ...openGraphImage,
-      type: "website",
-      url: `/${product.slug}`,
-      siteName: brand,
-      locale: "en_GB",
-      title: `${product.name} | ${brand}`,
-      description: product.promise,
-    },
-  };
-}
-
 export function ProductPage({ product }: { product: Product }) {
-  /* The product's own nodes, built from its record, so adding a product to the
-   * catalogue gives its page a graph with no further edit. */
-  const page = {
-    path: `/${product.slug}`,
-    name: product.name,
-    description: product.promise,
-  };
-  const graph = graphHtml([
-    webPage(page),
-    service({ ...page, prices: product.prices }),
-    breadcrumbs(page),
-  ]);
+  /* The product's own page record, and the nodes that follow from it, so
+   * adding a product to the catalogue gives its page a graph with no further
+   * edit. */
+  const page = productPage(product);
+  const graph = graphHtml(pageNodes(page, { prices: product.prices }));
 
   return (
     <>
