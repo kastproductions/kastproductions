@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import { callHref, channels, customPage, mailtoFor, slackPage } from "../content";
+import { callHref, channels, customPage, mailtoFor, slackPage, slackSubject } from "../content";
 import { pageMetadata } from "../head-directives";
 import { graphHtml, pageNodes } from "../structured-data";
 
@@ -22,7 +22,7 @@ const teamsDoc = "https://flueframework.com/docs/ecosystem/channels/teams/";
 
 /* Every call to action on the page carries the channel as its subject, so a
  * click is counted under the door a reader came in through. */
-const brief = mailtoFor("Agent in Slack");
+const brief = mailtoFor(slackSubject);
 
 export default function Slack() {
   return (
@@ -56,8 +56,8 @@ export default function Slack() {
               <h2 id="address-title">How a person addresses it</h2>
               <p>
                 The agent has a name in your workspace, the way a colleague
-                does. Nobody learns a command language: they ask in the channel
-                where the work already happens.
+                does. Nobody installs anything or learns a new tool: they ask
+                in the channel where the work already happens.
               </p>
             </div>
             <div className="unit__body">
@@ -89,8 +89,8 @@ export default function Slack() {
                     <span className="row__label">A slash command, where you prefer one</span>
                     <p>
                       A team that would rather type a command than a mention
-                      can have one. Slack sends it to the agent the same way,
-                      and the agent answers where it was asked.
+                      can have one. Slack sends the command to the agent, which
+                      acknowledges it at once and starts the work.
                     </p>
                   </div>
                 </li>
@@ -128,10 +128,10 @@ export default function Slack() {
                   <div className="row row--stack">
                     <span className="row__label">A named person presses the button</span>
                     <p>
-                      Slack delivers the press to your agent, with who pressed
-                      it. The rule that only a named person&rsquo;s press counts
-                      is ours to write, because the framework delivers the
-                      press and leaves the policy to us.
+                      Slack delivers the press to your agent. The rule that only
+                      a named person&rsquo;s press counts is ours to write,
+                      because Flue delivers the press and leaves the policy to
+                      us.
                     </p>
                   </div>
                 </li>
@@ -182,10 +182,10 @@ export default function Slack() {
                   <div className="row">
                     <span className="row__label">A Slack app in that workspace</span>
                     <p>
-                      The agent holds two values from it. Slack signs every
-                      request it sends, and the agent checks the signature
-                      before it reads a word, so the first is the app&rsquo;s
-                      signing secret. The second is the bot token the agent
+                      The agent holds two values from it. The first is the
+                      app&rsquo;s signing secret: the agent verifies the
+                      signature on every request before it reads a word of it.
+                      The second is the bot token the agent
                       answers with. Both stay in your project.
                     </p>
                   </div>
@@ -194,9 +194,8 @@ export default function Slack() {
                   <div className="row">
                     <span className="row__label">Somewhere for it to run</span>
                     <p>
-                      Your own Cloudflare account, or Node.js where your
-                      platform needs it there instead. The Slack channel runs
-                      in both.
+                      Your own Cloudflare account, or Node.js. Flue&rsquo;s
+                      Slack channel runs on both.
                     </p>
                   </div>
                 </li>
@@ -211,8 +210,8 @@ export default function Slack() {
               <h2 id="teams-title">If your team is in Microsoft Teams</h2>
               <p>
                 The agent reads the same way to your team: a person mentions it
-                in a channel, and it answers in that conversation. What changes
-                is the set-up, and it changes on your side of it.
+                in a channel, and it answers where it was asked. What changes
+                is what you provide, and it changes on your side of it.
               </p>
             </div>
             <div className="unit__body">
@@ -230,10 +229,10 @@ export default function Slack() {
                   <div className="row">
                     <span className="row__label">Teams holds three, and one registration</span>
                     <p>
-                      An app ID, a tenant ID and an app password, and before
-                      Teams sends the agent anything, an Azure Bot registration
-                      whose messaging endpoint points at your agent. None of
-                      that exists in a Teams tenant until somebody creates it.
+                      An app ID, a tenant ID and an app password, and an Azure
+                      Bot registration whose messaging endpoint points at your
+                      agent before Teams sends it anything. The registration is
+                      the step Slack does not have.
                     </p>
                   </div>
                 </li>
@@ -246,15 +245,13 @@ export default function Slack() {
           </div>
         </section>
 
-        <section className="band band--panel" id="pricing" aria-labelledby="slack-price-title">
+        <section className="band band--panel" id="cost" aria-labelledby="slack-cost-title">
           <div className="wrap unit">
             <div className="unit__head">
-              <h2 id="slack-price-title">What it costs</h2>
+              <h2 id="slack-cost-title">What it costs</h2>
               <p>
                 An agent in Slack is shaped around the work your team asks it
-                for, so it is custom work and the custom door prices it: a
-                floor to build, a monthly price to operate, and one fixed price
-                once we have read your workflow.
+                for, so it is custom work, and the custom door prices it.
               </p>
             </div>
             <div className="unit__body">

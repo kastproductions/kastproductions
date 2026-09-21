@@ -98,3 +98,30 @@ built home, custom and failed-payment pages each link `/slack` from the channels
 `/slack` links `/custom`. Looked at with `agent-browser` at 390 px and 1440 px; the first draft's
 price band was two buttons that stretched to the grid row height at desktop, replaced by the
 note-and-pull-link pattern the job page uses. `bun run test`: 168 pass. `bun run lint`: clean.
+
+The two-axis review of `e98a9b1...HEAD` ran after the second commit. What it found, and the
+answer:
+
+- **Sentences that reached past Flue's documentation.** "With who pressed it" (Slack's payload,
+  not Flue's page), "Slack signs every request", "the agent answers where it was asked" for a
+  slash command, and "none of that exists in a Teams tenant until somebody creates it" are cut
+  or rewritten to what the documentation states: the agent verifies the signature; the agent
+  acknowledges a command at once and starts the work; the registration is the step Slack does
+  not have.
+- **"Button" is kept.** Flue documents the Interactions surface and `block_actions`, and the
+  home page already states "Slack delivers a button press" in `stack.ours`, so the page says
+  no more than the site already does.
+- **The Teams counts disagreed on one screen**: "three values and one registration" beside the
+  note's "one step". The row now says the registration is the one step Slack does not have, and
+  the three values are what it holds; the note prints as written.
+- **`CONTEXT.md` `_Avoid_` words**: "set-up" (Prerequisite) and "conversation" (Session) are
+  gone, and "the framework" is "Flue", which the glossary says we name. "Thread" stays where it
+  names Slack's own thread, the place; the work in it is called a session every time.
+- **The mail subject moved into `content.ts`** as `slackSubject`, beside every other door's
+  subject, so the analytics vocabulary is in one file.
+- **The price band's head repeated the note.** Cut to one sentence; the note carries the link.
+  Its `id` is `cost`, because it prints no price; the header's Pricing link points at the
+  home page from every route regardless.
+- **Not taken:** `channels.teamsNote` is byte-identical to a FAQ answer on the home page. That
+  duplication predates this ticket and the FAQ is home page copy, so it is left for whoever
+  next edits the questions.

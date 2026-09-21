@@ -1025,6 +1025,10 @@ export const slackPage: PageRecord = {
   date: "2026-09-21",
 };
 
+/* The mail subject every call to action on the Slack page carries, which is
+ * how the analytics event names the door a reader came through. */
+export const slackSubject = "Agent in Slack";
+
 /* The pages we write by hand, as against the product pages the catalogue
  * makes. */
 export const writtenPages: PageRecord[] = [
