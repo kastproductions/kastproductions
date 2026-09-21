@@ -455,6 +455,135 @@ export type JobPage = PageRecord & {
   more: string;
 };
 
+export const contentPublishing: JobPage = {
+  path: "/content-publishing",
+  title: "Content publishing agent",
+  description:
+    "Content publishing, run by a standing agent: a brief in Notion comes back as a drafted and edited page in your CMS, and publishing waits for a name.",
+  date: "2026-09-21",
+  heading: "An agent that turns a brief into a page ready to publish.",
+  lede: "A brief marked ready in Notion comes back as a drafted and edited page, waiting unpublished in your CMS. Nothing goes live until a named person publishes it.",
+  authority:
+    "It acts behind an approval gate. Reading the brief, drafting the page and editing the draft against the brief needs nobody, and the finished draft then stops.",
+  gate: "The gate sits before a page is published. A published page reaches everyone outside your company, so a named person reads it and publishes it.",
+  steps: [
+    {
+      title: "Reads the brief",
+      body: "A brief marked ready in Notion wakes the agent. It reads what the page is for, who it is for and what it must say, in the words the brief uses.",
+    },
+    {
+      title: "Drafts the page",
+      body: "The draft goes into your CMS as an unpublished page, laid out the way your team already lays out a page there. Nothing is live yet.",
+    },
+    {
+      title: "Edits the draft against the brief",
+      body: "A second pass reads the whole draft as a reader would, checks it against every line of the brief, and edits it. The edited draft waits where the first one did.",
+    },
+    {
+      title: "Reports the page as ready",
+      body: "One message in the channel your team already works in: which brief, where the draft waits, and what the edit pass changed. Publishing waits for a name.",
+    },
+  ],
+  systems: [
+    {
+      name: "Notion",
+      role: "Where the brief lives, and what wakes the agent: a brief marked ready starts it, and the brief is what the draft is checked against.",
+    },
+    {
+      name: "Your CMS",
+      role: "Where the draft waits, unpublished, in the place your team already writes. The agent writes the draft and stops there.",
+    },
+  ],
+  subject: "Content publishing",
+  more: "How a brief becomes a page",
+};
+
+export const socialScheduling: JobPage = {
+  path: "/social-scheduling",
+  title: "Social scheduling agent",
+  description:
+    "Social scheduling, run by a standing agent: your team asks in Slack, the agent drafts in Typefully, and a post joins the queue once a named person approves it.",
+  date: "2026-09-21",
+  heading: "An agent that drafts and schedules your posts from a channel.",
+  lede: "Your team asks for a post in the channel they already work in. The agent drafts it in Typefully, and it joins the queue once a named person approves it. Every batch comes back as a report of what went out.",
+  authority:
+    "It acts behind an approval gate. Reading the ask, drafting the post and reporting the batch needs nobody, and every draft then stops.",
+  gate: "The gate sits before a post joins the queue. A queued post goes out under your name at its time, so a named person reads the draft and approves it.",
+  steps: [
+    {
+      title: "Takes the ask in the channel",
+      body: "A person addresses the agent by name in Slack and says what the post is about and for which account. Anything the ask leaves out, the agent asks back in the same thread.",
+    },
+    {
+      title: "Drafts in Typefully",
+      body: "The draft goes into Typefully as a draft, in the length and shape that account posts in. Nothing is scheduled yet.",
+    },
+    {
+      title: "Queues once a name approves",
+      body: "The draft comes back to the channel for a name. Approved, the agent puts it in the Typefully queue; sent back with changes, it drafts again.",
+    },
+    {
+      title: "Reports the batch",
+      body: "When a batch has gone out, one message in the channel says which posts went out and when, and what is still waiting for a name.",
+    },
+  ],
+  systems: [
+    {
+      name: "Slack",
+      role: "Where your team asks, and where every draft comes back for a name. Slack delivers the button press that moves a draft into the queue.",
+    },
+    {
+      name: "Typefully",
+      role: "Where the draft is written and, once approved, queued. The agent writes into the drafts and the queue, and nothing else there.",
+    },
+  ],
+  subject: "Social scheduling",
+  more: "How a post gets drafted and queued",
+};
+
+export const supportTicketTriage: JobPage = {
+  path: "/support-ticket-triage",
+  title: "Support ticket triage agent",
+  description:
+    "Support ticket triage, run by a standing agent: every new ticket read and grouped, a reply drafted where the answer is known, a GitHub issue where it is a bug.",
+  date: "2026-09-21",
+  heading: "An agent that reads every support ticket before your team does.",
+  lede: "Every new ticket in Zendesk or Intercom is read and grouped as it arrives. Where the answer is already written down, the reply is drafted in the ticket and waits for a name. Where the ticket is a bug, it is filed as a GitHub issue.",
+  authority:
+    "It acts behind an approval gate. Reading the ticket, grouping it, drafting the reply and filing the issue needs nobody, and every reply then stops.",
+  gate: "The gate sits before a reply reaches your customer. A drafted reply waits in the ticket, and a named person on your support team reads it and sends it. An issue in your own repository crosses no gate.",
+  steps: [
+    {
+      title: "Reads the ticket as it arrives",
+      body: "The new ticket wakes the agent. It reads what the customer wrote and what your team has already told that customer.",
+    },
+    {
+      title: "Groups it with the tickets like it",
+      body: "A question your help centre answers, a bug three people have hit this morning and a request nobody has seen before are three different queues. The agent tags the ticket with which one it is in.",
+    },
+    {
+      title: "Drafts the reply where the answer is known",
+      body: "Where the answer is already written down, in your help centre or in a reply your team sent before, the agent writes it into the ticket as a draft, in your team's own wording. The draft waits for a name.",
+    },
+    {
+      title: "Files the bug",
+      body: "Where the ticket is a bug, the agent opens an issue in your GitHub repository: what the customer did, what happened, and which tickets report it. A bug three people report is one issue with three tickets on it.",
+    },
+  ],
+  systems: [
+    {
+      name: "Zendesk or Intercom",
+      role: "The new ticket wakes the agent, and this is where it reads, tags and drafts. Every draft waits here, unsent, for a named person.",
+    },
+    {
+      name: "GitHub",
+      role: "Where a bug becomes an issue in your own repository, linked back to every ticket that reports it. Your engineers read it where they already work.",
+    },
+  ],
+  subject: "Support ticket triage",
+  more: "How the triage works",
+};
+
 export const failedPaymentRecovery: JobPage = {
   path: "/failed-payment-recovery",
   title: "Failed payment recovery agent",
@@ -500,21 +629,63 @@ export const failedPaymentRecovery: JobPage = {
   more: "How the follow-up works",
 };
 
+export const shopifyOperations: JobPage = {
+  path: "/shopify-operations",
+  title: "Shopify operations agent",
+  description:
+    "Shopify operations, run by a standing agent: stock, pricing and order exceptions watched on a schedule, and the ones that need a decision brought to a person.",
+  date: "2026-09-21",
+  heading: "An agent that watches your store, so a person sees only the exceptions.",
+  lede: "On the schedule you set, the agent reads your Shopify store for what is out of line: stock running low, a price outside the range you set, an order that stalled. It reports what it found in one place and brings the ones that need a decision to a named person.",
+  authority:
+    "It reads and reports. Nothing in your store changes because the agent ran: it reads Shopify, sorts what it found and writes one report. Every change is a person's to make.",
+  gate: "The gate sits in front of every change to the store. An exception that needs a decision comes to a named person with the product, the order or the price it concerns and the choices open, and that person makes the change in Shopify.",
+  steps: [
+    {
+      title: "Reads the store on a schedule",
+      body: "At the times you set, the agent reads Shopify: inventory levels, product prices and the orders that changed since it last looked.",
+    },
+    {
+      title: "Sorts what is out of line",
+      body: "Stock below the level you set, a price outside the range you set, an order that has not moved in the time you set. What counts as an exception is written in the spec with you, and the agent applies that and nothing else.",
+    },
+    {
+      title: "Reports the run in one place",
+      body: "One message in the channel your operations team already works in: what it read, what it found out of line, and which of those need a decision.",
+    },
+    {
+      title: "Brings a decision to a person",
+      body: "An exception that needs a decision comes to a named person with everything the decision needs: the product, the order or the price, and what the choices are. The change is that person's to make, in Shopify.",
+    },
+  ],
+  systems: [
+    {
+      name: "Shopify",
+      role: "The store it reads: inventory, products and their prices, and orders. The agent reads, and writes nothing back.",
+    },
+  ],
+  subject: "Shopify operations",
+  more: "How the store is watched",
+};
+
 export const jobs: Job[] = [
   {
     title: "Brief to published post",
     systems: "Notion, your CMS",
     body: "A brief goes in, a drafted and edited page comes back, and publishing waits for a name.",
+    page: contentPublishing,
   },
   {
     title: "Draft and schedule",
     systems: "Slack, Typefully",
     body: "Your team asks in a channel. The agent drafts, queues and reports what the last batch did.",
+    page: socialScheduling,
   },
   {
     title: "Support triage",
     systems: "Zendesk or Intercom, GitHub",
     body: "Every new ticket gets read, grouped and answered where the answer is known, and filed as an issue where it is a bug.",
+    page: supportTicketTriage,
   },
   {
     title: "Failed-payment follow-up",
@@ -526,6 +697,7 @@ export const jobs: Job[] = [
     title: "Store operations",
     systems: "Shopify",
     body: "Stock, pricing and order exceptions watched on a schedule, with the ones that need a decision brought to a person.",
+    page: shopifyOperations,
   },
 ];
 
