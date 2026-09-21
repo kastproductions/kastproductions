@@ -7,6 +7,7 @@ import {
   contactEmail,
   customPage,
   homePage,
+  legalPages,
   location,
   products,
 } from "@/app/content";
@@ -128,6 +129,20 @@ export function SiteFooter({ route }: Chrome) {
         </div>
         <div className="foot">
           <Brand route={route} />
+          {/* Quiet by design: these are not the action on any page, and they
+              are in the footer rather than the header because they are doors
+              to nothing. See `legalPages` in the content module. */}
+          <nav className="foot__legal" aria-label="Legal">
+            {legalPages.map((page) => (
+              <Link
+                href={page.path}
+                key={page.path}
+                prefetch={route === page.path ? false : undefined}
+              >
+                {page.title}
+              </Link>
+            ))}
+          </nav>
           <span>
             Software development agency in {location.city}, {location.country}.
             Copyright {new Date().getFullYear()}.

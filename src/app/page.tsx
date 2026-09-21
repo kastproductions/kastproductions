@@ -31,8 +31,8 @@ import { graphHtml, pageNodes } from "./structured-data";
 export const metadata = pageMetadata(homePage);
 
 /* A door that depends on a ready-made product stays off the page until one
- * runs. See the Catalogue entry in CONTEXT.md. `openPrices` holds the plans
- * that pass the same test. */
+ * runs. See the Catalogue entry in CONTEXT.md. `openPrices` is the same rule
+ * over the ways to buy, and the terms page prints the same list. */
 const openDoors = doors.filter((door) => !door.catalogue || products.length > 0);
 
 /* The home page's own nodes, beside the site-wide ones the layout renders: the

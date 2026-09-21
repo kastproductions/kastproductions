@@ -851,6 +851,28 @@ a { color: inherit; }
 }
 .foot .brand { margin-right: 0; font-size: .97rem; color: var(--type); }
 
+/* The three pages a buyer checks before a first call. Quiet by design: they
+ * are not the action on any page, so they never take the signal. */
+.foot__legal { display: flex; flex-wrap: wrap; gap: .2rem 1.35rem; }
+.foot__legal a { text-decoration: none; }
+.foot__legal a:hover { color: var(--type); }
+
+/* ---------------------------------------------------------------------------
+ * The legal pages
+ * ------------------------------------------------------------------------- */
+
+/* A link in the prose of a legal page leads somewhere else: the imprint, the
+ * mailbox, a processor's own notice. It reads as the `.strip__list` link
+ * does, hairline underline in the rules, signal only under the pointer,
+ * because following one is the reader's action and nothing else on these
+ * pages is. */
+.legal a {
+  text-decoration: underline;
+  text-decoration-color: var(--rule-2);
+  text-underline-offset: .25em;
+}
+.legal a:hover { text-decoration-color: var(--signal); }
+
 @media (max-width: 620px) {
   /* Brand and the one action on the first row, the sections on a rule below
    * it, so nothing in the header has to shrink to fit. */

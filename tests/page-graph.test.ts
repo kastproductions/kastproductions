@@ -10,7 +10,14 @@
  * pinning it.
  */
 import { expect, test } from "bun:test";
-import { custom, openPrices, type Price, products, questions } from "../src/app/content";
+import {
+  custom,
+  legalPages,
+  openPrices,
+  type Price,
+  products,
+  questions,
+} from "../src/app/content";
 import {
   type GraphNode,
   graphNodes,
@@ -57,12 +64,19 @@ function claim(amount: string): { currency: string; value: number } {
 }
 
 /*
- * What a route sells, from the content module. Every page that prints a price
- * offers it: the home page the plans it prints, and a door or a product page
- * its own. A route the suite cannot answer for is a failure, not a skip: that
- * is a page shipped with nobody watching what it claims.
+ * The offers a route owes, from the content module. A door and a product page
+ * each sell one thing and state it, and the home page offers the plans it
+ * prints. A legal page offers nothing: the terms print the same list of plans
+ * to say what a build buys, which is a description and not an offer, and the
+ * other two print no price at all.
+ *
+ * A route the suite cannot answer for is a failure, not a skip: that is a
+ * page shipped with nobody watching what it claims.
  */
-function pricesFor(path: string): Price[] {
+const statesNoOffer = legalPages.map((page) => page.path);
+
+function pricesFor(path: string): Price[] | null {
+  if (statesNoOffer.includes(path)) return null;
   if (path === "/") return openPrices;
   if (path === "/custom") return custom.prices;
   const product = products.find((entry) => `/${entry.slug}` === path);
@@ -104,6 +118,13 @@ for (const route of indexableRoutes) {
   test(`${route.path} offers the prices it prints`, () => {
     const prices = pricesFor(route.path);
     const sold = nodesOfType(readExport(route.file), "Service");
+    if (!prices) {
+      /* A page that sells nothing says so by carrying no service node. The
+       * terms print the plans to say what a build buys, and a crawler that
+       * read that as an offer would list the same price twice. */
+      expect(sold).toEqual([]);
+      return;
+    }
     if (sold.length !== 1) {
       /* Say which prices go unstated, so a page that loses its service node
        * fails with the offers it owes rather than a count. */

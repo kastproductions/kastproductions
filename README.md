@@ -78,6 +78,12 @@ src/app/
                        #   metadata and graph built from its page record
   custom/page.tsx      # The custom door: the jobs we take, channels, price; metadata
                        #   and graph built from its page record
+  privacy/page.tsx     # What the site collects, who processes it, how long it is kept
+  terms/page.tsx       # What a build buys and what the monthly work covers, from the
+                       #   prices and the lead time the content module holds
+  imprint/page.tsx     # The register entry: legal name, legal form, code, VAT number,
+                       #   registered address, director. It prints `company` and the
+                       #   mailbox under it, and nothing else
   content.ts           # Brand constants, client list, founder references, every word
                        #   of both doors, and the page records: the path, title,
                        #   description and copy date of every page we write by hand
@@ -102,7 +108,8 @@ src/app/
                        #   `noindex` there, and a second beside it is a contradiction
   icon.svg             # Favicon, drawn as the brand mark
 src/components/
-  site-chrome.tsx      # Header, footer and brand mark, shared by every page
+  site-chrome.tsx      # Header, footer and brand mark, shared by every page. The
+                       #   footer links privacy, terms and the imprint from every page
   channels-section.tsx # Where a standing agent is reachable, and what wakes it
   product-page.tsx     # One ready-made product, on its own page
   run-record.tsx       # The example run, on a product page
@@ -130,6 +137,8 @@ tests/
                        #   printed prices as offers, the questions the home page
                        #   answers, and one spelling of the site URL in every identifier
   analytics.test.ts    # Every page loads the tracker and counts a mailto click
+  legal.test.ts        # Every page links privacy, terms and the imprint, and the
+                       #   imprint prints every register fact `company` holds
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
@@ -162,7 +171,13 @@ The prices there are real: `prices` for the four ways to buy, and the `prices` f
 
 The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `openPrices`, which is the plans the catalogue leaves standing, so a plan the page keeps back is a plan the graph does not claim. One offer states one number, which is the `amount`, so a way to buy whose `per` words carry a second figure ("to build, then from €1,500 a month") offers its build floor and leaves the monthly one in prose. `custom.prices` and a product's prices avoid that by holding the build and the monthly price as two prices, and a way to buy would have to print them as two lines to do the same.
 
-`bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, so a click on it still names the door the reader came through.
+`company` holds what the Lithuanian register of legal entities holds: the legal name, the legal form, the registration code, the VAT number, the registered address and the director. The imprint prints those six, and `contactEmail` under them so a reader who has finished checking can write; nothing else goes on that page. `tests/legal.test.ts` fails if one of the six stops appearing there. A reader is on that page to check us against the register, so a detail we cannot point at in the register does not go in. Note that `company.registeredAddress` is not `location`: the copy says Vilnius, where the studio works, and the register holds an address in the Lazdijai district.
+
+`legalPages` is privacy, terms and the imprint, in the order the footer prints them. It is one list because four things read it: `writtenPages`, the footer, the suite's footer check, and the graph suite's list of pages that state no offer. A fourth page of this kind is a record and a route file, as any page is.
+
+`openPrices` is `prices` with the catalogue rule applied: a way to buy that depends on a ready-made product stays off every page until one runs. The home page and the terms page both print that list, so neither can print a price the other does not.
+
+`bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, so a click on it still names the door the reader came through. `contactEmail` is the mailbox the whole site uses, the privacy page included: it is the route by which a visitor's own words reach us.
 
 ## Adding a page
 
@@ -254,6 +269,8 @@ Nothing else moves. The door, the nav entry, the sitemap entry and its date, the
 Every claim on the page is either verifiable or labelled as an example.
 
 Real, and may be stated as fact: the 17 client companies, the 6 references with portraits, and the prices. All of them live in `src/app/content.ts`.
+
+The strictest case is `company`, which the imprint prints: every line of it is in the Lithuanian register of legal entities, and the reader is there to check one against the other. A legal page that states a fact the register does not hold is worse than no legal page, so nothing goes on the imprint, the privacy page or the terms that is not already in `content.ts` or in the register. That rule kept four things off those pages: a named supervisory authority, a governing law, a fixed retention period for mail, and the name of whoever runs the mailbox. The privacy page states the retention it can state, which is the 24 hours the analytics hash lives and a deletion on request, and it points at Vercel's own privacy notice for what the host keeps rather than summarising a document we do not control. Each of the four is the owner's to decide before the site states it.
 
 Also checkable, and worth keeping checkable: the channel lists in `channels` are the channels [Flue](https://flueframework.com/docs/ecosystem/) verifies, split into the chat channels a person addresses an agent in and the services that wake one with an event. The four items in `stack.ours` are the pieces Flue does not provide, so we write them. If Flue's ecosystem or its feature set moves, these lists move with it.
 

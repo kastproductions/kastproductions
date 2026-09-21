@@ -29,6 +29,28 @@ export const companyProfiles = ["https://github.com/kastproductions"];
 export const founderHandle = "@imkarolis";
 export const location = { city: "Vilnius", country: "Lithuania", countryCode: "LT" };
 
+/* The company as the Lithuanian register of legal entities holds it. The
+ * imprint prints these six lines, and `contactEmail` under them so a reader
+ * who has checked us can write; nothing else goes on that page. The privacy
+ * page names the same company as the one a visitor's data reaches. Read from
+ * the register entry at https://rekvizitai.vz.lt/en/company/kast_productions/,
+ * and edited only when the register changes.
+ *
+ * The registered address is not `location`. `location` is Vilnius, where the
+ * studio works and where the copy says we are; the register holds the address
+ * below. An imprint states the registered address, because that is the one a
+ * reader is checking against the register. */
+export const company = {
+  legalName: "Kast productions, MB",
+  /* What the two letters after the name mean, for a reader outside Lithuania. */
+  legalForm: "mažoji bendrija, a Lithuanian small partnership",
+  registrationCode: "305830693",
+  vatNumber: "LT100020218411",
+  registeredAddress: "Mokyklos g. 13, Verstaminų k., Lazdijų r., Lithuania",
+  /* The one person the register names, who is also the founder above. */
+  director: founder,
+};
+
 /* The search snippet copy of every page lives on that page's record, at the
  * foot of this file. The home page's title and description are the site's as
  * well, so the manifest, the unfurl image and the company's own nodes in the
@@ -510,10 +532,11 @@ export const prices = [
   },
 ];
 
-/* The plans the home page prints. A plan that prices a ready-made product waits
- * until the catalogue holds one: see the Catalogue entry in CONTEXT.md. The home
- * page's graph offers this list and nothing else, so a plan the page keeps back
- * is a plan the graph does not offer either. */
+/* The ways to buy the site prints today. A plan that prices a ready-made
+ * product waits until the catalogue holds one: see the Catalogue entry in
+ * CONTEXT.md. The home page prints this list and its graph offers it, and the
+ * terms state what it buys, so none of the three can state a plan the others
+ * do not. */
 export const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
 
 /* One question the home page answers, in the words it prints. The page renders
@@ -632,9 +655,40 @@ export const customPage: PageRecord = {
   date: "2026-09-21",
 };
 
+/* The pages a buyer reads before a first call. They state no offer, they
+ * carry no promotional copy, and they stay out of the header, which carries
+ * the doors a reader walks through. The footer links the list from every
+ * page, which is where a reader looks for them, and the suite walks the same
+ * list, so a fourth one of these is a record here and a route file. */
+export const privacyPage: PageRecord = {
+  path: "/privacy",
+  title: "Privacy",
+  description:
+    "What this site collects, who processes it, how long it is kept, and how to ask us to delete it.",
+  date: "2026-09-21",
+};
+
+export const termsPage: PageRecord = {
+  path: "/terms",
+  title: "Terms of service",
+  description:
+    "What a build buys, what the monthly work covers, and the terms both sides work to.",
+  date: "2026-09-21",
+};
+
+export const imprintPage: PageRecord = {
+  path: "/imprint",
+  title: "Imprint",
+  description:
+    "The company behind this site: legal name, registration code, VAT number, registered address and director.",
+  date: "2026-09-21",
+};
+
+export const legalPages: PageRecord[] = [privacyPage, termsPage, imprintPage];
+
 /* The pages we write by hand, as against the product pages the catalogue
  * makes. */
-export const writtenPages: PageRecord[] = [homePage, customPage];
+export const writtenPages: PageRecord[] = [homePage, customPage, ...legalPages];
 
 /* The record of a product's page. A product already states its slug, its
  * name, its promise and the day its copy changed, so its page record is read
