@@ -104,7 +104,7 @@ export default function Terms() {
                   <div className="row row--stack" key={way.title}>
                     <dt className="row__label">{way.title}</dt>
                     <dd>
-                      {way.price} {way.per}
+                      {way.amount} {way.per}
                     </dd>
                   </div>
                 ))}
