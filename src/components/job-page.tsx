@@ -34,7 +34,7 @@ export function JobPage({ page }: { page: JobPageRecord }) {
   /* The page's own nodes, beside the site-wide ones the layout renders: the
    * page itself, the custom work it sells at the door's prices, and the way
    * here from the home page. */
-  const graph = graphHtml(pageNodes(page, custom.prices));
+  const graph = graphHtml(pageNodes(page, { prices: custom.prices }));
   /* Every call to action on the page carries this job as its subject, so a
    * click is counted under the job a reader came in on. */
   const brief = mailtoFor(page.subject);
