@@ -7,10 +7,10 @@
  * Everything here reads the emitted export.
  */
 import { expect, test } from "bun:test";
-import { indexableRoutes, readExport, tagTexts } from "./export";
+import { indexableRoutes, readExport, sitemapUrls } from "./export";
 
 test("llms.txt lists exactly the URLs the sitemap lists", () => {
-  const sitemap = tagTexts(readExport("sitemap.xml"), "loc");
+  const sitemap = sitemapUrls();
 
   /* Every absolute URL the file states. The convention writes a page as a
    * Markdown link, so the URL sits in the parentheses. */
@@ -43,11 +43,16 @@ test("llms.txt states each page's own description beside its URL", () => {
 
 test("llms.txt is plain text in the shape the convention describes", () => {
   const llms = readExport("llms.txt");
+  const [heading, ...rest] = llms.split("\n");
 
-  /* The convention opens with one H1 naming the site, then a blockquote
-   * saying what the site is. A file that opens with markup is a page the
-   * build rendered by mistake, and no answer engine reads it. */
-  expect(llms.split("\n")[0]).toMatch(/^# \S/);
-  expect(llms).toMatch(/^> \S/m);
+  /* The convention opens with an H1 naming the site, and the line after it
+   * says what the site is. An answer engine that finds neither has nothing
+   * to read the page list against. */
+  expect(heading).toMatch(/^# \S/);
+  expect(rest.find((line) => line !== "")).toMatch(/^> \S/);
+
+  /* A tag anywhere in the file means the build wrote a rendered page under
+   * this name instead of the handler's text, and no answer engine reads
+   * that. */
   expect(llms).not.toMatch(/<[a-z!][^>]*>/i);
 });

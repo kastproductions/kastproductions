@@ -261,8 +261,7 @@ The site runs on Vercel, and `vercel.json` carries two settings the static expor
 - Permanent redirects from the retired `/about`, `/work`, `/contact`, `/standing-agents` and `/og.png` URLs to the matching page or section.
 - A `Content-Type: image/png` header for `/opengraph-image`. Next.js writes that file without an extension, and a static host would otherwise serve it as a download.
 
-`llms.txt` needs no such header. The build writes it under its own name, extension and all, so a
-static host reads the content type off the `.txt` the way it already does for `robots.txt`.
+`llms.txt` needs no such header. The build writes it under its own name, extension and all, so a static host reads the content type off the `.txt` the way it already does for `robots.txt`.
 
 On another host, port both settings to that host's configuration, and expect the analytics tracker to stop working: `## Analytics` below explains why the path every page requests is one only a Vercel deployment serves.
 

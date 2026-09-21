@@ -22,8 +22,8 @@ import { brand, homePage, indexablePages, pageUrl } from "../content";
 
 export const dynamic = "force-static";
 
-export async function GET(): Promise<Response> {
-  const pages = indexablePages.map(
+export function GET(): Response {
+  const listing = indexablePages.map(
     (page) => `- [${page.title}](${pageUrl(page.path)}): ${page.description}`,
   );
 
@@ -36,7 +36,7 @@ export async function GET(): Promise<Response> {
     "",
     "## Pages",
     "",
-    ...pages,
+    ...listing,
     "",
   ].join("\n");
 

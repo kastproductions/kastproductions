@@ -7,7 +7,15 @@
  */
 import { expect, test } from "bun:test";
 import { brand } from "../src/app/content";
-import { indexableRoutes, linkHrefs, metaContents, readExport, siteUrl, tagTexts } from "./export";
+import {
+  indexableRoutes,
+  linkHrefs,
+  metaContents,
+  readExport,
+  siteUrl,
+  sitemapUrls,
+  tagTexts,
+} from "./export";
 
 for (const route of indexableRoutes) {
   test(`${route.path} emits one h1`, () => {
@@ -40,7 +48,7 @@ for (const route of indexableRoutes) {
 }
 
 test("the sitemap lists exactly the indexable routes", () => {
-  const listed = tagTexts(readExport("sitemap.xml"), "loc");
+  const listed = sitemapUrls();
 
   /* A crawler spends a fetch on every URL here, and misses any route we leave
    * out, so the list has to be the routes and nothing else. */
@@ -48,7 +56,7 @@ test("the sitemap lists exactly the indexable routes", () => {
 });
 
 test("every sitemap entry resolves to an emitted page", () => {
-  for (const listed of tagTexts(readExport("sitemap.xml"), "loc")) {
+  for (const listed of sitemapUrls()) {
     const route = indexableRoutes.find((candidate) => candidate.url === listed);
     if (!route) {
       throw new Error(`the sitemap lists ${listed}, which is not a route this site has.`);

@@ -142,6 +142,16 @@ export function tagTexts(document: string, tag: string): string[] {
   return [...document.matchAll(pattern)].map(([, text]) => decodeEntities(text.trim()));
 }
 
+/*
+ * Every URL the built sitemap lists, in the order it states them. The sitemap
+ * is the list of routes a crawler is asked to fetch, so three files read it:
+ * one checks it against the page records, one checks each entry resolves to a
+ * page, and one checks the plain-text index states the same URLs.
+ */
+export function sitemapUrls(): string[] {
+  return tagTexts(readExport("sitemap.xml"), "loc");
+}
+
 /* A node in a JSON-LD graph, read as free-form data: schema.org vocabulary is
  * wider than a type written here would be. */
 export type GraphNode = Record<string, unknown>;
