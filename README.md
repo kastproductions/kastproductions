@@ -94,6 +94,8 @@ src/app/
   robots.ts            # robots.txt
   sitemap.ts           # sitemap.xml, one entry per page record, stating the date each
                        #   record holds
+  llms.txt/route.ts    # llms.txt, the plain-text index an answer engine reads: one
+                       #   Markdown link per page record, with its description
   not-found.tsx        # The page a wrong address lands on. Carries no canonical and
                        #   no robots directive of its own: the framework writes the
                        #   `noindex` there, and a second beside it is a contradiction
@@ -119,6 +121,8 @@ tests/
   opengraph.test.ts    # An unfurl image, title and description per route, and one
                        #   robots directive on the 404
   sitemap.test.ts      # Real dates, no build time, and no Host directive
+  llms-txt.test.ts     # The plain-text index lists the URLs the sitemap lists, with
+                       #   the description each record states
   structured-data.test.ts  # The company states only what it can support
   page-graph.test.ts   # Each route describes itself, with the printed prices as offers
   analytics.test.ts    # Every page loads the tracker and counts a mailto click
@@ -161,7 +165,7 @@ The printed price is also the only source for the machine-readable offer in the 
 A page is one record and one route file. The record is the one place its path, title,
 description and copy date are written, and everything a machine reads follows from it: the
 canonical URL, the indexing directive, the unfurl fields, the sitemap entry with its date, the
-page's own graph nodes, and the suite's coverage of all of them.
+line in `llms.txt`, the page's own graph nodes, and the suite's coverage of all of them.
 
 1. Add the record in the page records section of `src/app/content.ts`, and put it in
    `writtenPages`:
@@ -256,6 +260,9 @@ The site runs on Vercel, and `vercel.json` carries two settings the static expor
 
 - Permanent redirects from the retired `/about`, `/work`, `/contact`, `/standing-agents` and `/og.png` URLs to the matching page or section.
 - A `Content-Type: image/png` header for `/opengraph-image`. Next.js writes that file without an extension, and a static host would otherwise serve it as a download.
+
+`llms.txt` needs no such header. The build writes it under its own name, extension and all, so a
+static host reads the content type off the `.txt` the way it already does for `robots.txt`.
 
 On another host, port both settings to that host's configuration, and expect the analytics tracker to stop working: `## Analytics` below explains why the path every page requests is one only a Vercel deployment serves.
 
