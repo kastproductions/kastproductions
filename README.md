@@ -93,6 +93,10 @@ src/app/
                        # One ready-made product on its own page. The route hands the
                        #   product to the component; every word of the product and its
                        #   copy date live on the product in content.ts
+  slack/page.tsx       # The one channel with a page: how a person addresses an agent in
+                       #   Slack, what the gate looks like there, what the client provides,
+                       #   and what Teams needs that Slack does not. Every sentence about
+                       #   either channel is one Flue's documentation states
   privacy/page.tsx     # What the site collects, who processes it, how long it is kept
   terms/page.tsx       # What a build buys and what the monthly work covers, from the
                        #   prices and the lead time the content module holds
@@ -367,7 +371,7 @@ Real, and may be stated as fact: the 17 client companies, the 6 references with 
 
 The strictest case is `company`, which the imprint prints: every line of it is in the Lithuanian register of legal entities, and the reader is there to check one against the other. A legal page that states a fact the register does not hold is worse than no legal page, so nothing goes on the imprint, the privacy page or the terms that is not already in `content.ts` or in the register. That rule kept four things off those pages: a named supervisory authority, a governing law, a fixed retention period for mail, and the name of whoever runs the mailbox. The privacy page states the retention it can state, which is the 24 hours the analytics hash lives and a deletion on request, and it points at Vercel's own privacy notice for what the host keeps rather than summarising a document we do not control. Each of the four is the owner's to decide before the site states it.
 
-Also checkable, and worth keeping checkable: the channel lists in `channels` are the channels [Flue](https://flueframework.com/docs/ecosystem/) verifies, split into the chat channels a person addresses an agent in and the services that wake one with an event. The four items in `stack.ours` are the pieces Flue does not provide, so we write them. If Flue's ecosystem or its feature set moves, these lists move with it.
+Also checkable, and worth keeping checkable: the channel lists in `channels` are the channels [Flue](https://flueframework.com/docs/ecosystem/) verifies, split into the chat channels a person addresses an agent in and the services that wake one with an event. The Slack page at `src/app/slack/page.tsx` says how one of those channels behaves, and every sentence it states about Slack or Teams is one Flue's [Slack](https://flueframework.com/docs/ecosystem/channels/slack/) or [Teams](https://flueframework.com/docs/ecosystem/channels/teams/) channel documentation states; the page links both so a reader can check. The four items in `stack.ours` are the pieces Flue does not provide, so we write them. If Flue's ecosystem or its feature set moves, these lists and that page move with it.
 
 Synthetic, and labelled as an example wherever a visitor could read it as fact: the agent console in `src/components/agent-console.tsx`, the hero run record in `src/components/run-record.tsx`, and the `work` table on a product page. Each one carries a visible `.tag` label. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
 

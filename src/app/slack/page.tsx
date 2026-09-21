@@ -258,14 +258,16 @@ export default function Slack() {
               </p>
             </div>
             <div className="unit__body">
-              <div className="actions">
-                <a className="btn btn--signal" href={brief}>
-                  Describe the work
-                </a>
-                <Link className="btn btn--line" href={customPage.path}>
+              {/* The floor, the month and what a custom agent needs from you
+                  are the door's own sentences, so this page prints no number
+                  and sends the reader there. */}
+              <p className="note">
+                The door states the floor to build, what the month buys, and
+                what a custom agent needs from you before we start.{" "}
+                <Link className="pull" href={customPage.path}>
                   What custom AI agent development costs
                 </Link>
-              </div>
+              </p>
             </div>
           </div>
         </section>
