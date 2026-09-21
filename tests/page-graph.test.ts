@@ -13,6 +13,7 @@ import { expect, test } from "bun:test";
 import {
   contactPage,
   custom,
+  explainerPages,
   jobPages,
   legalPages,
   openPrices,
@@ -70,12 +71,14 @@ function claim(amount: string): { currency: string; value: number } {
  * each sell one thing and state it, and the home page offers the plans it
  * prints. A legal page offers nothing: the terms print the same list of plans
  * to say what a build buys, which is a description and not an offer, and the
- * other two print no price at all. The contact page prints no price either.
+ * other two print no price at all. An explainer offers nothing either: it
+ * explains one part of the mechanism and prints no price. The contact page
+ * prints no price either.
  *
  * A route the suite cannot answer for is a failure, not a skip: that is a
  * page shipped with nobody watching what it claims.
  */
-const statesNoOffer = [...legalPages, contactPage].map((page) => page.path);
+const statesNoOffer = [...legalPages, ...explainerPages, contactPage].map((page) => page.path);
 
 function pricesFor(path: string): Price[] | null {
   if (statesNoOffer.includes(path)) return null;

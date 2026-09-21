@@ -8,6 +8,7 @@ import {
   callHref,
   clients,
   doors,
+  evalSuitePage,
   fitDimensions,
   fitIntro,
   founder,
@@ -144,6 +145,9 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
+              <Link className="pull" href={evalSuitePage.path}>
+                {mechanismIntro.more}
+              </Link>
             </div>
           </div>
         </section>

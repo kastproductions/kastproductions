@@ -9,7 +9,7 @@
  * emitted HTML rather than the lists.
  */
 import { expect, test } from "bun:test";
-import { customPage, jobPages, productPage, products } from "../src/app/content";
+import { customPage, evalSuitePage, jobPages, productPage, products } from "../src/app/content";
 import { decodeEntities, indexableRoutes, readExport } from "./export";
 
 /*
@@ -61,3 +61,18 @@ for (const page of products.map(productPage)) {
     expect(bodyPaths(fileFor("/"))).toContain(page.path);
   });
 }
+
+test(`${evalSuitePage.path} is linked from the mechanism section of the home page`, () => {
+  /* The explainer is the fuller answer to the one line the mechanism section
+   * gives on the eval suite, so that section is where a reader is handed on.
+   * A link elsewhere on the page is not that. */
+  const home = readExport(fileFor("/"));
+  const section = /<section\b[^>]*\bid="mechanism"[^>]*>([\s\S]*?)<\/section>/.exec(home);
+  if (!section) {
+    throw new Error("The home page carries no mechanism section.");
+  }
+  const paths = [...section[1].matchAll(/<a\b[^>]*?\shref="([^"]*)"/g)].map(([, href]) =>
+    decodeEntities(href),
+  );
+  expect(paths).toContain(evalSuitePage.path);
+});

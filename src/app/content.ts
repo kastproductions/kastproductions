@@ -225,9 +225,14 @@ export const fitDimensions = [
   },
 ];
 
+/* `more` is the words the section hands a reader on to the eval suite
+ * explainer with: the row on the suite is the one line, and `evalSuitePage`
+ * is the fuller answer. The path comes off that record, at the foot of this
+ * file, so it is written once. */
 export const mechanismIntro = {
   heading: "How we keep it right",
   lede: "Fit is the promise. These five are how we prove it, every month, for as long as we operate your agent.",
+  more: "What an eval suite is",
 };
 
 export const mechanism = [
@@ -968,9 +973,37 @@ export const contactSubject = "Contact page";
 
 export const legalPages: PageRecord[] = [privacyPage, termsPage, imprintPage];
 
+/* The explainers: one page each on one part of the mechanism, written for the
+ * reader who searches the part rather than the company. An explainer sells
+ * nothing and prints no price, so the graph suite's list of pages that state
+ * no offer reads this list beside `legalPages`. It stays out of the header
+ * and the footer: the home page hands a reader on to it from the section it
+ * explains. A second explainer is a record here and a route file.
+ *
+ * The eval suite page targets "AI agent eval suite". A buyer who has been
+ * offered an autonomous agent and asks how anyone knows it is right types
+ * the word the field uses for that, and no competing page in this category
+ * answers it. The title leads with the phrase; the heading on the page reads
+ * in the site's voice, the way `mechanismIntro.heading` does. */
+export const evalSuitePage: PageRecord = {
+  path: "/eval-suite",
+  title: "AI agent eval suite: what correct means",
+  description:
+    "What an AI agent eval suite is: the written definition of correct for one agent, run on every change, and what we do when correct cannot be written down.",
+  date: "2026-09-21",
+};
+
+export const explainerPages: PageRecord[] = [evalSuitePage];
+
 /* The pages we write by hand, as against the product pages the catalogue
  * makes. */
-export const writtenPages: PageRecord[] = [homePage, customPage, ...legalPages, contactPage];
+export const writtenPages: PageRecord[] = [
+  homePage,
+  customPage,
+  ...legalPages,
+  ...explainerPages,
+  contactPage,
+];
 
 /* The record of a product's page. A product already states its slug, its
  * name, its promise and the day its copy changed, so its page record is read
