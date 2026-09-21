@@ -225,10 +225,8 @@ export const fitDimensions = [
   },
 ];
 
-/* `more` is the words the section hands a reader on to the eval suite
- * explainer with: the row on the suite is the one line, and `evalSuitePage`
- * is the fuller answer. The path comes off that record, at the foot of this
- * file, so it is written once. */
+/* `more` is the words the section links the eval suite explainer with, as a
+ * door's `more` links its page. The path is on `evalSuitePage`, below. */
 export const mechanismIntro = {
   heading: "How we keep it right",
   lede: "Fit is the promise. These five are how we prove it, every month, for as long as we operate your agent.",

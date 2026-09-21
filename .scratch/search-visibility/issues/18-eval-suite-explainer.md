@@ -77,3 +77,24 @@ Decided, and the reasons:
   `index, follow`, and the graph carries WebPage (dated), BreadcrumbList, no Service. Looked
   at with `agent-browser` at 390 px and 1440 px: no horizontal overflow, layout shift 0 over
   2.5 s with fonts loaded, one hairline per divider. Sessions closed; `session list` empty.
+
+The two-axis review of `e98a9b1...HEAD` ran after the first commit. What it found, and the
+answer:
+
+- **The prose used "task" five times, "job" once and "plans" once, all `_Avoid_` words in
+  `CONTEXT.md`** (under Run, Session and Authority). True, and inherited from the ticket's
+  own wording; the page now says "a piece of work", "that work" and "two ways to do it".
+- **The gate note committed to a process the home page does not state**: the agent gathers,
+  drafts and stops, a named person reads and decides. Trimmed to what `CONTEXT.md` fixes: the
+  work goes behind an approval gate, the agent does the part that can be defined and stops
+  at the gate, a named person decides, and the approval policy we write names that person.
+- **"Each entry reads four things" asserted a file format the repository states nowhere.**
+  Now "the definition covers four things", which is what the four home page lines say
+  correct means for a standing agent, and not a claim about the shape of a file.
+- **The new links test copied the href extraction out of `bodyPaths`.** Both now call one
+  `linkedPaths(markup)`.
+- **`/#mechanism` was a string where the repo derives root links from `homePage.path`.**
+  Now `${homePage.path}#mechanism`.
+- **`mechanismIntro.more` needed a comment to explain its name.** Kept, because `more` is
+  the word a door and a job page already use for the words that link their page; the
+  comment is now one line.

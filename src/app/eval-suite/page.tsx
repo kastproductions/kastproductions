@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import { evalSuitePage } from "../content";
+import { evalSuitePage, homePage } from "../content";
 import { pageMetadata } from "../head-directives";
 import { graphHtml, pageNodes } from "../structured-data";
 
@@ -10,9 +10,9 @@ export const metadata = pageMetadata(evalSuitePage);
  * mechanism and sells nothing, so it states no offer. */
 const graph = graphHtml(pageNodes(evalSuitePage));
 
-/* What one entry in the suite covers. Four readings, and every one of them is
- * a line the home page already states: the answer, the authority, the gate
- * and the spend cap. */
+/* What the definition of correct covers. Four readings, and every one of them
+ * is a line the home page already states: the answer, the authority, the
+ * gate and the spend cap. */
 const covers = [
   "The answer. What a correct answer to this message contains, and what it must not contain.",
   "The authority. Which systems the agent reads, which it writes to, and which it never touches.",
@@ -33,7 +33,7 @@ export default function EvalSuite() {
               An eval suite is the written definition of correct for one
               standing agent. This page says what is in it, how it runs on
               every change we make, and what we do when correct cannot be
-              written down for a task.
+              written down for a piece of work.
             </p>
           </div>
         </section>
@@ -54,9 +54,9 @@ export default function EvalSuite() {
                 contain.
               </p>
               <p>
-                An entry states more than the words in the answer. Correct, for
-                a standing agent, is the answer and the way it got there, so
-                each entry reads four things.
+                The definition covers more than the words in the answer.
+                Correct, for a standing agent, is the answer and the way it got
+                there, so it covers four things.
               </p>
               <ul className="marks">
                 {covers.map((item) => (
@@ -111,25 +111,23 @@ export default function EvalSuite() {
             </div>
             <div className="unit__body">
               <p>
-                Some tasks have a correct answer that nobody can write down in
+                Some work has a correct answer that nobody can write down in
                 advance. Whether a reply to an angry customer has the right
-                tone. Whether a refund is fair. Which of two plans to take when
+                tone. Whether a refund is fair. Which of two ways to do it when
                 both fit the brief. A person can judge each of these when it
                 comes up, and no document can settle it before it does.
               </p>
               <p>
                 An agent judged on work like that is judged on nothing. So when
-                we cannot write down what correct means for a task, we say so
-                before we build it, and the task does not go to the
+                we cannot write down what correct means for a piece of work, we
+                say so before we build it, and that work does not go to the
                 agent&rsquo;s own judgement.
               </p>
               <p className="note note--gate">
-                That work becomes a job for an approval gate and a named
-                person. The agent does the part that can be defined: it gathers
-                what the decision needs, drafts the answer, and stops. A named
-                person at your company reads it and decides. The approval
-                policy we write names that person, and the gate is where the
-                agent waits for them.
+                That work goes behind an approval gate and to a named person.
+                The agent does the part that can be defined and stops at the
+                gate. A named person at your company decides. The approval
+                policy we write names that person.
               </p>
               <p>
                 An outward action is behind a gate whatever the suite says. A
@@ -139,12 +137,12 @@ export default function EvalSuite() {
                 the same gate, used for one more reason.
               </p>
               <p>
-                What we do not do is build the task anyway and call the agent
+                What we do not do is build that work anyway and call the agent
                 autonomous. A page that promises an agent that decides
                 everything on its own is promising a definition of correct it
                 has not shown you.
               </p>
-              <Link className="pull" href="/#mechanism">
+              <Link className="pull" href={`${homePage.path}#mechanism`}>
                 The other four parts of how we keep it right
               </Link>
             </div>

@@ -12,6 +12,13 @@ import { expect, test } from "bun:test";
 import { customPage, evalSuitePage, jobPages, productPage, products } from "../src/app/content";
 import { decodeEntities, indexableRoutes, readExport } from "./export";
 
+/* Every path a piece of markup links to, in document order. */
+function linkedPaths(markup: string): string[] {
+  return [...markup.matchAll(/<a\b[^>]*?\shref="([^"]*)"/g)].map(([, href]) =>
+    decodeEntities(href),
+  );
+}
+
 /*
  * Every path the page body links to, in document order. The header and the
  * footer link the door from every route already, so a link that counts as one
@@ -23,9 +30,7 @@ function bodyPaths(file: string): string[] {
   if (!body) {
     throw new Error(`${file} carries no main element, so it has no page body to read.`);
   }
-  return [...body[1].matchAll(/<a\b[^>]*?\shref="([^"]*)"/g)].map(([, href]) =>
-    decodeEntities(href),
-  );
+  return linkedPaths(body[1]);
 }
 
 /* Where the export put a page the content module holds a record for. */
@@ -71,8 +76,5 @@ test(`${evalSuitePage.path} is linked from the mechanism section of the home pag
   if (!section) {
     throw new Error("The home page carries no mechanism section.");
   }
-  const paths = [...section[1].matchAll(/<a\b[^>]*?\shref="([^"]*)"/g)].map(([, href]) =>
-    decodeEntities(href),
-  );
-  expect(paths).toContain(evalSuitePage.path);
+  expect(linkedPaths(section[1])).toContain(evalSuitePage.path);
 });
