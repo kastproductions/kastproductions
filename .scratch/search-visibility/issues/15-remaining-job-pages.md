@@ -33,7 +33,9 @@ The four pages, the phrase each targets, and who types it:
 - `/support-ticket-triage` targets **support ticket triage agent**: a support lead in
   Zendesk or Intercom whose team reads every ticket before it can be routed.
 - `/shopify-operations` targets **Shopify operations agent**: the person who runs a Shopify
-  store and checks stock, prices and stalled orders by hand each morning.
+  store and checks stock, prices and stalled orders by hand each morning. Ticket 14 sketched
+  "store operations agent"; the row's one system is Shopify, and a buyer types the product
+  name, not the word "store".
 
 With ticket 14's **failed payment recovery agent**, the five head phrases are content
 publishing, social scheduling, support ticket triage, Shopify operations and failed payment
@@ -68,3 +70,22 @@ Decided, and the reasons:
   says it is the client's, written in the spec.
 - **Each record's date is 2026-09-21**, the day its copy was written. The four descriptions
   lead with the phrase and are 148 to 159 characters, under the 160 the head suite holds.
+
+The two-axis review of `e98a9b1...HEAD` ran after the first commit. What it found, and the
+answer:
+
+- **"Reports the run in one place" used "run" for one pass of the agent**, which CONTEXT.md
+  reserves for one feature on a backlog. Now "Reports what it found in one place", and
+  "because the agent ran" is "because the agent looked". "Thread" and the noun "report" for
+  the agent's message went the same way: "in the same channel", "one summary".
+- **The Shopify page prints a gate for an agent that only reads.** Kept, sharpened: the gate
+  is where an agent stops and waits for a named person before it acts, and this agent stops
+  there every time, which is now what the line says. The amber slot marks where a person
+  must act, and on this page that is every change to the store.
+- **The copy claimed a Notion brief is "marked ready" and that Zendesk tickets are tagged.**
+  Neither is on the site elsewhere, so both went: a new brief in Notion wakes the agent,
+  which is what `channels.events` already says Notion does, and the agent groups the ticket.
+  The Typefully draft and queue stay, because the row itself says "drafts, queues" against
+  Typefully.
+- **The phrases were not on the ticket.** They are the first thing under Comments now, with
+  the departure from ticket 14's "store operations" sketch.

@@ -462,14 +462,14 @@ export const contentPublishing: JobPage = {
     "Content publishing, run by a standing agent: a brief in Notion comes back as a drafted and edited page in your CMS, and publishing waits for a name.",
   date: "2026-09-21",
   heading: "An agent that turns a brief into a page ready to publish.",
-  lede: "A brief marked ready in Notion comes back as a drafted and edited page, waiting unpublished in your CMS. Nothing goes live until a named person publishes it.",
+  lede: "A brief in Notion comes back as a drafted and edited page, waiting unpublished in your CMS. Nothing goes live until a named person publishes it.",
   authority:
     "It acts behind an approval gate. Reading the brief, drafting the page and editing the draft against the brief needs nobody, and the finished draft then stops.",
   gate: "The gate sits before a page is published. A published page reaches everyone outside your company, so a named person reads it and publishes it.",
   steps: [
     {
       title: "Reads the brief",
-      body: "A brief marked ready in Notion wakes the agent. It reads what the page is for, who it is for and what it must say, in the words the brief uses.",
+      body: "A new brief in Notion wakes the agent. It reads what the page is for, who it is for and what it must say, in the words the brief uses.",
     },
     {
       title: "Drafts the page",
@@ -487,7 +487,7 @@ export const contentPublishing: JobPage = {
   systems: [
     {
       name: "Notion",
-      role: "Where the brief lives, and what wakes the agent: a brief marked ready starts it, and the brief is what the draft is checked against.",
+      role: "Where the brief lives, and what wakes the agent: a new brief starts it, and the brief is what the draft is checked against.",
     },
     {
       name: "Your CMS",
@@ -505,14 +505,14 @@ export const socialScheduling: JobPage = {
     "Social scheduling, run by a standing agent: your team asks in Slack, the agent drafts in Typefully, and a post joins the queue once a named person approves it.",
   date: "2026-09-21",
   heading: "An agent that drafts and schedules your posts from a channel.",
-  lede: "Your team asks for a post in the channel they already work in. The agent drafts it in Typefully, and it joins the queue once a named person approves it. Every batch comes back as a report of what went out.",
+  lede: "Your team asks for a post in the channel they already work in. The agent drafts it in Typefully, and it joins the queue once a named person approves it. Every batch comes back as one summary of what went out.",
   authority:
     "It acts behind an approval gate. Reading the ask, drafting the post and reporting the batch needs nobody, and every draft then stops.",
   gate: "The gate sits before a post joins the queue. A queued post goes out under your name at its time, so a named person reads the draft and approves it.",
   steps: [
     {
       title: "Takes the ask in the channel",
-      body: "A person addresses the agent by name in Slack and says what the post is about and for which account. Anything the ask leaves out, the agent asks back in the same thread.",
+      body: "A person addresses the agent by name in Slack and says what the post is about and for which account. Anything the ask leaves out, the agent asks back in the same channel.",
     },
     {
       title: "Drafts in Typefully",
@@ -559,7 +559,7 @@ export const supportTicketTriage: JobPage = {
     },
     {
       title: "Groups it with the tickets like it",
-      body: "A question your help centre answers, a bug three people have hit this morning and a request nobody has seen before are three different queues. The agent tags the ticket with which one it is in.",
+      body: "A question your help centre answers, a bug three people have hit this morning and a request nobody has seen before are three different queues. The agent puts the ticket in the one it belongs to.",
     },
     {
       title: "Drafts the reply where the answer is known",
@@ -573,7 +573,7 @@ export const supportTicketTriage: JobPage = {
   systems: [
     {
       name: "Zendesk or Intercom",
-      role: "The new ticket wakes the agent, and this is where it reads, tags and drafts. Every draft waits here, unsent, for a named person.",
+      role: "The new ticket wakes the agent, and this is where it reads, groups and drafts. Every draft waits here, unsent, for a named person.",
     },
     {
       name: "GitHub",
@@ -638,8 +638,8 @@ export const shopifyOperations: JobPage = {
   heading: "An agent that watches your store, so a person sees only the exceptions.",
   lede: "On the schedule you set, the agent reads your Shopify store for what is out of line: stock running low, a price outside the range you set, an order that stalled. It reports what it found in one place and brings the ones that need a decision to a named person.",
   authority:
-    "It reads and reports. Nothing in your store changes because the agent ran: it reads Shopify, sorts what it found and writes one report. Every change is a person's to make.",
-  gate: "The gate sits in front of every change to the store. An exception that needs a decision comes to a named person with the product, the order or the price it concerns and the choices open, and that person makes the change in Shopify.",
+    "It reads and reports. Nothing in your store changes because the agent looked: it reads Shopify, sorts what it found and writes one summary. Every change is a person's to make.",
+  gate: "The gate sits in front of every change to the store, and this agent stops there every time. An exception that needs a decision comes to a named person with the product, the order or the price it concerns and the choices open, and that person makes the change in Shopify.",
   steps: [
     {
       title: "Reads the store on a schedule",
@@ -650,7 +650,7 @@ export const shopifyOperations: JobPage = {
       body: "Stock below the level you set, a price outside the range you set, an order that has not moved in the time you set. What counts as an exception is written in the spec with you, and the agent applies that and nothing else.",
     },
     {
-      title: "Reports the run in one place",
+      title: "Reports what it found in one place",
       body: "One message in the channel your operations team already works in: what it read, what it found out of line, and which of those need a decision.",
     },
     {
