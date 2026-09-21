@@ -1,6 +1,6 @@
 # Portraits name the person
 
-Status: needs-triage
+Status: done
 Source: GitHub issue #13, opened on 2026-09-20.
 
 ## What to build
@@ -115,3 +115,14 @@ second criterion is open and only one option needs a person:
   it against.
 
 Verified with `bun run test`: 34 pass, 0 fail.
+
+### Owner's answer, 21 September 2026
+
+Option A. Ship no new files and close the second criterion: the end it was written for, a
+sharp reference block on a 2x screen, already holds at 2.07x the device pixels a 2x screen
+asks for. The 352 in the criterion followed the `width={176}` attribute, which sets the
+intrinsic aspect ratio and not the drawn size.
+
+Revisit this against `11-about-page.md` only if that page draws a portrait large. A
+portrait above about 88 CSS pixels needs sources four of the six people have never given
+us, so the decision there is D, not a re-encode.
