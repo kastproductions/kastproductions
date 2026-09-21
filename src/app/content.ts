@@ -443,7 +443,7 @@ export const custom = {
  * ------------------------------------------------------------------------- */
 
 export const pricingIntro = {
-  heading: "How to work with us",
+  heading: "What AI agent development costs",
   lede: "A build price is a floor, because the work follows the number of systems your agent touches. Every monthly price buys the evals, the changes and the report.",
 };
 
@@ -566,10 +566,10 @@ export const questions = [
  *
  * A title is the page's own, and `pageMetadata` puts the brand after it, the
  * way a search result reads. A result prints about 60 characters of the title
- * and about 160 of the description, and cuts the rest, so a new page aims
- * under both. The custom door misses that today: its description is the lede
- * the page prints, at 181 characters, which is a copy question rather than a
- * machine one and belongs to whoever rewrites the copy.
+ * and about 160 of the description, and cuts the rest, so both stay under
+ * those counts and `tests/head.test.ts` measures what the export emits. A
+ * title also leads with the words a buyer types, because a result is read
+ * left to right and the brand is the part nobody searches for.
  *
  * A date is the day that page's copy last changed, written YYYY-MM-DD. It
  * comes from the page file's history, `git log -1 --date=short -- <file>`, so
@@ -592,22 +592,33 @@ export type PageRecord = {
 
 /* The home page. Its title is stated whole, brand and all, because it is the
  * site's title as well: the manifest, the unfurl image and the not-found page
- * all take it, and `pageMetadata` adds no brand to it a second time. */
+ * all take it, and `pageMetadata` adds no brand to it a second time. It
+ * therefore spells out the separator the other pages get from `pageMetadata`,
+ * and it reaches further than a search result: the manifest name, the unfurl
+ * title and the unfurl image's alt text all read this one string.
+ *
+ * The title leads with "AI agent development company", which is what a buyer
+ * types and what every competing page in this category is titled. The brand
+ * follows it: two other companies crowd the name in search, so leading with
+ * it wins a reader we already have. "Software factory on demand" is still the
+ * promise, and `CONTEXT.md` still fixes it, but no page states it in words
+ * now: the unfurl image draws it, and that is the only place it is written. */
 export const homePage: PageRecord = {
   path: "/",
-  title: `${brand}: software factory on demand`,
-  description: `Software factory on demand in ${location.city}, ${location.country}. We build agents that work the way your company works, deploy them into your own accounts and keep them right.`,
-  date: "2026-09-18",
+  title: `AI agent development company | ${brand}`,
+  description: `An AI agent development company in ${location.city}, ${location.country}. We build one standing agent for one company, deploy it into your own accounts and keep it right.`,
+  date: "2026-09-21",
 };
 
+/* The custom door. Its description is its own sentence rather than the lede
+ * the page prints: one string cannot both open a page and fit a search
+ * result, and the lede is 181 characters long. */
 export const customPage: PageRecord = {
   path: "/custom",
-  title: "Custom agents",
-  /* The lede the page prints, which is also what a search result shows. One
-   * string doing two jobs, and it does the second one badly: at 181
-   * characters a result cuts it. Splitting the two is a copy change. */
-  description: custom.lede,
-  date: "2026-09-18",
+  title: "Custom AI agent development",
+  description:
+    "Custom AI agent development for work that matches nothing on a shelf. Describe it and get a short spec and a fixed price within one working day.",
+  date: "2026-09-21",
 };
 
 /* The pages we write by hand, as against the product pages the catalogue

@@ -117,7 +117,8 @@ tests/
                        #   a JSON-LD reader, and the indexable routes, which follow
                        #   the page records
   head.test.ts         # One h1, a self-referencing canonical, and the title and
-                       #   description each record states; the sitemap and robots file
+                       #   description each record states, each unique and short
+                       #   enough to print whole; the sitemap and robots file
   opengraph.test.ts    # An unfurl image, title and description per route, and one
                        #   robots directive on the 404
   sitemap.test.ts      # Real dates, no build time, and no Host directive

@@ -63,7 +63,7 @@ export default function Custom() {
         >
           <div className="wrap unit">
             <div className="unit__head">
-              <h2 id="custom-price-title">What a custom build costs</h2>
+              <h2 id="custom-price-title">What custom AI agent development costs</h2>
               <p>
                 The build price is a floor, because the work follows the number
                 of systems your agent touches. The monthly price buys the eval

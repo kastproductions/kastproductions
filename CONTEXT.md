@@ -8,6 +8,10 @@ KastProductions builds standing agents. A reader meets two kinds of agent on the
 The company's promise, covering everything KastProductions sells. It is not the name of a product.
 _Avoid_: factory model, AI factory
 
+**AI agent development**:
+The buyer's own name for the work we sell: building a standing agent and deploying it into a company's systems. It is software factory on demand named from outside, so it leads a title and the heading that answers the search, and the custom door carries it as custom AI agent development.
+_Avoid_: AI development services, agentic AI, AI automation agency
+
 **Standing agent**:
 An agent we build for a client. It runs unattended in the client's systems until someone turns it off. One standing agent is one deployment, addressed by one name.
 _Avoid_: bot, assistant, AI employee

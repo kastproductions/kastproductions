@@ -45,7 +45,29 @@ for (const route of indexableRoutes) {
 
     expect(metaContents(document, "description")).toEqual([route.description]);
   });
+
+  test(`${route.path} states a title and a description a search result prints whole`, () => {
+    const document = readExport(route.file);
+
+    /* A result prints about 60 characters of the title and about 160 of the
+     * description, and cuts the rest mid-word. The custom door shipped a
+     * 181-character description for months, because nothing measured one. */
+    expect(tagTexts(document, "title")[0].length).toBeLessThan(60);
+    expect(metaContents(document, "description")[0].length).toBeLessThan(160);
+  });
 }
+
+test("no two routes state the same title or description", () => {
+  /* One snippet on two pages leaves a crawler to choose which of them answers
+   * the query, and it may choose neither. Every record is written by hand,
+   * and copying a neighbour's line is the easy mistake. */
+  const documents = indexableRoutes.map((route) => readExport(route.file));
+  const titles = documents.map((document) => tagTexts(document, "title")[0]);
+  const descriptions = documents.map((document) => metaContents(document, "description")[0]);
+
+  expect(new Set(titles).size).toBe(titles.length);
+  expect(new Set(descriptions).size).toBe(descriptions.length);
+});
 
 test("the sitemap lists exactly the indexable routes", () => {
   const listed = sitemapUrls();
