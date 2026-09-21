@@ -94,9 +94,8 @@ export default function Contact() {
                 <div className="row row--stack">
                   <dt className="row__label">After you sign</dt>
                   <dd>
-                    Lead time is the working days from a signed order to the
-                    agent answering in your own channel. A ready-made
-                    agent&rsquo;s is {leadTime}.
+                    A ready-made agent answers in your own channel {leadTime}{" "}
+                    after you sign the order.
                   </dd>
                 </div>
               </dl>

@@ -197,7 +197,7 @@ The printed price is also the only source for the machine-readable offer in the 
 
 `company` holds what the Lithuanian register of legal entities holds: the legal name, the legal form, the registration code, the VAT number, the registered address and the director. The imprint prints those six, and `contactEmail` under them so a reader who has finished checking can write; nothing else goes on that page. `tests/legal.test.ts` fails if one of the six stops appearing there. A reader is on that page to check us against the register, so a detail we cannot point at in the register does not go in. Note that `company.registeredAddress` is not `location`: the copy says Vilnius, where the studio works, and the register holds an address in the Lazdijai district.
 
-`legalPages` is privacy, terms and the imprint, in the order the footer prints them. It is one list because four things read it: `writtenPages`, the footer, the suite's footer check, and the graph suite's list of pages that state no offer. A fourth page of this kind is a record and a route file, as any page is.
+`legalPages` is privacy, terms and the imprint, in the order the footer prints them. It is one list because four things read it: `writtenPages`, the footer, the suite's footer check, and the graph suite's list of pages that state no offer, which `contactPage` joins there because it prints no price either. A fourth page of this kind is a record and a route file, as any page is.
 
 `openPrices` is `prices` with the catalogue rule applied: a way to buy that depends on a ready-made product stays off every page until one runs. The home page and the terms page both print that list, so neither can print a price the other does not.
 
