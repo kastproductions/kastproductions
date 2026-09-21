@@ -78,8 +78,12 @@ src/app/
                        #   metadata and graph built from its page record
   custom/page.tsx      # The custom door: the jobs we take, channels, price; metadata
                        #   and graph built from its page record
+  content-publishing/page.tsx
+  social-scheduling/page.tsx
+  support-ticket-triage/page.tsx
   failed-payment-recovery/page.tsx
-                       # One job on its own page. The route hands the record to the
+  shopify-operations/page.tsx
+                       # The five jobs, one per page. Each route hands its record to the
                        #   component; the record and every word about that job live on
                        #   the job in content.ts
   issue-to-pull-request/page.tsx
