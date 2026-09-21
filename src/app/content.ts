@@ -409,7 +409,90 @@ export const jobsIntro = {
 /* The five jobs. The home page indexes them by title and systems; the custom
  * door describes each one. None of them is in the catalogue: each is work we
  * shape an agent around once we have read the client's workflow. */
-export type Job = { title: string; systems: string; body: string };
+export type Job = {
+  title: string;
+  systems: string;
+  body: string;
+  /* The page that expands this job, where it has one. A job with no page is a
+   * row on the two lists and nothing more; a job with one is linked from both
+   * of them, and the link follows the record rather than being written out. */
+  page?: JobPage;
+};
+
+/* One job on its own page: the page's record and every word it prints. The
+ * record fields are the ones `PageRecord` names, so a job page needs no
+ * second record written for it, and the canonical URL, the sitemap entry with
+ * its date, the line in `llms.txt` and the page's graph nodes all follow from
+ * this object the way they follow from a written page's record. A job page is
+ * therefore one of these and one route file, which the Adding a page section
+ * of README.md sets out.
+ *
+ * The heading and the record's title are two different sentences on purpose:
+ * a title is written for a search result, and a heading is written for the
+ * reader who clicked it. */
+export type JobPage = PageRecord & {
+  /* The h1, in the site's own voice. */
+  heading: string;
+  lede: string;
+  /* What the agent may do on its own. One of the three authorities in
+   * CONTEXT.md, and never a fourth. */
+  authority: string;
+  /* Where the agent stops and waits for a named person. */
+  gate: string;
+  /* What the agent does, in the order it does it. */
+  steps: { title: string; body: string }[];
+  /* The systems the job names, and what the agent does in each. */
+  systems: { name: string; role: string }[];
+  /* The mail subject every call to action on the page carries, which is how
+   * the analytics event names the door a reader came through. */
+  subject: string;
+  /* The words the two job lists link to this page with. Its own, so a reader
+   * meeting five of these rows hears five different links. */
+  more: string;
+};
+
+export const failedPaymentRecovery: JobPage = {
+  path: "/failed-payment-recovery",
+  title: "Failed payment recovery agent",
+  description:
+    "An agent that reads every charge Stripe failed, drafts the follow-up to each customer, and sends nothing until a named person approves it.",
+  date: "2026-09-21",
+  heading: "An agent that works last night's failed payments.",
+  lede: "Every charge Stripe failed overnight comes back as one summary, with a drafted message per customer waiting in your outbox. Nothing reaches a customer until a named person approves it.",
+  authority:
+    "It acts behind an approval gate. Reading Stripe, sorting the failures and writing the drafts needs nobody, and every draft then stops.",
+  gate: "The gate sits before a message leaves your company. A follow-up reaches your customer, so a named person reads it and sends it.",
+  steps: [
+    {
+      title: "Reads the night's failures",
+      body: "The failed charge itself wakes the agent. It reads the amount, the reason the card gave, the invoice behind it and how long that customer has been paying you.",
+    },
+    {
+      title: "Sorts them by what went wrong",
+      body: "An expired card, a bank that declined once and a subscription on its fourth retry are three different messages. The agent groups the night before it writes anything.",
+    },
+    {
+      title: "Drafts one message per customer",
+      body: "Each draft names the invoice, the amount and the next retry, in the wording your team already uses. They wait in your outbox, unsent.",
+    },
+    {
+      title: "Reports the night in one place",
+      body: "One summary in the channel your finance team already works in: how many charges failed, how much is waiting, and which drafts need a name.",
+    },
+  ],
+  systems: [
+    {
+      name: "Stripe",
+      role: "The event that wakes the agent, and where it reads the failed charge, the decline reason, the invoice and the retry schedule.",
+    },
+    {
+      name: "Your outbox",
+      role: "Where every draft waits, under the address your customers already hear from. The agent writes the draft and stops there.",
+    },
+  ],
+  subject: "Failed payment recovery",
+  more: "How the follow-up works",
+};
 
 export const jobs: Job[] = [
   {
@@ -431,6 +514,7 @@ export const jobs: Job[] = [
     title: "Failed-payment follow-up",
     systems: "Stripe, your outbox",
     body: "Overnight failures come back as a summary and a drafted message per customer. Sending needs a signature.",
+    page: failedPaymentRecovery,
   },
   {
     title: "Store operations",
@@ -438,6 +522,12 @@ export const jobs: Job[] = [
     body: "Stock, pricing and order exceptions watched on a schedule, with the ones that need a decision brought to a person.",
   },
 ];
+
+/* The jobs that have a page, in the order the lists print them. A crawler
+ * reads these the way it reads a page we write by hand: `indexablePages`
+ * carries them, so a job page added above is in the sitemap, in `llms.txt`
+ * and under the test suite in that one edit. */
+export const jobPages: JobPage[] = jobs.flatMap((job) => job.page ?? []);
 
 /* ---------------------------------------------------------------------------
  * The custom door
@@ -702,10 +792,14 @@ export function productPage(product: Product): PageRecord {
   };
 }
 
-/* Every page a crawler should index: the pages we write by hand, then one
- * page per product in the catalogue. The sitemap walks this list and so does
- * the suite, so a page added above is listed for a crawler and guarded by the
- * suite in that one edit. A page that is not here has no sitemap entry, and
- * nothing watching its canonical, its title, its description or its unfurl
- * image. */
-export const indexablePages: PageRecord[] = [...writtenPages, ...products.map(productPage)];
+/* Every page a crawler should index: the pages we write by hand, then the
+ * jobs that have a page of their own, then one page per product in the
+ * catalogue. The sitemap walks this list and so does the suite, so a page
+ * added above is listed for a crawler and guarded by the suite in that one
+ * edit. A page that is not here has no sitemap entry, and nothing watching
+ * its canonical, its title, its description or its unfurl image. */
+export const indexablePages: PageRecord[] = [
+  ...writtenPages,
+  ...jobPages,
+  ...products.map(productPage),
+];

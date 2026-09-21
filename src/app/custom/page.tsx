@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ChannelsSection } from "@/components/channels-section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { callHref, custom, customPage, jobs, mailtoFor } from "../content";
@@ -46,6 +47,11 @@ export default function Custom() {
                       <span className="row__label">{job.title}</span>
                       <p>{job.body}</p>
                       <span className="row__note">{job.systems}</span>
+                      {job.page && (
+                        <Link className="pull" href={job.page.path}>
+                          {job.page.more}
+                        </Link>
+                      )}
                     </div>
                   </li>
                 ))}

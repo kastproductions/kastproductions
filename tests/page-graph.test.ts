@@ -12,6 +12,7 @@
 import { expect, test } from "bun:test";
 import {
   custom,
+  jobPages,
   legalPages,
   openPrices,
   type Price,
@@ -79,6 +80,10 @@ function pricesFor(path: string): Price[] | null {
   if (statesNoOffer.includes(path)) return null;
   if (path === "/") return openPrices;
   if (path === "/custom") return custom.prices;
+  /* A job page sells the custom door's work at the door's own prices: a job
+   * we shape an agent around carries no price of its own, and a second number
+   * for it would be one the door does not state. */
+  if (jobPages.some((job) => job.path === path)) return custom.prices;
   const product = products.find((entry) => `/${entry.slug}` === path);
   if (!product) {
     throw new Error(`${path} is an indexable route the suite knows no price list for.`);

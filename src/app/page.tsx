@@ -94,6 +94,14 @@ export default function Home() {
                       <span className="row__label">{job.title}</span>
                       <p>{job.body}</p>
                       <span className="row__note">{job.systems}</span>
+                      {/* A job with a page of its own is linked from the row
+                          that names it. A job without one is a row and
+                          nothing more: see `jobs` in content.ts. */}
+                      {job.page && (
+                        <Link className="pull" href={job.page.path}>
+                          {job.page.more}
+                        </Link>
+                      )}
                     </div>
                   </li>
                 ))}

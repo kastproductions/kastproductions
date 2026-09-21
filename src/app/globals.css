@@ -191,6 +191,9 @@ a { color: inherit; }
     gap: .3rem var(--split);
   }
   .row__label { grid-row: span 2; }
+  /* A row that leads somewhere keeps its link in the reading column, under
+     the body it belongs to, rather than under the label. */
+  .row > .pull { grid-column: 2; }
   .row--stack .row__label { grid-row: auto; }
 }
 
