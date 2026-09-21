@@ -1037,8 +1037,9 @@ export const slackSubject = "Agent in Slack";
 
 /* The pages we write by hand, as against the job pages the jobs hold and the
  * product pages the catalogue makes. The two doors are the written pages
- * that print a price; every other page here states no offer, and the graph
- * suite reads that off this list. */
+ * that state an offer; every other page here states none, the terms
+ * included, which print the plans to say what a build buys and not to sell
+ * one. The graph suite reads that off this list. */
 export const writtenPages: PageRecord[] = [
   homePage,
   customPage,
