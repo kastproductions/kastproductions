@@ -4,6 +4,7 @@ import { ChannelsSection } from "@/components/channels-section";
 import { JobRows } from "@/components/job-rows";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
+  aboutPage,
   brand,
   callHref,
   clients,
@@ -23,7 +24,6 @@ import {
   pricingIntro,
   products,
   questions,
-  references,
   stack,
 } from "./content";
 import { pageMetadata } from "./head-directives";
@@ -183,35 +183,16 @@ export default function Home() {
               <p>
                 {founder} founded {brand} in {location.city} and has shipped for
                 the companies listed above. He owns the agents we build and
-                signs the merges we make on a client&apos;s repository. The
-                references below are quoted as written.
+                signs the merges we make on a client&apos;s repository.
               </p>
             </div>
-            <ul className="unit__body refs">
-              {references.map((reference) => (
-                <li key={reference.name}>
-                  <figure>
-                    <blockquote>
-                      <p>{reference.quote}</p>
-                    </blockquote>
-                    <figcaption>
-                      <img
-                        src={reference.portrait}
-                        alt={`${reference.name}, ${reference.position}`}
-                        width={176}
-                        height={176}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span className="refs__who">
-                        <b>{reference.name}</b>
-                        <span>{reference.position}</span>
-                      </span>
-                    </figcaption>
-                  </figure>
-                </li>
-              ))}
-            </ul>
+            <div className="unit__body">
+              {/* The six references and their portraits live on the about
+                  page, which is the one place they are printed. */}
+              <Link className="pull" href={aboutPage.path}>
+                Who he is, and six references quoted as written
+              </Link>
+            </div>
           </div>
         </section>
 

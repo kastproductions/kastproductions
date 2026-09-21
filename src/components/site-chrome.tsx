@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import {
+  aboutPage,
   brand,
   briefHref,
   callHref,
@@ -96,6 +97,12 @@ export function SiteHeader({ route }: Chrome) {
           <SectionLink home={home} hash="#questions">
             Questions
           </SectionLink>
+          {/* Who is behind the work. A buyer weighing a build looks for this
+              from whichever page brought them in, so it is in the header and
+              not with the legal pages in the footer. */}
+          <Link href={aboutPage.path} prefetch={route === aboutPage.path ? false : undefined}>
+            About
+          </Link>
         </nav>
         <a className="btn btn--signal" href={briefHref}>
           Send us a brief

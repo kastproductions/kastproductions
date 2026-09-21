@@ -993,6 +993,18 @@ export const evalSuitePage: PageRecord = {
 
 export const explainerPages: PageRecord[] = [evalSuitePage];
 
+/* The page that says who is behind the work: the founder, the companies he
+ * has shipped for and the six references, which live on this page and not on
+ * the home page. Its title leads with his name, which is what a buyer
+ * checking who signs the merge types into a search engine, and the founder
+ * node in the graph points here. It states no offer. */
+export const aboutPage: PageRecord = {
+  path: "/about",
+  title: `${founder}, founder`,
+  description: `${founder} founded ${brand} in ${location.city} and signs every merge. The seventeen companies he has shipped for, and six references quoted as written.`,
+  date: "2026-09-21",
+};
+
 /* The pages we write by hand, as against the product pages the catalogue
  * makes. */
 export const writtenPages: PageRecord[] = [
@@ -1000,6 +1012,7 @@ export const writtenPages: PageRecord[] = [
   customPage,
   ...legalPages,
   ...explainerPages,
+  aboutPage,
   contactPage,
 ];
 

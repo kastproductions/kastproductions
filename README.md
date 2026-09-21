@@ -81,6 +81,9 @@ src/app/
   content-publishing/page.tsx
   social-scheduling/page.tsx
   support-ticket-triage/page.tsx
+  about/page.tsx       # Who is behind the work: the founder, the companies he shipped
+                       #   for before the company existed, and the six references with
+                       #   their portraits, which print here and nowhere else
   failed-payment-recovery/page.tsx
   shopify-operations/page.tsx
                        # The five jobs, one per page. Each route hands its record to the
@@ -127,8 +130,8 @@ src/app/
   icon.svg             # Favicon, drawn as the brand mark
 src/components/
   site-chrome.tsx      # Header, footer and brand mark, shared by every page. The
-                       #   footer links privacy, terms, the imprint and the contact page
-                       #   from every page
+                       #   header links the about page, and the footer links privacy,
+                       #   terms, the imprint and the contact page from every page
   channels-section.tsx # Where a standing agent is reachable, and what wakes it
   product-page.tsx     # One ready-made product, on its own page
   job-page.tsx         # One job we take, on its own page
@@ -166,6 +169,9 @@ tests/
   contact.test.ts      # Every "Book a call" points where `callHref` points, every page
                        #   leads to the contact page, and the contact page prints the
                        #   company it names
+  about.test.ts        # The founder node points at the about page, every header links
+                       #   it, and the page prints every client and every reference
+                       #   as `content.ts` holds them
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
@@ -216,17 +222,18 @@ canonical URL, the indexing directive, the unfurl fields, the sitemap entry with
 line in `llms.txt`, the page's own graph nodes, and the suite's coverage of all of them.
 
 1. Add the record in the page records section of `src/app/content.ts`, and put it in
-   `writtenPages`:
+   `writtenPages`. The about page is the worked example, and `src/app/about/page.tsx` is
+   what the route file below grew into:
 
    ```ts
    export const aboutPage: PageRecord = {
      path: "/about",
-     title: "Who builds the agents",
+     title: `${founder}, founder`,
      description: "The sentence a search result prints under the title, under 160 characters.",
-     date: "2026-09-20",
+     date: "2026-09-21",
    };
 
-   export const writtenPages: PageRecord[] = [homePage, customPage, aboutPage];
+   export const writtenPages: PageRecord[] = [homePage, customPage, ...legalPages, aboutPage];
    ```
 
 2. Add the route file at the path the record states, here `src/app/about/page.tsx`:
@@ -370,7 +377,7 @@ The site is a static export (`output: "export"` in `next.config.ts`). Deploy `./
 
 The site runs on Vercel, and `vercel.json` carries two settings the static export cannot express on its own:
 
-- Permanent redirects from the retired `/about`, `/work`, `/standing-agents` and `/og.png` URLs to the matching page or section. `/contact` is a page now, so nothing redirects it.
+- Permanent redirects from the retired `/work`, `/standing-agents` and `/og.png` URLs to the matching page or section. `/about` and `/contact` are pages now, so nothing redirects them.
 - A `Content-Type: image/png` header for `/opengraph-image`. Next.js writes that file without an extension, and a static host would otherwise serve it as a download.
 
 `llms.txt` needs no such header. The build writes it under its own name, extension and all, so a static host reads the content type off the `.txt` the way it already does for `robots.txt`.

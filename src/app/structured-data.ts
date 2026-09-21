@@ -8,6 +8,7 @@
  * worse than no claim: it fails validation and costs trust.
  */
 import {
+  aboutPage,
   brand,
   companyProfiles,
   contactEmail,
@@ -110,7 +111,9 @@ const person: GraphNode = {
   "@id": founderId,
   name: founder,
   jobTitle: "Founder",
-  url: siteUrl,
+  /* The page that describes him, so a crawler that follows the node lands
+   * where the founder is written about and not on the home page. */
+  url: pageUrl(aboutPage.path),
   worksFor: { "@id": organizationId },
   sameAs: founderProfiles,
 };
