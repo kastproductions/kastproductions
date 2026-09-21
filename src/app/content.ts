@@ -419,13 +419,15 @@ export type Job = {
   page?: JobPage;
 };
 
-/* One job on its own page: the page's record and every word it prints. The
- * record fields are the ones `PageRecord` names, so a job page needs no
- * second record written for it, and the canonical URL, the sitemap entry with
- * its date, the line in `llms.txt` and the page's graph nodes all follow from
- * this object the way they follow from a written page's record. A job page is
- * therefore one of these and one route file, which the Adding a page section
- * of README.md sets out.
+/* One job on its own page: the page's record and the words that page prints
+ * about the job. The record fields are the ones `PageRecord` names, so a job
+ * page needs no second record written for it, and the canonical URL, the
+ * sitemap entry with its date, the line in `llms.txt` and the page's graph
+ * nodes all follow from this object the way they follow from a written page's
+ * record. A job page is therefore one of these and one route file, which the
+ * A job page section of README.md sets out. The prose every job page shares,
+ * the section headings among it, is in `src/components/job-page.tsx`, which
+ * draws them all.
  *
  * The heading and the record's title are two different sentences on purpose:
  * a title is written for a search result, and a heading is written for the
@@ -454,8 +456,10 @@ export type JobPage = PageRecord & {
 export const failedPaymentRecovery: JobPage = {
   path: "/failed-payment-recovery",
   title: "Failed payment recovery agent",
+  /* The description leads with the phrase a buyer types, because a result is
+   * read left to right. The title carries the same words. */
   description:
-    "An agent that reads every charge Stripe failed, drafts the follow-up to each customer, and sends nothing until a named person approves it.",
+    "Failed payment recovery, run by a standing agent: every charge Stripe failed comes back as a drafted message that waits for your approval.",
   date: "2026-09-21",
   heading: "An agent that works last night's failed payments.",
   lede: "Every charge Stripe failed overnight comes back as one summary, with a drafted message per customer waiting in your outbox. Nothing reaches a customer until a named person approves it.",

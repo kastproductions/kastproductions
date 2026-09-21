@@ -32,6 +32,13 @@ _Avoid_: bespoke, enterprise, one-off
 The list of ready-made products. It holds only a product that runs today. A job we have not built yet belongs to the custom door.
 _Avoid_: marketplace, store, library, gallery
 
+**Job**:
+A piece of work a company wants taken off its team, named the way that company
+would name it. A job names the systems it touches, and a job we take often has
+a page of its own, because it is also what a buyer types into a search engine.
+It is never one piece of work a standing agent does: that is a session.
+_Avoid_: use case, service, vertical
+
 **Brief**:
 The client's issue stating the problem, the acceptance criteria and the constraints. It is the unit we price.
 _Avoid_: requirement, ticket, story, scope document

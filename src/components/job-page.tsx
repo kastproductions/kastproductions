@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ChannelsSection } from "@/components/channels-section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+/* The record is the job's page, and this component draws it, so the two carry
+ * one name between them: the record is aliased here rather than renamed
+ * everywhere else. */
 import type { JobPage as JobPageRecord } from "@/app/content";
 import { callHref, custom, customPage, mailtoFor } from "@/app/content";
 import { graphHtml, pageNodes } from "@/app/structured-data";
@@ -13,7 +16,9 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
  * questions in the same order, and five hand-written pages would answer them
  * a word further apart every time one was edited. A job page is therefore one
  * record on the job in `content.ts` and one route file that hands that record
- * to this component, which the Adding a page section of README.md sets out.
+ * to this component, which the A job page section of README.md sets out. Every
+ * word about one job is on the record; the prose the five pages share, their
+ * section headings among it, is here.
  *
  * The page prints the custom door's prices and no others. A job we shape an
  * agent around is custom work, so a price of its own would be a number the
@@ -111,20 +116,21 @@ export function JobPage({ page }: { page: JobPageRecord }) {
           <div className="wrap unit">
             <div className="unit__head">
               <h2 id="job-price-title">What it costs</h2>
+              {/* The floor, and what the month buys, are the door's own
+                  sentences. This page states which price list a job like this
+                  one is on and sends a reader there for the rest. */}
               <p>
-                We read your workflow first, then name a fixed price. The build
-                price is a floor, because the work follows the number of systems
-                your agent touches. The monthly price buys the eval suite, the
-                changes and the report.
+                A job we have not built before is custom work, so this one is
+                priced at the custom door. The numbers below are floors: we
+                read your workflow first, then name one fixed price.
               </p>
             </div>
             <div className="unit__body plans">
               <div className="plan">
                 <h3>Custom agent</h3>
                 <p>
-                  A job like this one is custom work: you describe it, we write
-                  the spec and name the price, then build the agent around how
-                  your company already runs.
+                  You describe this job as your company runs it. We write the
+                  spec, name the price, and build the agent around it.
                 </p>
                 <div className="plan__figures">
                   {custom.prices.map((price) => (
@@ -138,8 +144,8 @@ export function JobPage({ page }: { page: JobPageRecord }) {
                 </a>
               </div>
               <p className="note">
-                This job is on no shelf. It goes through the custom door, which
-                states what a custom agent is and what it needs from you.{" "}
+                The door says what a custom agent needs from you, and what the
+                month after it goes live buys.{" "}
                 <Link className="pull" href={customPage.path}>
                   How a custom agent is built
                 </Link>

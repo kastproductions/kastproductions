@@ -79,8 +79,9 @@ src/app/
   custom/page.tsx      # The custom door: the jobs we take, channels, price; metadata
                        #   and graph built from its page record
   failed-payment-recovery/page.tsx
-                       # One job on its own page. The route is four lines; the record
-                       #   and every word it prints live on the job in content.ts
+                       # One job on its own page. The route hands the record to the
+                       #   component; the record and every word about that job live on
+                       #   the job in content.ts
   privacy/page.tsx     # What the site collects, who processes it, how long it is kept
   terms/page.tsx       # What a build buys and what the monthly work covers, from the
                        #   prices and the lead time the content module holds
@@ -88,8 +89,8 @@ src/app/
                        #   registered address, director. It prints `company` and the
                        #   mailbox under it, and nothing else
   content.ts           # Brand constants, client list, founder references, every word
-                       #   of both doors and of every job page, and the page records:
-                       #   the path, title, description and copy date of every page we
+                       #   of both doors and of every job, and the page records: the
+                       #   path, title, description and copy date of every page we
                        #   write by hand
   head-directives.ts   # What a page tells a machine in its head. `pageMetadata` builds
                        #   all of it from a page record: title, description, canonical
@@ -117,6 +118,7 @@ src/components/
   channels-section.tsx # Where a standing agent is reachable, and what wakes it
   product-page.tsx     # One ready-made product, on its own page
   job-page.tsx         # One job we take, on its own page
+  job-rows.tsx         # The jobs we take, as rows, on the home page and the door
   run-record.tsx       # The example run, on a product page
   agent-console.tsx    # The example agent in the home page hero: its nameplate, the
                        #   exchange, and the gate it stops at
@@ -172,7 +174,7 @@ what the build emitted, never what Google accepted.
 
 ## Content
 
-Every word of both doors and of every job page lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the page records with the day each page's copy last changed. What a page tells a machine rather than a reader is not there. The metadata each page derives from its record, with the unfurl image and the indexing directive, lives in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`.
+Every word of both doors and of every job we take lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the page records with the day each page's copy last changed. What a page tells a machine rather than a reader is not there, and neither is the prose a shared component prints on every page of a kind. The metadata each page derives from its record, with the unfurl image and the indexing directive, lives in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`.
 
 The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
 
@@ -248,8 +250,9 @@ read it off the record.
 The home page lists the five jobs we take, and a job is also the phrase a buyer types into a
 search engine, so a job earns a page of its own. That page is still one record and one route
 file, and the record is the `page` field on the job in `src/app/content.ts`: a `JobPage` is a
-page record with the words the page prints added to it, so nothing about the job is written
-twice.
+page record with the words that page prints about the job added to it, so nothing about the
+job is written twice. The prose the five pages share, their section headings among it, is in
+`src/components/job-page.tsx`, which draws them all.
 
 1. Write the page on the job, in the jobs section of `src/app/content.ts`:
 
@@ -289,9 +292,9 @@ twice.
 
 Nothing else moves. `jobPages` reads the pages off `jobs` and `indexablePages` carries them, so
 the sitemap entry, the `llms.txt` line, the canonical, the unfurl and the graph nodes follow;
-the rows on the home page and on the custom door link the page because the job holds it; and
-`src/components/job-page.tsx` draws every job page, so five of them stay one page in five
-voices rather than five pages drifting apart.
+`src/components/job-rows.tsx` links the page from the home page and from the custom door,
+because the job holds it; and `src/components/job-page.tsx` draws every job page, so five jobs
+stay one page in five voices rather than five pages drifting apart.
 
 A job page prints the custom door's prices, read from `custom.prices`, and no number of its
 own: a job we shape an agent around is custom work, and the door is where it is priced. It

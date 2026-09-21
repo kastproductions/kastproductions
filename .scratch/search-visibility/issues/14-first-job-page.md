@@ -52,7 +52,32 @@ Decided, and the reasons:
   state, and the graph states the same two floors the page prints.
 - **Authority: it acts behind an approval gate**, and the gate sits before a message leaves the
   company, because a sent follow-up is an outward action.
-- **Deliberately not abstracted:** the job row markup, which the home page and the custom door
-  still each write out. The duplication was already there, and the link follows the record, so
-  adding four more pages does not widen it. There is no nav entry for a job page either: five
-  of them would crowd a header that holds three links.
+- **The rows are shared too, in `src/components/job-rows.tsx`.** The home page and the custom
+  door print one list, and the link to a job page is a condition inside a row, so the row
+  markup stopped being written twice. `channels-section.tsx` is the precedent.
+- **Deliberately not abstracted:** the pricing band's `.plan` markup, which the custom door
+  also writes. It is the design's own instrument, and the two bands now say different things,
+  so what is shared is `custom.prices` and nothing else. There is no nav entry for a job page
+  either: five of them would crowd a header that holds three links. And `pricesFor` in
+  `tests/page-graph.test.ts` keeps one branch per kind of page rather than reading a `prices`
+  field off a record, because a job page has no price of its own to read.
+
+The two-axis review of `af9893e...HEAD` ran after the first commit. What it found, and the
+answer:
+
+- **The description did not carry the phrase the page targets.** True, and now it does: it
+  leads with "Failed payment recovery", the way a result is read left to right.
+- **The README claimed every word of a job page lives in `content.ts`, while the component
+  hard-codes the section headings and the prose the five pages share.** The claim was the part
+  that was wrong. The README now says every word of both doors and of every job we take is in
+  `content.ts`, and that the prose a shared component prints on every page of a kind is not.
+- **The job page re-explained the floor and the month, which the custom door already
+  explains.** Cut. The band now states which price list the job is on, prints the two floors,
+  and hands the reader to the door for the rest.
+- **CONTEXT.md fixed no meaning for "job", which only appeared as a word to avoid for a
+  session.** A **Job** entry now fixes it, and says it is never one session's work.
+- **`JobPage` names both the record and the component, which forces an alias in
+  `job-page.tsx`.** Kept: the record is the job's page, and renaming it to fit the component
+  would cost the name everywhere else. The alias is commented where it happens.
+- **Comments pointed at the README's "Adding a page" section for a pattern the new "A job
+  page" section describes.** Repointed.

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AgentConsole } from "@/components/agent-console";
 import { ChannelsSection } from "@/components/channels-section";
+import { JobRows } from "@/components/job-rows";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   brand,
@@ -12,7 +13,6 @@ import {
   founder,
   hero,
   homePage,
-  jobs,
   jobsIntro,
   location,
   mailtoFor,
@@ -87,25 +87,7 @@ export default function Home() {
               <p>{jobsIntro.lede}</p>
             </div>
             <div className="unit__body">
-              <ul className="rows">
-                {jobs.map((job) => (
-                  <li key={job.title}>
-                    <div className="row">
-                      <span className="row__label">{job.title}</span>
-                      <p>{job.body}</p>
-                      <span className="row__note">{job.systems}</span>
-                      {/* A job with a page of its own is linked from the row
-                          that names it. A job without one is a row and
-                          nothing more: see `jobs` in content.ts. */}
-                      {job.page && (
-                        <Link className="pull" href={job.page.path}>
-                          {job.page.more}
-                        </Link>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <JobRows />
               <ul className="doors" id="doors">
                 {openDoors.map((door) => (
                   <li className="door" key={door.name}>

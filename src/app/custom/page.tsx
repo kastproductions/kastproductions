@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { ChannelsSection } from "@/components/channels-section";
+import { JobRows } from "@/components/job-rows";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import { callHref, custom, customPage, jobs, mailtoFor } from "../content";
+import { callHref, custom, customPage, mailtoFor } from "../content";
 import { pageMetadata } from "../head-directives";
 import { graphHtml, pageNodes } from "../structured-data";
 
@@ -40,22 +40,7 @@ export default function Custom() {
               <p>{custom.jobsLede}</p>
             </div>
             <div className="unit__body">
-              <ul className="rows">
-                {jobs.map((job) => (
-                  <li key={job.title}>
-                    <div className="row">
-                      <span className="row__label">{job.title}</span>
-                      <p>{job.body}</p>
-                      <span className="row__note">{job.systems}</span>
-                      {job.page && (
-                        <Link className="pull" href={job.page.path}>
-                          {job.page.more}
-                        </Link>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <JobRows />
             </div>
           </div>
         </section>
