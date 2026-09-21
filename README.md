@@ -85,8 +85,9 @@ src/app/
                        #   all of it from a page record: title, description, canonical
                        #   URL, indexing directive and unfurl fields
   structured-data.ts   # The schema.org graph: the nodes true everywhere, and
-                       #   `pageNodes`, which builds the page, service and breadcrumb
-                       #   nodes a page adds from that same record
+                       #   `pageNodes`, which builds what a page adds from that same
+                       #   record: the page with the date its copy changed and the
+                       #   questions it answers, the service it sells, the breadcrumb
   globals.css          # The sheet: design tokens and component styles. Its header
                        #   states the three rules the design holds to
   opengraph-image.tsx  # Open Graph image, rendered at build time
@@ -125,7 +126,9 @@ tests/
   llms-txt.test.ts     # The plain-text index lists the URLs the sitemap lists, with
                        #   the description each record states
   structured-data.test.ts  # The company states only what it can support
-  page-graph.test.ts   # Each route describes itself, with the printed prices as offers
+  page-graph.test.ts   # Each route describes itself: the date its copy changed, the
+                       #   printed prices as offers, the questions the home page
+                       #   answers, and one spelling of the site URL in every identifier
   analytics.test.ts    # Every page loads the tracker and counts a mailto click
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
@@ -157,7 +160,7 @@ Every word of both doors lives in `src/app/content.ts`, along with the facts the
 
 The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
 
-The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor.
+The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `openPrices`, which is the plans the catalogue leaves standing, so a plan the page keeps back is a plan the graph does not claim.
 
 `bookingUrl` is empty until a booking link exists. "Book a call" falls back to a `mailto:` with a subject line, so a click on it still names the door the reader came through.
 
@@ -207,15 +210,19 @@ line in `llms.txt`, the page's own graph nodes, and the suite's coverage of all 
    ```
 
 Nothing else moves. A page that prints a price passes it, `pageNodes(aboutPage, prices)`, and
-gets the service node with one offer per price; a page that prints none states no offer. The
-title on the record is the page's own and `pageMetadata` puts the brand after it, so keep the
-two together under about 60 characters. The date is the day the copy last changed, read with
-`git log -1 --date=short -- <file>`, so editing the words on a page means editing its date in
-the same commit.
+gets the service node with one offer per price; a page that prints none states no offer. A page
+that answers questions passes the list it prints as well, `pageNodes(aboutPage, prices,
+questions)`, and its node says it is an FAQ page and carries every question and answer; pass
+the same array the page renders, because a second list drifts from the copy on the first edit.
+The title on the record is the page's own and `pageMetadata` puts the brand after it, so keep
+the two together under about 60 characters. The date is the day the copy last changed, read
+with `git log -1 --date=short -- <file>`, so editing the words on a page means editing its date
+in the same commit; the route file states it nowhere, because the graph and the sitemap both
+read it off the record.
 
 ## The catalogue
 
-`products` holds only a product that runs today. A job we have not built yet belongs on the custom page. While the array is empty the home page shows one door, the ready-made prices stay off the price list, and no product appears in the nav or the sitemap.
+`products` holds only a product that runs today. A job we have not built yet belongs on the custom page. While the array is empty the home page shows one door, the ready-made prices stay off the price list and out of the offers in its graph, and no product appears in the nav or the sitemap.
 
 Turning a product on takes two edits, because `output: "export"` refuses a dynamic route segment that generates no paths:
 

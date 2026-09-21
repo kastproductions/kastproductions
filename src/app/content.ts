@@ -119,10 +119,10 @@ export const references = [
  * and what may be stated as fact is in the Claims section of README.md.
  * ------------------------------------------------------------------------- */
 
-/* A price as a reader sees it, and the only place the number lives.
- * `custom.prices` and the `prices` field on a product both hold these, and
- * `src/app/structured-data.ts` reads the number and the currency back out of
- * the string so the page and the graph cannot drift apart. */
+/* A price as a reader sees it, and the only place the number lives. Each way to
+ * buy in `prices`, `custom.prices` and the `prices` field on a product all hold
+ * these, and `src/app/structured-data.ts` reads the number and the currency
+ * back out of the string so the page and the graph cannot drift apart. */
 export type Price = { amount: string; per: string };
 
 export const hero = {
@@ -451,7 +451,7 @@ export const prices = [
   {
     title: "Self-run",
     body: "We build your agent, deploy it into your own accounts and hand over the keys. Your team runs it and your engineers sign the merges.",
-    price: "From €7,500",
+    amount: "From €7,500",
     per: "to build, then from €1,500 a month",
     includes: [
       `Live in your own channel in ${leadTime}`,
@@ -466,7 +466,7 @@ export const prices = [
   {
     title: "Managed",
     body: "We build it and we run it. Our coding agents take the runs, our reviewer reads every diff, and the agent still lives in your accounts.",
-    price: "From €7,500",
+    amount: "From €7,500",
     per: "to build, then from €4,000 a month",
     includes: [
       "As many briefs as the capacity allows, prioritised with you weekly",
@@ -481,7 +481,7 @@ export const prices = [
   {
     title: "Custom agent",
     body: "For work that matches nothing we have built. You describe it, we write the spec and name the price, and the agent is shaped around your workflow.",
-    price: "From €10,000",
+    amount: "From €10,000",
     per: "to build, then from €1,500 a month",
     includes: [
       "A spec and a fixed price within one working day",
@@ -496,7 +496,7 @@ export const prices = [
   {
     title: "Sprint",
     body: "One brief, two weeks, one fixed price. Our own agents work it on your repository, and our reviewer signs the merge. Nothing is deployed and nothing is connected, so this buys one piece of finished work rather than an agent.",
-    price: "From €4,000",
+    amount: "From €4,000",
     per: "per brief",
     includes: [
       "A fixed price before the two weeks start",
@@ -510,7 +510,18 @@ export const prices = [
   },
 ];
 
-export const questions = [
+/* The plans the home page prints. A plan that prices a ready-made product waits
+ * until the catalogue holds one: see the Catalogue entry in CONTEXT.md. The home
+ * page's graph offers this list and nothing else, so a plan the page keeps back
+ * is a plan the graph does not offer either. */
+export const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
+
+/* One question the home page answers, in the words it prints. The page renders
+ * this list and the graph marks the same list up as questions and answers, so
+ * neither can state a question the other leaves out. */
+export type Question = { q: string; a: string };
+
+export const questions: Question[] = [
   {
     q: "Who owns the agent and the code?",
     a: "You do. It lives in your repository and deploys into your own accounts, with your keys. Stop paying us and your agent keeps running. What stops is our work on it.",

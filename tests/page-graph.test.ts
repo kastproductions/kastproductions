@@ -1,21 +1,23 @@
 /*
  * What each page says about itself. The site-wide nodes are the same wherever a
- * crawler lands, so this file reads the ones a route adds on top: the page, the
- * service it sells with the prices it prints, and the way here from the home
- * page.
+ * crawler lands, so this file reads the ones a route adds on top: the page with
+ * the date its copy last changed, the questions it answers, the service it
+ * sells with the prices it prints, and the way here from the home page.
  *
  * The route list comes from the catalogue, so a product entering it is covered
- * with no edit here. Prices are read out of `content.ts` rather than written
- * down a second time: the suite tracks the copy instead of pinning it.
+ * with no edit here. Prices, questions and dates are read out of `content.ts`
+ * rather than written down a second time: the suite tracks the copy instead of
+ * pinning it.
  */
 import { expect, test } from "bun:test";
-import { custom, type Price, products } from "../src/app/content";
+import { custom, openPrices, type Price, products, questions } from "../src/app/content";
 import {
   type GraphNode,
   graphNodes,
   indexableRoutes,
   nodesOfType,
   readExport,
+  type Route,
   siteUrl,
 } from "./export";
 
@@ -24,6 +26,17 @@ function only(found: GraphNode[], type: string, path: string): GraphNode {
     throw new Error(`${path} declares ${found.length} ${type} nodes; it promises one.`);
   }
   return found[0];
+}
+
+/*
+ * The key a node of this page carries. Every identifier in the graph keys off
+ * the site URL with the slash after the host, which the identifier test below
+ * holds the whole graph to. A page below the home page carries that slash in
+ * its path already; the home page's own address ends at the host, so its key
+ * is the one place the two spellings part.
+ */
+function keyFor(route: Route, fragment: string): string {
+  return `${route.path === "/" ? `${siteUrl}/` : route.url}#${fragment}`;
 }
 
 /*
@@ -44,13 +57,13 @@ function claim(amount: string): { currency: string; value: number } {
 }
 
 /*
- * What a route sells, from the content module. The home page sells no one
- * thing, so it has no price list; a door and a product page each have their
- * own. A route the suite cannot answer for is a failure, not a skip: that is a
- * page shipped with nobody watching what it claims.
+ * What a route sells, from the content module. Every page that prints a price
+ * offers it: the home page the plans it prints, and a door or a product page
+ * its own. A route the suite cannot answer for is a failure, not a skip: that
+ * is a page shipped with nobody watching what it claims.
  */
-function pricesFor(path: string): Price[] | null {
-  if (path === "/") return null;
+function pricesFor(path: string): Price[] {
+  if (path === "/") return openPrices;
   if (path === "/custom") return custom.prices;
   const product = products.find((entry) => `/${entry.slug}` === path);
   if (!product) {
@@ -63,15 +76,34 @@ for (const route of indexableRoutes) {
   test(`${route.path} describes itself as a page`, () => {
     const page = only(nodesOfType(readExport(route.file), "WebPage"), "WebPage", route.path);
     expect(page.url).toBe(route.url);
-    expect(page["@id"]).toBe(`${route.url}#webpage`);
+    expect(page["@id"]).toBe(keyFor(route, "webpage"));
     /* It belongs to the site the layout declares, rather than restating it. */
     expect(page.isPartOf).toEqual({ "@id": `${siteUrl}/#website` });
   });
 
-  const prices = pricesFor(route.path);
-  if (!prices) continue;
+  test(`${route.path} states the date its copy last changed`, () => {
+    const page = only(nodesOfType(readExport(route.file), "WebPage"), "WebPage", route.path);
+    /* The date comes off the page record, which is the one place it is written.
+     * A date the build stamps tells a crawler that every page changed on every
+     * deploy, and a crawler that learns our dates are worthless stops reading
+     * them: the reason `sitemap.test.ts` checks the sitemap for a clock too. */
+    expect(page.dateModified).toBe(route.date);
+    expect(page.dateModified).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+  });
+
+  test(`${route.path} spells the site URL one way in every identifier`, () => {
+    const stated = JSON.stringify(graphNodes(readExport(route.file)));
+    const ids = [...stated.matchAll(/"@id":"([^"]+)"/g)].map(([, id]) => id);
+    expect(ids.length).toBeGreaterThan(0);
+    /* An identifier is a key rather than an address, and two spellings of one
+     * key are two entities to a crawler: a page keyed as `…com#webpage` beside
+     * a company keyed as `…com/#organization` describes two sites. Every key
+     * carries the slash after the host. */
+    expect(ids.filter((id) => !id.startsWith(`${siteUrl}/`))).toEqual([]);
+  });
 
   test(`${route.path} offers the prices it prints`, () => {
+    const prices = pricesFor(route.path);
     const sold = nodesOfType(readExport(route.file), "Service");
     if (sold.length !== 1) {
       /* Say which prices go unstated, so a page that loses its service node
@@ -102,6 +134,10 @@ for (const route of indexableRoutes) {
     }
   });
 
+  /* The home page is where every trail starts, and a crumb trail of one item
+   * claims a depth this site does not have. */
+  if (route.path === "/") continue;
+
   test(`${route.path} says how a reader got here from the home page`, () => {
     const trail = only(
       nodesOfType(readExport(route.file), "BreadcrumbList"),
@@ -114,12 +150,16 @@ for (const route of indexableRoutes) {
   });
 }
 
-test("the home page offers nothing of its own", () => {
-  /* The home page prints the four ways to buy, and they price work a product
-   * page and the custom door describe. A machine-readable offer belongs on the
-   * page that sells the one thing, so the home page states no Service and no
-   * Offer. */
-  const home = readExport("index.html");
-  expect(nodesOfType(home, "Service")).toEqual([]);
-  expect(JSON.stringify(graphNodes(home))).not.toContain("Offer");
+test("the home page marks up every question it answers", () => {
+  /* The page prints its questions from the same list, so what this catches is
+   * drift: a question added to the copy and left out of the graph, an answer
+   * cut short, or a pair that arrives in an order the page does not show. */
+  const page = only(nodesOfType(readExport("index.html"), "WebPage"), "WebPage", "/");
+  expect([page["@type"]].flat()).toContain("FAQPage");
+
+  const asked = page.mainEntity as GraphNode[];
+  expect(asked.map((question) => question.name)).toEqual(questions.map((item) => item.q));
+  expect(asked.map((question) => (question.acceptedAnswer as GraphNode).text)).toEqual(
+    questions.map((item) => item.a),
+  );
 });

@@ -18,7 +18,7 @@ import {
   mailtoFor,
   mechanism,
   mechanismIntro,
-  prices,
+  openPrices,
   pricingIntro,
   products,
   questions,
@@ -30,13 +30,14 @@ import { graphHtml, pageNodes } from "./structured-data";
 
 export const metadata = pageMetadata(homePage);
 
-/* A door and a price that depend on a ready-made product stay off the page
- * until one runs. See the Catalogue entry in CONTEXT.md. */
+/* A door that depends on a ready-made product stays off the page until one
+ * runs. See the Catalogue entry in CONTEXT.md. `openPrices` holds the plans
+ * that pass the same test. */
 const openDoors = doors.filter((door) => !door.catalogue || products.length > 0);
-const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
 
-/* The home page's own nodes, beside the site-wide ones the layout renders. */
-const graph = graphHtml(pageNodes(homePage));
+/* The home page's own nodes, beside the site-wide ones the layout renders: the
+ * page with the questions it answers, and the plans it prints as offers. */
+const graph = graphHtml(pageNodes(homePage, openPrices, questions));
 
 export default function Home() {
   return (
@@ -237,7 +238,7 @@ export default function Home() {
                   <p>{plan.body}</p>
                   <div className="plan__figures">
                     <div className="plan__price">
-                      {plan.price} <span>{plan.per}</span>
+                      {plan.amount} <span>{plan.per}</span>
                     </div>
                     <ul className="plan__includes">
                       {plan.includes.map((item) => (

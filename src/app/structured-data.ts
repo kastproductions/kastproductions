@@ -18,6 +18,7 @@ import {
   type PageRecord,
   pageUrl,
   type Price,
+  type Question,
   siteUrl,
 } from "./content";
 
@@ -25,11 +26,28 @@ import {
  * is wider than any type we would write here, and the graph is data, not code. */
 export type GraphNode = Record<string, unknown>;
 
-/* Nodes point at each other by `@id`, so a page node can say it belongs to the
- * company without repeating the company. */
-export const organizationId = `${siteUrl}/#organization`;
-export const founderId = `${siteUrl}/#founder`;
-export const websiteId = `${siteUrl}/#website`;
+/*
+ * The key a node carries: the page's URL, then a fragment naming the node. One
+ * function writes every key in the graph, so the site URL is spelled one way
+ * throughout: `https://www.kastproductions.com/#organization` for a node true
+ * of the whole site, `…/custom#webpage` for a node about a page below it.
+ *
+ * `pageUrl` leaves the home page's trailing slash off, because a canonical tag
+ * has to name one address and that is the address this site names. A key is not
+ * an address, though, and two spellings of one key are two entities to whoever
+ * reads the graph, so the home page's key keeps the slash the site-wide keys
+ * carry. Nodes point at each other by key, so a page node can say it belongs to
+ * the company without repeating the company.
+ */
+function nodeId(path: string, fragment: string): string {
+  return `${path === homePage.path ? `${siteUrl}/` : pageUrl(path)}#${fragment}`;
+}
+
+/* The three nodes true of the whole site key off its root, which is the path
+ * the home page holds. */
+export const organizationId = nodeId(homePage.path, "organization");
+export const founderId = nodeId(homePage.path, "founder");
+export const websiteId = nodeId(homePage.path, "website");
 
 /*
  * The logo a search engine may show beside the company. It has to be a raster
@@ -112,20 +130,44 @@ const website: GraphNode = {
 export const siteNodes: GraphNode[] = [organization, person, website];
 
 /*
+ * One question the page answers, in the words it prints. Both strings come off
+ * the same list the page renders, so an answer engine that lifts the answer
+ * lifts what a reader reads.
+ */
+function question(asked: Question): GraphNode {
+  return {
+    "@type": "Question",
+    name: asked.q,
+    acceptedAnswer: { "@type": "Answer", text: asked.a },
+  };
+}
+
+/*
  * The page itself, as a node. It points at the site and the company by `@id`
  * rather than restating either: the layout already said both, on this route
  * and on every other one.
+ *
+ * A page that answers questions says so on this node rather than on a second
+ * node beside it: two nodes claiming one address are two pages to whoever
+ * reads the graph, and only one of them is real.
  */
-function webPage(page: PageRecord): GraphNode {
+function webPage(page: PageRecord, questions?: Question[]): GraphNode {
   return {
-    "@type": "WebPage",
-    "@id": `${pageUrl(page.path)}#webpage`,
+    "@type": questions ? ["WebPage", "FAQPage"] : "WebPage",
+    "@id": nodeId(page.path, "webpage"),
     url: pageUrl(page.path),
     name: page.title,
     description: page.description,
+    /* The day this page's copy last changed, off the page record, which is the
+     * one place it is written. Never the clock the build runs on: a date
+     * stamped at build time tells a crawler that every page changed on every
+     * deploy, and a crawler that learns our dates are worthless stops reading
+     * them. */
+    dateModified: page.date,
     isPartOf: { "@id": websiteId },
     about: { "@id": organizationId },
     inLanguage: "en",
+    ...(questions ? { mainEntity: questions.map(question) } : {}),
   };
 }
 
@@ -192,7 +234,7 @@ function offer(price: Price): GraphNode {
 function service(page: PageRecord & { prices: Price[] }): GraphNode {
   return {
     "@type": "Service",
-    "@id": `${pageUrl(page.path)}#service`,
+    "@id": nodeId(page.path, "service"),
     name: page.title,
     description: page.description,
     url: pageUrl(page.path),
@@ -209,7 +251,7 @@ function service(page: PageRecord & { prices: Price[] }): GraphNode {
 function breadcrumbs(page: PageRecord): GraphNode {
   return {
     "@type": "BreadcrumbList",
-    "@id": `${pageUrl(page.path)}#breadcrumbs`,
+    "@id": nodeId(page.path, "breadcrumbs"),
     itemListElement: [
       { "@type": "ListItem", position: 1, name: brand, item: siteUrl },
       { "@type": "ListItem", position: 2, name: page.title, item: pageUrl(page.path) },
@@ -222,13 +264,18 @@ function breadcrumbs(page: PageRecord): GraphNode {
  * page itself, the thing it sells where it prints a price for it, and the
  * trail back to the home page.
  *
- * A page that prints no price passes none and states no offer. The home page
- * carries no trail, because it is where every trail starts, and a crumb trail
- * of one item claims a depth this site does not have.
+ * A page that prints no price passes none and states no offer, and a page that
+ * answers no question passes no question. The home page carries no trail,
+ * because it is where every trail starts, and a crumb trail of one item claims
+ * a depth this site does not have.
  */
-export function pageNodes(page: PageRecord, prices?: Price[]): GraphNode[] {
+export function pageNodes(
+  page: PageRecord,
+  prices?: Price[],
+  questions?: Question[],
+): GraphNode[] {
   return [
-    webPage(page),
+    webPage(page, questions),
     ...(prices ? [service({ ...page, prices })] : []),
     ...(page.path === homePage.path ? [] : [breadcrumbs(page)]),
   ];
