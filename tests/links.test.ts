@@ -2,13 +2,14 @@
  * Whether a reader can get to a page, and back out of it.
  *
  * A job page exists to be found: a buyer searches the job, lands on it, and
- * the page hands them on to the door where the work is priced. A page the two
- * job lists stop linking to is an orphan a crawler discovers last and a reader
- * never at all, and nothing in the export says so out loud, which is why this
- * reads the emitted HTML rather than the lists.
+ * the page hands them on to the door where the work is priced. A product page
+ * is where the ready-made door leads. A page the lists or the door stop
+ * linking to is an orphan a crawler discovers last and a reader never at all,
+ * and nothing in the export says so out loud, which is why this reads the
+ * emitted HTML rather than the lists.
  */
 import { expect, test } from "bun:test";
-import { customPage, jobPages, products } from "../src/app/content";
+import { customPage, jobPages, productPage, products } from "../src/app/content";
 import { decodeEntities, indexableRoutes, readExport } from "./export";
 
 /*
@@ -52,11 +53,11 @@ for (const job of jobPages) {
   });
 }
 
-for (const product of products) {
-  test(`/${product.slug} is linked from the ready-made door`, () => {
+for (const page of products.map(productPage)) {
+  test(`${page.path} is linked from the ready-made door`, () => {
     /* The door on the home page is the one body link to a product page, and
      * it is written by hand while the route follows the slug, so a renamed
      * slug would leave the door pointing at a page the build no longer emits. */
-    expect(bodyPaths(fileFor("/"))).toContain(`/${product.slug}`);
+    expect(bodyPaths(fileFor("/"))).toContain(page.path);
   });
 }

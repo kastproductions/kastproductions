@@ -8,8 +8,8 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
 /*
  * One ready-made product, on its own page. The markup lives here rather than in
  * a route, because `output: "export"` refuses a dynamic segment that generates
- * no paths, and the catalogue is empty until a product runs. Turning a product
- * on takes two edits, both listed in the Catalogue section of README.md: add it
+ * no paths, and the catalogue holds only a product that runs today. A product
+ * takes two edits, both listed in the Catalogue section of README.md: add it
  * to `products`, then add a route file that calls this component and builds its
  * metadata from `productPage`, the way a written page builds its own.
  */
