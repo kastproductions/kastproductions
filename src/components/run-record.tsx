@@ -74,10 +74,12 @@ const STEPS: Step[] = [
   },
 ];
 
+const head = { "--i": 0 } as CSSProperties;
+
 export function RunRecord() {
   return (
     <figure className="run" aria-labelledby="run-title">
-      <figcaption className="run__head" style={{ "--i": 0 } as CSSProperties}>
+      <figcaption className="run__head" style={head}>
         <span className="run__title" id="run-title">
           Run 4127
         </span>

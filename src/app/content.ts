@@ -234,7 +234,7 @@ export const fitDimensions = [
  * door's `more` links its page. The path is on `evalSuitePage`, below. */
 export const mechanismIntro = {
   heading: "How we keep it right",
-  lede: "Fit is the promise. These five are how we prove it, every month, for as long as we operate your agent.",
+  lede: "The five points above are a promise. These five are how we prove it, every month, for as long as we operate your agent.",
   more: "What an eval suite is",
 };
 
@@ -323,6 +323,10 @@ export type Product = {
   slug: string;
   name: string;
   promise: string;
+  /* The sentence a search result shows under the page title. The promise
+   * alone is too short for that slot, so this names the trigger and the
+   * signature as well. */
+  description: string;
   lede: string;
   authority: string;
   boundary: string;
@@ -341,6 +345,8 @@ export const issueToPullRequest: Product = {
   slug: "issue-to-pull-request",
   name: "Issue to pull request",
   promise: "Takes an issue off your tracker and opens a draft pull request.",
+  description:
+    "Issue to pull request, run by a standing agent: label an issue in your tracker and get a draft pull request on your repository. A named person signs the merge.",
   lede: "Your team labels an issue, or delegates it in Linear. The agent works it through four stations and opens a draft pull request on your repository, with the run record attached. A named person signs the merge.",
   authority: "It acts behind an approval gate.",
   boundary: "It never merges. Every branch it pushes waits for a signature.",
@@ -381,7 +387,7 @@ export const issueToPullRequest: Product = {
     { amount: "From €1,500", per: "a month to operate" },
   ],
   subject: "Issue to pull request",
-  date: "2026-09-13",
+  date: "2026-09-22",
 };
 
 export const products: Product[] = [issueToPullRequest];
@@ -955,7 +961,7 @@ export const termsPage: PageRecord = {
   path: "/terms",
   title: "Terms of service",
   description:
-    "What a build buys, what the monthly work covers, and the terms both sides work to.",
+    "Terms of service for a KastProductions agent: what the fixed-price build buys, what the monthly work covers, who owns the code, and what both sides can expect.",
   date: "2026-09-21",
 };
 
@@ -1051,13 +1057,15 @@ export const writtenPages: PageRecord[] = [
 ];
 
 /* The record of a product's page. A product already states its slug, its
- * name, its promise and the day its copy changed, so its page record is read
- * off the catalogue rather than written a second time. */
+ * name, its description and the day its copy changed, so its page record is
+ * read off the catalogue rather than written a second time. The title says
+ * "agent" after the name, as every job page's does, so a search result names
+ * what the page sells. */
 export function productPage(product: Product): PageRecord {
   return {
     path: `/${product.slug}`,
-    title: product.name,
-    description: product.promise,
+    title: `${product.name} agent`,
+    description: product.description,
     date: product.date,
   };
 }

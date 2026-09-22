@@ -20,11 +20,11 @@ export function JobRows() {
             <span className="row__label">{job.title}</span>
             <p>{job.body}</p>
             <span className="row__note">{job.systems}</span>
-            {job.page && (
+            {job.page ? (
               <Link className="pull" href={job.page.path}>
                 {job.page.more}
               </Link>
-            )}
+            ) : null}
           </div>
         </li>
       ))}

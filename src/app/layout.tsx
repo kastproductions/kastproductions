@@ -1,46 +1,45 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Inter, Inter_Tight, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import { brand, founder, founderHandle, homePage, siteUrl } from "./content";
 import { graphHtml, siteNodes } from "./structured-data";
 import "./globals.css";
 
 /*
- * Both families load `optional`, which is what holds the first paint still.
- * The browser draws the page once: it uses a web font if that font is already
- * in hand, and otherwise keeps the fallback for the rest of the pageview. A
- * swap can therefore never move the hero lede, the buttons under it or the
- * console. `swap` moved all three, because Archivo carries the display sizes
- * on its width axis, no fallback has a width axis, and a heading that rewraps
- * one line taller pushes every band under it down. Each family sets text that
- * sits in the flow, so each one has to load this way for the page to hold.
- *
- * The preload stays on. It gives a font its one chance to arrive before the
- * paint, and it puts the font in the cache for the next page either way.
+ * The four families the stylesheet reads, each on its own --font-* variable:
+ * Inter Tight for headings, Inter for prose, Playfair Display for the italic
+ * words inside a display heading, JetBrains Mono for strings a machine wrote.
+ * next/font self-hosts them and preloads each one, so no request leaves for
+ * Google at runtime. They load `swap` with size-adjusted fallbacks, which is
+ * what keeps the hero from moving when a font arrives after the first paint.
  */
-
-/*
- * One text family, used through its width axis: the display sizes run expanded,
- * the prose runs normal, and a spec label runs narrowed. The width axis does
- * the work a second family or an all-caps label would otherwise do.
- */
-const archivo = Archivo({
-  variable: "--font-archivo",
+const interTight = Inter_Tight({
+  variable: "--font-sans",
   subsets: ["latin"],
-  axes: ["wdth"],
-  display: "optional",
+  display: "swap",
 });
 
-/* Machine-emitted text only: a handle, a channel, a timestamp, a diff, a path. */
-const plexMono = IBM_Plex_Mono({
-  variable: "--font-plex-mono",
-  weight: "400",
+const inter = Inter({
+  variable: "--font-body",
   subsets: ["latin"],
-  display: "optional",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-serif",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0d1330",
+  themeColor: "#efe7d2",
   width: "device-width",
   initialScale: 1,
 };
@@ -84,7 +83,7 @@ const jsonLdHtml = graphHtml(siteNodes);
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${archivo.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${interTight.variable} ${inter.variable} ${playfair.variable} ${jetbrainsMono.variable}`}>
       <body>
         <a className="skip" href="#main">
           Skip to content

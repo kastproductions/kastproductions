@@ -8,34 +8,35 @@ Live at [www.kastproductions.com](https://www.kastproductions.com).
 
 - **Framework**: Next.js 16 (App Router, static export)
 - **Styling**: hand-written CSS in `src/app/globals.css`, no framework
-- **Fonts**: Archivo (one family, variable `wght` and `wdth`), IBM Plex Mono
+- **Fonts**: Inter Tight for headings, Inter for prose, Playfair Display italic for the two or three words a display heading leans on, JetBrains Mono for machine strings; all four load through `next/font`
 - **Language**: TypeScript (strict)
 - **Runtime**: Bun
 
 ## The design
 
-The page is drawn as the instrument sheet of the thing we sell: a machine that
-runs unattended and stops at a gate. Three rules hold it together, and breaking
-one is a bug rather than a variation.
+The page is warm paper, ink type, and one coral signal. It is the same world
+on every page, and three rules hold it together. Breaking one is a bug rather
+than a variation.
 
-1. **A hairline is the only divider.** No card, no shadow, no corner radius.
-   Structure carries information: a rule separates two readings, the rule down
-   the middle of a unit separates a label from its reading, and a band is one
-   course of the sheet. Nothing is drawn for looks.
-2. **`--signal` means someone must act.** The amber marks the gate the agent
-   stops at, and the one action a reader can take in a view: the primary
-   button, the underline on a link that leads somewhere, the marker on a
-   question that opens. It is the approval gate in colour, so spending it on
-   decoration spends the one signal the page has. A rule, a number or a table
-   cell is never amber.
-3. **`--font-mono` means a machine wrote this string.** A handle, a channel, a
-   timestamp, a diff, a path. A label a person wrote is set in the text face,
-   narrowed, never in mono and never in tracked capitals.
+1. **A hairline and a panel are the only structure.** A `.band` is one course
+   of the page, on one rule. A `.unit` splits a band into a head column and a
+   body column. A panel (`.door`, `.plan`, `.console`, `.run`) is a bone
+   surface with a hairline and one soft shadow, and it is reserved for the
+   things a reader compares or acts on: the two doors, the ways to buy, the
+   agent's console. Rows and lists sit on hairlines with no box around them.
+   Nothing is drawn for looks: no section numbers, no eyebrow labels, no
+   coordinates, no illustration standing in for content.
+2. **`--coral` means someone must act.** It marks the gate the agent stops at
+   and the one action a reader can take in a view: the primary button on
+   hover, the link that leads somewhere, the marker on a question that opens.
+   A rule, a number or a table cell is never coral.
+3. **`--mono` means a machine wrote this string.** A handle, a channel, a
+   timestamp, a diff, a registration code. A label a person wrote is set in
+   the text face, never in mono and never in tracked capitals.
 
-One family carries the voice through its width axis, so `font-stretch` is a
-type token here and not a tweak: `--wide` (118%) for display, normal for prose,
-`--narrow` (88%) for a spec label. The narrowing does the job a tracked
-all-caps eyebrow would otherwise do, without shouting.
+Playfair italic is the voice of a display heading, not a decoration: it
+carries the words the heading turns on (`your company`, `your workflow`) and
+appears nowhere below the heading level.
 
 Motion is one orchestrated entrance per page, on load: the hero console rises
 part by part and lands on the gate lamp, or the run record ticks in on a
@@ -73,8 +74,9 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 src/app/
   layout.tsx           # Root layout: fonts, site-wide metadata, the site-wide graph,
                        #   analytics
-  page.tsx             # Home: hero, clients, the work we take and the doors, fit,
-                       #   channels, mechanism and stack, reviewer, prices, questions;
+  page.tsx             # Home: hero and console, clients, the two doors, the work we
+                       #   take, fit, mechanism and stack, channels, reviewer, prices,
+                       #   questions, closing call to action;
                        #   metadata and graph built from its page record
   custom/page.tsx      # The custom door: the jobs we take, channels, price; metadata
                        #   and graph built from its page record
