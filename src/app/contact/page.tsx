@@ -1,5 +1,21 @@
 import Link from "next/link";
+import {
+  Actions,
+  Band,
+  FactRows,
+  FactTerm,
+  FactValue,
+  HeadNote,
+  HeroCopy,
+  HeroTitle,
+  Lede,
+  Row,
+  Unit,
+  UnitBody,
+  UnitHead,
+} from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { buttonVariants } from "@/components/ui/button";
 import {
   callHref,
   company,
@@ -44,90 +60,96 @@ const identity = [
   { label: "Studio", value: `${location.city}, ${location.country}` },
 ];
 
+/* A machine string is set in mono at the size of the values around it. */
+const machineValue = "font-mono";
+
+/* A link in the copy is set in the coral, as on the legal pages. The two
+ * buttons are not copy and keep their own colours. */
+const coralLinks = "[&_a]:text-signal-foreground";
+
 export default function Contact() {
   return (
     <>
       <SiteHeader route={contactPage.path} />
-      <main className="contact-page" id="main">
-        <section className="band band--flush hero">
-          <div className="wrap hero__copy">
-            <h1>Contact</h1>
-            <p className="lede lede--wide">
+      <main id="main">
+        <Band flush>
+          <HeroCopy className="wrap">
+            <HeroTitle>Contact</HeroTitle>
+            <Lede wide className={coralLinks}>
               Two ways in: book a call, or write to {mailbox}. Send the issue
               you would hand to a new senior engineer, or describe the work you
               want an agent to take over.
-            </p>
-            <div className="actions">
-              <a className="btn btn--signal" href={callHref}>
+            </Lede>
+            <Actions>
+              <a className={buttonVariants()} href={callHref}>
                 Book a call
               </a>
-              <a className="btn btn--line" href={mailtoFor(contactSubject)}>
+              <a className={buttonVariants({ variant: "outline" })} href={mailtoFor(contactSubject)}>
                 Write to us
               </a>
-            </div>
-          </div>
-        </section>
+            </Actions>
+          </HeroCopy>
+        </Band>
 
-        <section className="band" aria-labelledby="next-title">
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="next-title">What happens after you write</h2>
-            </div>
-            <div className="unit__body">
-              <dl className="rows">
-                <div className="row row--stack">
-                  <dt className="row__label">Within one working day</dt>
-                  <dd>
+        <Band aria-labelledby="next-title">
+          <Unit>
+            <UnitHead title="What happens after you write" titleId="next-title" />
+            <UnitBody>
+              <FactRows>
+                <Row stack>
+                  <FactTerm>Within one working day</FactTerm>
+                  <FactValue>
                     A short spec and a fixed price for the work you described.
                     The price is fixed before any work starts.
-                  </dd>
-                </div>
-                <div className="row row--stack">
-                  <dt className="row__label">Before you sign</dt>
-                  <dd>
+                  </FactValue>
+                </Row>
+                <Row stack>
+                  <FactTerm>Before you sign</FactTerm>
+                  <FactValue>
                     The spec names every account, key and subscription your
                     agent needs, and says whether you already own it or we set
                     it up. Those that are yours stay in your name: we deploy
                     into them.
-                  </dd>
-                </div>
-                <div className="row row--stack">
-                  <dt className="row__label">After you sign</dt>
-                  <dd>
+                  </FactValue>
+                </Row>
+                <Row stack>
+                  <FactTerm>After you sign</FactTerm>
+                  <FactValue>
                     A ready-made agent answers in your own channel {leadTime}{" "}
                     after you sign the order.
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </section>
+                  </FactValue>
+                </Row>
+              </FactRows>
+            </UnitBody>
+          </Unit>
+        </Band>
 
-        <section className="band" aria-labelledby="identity-title">
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="identity-title">Who you are writing to</h2>
-              <p>
+        <Band aria-labelledby="identity-title">
+          <Unit>
+            <UnitHead title="Who you are writing to" titleId="identity-title">
+              <HeadNote className={coralLinks}>
                 The full register entry is on the{" "}
                 <Link href={imprintPage.path}>imprint</Link>.
-              </p>
-            </div>
-            <div className="unit__body">
-              <dl className="rows">
+              </HeadNote>
+            </UnitHead>
+            <UnitBody>
+              <FactRows>
                 {identity.map((line) => (
-                  <div className="row row--stack" key={line.label}>
-                    <dt className="row__label">{line.label}</dt>
-                    <dd className={line.machine ? "mono" : undefined}>{line.value}</dd>
-                  </div>
+                  <Row stack key={line.label}>
+                    <FactTerm>{line.label}</FactTerm>
+                    <FactValue className={line.machine ? machineValue : undefined}>
+                      {line.value}
+                    </FactValue>
+                  </Row>
                 ))}
-                <div className="row row--stack">
-                  <dt className="row__label">Email</dt>
-                  <dd>{mailbox}</dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </section>
+                <Row stack>
+                  <FactTerm>Email</FactTerm>
+                  <FactValue>{mailbox}</FactValue>
+                </Row>
+              </FactRows>
+            </UnitBody>
+          </Unit>
+        </Band>
       </main>
 
       <SiteFooter route={contactPage.path} />

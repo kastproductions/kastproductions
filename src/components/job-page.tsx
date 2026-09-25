@@ -1,6 +1,24 @@
-import Link from "next/link";
 import { ChannelsSection } from "@/components/channels-section";
+import { PlanCard, Plans } from "@/components/plan-card";
+import {
+  Actions,
+  Band,
+  HeadNote,
+  HeroCopy,
+  HeroTitle,
+  Lede,
+  Note,
+  PullLink,
+  Row,
+  RowLabel,
+  Rows,
+  RowText,
+  Unit,
+  UnitBody,
+  UnitHead,
+} from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { buttonVariants } from "@/components/ui/button";
 /* The record is the job's page, and this component draws it, so the two carry
  * one name between them: the record is aliased here rather than renamed
  * everywhere else. */
@@ -44,115 +62,103 @@ export function JobPage({ page }: { page: JobPageRecord }) {
       <SiteHeader route={page.path} />
 
       <main id="main">
-        <section className="band band--flush hero">
-          <div className="wrap hero__copy">
-            <h1>{page.heading}</h1>
-            <p className="lede lede--wide">{page.lede}</p>
-            <div className="actions">
-              <a className="btn btn--signal" href={brief}>
+        <Band flush>
+          <HeroCopy className="wrap">
+            <HeroTitle>{page.heading}</HeroTitle>
+            <Lede wide>{page.lede}</Lede>
+            <Actions>
+              <a className={buttonVariants()} href={brief}>
                 Describe the work
               </a>
-              <a className="btn btn--line" href={callHref}>
+              <a className={buttonVariants({ variant: "outline" })} href={callHref}>
                 Book a call
               </a>
-            </div>
-          </div>
-        </section>
+            </Actions>
+          </HeroCopy>
+        </Band>
 
-        <section className="band" id="work" aria-labelledby="job-work-title">
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="job-work-title">What the agent does</h2>
-              <p>{page.authority}</p>
-            </div>
-            <div className="unit__body">
-              <ul className="rows">
+        <Band id="work" aria-labelledby="job-work-title">
+          <Unit>
+            <UnitHead title="What the agent does" titleId="job-work-title">
+              <HeadNote>{page.authority}</HeadNote>
+            </UnitHead>
+            <UnitBody>
+              <Rows>
                 {page.steps.map((step) => (
                   <li key={step.title}>
-                    <div className="row row--stack">
-                      <span className="row__label">{step.title}</span>
-                      <p>{step.body}</p>
-                    </div>
+                    <Row stack>
+                      <RowLabel>{step.title}</RowLabel>
+                      <RowText>{step.body}</RowText>
+                    </Row>
                   </li>
                 ))}
-              </ul>
-              <p className="note note--gate">{page.gate}</p>
-            </div>
-          </div>
-        </section>
+              </Rows>
+              <Note gate>{page.gate}</Note>
+            </UnitBody>
+          </Unit>
+        </Band>
 
-        <section className="band" id="systems" aria-labelledby="job-systems-title">
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="job-systems-title">What it touches</h2>
-              <p>
+        <Band id="systems" aria-labelledby="job-systems-title">
+          <Unit>
+            <UnitHead title="What it touches" titleId="job-systems-title">
+              <HeadNote>
                 Your agent works in the systems your team already pays for. We
                 connect it to each one, and the spec names every account it
                 needs before you commit to anything.
-              </p>
-            </div>
-            <div className="unit__body">
-              <ul className="rows">
+              </HeadNote>
+            </UnitHead>
+            <UnitBody>
+              <Rows>
                 {page.systems.map((system) => (
                   <li key={system.name}>
-                    <div className="row">
-                      <span className="row__label">{system.name}</span>
-                      <p>{system.role}</p>
-                    </div>
+                    <Row>
+                      <RowLabel>{system.name}</RowLabel>
+                      <RowText>{system.role}</RowText>
+                    </Row>
                   </li>
                 ))}
-              </ul>
-            </div>
-          </div>
-        </section>
+              </Rows>
+            </UnitBody>
+          </Unit>
+        </Band>
 
         <ChannelsSection />
 
-        <section
-          className="band band--panel"
-          id="pricing"
-          aria-labelledby="job-price-title"
-        >
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="job-price-title">What it costs</h2>
+        <Band tone="panel" id="pricing" aria-labelledby="job-price-title">
+          <Unit>
+            <UnitHead title="What it costs" titleId="job-price-title">
               {/* The floor, and what the month buys, are the door's own
                   sentences. This page states which price list a job like this
                   one is on and sends a reader there for the rest. */}
-              <p>
+              <HeadNote>
                 A job we have not built before is custom work, so this one is
                 priced at the custom door. The numbers below are floors: we
                 read your workflow first, then name one fixed price.
-              </p>
-            </div>
-            <div className="unit__body plans">
-              <div className="plan">
-                <h3>Custom agent</h3>
-                <p>
-                  You describe this job as your company runs it. We write the
-                  spec, name the price, and build the agent around it.
-                </p>
-                <div className="plan__figures">
-                  {custom.prices.map((price) => (
-                    <div className="plan__price" key={price.per}>
-                      {price.amount} <span>{price.per}</span>
-                    </div>
-                  ))}
-                </div>
-                <a className="btn btn--line" href={brief}>
-                  Describe the work
-                </a>
-              </div>
-              <p className="note">
+              </HeadNote>
+            </UnitHead>
+            <Plans>
+              <PlanCard
+                title="Custom agent"
+                body={
+                  <>
+                    You describe this job as your company runs it. We write the
+                    spec, name the price, and build the agent around it.
+                  </>
+                }
+                prices={custom.prices}
+                href={brief}
+                cta="Describe the work"
+              />
+              <Note>
                 The door says what a custom agent needs from you, and what the
                 month after it goes live buys.{" "}
-                <Link className="pull" href={customPage.path}>
+                <PullLink href={customPage.path}>
                   How a custom agent is built
-                </Link>
-              </p>
-            </div>
-          </div>
-        </section>
+                </PullLink>
+              </Note>
+            </Plans>
+          </Unit>
+        </Band>
       </main>
 
       <SiteFooter route={page.path} />

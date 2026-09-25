@@ -1,0 +1,3 @@
+# Tailwind and shadcn/ui for every style
+
+The 1,700-line hand-written stylesheet gave way to Tailwind CSS v4 utilities and shadcn/ui components on Base UI, themed to the same paper, ink and coral, so each style sits in the component that draws it and each control comes from a maintained library. The FAQ, the mobile menu and the run record's diff are now Base UI components and ship client JavaScript where native `<details>` shipped none; their text stays in the built HTML (a closed panel loads `hidden`, then becomes `hidden="until-found"`), so the export suite of ADR-0001 and a crawler still read every word. The portraits stay plain `<img>` tags, because Base UI's Avatar renders no image on the server and the export must carry each `src`.
