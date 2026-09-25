@@ -129,7 +129,7 @@ export function ProductPage({ product }: { product: Product }) {
                 <TableBody className={stackedTable}>
                   {work.map((run) => (
                     <TableRow className={stackedRow} key={run.brief}>
-                      <TableCell className={stackedCell} data-label="Client">
+                      <TableCell className={stackedCell} data-label="Kind of company">
                         {run.client}
                       </TableCell>
                       <TableCell className={stackedCell} data-label="Brief">

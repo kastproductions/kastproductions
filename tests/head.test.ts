@@ -8,6 +8,7 @@
 import { expect, test } from "bun:test";
 import { brand } from "../src/app/content";
 import {
+  fileFor,
   indexableRoutes,
   linkHrefs,
   metaContents,
@@ -55,6 +56,17 @@ for (const route of indexableRoutes) {
     expect(tagTexts(document, "title")[0].length).toBeLessThan(60);
     expect(metaContents(document, "description")[0].length).toBeLessThan(160);
   });
+
+  test(`${route.path} gives every image alternative text`, () => {
+    /* The only images on the site are the reference portraits, and a portrait
+     * with no alternative text leaves a reader who cannot see it, and an image
+     * crawler, with no tie between the face and the name beside it. The home
+     * page lost it once in a redesign while the about page kept it. */
+    const images = [...readExport(route.file).matchAll(/<img\b[^>]*>/g)].map(([tag]) => tag);
+    for (const image of images) {
+      expect(image).toMatch(/\balt="[^"]+"/);
+    }
+  });
 }
 
 test("no two routes state the same title or description", () => {
@@ -95,4 +107,17 @@ test("the robots file allows crawling and names the sitemap", () => {
   /* A blanket disallow would hide the whole site. */
   expect(robots).not.toMatch(/^Disallow:\s*\/$/im);
   expect(robots).toContain(`Sitemap: ${siteUrl}/sitemap.xml`);
+});
+
+test("the web app manifest states the home page's description and the page colour", () => {
+  const manifest = JSON.parse(readExport("manifest.webmanifest")) as Record<string, string>;
+  const home = readExport(fileFor("/"));
+
+  /* An installed site shows the manifest's colours on its splash screen and
+   * its window frame, and a store listing shows its description. Both were
+   * left behind by an earlier design for months, so each is read back
+   * against what the home page itself emits. */
+  expect(manifest.description).toBe(metaContents(home, "description")[0]);
+  expect(manifest.theme_color).toBe(metaContents(home, "theme-color")[0]);
+  expect(manifest.background_color).toBe(manifest.theme_color);
 });
