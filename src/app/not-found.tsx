@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { Actions, Band, HeroCopy, HeroTitle, Lede } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { buttonVariants } from "@/components/ui/button";
 
 /*
  * The page a wrong address lands on. It states what happened and where to go
@@ -18,24 +20,24 @@ export default function NotFound() {
       <SiteHeader />
 
       <main id="main">
-        <section className="band band--flush hero">
-          <div className="wrap hero__copy">
-            <h1>No page at this address.</h1>
-            <p className="lede">
+        <Band flush>
+          <HeroCopy className="wrap">
+            <HeroTitle>No page at this address.</HeroTitle>
+            <Lede>
               The link is either old or mistyped. Everything we publish is one
               click away: the work we take, what an agent costs, and the
               questions we get on the first call.
-            </p>
-            <div className="actions">
-              <Link className="btn btn--signal" href="/">
+            </Lede>
+            <Actions>
+              <Link className={buttonVariants()} href="/">
                 Go to the home page
               </Link>
-              <Link className="btn btn--line" href="/#work">
+              <Link className={buttonVariants({ variant: "outline" })} href="/#work">
                 See the work we take
               </Link>
-            </div>
-          </div>
-        </section>
+            </Actions>
+          </HeroCopy>
+        </Band>
       </main>
 
       <SiteFooter />

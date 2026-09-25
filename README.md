@@ -7,7 +7,7 @@ Live at [www.kastproductions.com](https://www.kastproductions.com).
 ## Tech Stack
 
 - **Framework**: Next.js 16 (App Router, static export)
-- **Styling**: hand-written CSS in `src/app/globals.css`, no framework
+- **Styling**: Tailwind CSS v4 utilities, and shadcn/ui components on Base UI (`components.json`, style `base-nova`). The theme lives in `src/app/globals.css`
 - **Fonts**: Inter Tight for headings, Inter for prose, Playfair Display italic for the two or three words a display heading leans on, JetBrains Mono for machine strings; all four load through `next/font`
 - **Language**: TypeScript (strict)
 - **Runtime**: Bun
@@ -18,19 +18,22 @@ The page is warm paper, ink type, and one coral signal. It is the same world
 on every page, and three rules hold it together. Breaking one is a bug rather
 than a variation.
 
-1. **A hairline and a panel are the only structure.** A `.band` is one course
-   of the page, on one rule. A `.unit` splits a band into a head column and a
-   body column. A panel (`.door`, `.plan`, `.console`, `.run`) is a bone
-   surface with a hairline and one soft shadow, and it is reserved for the
-   things a reader compares or acts on: the two doors, the ways to buy, the
-   agent's console. Rows and lists sit on hairlines with no box around them.
-   Nothing is drawn for looks: no section numbers, no eyebrow labels, no
-   coordinates, no illustration standing in for content.
-2. **`--coral` means someone must act.** It marks the gate the agent stops at
-   and the one action a reader can take in a view: the primary button on
-   hover, the link that leads somewhere, the marker on a question that opens.
-   A rule, a number or a table cell is never coral.
-3. **`--mono` means a machine wrote this string.** A handle, a channel, a
+1. **A hairline and a panel are the only structure.** A `Band` is one course
+   of the page, on one rule. A `Unit` splits a band into a head column and a
+   body column. A panel is a bone surface with a hairline and one soft
+   shadow: a `Card` for the doors, the ways to buy and the references, and
+   the console and the run record drawn to match. It is reserved for the
+   things a reader compares or acts on. Rows and lists
+   sit on hairlines with no box around them. Nothing is drawn for looks: no
+   section numbers, no eyebrow labels, no coordinates, no illustration
+   standing in for content.
+2. **`signal` (the coral) means someone must act.** It marks the gate the
+   agent stops at and the one action a reader can take in a view: the primary
+   button on hover, the link that leads somewhere, the marker on a question
+   that opens. A rule, a number or a table cell is never coral. On an ink
+   section (`Band tone="ink"`, which sets the `dark` class) the primary button
+   itself is coral, because an ink button on ink has no edge.
+3. **`font-mono` means a machine wrote this string.** A handle, a channel, a
    timestamp, a diff, a registration code. A label a person wrote is set in
    the text face, never in mono and never in tracked capitals.
 
@@ -45,7 +48,16 @@ the site moves unless a reader asks it to. `prefers-reduced-motion` gets the
 end state immediately.
 
 A number in front of a row means the rows are a sequence. Only the four
-stations of a run earn `.rows--seq`, because only they are one.
+stations of a run earn `<Rows sequence>`, because only they are one.
+
+Every style is a utility in the component that draws it. A shape that recurs
+across pages is a component in `src/components/section.tsx` or
+`src/components/plan-card.tsx`, and a control is a shadcn/ui component in
+`src/components/ui`, themed to the palette in its own source. Add or update
+one with `bunx --bun shadcn@latest add <name>`; check `--diff` first, because
+every file in `src/components/ui` carries local changes. Colours are the
+semantic tokens in `globals.css` (`text-prose`, `text-faint`,
+`border-hairline`, `bg-signal`, and shadcn's own), never a raw value.
 
 ## Getting Started
 
@@ -121,8 +133,9 @@ src/app/
                        #   `pageNodes`, which builds what a page adds from that same
                        #   record: the page with the date its copy changed and the
                        #   questions it answers, the service it sells, the breadcrumb
-  globals.css          # The sheet: design tokens and component styles. Its header
-                       #   states the three rules the design holds to
+  globals.css          # The theme: shadcn's variables set to paper and ink, the
+                       #   site's own tokens beside them, the breakpoints, the
+                       #   entrance keyframes, and the few base rules no component owns
   opengraph-image.tsx  # Open Graph image, rendered at build time
   manifest.ts          # Web app manifest
   robots.ts            # robots.txt
@@ -139,6 +152,11 @@ src/components/
   site-chrome.tsx      # Header, footer and brand mark, shared by every page. The
                        #   header links the about page, and the footer links privacy,
                        #   terms, the imprint and the contact page from every page
+  mobile-nav.tsx       # The header's links in a sheet on a narrow screen
+  section.tsx          # The shapes every page is built from: band, unit, hero,
+                       #   lede, note, pull link, rows
+  plan-card.tsx        # One way to buy as a card, and the grid the cards sit in
+  ui/                  # shadcn/ui components, themed to the palette in their source
   channels-section.tsx # Where a standing agent is reachable, and what wakes it
   product-page.tsx     # One ready-made product, on its own page
   clients-strip.tsx    # The client companies as one strip, on the home page and the
@@ -150,6 +168,8 @@ src/components/
                        #   exchange, and the gate it stops at
   analytics.tsx        # Vercel Web Analytics: the tracker this deployment serves,
                        #   and one event per call to action clicked
+src/lib/
+  utils.ts             # `cn`, which merges class names
 public/
   reviewers/           # Portraits for the references on the about page
   logo.png             # 512px raster logo, for the Organization node in the graph
@@ -382,7 +402,7 @@ The strictest case is `company`, which the imprint prints: every line of it is i
 
 Also checkable, and worth keeping checkable: the channel lists in `channels` are the channels [Flue](https://flueframework.com/docs/ecosystem/) verifies, split into the chat channels a person addresses an agent in and the services that wake one with an event. The Slack page at `src/app/slack/page.tsx` says how one of those channels behaves, and every sentence it states about Slack or Teams is one Flue's [Slack](https://flueframework.com/docs/ecosystem/channels/slack/) or [Teams](https://flueframework.com/docs/ecosystem/channels/teams/) channel documentation states; the page links both so a reader can check. The four items in `stack.ours` are the pieces Flue does not provide, so we write them. If Flue's ecosystem or its feature set moves, these lists and that page move with it.
 
-Synthetic, and labelled as an example wherever a visitor could read it as fact: the agent console in `src/components/agent-console.tsx`, the hero run record in `src/components/run-record.tsx`, and the `work` table on a product page. Each one carries a visible `.tag` label. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
+Synthetic, and labelled as an example wherever a visitor could read it as fact: the agent console in `src/components/agent-console.tsx`, the hero run record in `src/components/run-record.tsx`, and the `work` table on a product page. Each one carries a visible "Example" label, a `Badge` with `variant="signal"`. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
 
 Other people's names belong to them. Flue is Apache-2.0, and §6 of that licence permits the descriptive use of the name, so we write "Flue" in text with a link, never as a logo, and never in a way that implies Flue endorses us. Never adopt a name from somebody else's repository as a KastProductions product name: a product is named for the outcome it delivers.
 

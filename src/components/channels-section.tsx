@@ -1,5 +1,14 @@
-import Link from "next/link";
 import { channels, slackPage } from "@/app/content";
+import {
+  Band,
+  HeadNote,
+  Note,
+  PullLink,
+  Unit,
+  UnitBody,
+  UnitHead,
+} from "@/components/section";
+import { Badge } from "@/components/ui/badge";
 
 /*
  * Where a standing agent is reachable, and what wakes it. Both lists are what
@@ -14,39 +23,48 @@ import { channels, slackPage } from "@/app/content";
  */
 export function ChannelsSection() {
   return (
-    <section className="band" id="channels" aria-labelledby="channels-title">
-      <div className="wrap unit">
-        <div className="unit__head">
-          <h2 id="channels-title">{channels.heading}</h2>
-          <p>{channels.lede}</p>
-        </div>
-        <div className="unit__body">
-          <div className="split">
-            <div className="pair">
-              <h3>A person reaches it in</h3>
-              <ul className="names">
+    <Band aria-labelledby="channels-title" id="channels">
+      <Unit>
+        <UnitHead title={channels.heading} titleId="channels-title">
+          <HeadNote>{channels.lede}</HeadNote>
+        </UnitHead>
+        <UnitBody>
+          <div className="grid gap-10 md:grid-cols-2">
+            <div>
+              <h3 className="mb-3.5 font-heading text-[0.85rem] font-semibold text-faint">
+                A person reaches it in
+              </h3>
+              <ul className="flex flex-wrap gap-2">
                 {channels.reachable.map((channel) => (
-                  <li key={channel}>{channel}</li>
+                  <li key={channel}>
+                    <Badge size="lg" variant="panel">
+                      {channel}
+                    </Badge>
+                  </li>
                 ))}
               </ul>
-              <p className="note">
-                <Link className="pull" href={slackPage.path}>
-                  {channels.slackMore}
-                </Link>
-              </p>
-              <p className="note">{channels.teamsNote}</p>
+              <Note>
+                <PullLink href={slackPage.path}>{channels.slackMore}</PullLink>
+              </Note>
+              <Note>{channels.teamsNote}</Note>
             </div>
-            <div className="pair">
-              <h3>An event wakes it from</h3>
-              <ul className="names names--muted">
+            <div>
+              <h3 className="mb-3.5 font-heading text-[0.85rem] font-semibold text-faint">
+                An event wakes it from
+              </h3>
+              <ul className="flex flex-wrap gap-2">
                 {channels.events.map((source) => (
-                  <li key={source}>{source}</li>
+                  <li key={source}>
+                    <Badge className="text-prose" size="lg" variant="outline">
+                      {source}
+                    </Badge>
+                  </li>
                 ))}
               </ul>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </UnitBody>
+      </Unit>
+    </Band>
   );
 }

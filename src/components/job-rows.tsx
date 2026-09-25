@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { jobs } from "@/app/content";
+import { PullLink, Row, RowLabel, RowNote, RowText, Rows } from "@/components/section";
 
 /*
  * The jobs we take, as rows: the job, what an agent does with it, and the
@@ -13,21 +13,21 @@ import { jobs } from "@/app/content";
  */
 export function JobRows() {
   return (
-    <ul className="rows">
+    <Rows>
       {jobs.map((job) => (
         <li key={job.title}>
-          <div className="row">
-            <span className="row__label">{job.title}</span>
-            <p>{job.body}</p>
-            <span className="row__note">{job.systems}</span>
+          <Row>
+            <RowLabel>{job.title}</RowLabel>
+            <RowText>{job.body}</RowText>
+            <RowNote>{job.systems}</RowNote>
             {job.page ? (
-              <Link className="pull" href={job.page.path}>
+              <PullLink className="mt-0.5" href={job.page.path}>
                 {job.page.more}
-              </Link>
+              </PullLink>
             ) : null}
-          </div>
+          </Row>
         </li>
       ))}
-    </ul>
+    </Rows>
   );
 }

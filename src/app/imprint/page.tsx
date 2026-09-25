@@ -1,4 +1,17 @@
+import {
+  Band,
+  FactRows,
+  FactTerm,
+  FactValue,
+  HeroCopy,
+  HeroTitle,
+  Row,
+  Unit,
+  UnitBody,
+  UnitHead,
+} from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { cn } from "@/lib/utils";
 import { company, contactEmail, imprintPage } from "../content";
 import { pageMetadata } from "../head-directives";
 import { graphHtml, pageNodes } from "../structured-data";
@@ -30,41 +43,44 @@ const entry = [
   { label: "Director", value: company.director },
 ];
 
+/* A machine string is set in mono at the size of the values around it. */
+const machineValue = "font-mono";
+
 export default function Imprint() {
   return (
     <>
       <SiteHeader route={imprintPage.path} />
 
-      <main className="legal" id="main">
-        <section className="band band--flush hero">
-          <div className="wrap hero__copy">
-            <h1>Imprint</h1>
-          </div>
-        </section>
+      <main id="main">
+        <Band flush>
+          <HeroCopy className="wrap">
+            <HeroTitle>Imprint</HeroTitle>
+          </HeroCopy>
+        </Band>
 
-        <section className="band" aria-labelledby="entry-title">
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="entry-title">The company</h2>
-            </div>
-            <div className="unit__body">
-              <dl className="rows">
+        <Band aria-labelledby="entry-title">
+          <Unit>
+            <UnitHead title="The company" titleId="entry-title" />
+            <UnitBody>
+              <FactRows>
                 {entry.map((line) => (
-                  <div className="row row--stack" key={line.label}>
-                    <dt className="row__label">{line.label}</dt>
-                    <dd className={line.machine ? "mono" : undefined}>{line.value}</dd>
-                  </div>
+                  <Row stack key={line.label}>
+                    <FactTerm>{line.label}</FactTerm>
+                    <FactValue className={cn(line.machine && machineValue)}>
+                      {line.value}
+                    </FactValue>
+                  </Row>
                 ))}
-                <div className="row row--stack">
-                  <dt className="row__label">Email</dt>
-                  <dd>
+                <Row stack>
+                  <FactTerm>Email</FactTerm>
+                  <FactValue>
                     <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </div>
-        </section>
+                  </FactValue>
+                </Row>
+              </FactRows>
+            </UnitBody>
+          </Unit>
+        </Band>
       </main>
 
       <SiteFooter route={imprintPage.path} />

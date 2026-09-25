@@ -1,6 +1,20 @@
 import { ChannelsSection } from "@/components/channels-section";
 import { JobRows } from "@/components/job-rows";
+import { PlanCard, Plans } from "@/components/plan-card";
+import {
+  Actions,
+  Band,
+  HeadNote,
+  HeroCopy,
+  HeroTitle,
+  Lede,
+  Note,
+  Unit,
+  UnitBody,
+  UnitHead,
+} from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { buttonVariants } from "@/components/ui/button";
 import { callHref, custom, customPage, mailtoFor } from "../content";
 import { pageMetadata } from "../head-directives";
 import { graphHtml, pageNodes } from "../structured-data";
@@ -18,83 +32,69 @@ export default function Custom() {
       <SiteHeader route={customPage.path} />
 
       <main id="main">
-        <section className="band band--flush hero">
-          <div className="wrap hero__copy">
-            <h1>{custom.heading}</h1>
-            <p className="lede lede--wide">{custom.lede}</p>
-            <div className="actions">
-              <a className="btn btn--signal" href={mailtoFor(custom.subject)}>
+        <Band flush>
+          <HeroCopy className="wrap">
+            <HeroTitle>{custom.heading}</HeroTitle>
+            <Lede wide>{custom.lede}</Lede>
+            <Actions>
+              <a className={buttonVariants()} href={mailtoFor(custom.subject)}>
                 Describe the work
               </a>
-              <a className="btn btn--line" href={callHref}>
+              <a className={buttonVariants({ variant: "outline" })} href={callHref}>
                 Book a call
               </a>
-            </div>
-          </div>
-        </section>
+            </Actions>
+          </HeroCopy>
+        </Band>
 
-        <section className="band" id="jobs" aria-labelledby="jobs-title">
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="jobs-title">{custom.jobsHeading}</h2>
-              <p>{custom.jobsLede}</p>
-            </div>
-            <div className="unit__body">
+        <Band id="jobs" aria-labelledby="jobs-title">
+          <Unit>
+            <UnitHead title={custom.jobsHeading} titleId="jobs-title">
+              <HeadNote>{custom.jobsLede}</HeadNote>
+            </UnitHead>
+            <UnitBody>
               <JobRows />
-            </div>
-          </div>
-        </section>
+            </UnitBody>
+          </Unit>
+        </Band>
 
         <ChannelsSection />
 
-        <section
-          className="band band--panel"
-          id="pricing"
-          aria-labelledby="custom-price-title"
-        >
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="custom-price-title">{custom.pricingHeading}</h2>
-              <p>
+        <Band tone="panel" id="pricing" aria-labelledby="custom-price-title">
+          <Unit>
+            <UnitHead title={custom.pricingHeading} titleId="custom-price-title">
+              <HeadNote>
                 The build price is a floor, because the work follows the number
                 of systems your agent touches. The monthly price buys the eval
                 suite, the changes and the report.
-              </p>
-            </div>
-            <div className="unit__body plans">
-              <div className="plan">
-                <h3>Custom agent</h3>
-                <p>
-                  You describe the work. We write the spec and name the price,
-                  then build the agent around how your company already runs.
-                </p>
-                <div className="plan__figures">
-                  {custom.prices.map((price) => (
-                    <div className="plan__price" key={price.per}>
-                      {price.amount} <span>{price.per}</span>
-                    </div>
-                  ))}
-                  <ul className="plan__includes">
-                    <li>A fixed price before we write any code</li>
-                    <li>Your accounts, your keys, your code from the first commit</li>
-                    <li>An eval suite, approval gates and a spend cap written for you</li>
-                  </ul>
-                </div>
-                <a
-                  className="btn btn--line"
-                  href={mailtoFor(custom.subject)}
-                >
-                  Describe the work
-                </a>
-              </div>
-              <p className="note">
+              </HeadNote>
+            </UnitHead>
+            <Plans>
+              <PlanCard
+                title="Custom agent"
+                body={
+                  <>
+                    You describe the work. We write the spec and name the price,
+                    then build the agent around how your company already runs.
+                  </>
+                }
+                prices={custom.prices}
+                includes={[
+                  "A fixed price before we write any code",
+                  "Your accounts, your keys, your code from the first commit",
+                  "An eval suite, approval gates and a spend cap written for you",
+                ]}
+                href={mailtoFor(custom.subject)}
+                cta="Describe the work"
+              />
+              <Note>
                 Which accounts you need depends on the systems your agent
                 touches. The spec names every one of them, next to the price,
                 before you commit to anything.
-              </p>
-            </div>
-          </div>
-        </section>
+              </Note>
+            </Plans>
+          </Unit>
+        </Band>
       </main>
 
       <SiteFooter route={customPage.path} />

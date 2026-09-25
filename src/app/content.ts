@@ -751,6 +751,7 @@ export const custom = {
  * Prices are real evidence and must not be invented: see the Claims section of
  * README.md. A build price is a floor, because the work follows the number of
  * systems the agent touches. A monthly price buys the work in `mechanism`.
+ * `lead` marks the one plan the price list sets on ink.
  * ------------------------------------------------------------------------- */
 
 export const pricingIntro = {
@@ -771,7 +772,7 @@ export const prices = [
     ],
     cta: "Ask about a build",
     subject: "Self-run build",
-    buttonStyle: "button--outline",
+    lead: false,
     catalogue: true,
   },
   {
@@ -786,7 +787,7 @@ export const prices = [
     ],
     cta: "Ask about Managed",
     subject: "Managed build",
-    buttonStyle: "button--outline",
+    lead: false,
     catalogue: true,
   },
   {
@@ -801,7 +802,7 @@ export const prices = [
     ],
     cta: "Describe the work",
     subject: "Custom agent",
-    buttonStyle: "button--outline",
+    lead: false,
     catalogue: false,
   },
   {
@@ -816,7 +817,7 @@ export const prices = [
     ],
     cta: "Start with a brief",
     subject: "Sprint: one brief",
-    buttonStyle: "button--ink",
+    lead: true,
     catalogue: false,
   },
 ];

@@ -1,6 +1,21 @@
-import Link from "next/link";
 import { ClientsStrip } from "@/components/clients-strip";
+import {
+  Band,
+  FactRows,
+  FactTerm,
+  FactValue,
+  HeadNote,
+  HeroCopy,
+  HeroTitle,
+  Lede,
+  PullLink,
+  Row,
+  Unit,
+  UnitBody,
+  UnitHead,
+} from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   aboutPage,
   brand,
@@ -45,93 +60,105 @@ export default function About() {
       <SiteHeader route={aboutPage.path} />
 
       <main id="main">
-        <section className="band band--flush hero">
-          <div className="wrap hero__copy">
-            <h1>{founder} owns the agents and signs the merges.</h1>
-            <p className="lede">
+        <Band flush>
+          <HeroCopy className="wrap">
+            <HeroTitle>{founder} owns the agents and signs the merges.</HeroTitle>
+            <Lede>
               He founded {brand} in {location.city}, {location.country}. He
               owns the agents we build and signs the merges we make on a
               client&apos;s repository.
-            </p>
-          </div>
-        </section>
+            </Lede>
+          </HeroCopy>
+        </Band>
 
-        <section className="band" id="founder" aria-labelledby="founder-title">
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="founder-title">The founder</h2>
-              <p>
+        <Band id="founder" aria-labelledby="founder-title">
+          <Unit>
+            <UnitHead title="The founder" titleId="founder-title">
+              <HeadNote>
                 He owns the agents we build. Where he works, what the register
                 holds, and where else to find him.
-              </p>
-            </div>
-            <div className="unit__body">
-              <dl className="rows">
-                <div className="row row--stack">
-                  <dt className="row__label">Works from</dt>
-                  <dd>
+              </HeadNote>
+            </UnitHead>
+            <UnitBody>
+              <FactRows>
+                <Row stack>
+                  <FactTerm>Works from</FactTerm>
+                  <FactValue>
                     {location.city}, {location.country}
-                  </dd>
-                </div>
-                <div className="row row--stack">
-                  <dt className="row__label">In the register</dt>
-                  <dd>Director of {company.legalName}</dd>
-                  <Link className="pull" href={imprintPage.path}>
+                  </FactValue>
+                </Row>
+                <Row stack>
+                  <FactTerm>In the register</FactTerm>
+                  <FactValue>Director of {company.legalName}</FactValue>
+                  <PullLink className="mt-0.5" href={imprintPage.path}>
                     Read the register entry
-                  </Link>
-                </div>
-                <div className="row row--stack">
-                  <dt className="row__label">Profiles</dt>
-                  <dd>His own, as against the company&apos;s. Both link back here.</dd>
+                  </PullLink>
+                </Row>
+                <Row stack>
+                  <FactTerm>Profiles</FactTerm>
+                  <FactValue>
+                    His own, as against the company&apos;s. Both link back here.
+                  </FactValue>
                   {profiles.map((profile) => (
-                    <a className="pull mono" href={profile.href} rel="me noreferrer" key={profile.href}>
+                    <PullLink
+                      className="mt-0.5 font-mono text-[0.92em]"
+                      href={profile.href}
+                      rel="me noreferrer"
+                      key={profile.href}
+                    >
                       {profile.label}
-                    </a>
+                    </PullLink>
                   ))}
-                </div>
-              </dl>
-            </div>
-          </div>
-        </section>
+                </Row>
+              </FactRows>
+            </UnitBody>
+          </Unit>
+        </Band>
 
         <ClientsStrip heading={`Companies ${founder} has shipped for, across four continents`} />
 
-        <section className="band" id="references" aria-labelledby="references-title">
-          <div className="wrap unit">
-            <div className="unit__head">
-              <h2 id="references-title">Six references, quoted as written</h2>
-              <p>
+        <Band id="references" aria-labelledby="references-title">
+          <Unit>
+            <UnitHead title="Six references, quoted as written" titleId="references-title">
+              <HeadNote>
                 People who worked with {founder} wrote these about his earlier
                 work. Nothing in them is edited.
-              </p>
-            </div>
-            <ul className="unit__body refs">
+              </HeadNote>
+            </UnitHead>
+            <ul className="grid min-w-0 gap-4">
               {references.map((reference) => (
                 <li key={reference.name}>
-                  <figure>
-                    <blockquote>
-                      <p>{reference.quote}</p>
-                    </blockquote>
-                    <figcaption>
-                      <img
-                        src={reference.portrait}
-                        alt={`${reference.name}, ${reference.position}`}
-                        width={176}
-                        height={176}
-                        loading="lazy"
-                        decoding="async"
-                      />
-                      <span className="refs__who">
-                        <b>{reference.name}</b>
-                        <span>{reference.position}</span>
-                      </span>
-                    </figcaption>
-                  </figure>
+                  <Card size="lg">
+                    <CardContent className="sm:px-7">
+                      <figure>
+                        <blockquote>
+                          <p className="max-w-[62ch] font-serif text-[1.12rem] leading-[1.55] text-foreground italic">
+                            {reference.quote}
+                          </p>
+                        </blockquote>
+                        <figcaption className="mt-4.5 flex items-center gap-3.5 border-t border-hairline pt-4">
+                          <img
+                            className="size-11 rounded-full object-cover grayscale contrast-105"
+                            src={reference.portrait}
+                            alt={`${reference.name}, ${reference.position}`}
+                            width={176}
+                            height={176}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                          <span className="flex flex-col font-heading text-[0.9rem] leading-[1.35]">
+                            <b className="font-bold text-foreground">{reference.name}</b>
+                            <span className="text-[0.82rem] text-faint">{reference.position}</span>
+                          </span>
+                        </figcaption>
+                      </figure>
+                    </CardContent>
+                  </Card>
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
+          </Unit>
+        </Band>
       </main>
 
       <SiteFooter route={aboutPage.path} />
