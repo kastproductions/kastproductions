@@ -254,28 +254,30 @@ export default function Home() {
             <UnitBody>
               <figure>
                 <Card size="lg">
-                  <blockquote className="px-(--card-spacing)">
-                    <p className="font-serif text-[clamp(1.15rem,1rem+0.6vw,1.45rem)] leading-[1.45] text-pretty italic">
-                      &ldquo;{reference.quote}&rdquo;
-                    </p>
-                    <figcaption className="mt-4.5 flex items-center gap-3.5 border-t border-hairline pt-4">
-                      <img
-                        alt=""
-                        className="size-11 rounded-full object-cover contrast-105 grayscale"
-                        decoding="async"
-                        height={176}
-                        loading="lazy"
-                        src={reference.portrait}
-                        width={176}
-                      />
-                      <span className="flex flex-col font-heading text-[0.9rem] leading-[1.35]">
-                        <b className="font-bold">{reference.name}</b>
-                        <span className="text-[0.82rem] text-faint">
-                          {reference.position}
+                  <CardContent>
+                    <blockquote>
+                      <p className="font-serif text-[clamp(1.15rem,1rem+0.6vw,1.45rem)] leading-[1.45] text-pretty italic">
+                        &ldquo;{reference.quote}&rdquo;
+                      </p>
+                      <figcaption className="mt-4.5 flex items-center gap-3.5 border-t border-hairline pt-4">
+                        <img
+                          alt=""
+                          className="size-11 rounded-full object-cover contrast-105 grayscale"
+                          decoding="async"
+                          height={176}
+                          loading="lazy"
+                          src={reference.portrait}
+                          width={176}
+                        />
+                        <span className="flex flex-col font-heading text-[0.9rem] leading-[1.35]">
+                          <b className="font-bold">{reference.name}</b>
+                          <span className="text-[0.82rem] text-faint">
+                            {reference.position}
+                          </span>
                         </span>
-                      </span>
-                    </figcaption>
-                  </blockquote>
+                      </figcaption>
+                    </blockquote>
+                  </CardContent>
                 </Card>
               </figure>
               <Note className="mt-6">

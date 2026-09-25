@@ -80,6 +80,9 @@
 
 @theme {
   --shadow-plate: 0 24px 48px -28px rgb(21 20 15 / 0.35), 0 2px 6px -2px rgb(21 20 15 / 0.12);
+  /* The resting shadow under the lead button, and the coral one it takes on hover. */
+  --shadow-lift: 0 8px 18px -12px rgb(21 20 15 / 0.7);
+  --shadow-lift-signal: 0 12px 22px -12px rgb(226 98 78 / 0.8);
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* The site's three breakpoints, replacing Tailwind's: at sm a button

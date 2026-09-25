@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { mention } from "@/app/content";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 
 /*
  * The hero's instrument: one standing agent, answering in a channel and
@@ -15,7 +16,7 @@ import { Badge } from "@/components/ui/badge";
 const PARTS = 4;
 const gateDelay = `${PARTS * 140 + 200}ms`;
 
-const at = (i: number) => ({ "--i": i }) as CSSProperties;
+const riseOrder = (i: number) => ({ "--i": i }) as CSSProperties;
 
 export function AgentConsole() {
   return (
@@ -26,7 +27,7 @@ export function AgentConsole() {
     >
       <figcaption
         className="flex items-center justify-between gap-4 border-b border-hairline pb-3.5"
-        style={at(0)}
+        style={riseOrder(0)}
       >
         <b className="font-mono text-base font-semibold" id="console-title">
           {mention.handle}
@@ -36,7 +37,7 @@ export function AgentConsole() {
 
       <dl
         className="grid grid-cols-[max-content_minmax(0,1fr)] gap-x-4.5 gap-y-1.75 text-[0.85rem]"
-        style={at(1)}
+        style={riseOrder(1)}
       >
         {mention.readings.map((reading) => (
           <div className="contents" key={reading.label}>
@@ -44,7 +45,7 @@ export function AgentConsole() {
               {reading.label}
             </dt>
             <dd className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-              <span className={reading.mono ? "font-mono text-[0.92em]" : undefined}>
+              <span className={cn(reading.mono && "font-mono text-[0.92em]")}>
                 {reading.value}
               </span>
               {reading.note ? (
@@ -55,7 +56,7 @@ export function AgentConsole() {
         ))}
       </dl>
 
-      <ol className="flex flex-col gap-2.5" style={at(2)}>
+      <ol className="flex flex-col gap-2.5" style={riseOrder(2)}>
         <li className="max-w-full rounded-[10px] bg-background px-4 py-3 text-[0.9rem] leading-normal text-prose sm:max-w-[92%]">
           <span className="mb-1 block font-heading text-[0.72rem] font-semibold text-faint">
             {mention.asker}
@@ -77,7 +78,7 @@ export function AgentConsole() {
 
       <div
         className="flex flex-col gap-2 rounded-[10px] border border-signal bg-card bg-linear-to-t from-signal-tint to-signal-tint px-4 py-3.5"
-        style={at(3)}
+        style={riseOrder(3)}
       >
         <span className="inline-flex items-center gap-2 font-heading text-[0.78rem] font-bold text-signal-foreground">
           <span

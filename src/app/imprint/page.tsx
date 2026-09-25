@@ -11,6 +11,7 @@ import {
   UnitHead,
 } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { cn } from "@/lib/utils";
 import { company, contactEmail, imprintPage } from "../content";
 import { pageMetadata } from "../head-directives";
 import { graphHtml, pageNodes } from "../structured-data";
@@ -65,7 +66,7 @@ export default function Imprint() {
                 {entry.map((line) => (
                   <Row stack key={line.label}>
                     <FactTerm>{line.label}</FactTerm>
-                    <FactValue className={line.machine ? machineValue : undefined}>
+                    <FactValue className={cn(line.machine && machineValue)}>
                       {line.value}
                     </FactValue>
                   </Row>

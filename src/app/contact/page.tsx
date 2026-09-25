@@ -16,6 +16,7 @@ import {
 } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   callHref,
   company,
@@ -137,7 +138,7 @@ export default function Contact() {
                 {identity.map((line) => (
                   <Row stack key={line.label}>
                     <FactTerm>{line.label}</FactTerm>
-                    <FactValue className={line.machine ? machineValue : undefined}>
+                    <FactValue className={cn(line.machine && machineValue)}>
                       {line.value}
                     </FactValue>
                   </Row>

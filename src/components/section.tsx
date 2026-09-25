@@ -67,21 +67,14 @@ export function UnitHead({
 }) {
   return (
     <div className="flex flex-col items-start lg:sticky lg:top-22">
-      <SectionTitle id={titleId}>{title}</SectionTitle>
+      <h2
+        className="font-heading text-[clamp(1.6rem,1.2rem+1.2vw,2.1rem)] leading-[1.12] font-bold tracking-[-0.025em] text-balance"
+        id={titleId}
+      >
+        {title}
+      </h2>
       {children}
     </div>
-  );
-}
-
-export function SectionTitle({ className, ...props }: ComponentProps<"h2">) {
-  return (
-    <h2
-      className={cn(
-        "font-heading text-[clamp(1.6rem,1.2rem+1.2vw,2.1rem)] leading-[1.12] font-bold tracking-[-0.025em] text-balance",
-        className,
-      )}
-      {...props}
-    />
   );
 }
 
@@ -118,19 +111,6 @@ export function Prose({ className, ...props }: ComponentProps<"p">) {
     <p
       className={cn(
         "mt-4 max-w-(--measure) text-[1.02rem] leading-[1.65] text-prose first:mt-0 [&_a]:text-signal-foreground",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
-
-/* A list of short statements, each behind a short rule. */
-export function DashList({ className, ...props }: ComponentProps<"ul">) {
-  return (
-    <ul
-      className={cn(
-        "mt-3 grid max-w-(--measure) gap-1.5 text-prose [&>li]:relative [&>li]:pl-4 [&>li]:before:absolute [&>li]:before:top-[0.7em] [&>li]:before:left-0 [&>li]:before:h-px [&>li]:before:w-1.75 [&>li]:before:bg-faint",
         className,
       )}
       {...props}
