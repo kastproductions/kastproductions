@@ -11,19 +11,19 @@ import { Band } from "@/components/section";
  */
 export function ClientsStrip({ heading }: { heading: ReactNode }) {
   return (
-    <Band aria-labelledby="clients-title" className="py-7" id="clients">
-      <div className="wrap grid items-baseline gap-6 lg:grid-cols-[var(--head-col)_minmax(0,1fr)] lg:gap-(--split)">
+    <Band aria-labelledby="clients-title" className="py-8" id="clients">
+      <div className="wrap grid items-baseline gap-5 border-t border-foreground pt-5 lg:grid-cols-[var(--head-col)_minmax(0,1fr)] lg:gap-(--split)">
         <h2
-          className="font-heading text-[0.85rem] leading-[1.4] font-semibold text-faint"
+          className="text-[0.88rem] leading-[1.4] font-medium text-faint"
           id="clients-title"
         >
           {heading}
         </h2>
-        <ul className="flex flex-wrap items-baseline gap-x-5.5 gap-y-2">
+        <ul className="flex flex-wrap items-baseline gap-x-6 gap-y-2">
           {clients.map((client) => (
             <li key={client.name}>
               <a
-                className="font-heading text-[0.92rem] font-semibold whitespace-nowrap text-muted-foreground no-underline transition-colors hover:text-foreground"
+                className="text-[0.95rem] font-semibold whitespace-nowrap text-muted-foreground no-underline decoration-signal decoration-2 underline-offset-[0.3em] hover:text-foreground hover:underline"
                 href={client.url}
                 rel="noreferrer"
               >

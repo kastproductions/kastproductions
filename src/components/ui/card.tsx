@@ -2,9 +2,9 @@ import * as React from "react"
 import { cn } from "cn"
 
 /*
- * A panel on paper: bone, one hairline, the brand radius. `lg` is the size
- * every door, plan and reference on the site uses. A card inside a `dark`
- * section turns to ink with the section.
+ * A sheet: white, one drawn edge, no shadow. `lg` is the size every door,
+ * plan and reference on the site uses. A card with the `dark` class, or
+ * inside a section that has it, is set in the signature blue.
  */
 function Card({
   className,

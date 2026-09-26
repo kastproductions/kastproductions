@@ -69,8 +69,8 @@ export default function EvalSuite() {
                 Correct, for a standing agent, is the answer and the way it got
                 there, so it covers four things.
               </Prose>
-              {/* The four readings, each behind a short coral rule. */}
-              <ul className="my-4 grid max-w-(--measure) gap-2 text-base text-prose [&>li]:relative [&>li]:pl-5 [&>li]:before:absolute [&>li]:before:top-[0.65em] [&>li]:before:left-0 [&>li]:before:h-px [&>li]:before:w-2 [&>li]:before:bg-signal">
+              {/* The four readings, each behind a short black rule. */}
+              <ul className="my-4 grid max-w-(--measure) gap-2 text-base text-prose [&>li]:relative [&>li]:pl-5 [&>li]:before:absolute [&>li]:before:top-[0.7em] [&>li]:before:left-0 [&>li]:before:h-px [&>li]:before:w-2 [&>li]:before:bg-foreground">
                 {covers.map((item) => (
                   <li key={item}>{item}</li>
                 ))}

@@ -2,9 +2,9 @@ import * as React from "react"
 import { cn } from "cn"
 
 /*
- * A sheet table: labels in the heading face over one full rule, rows on
- * hairlines, no fills. Cells wrap, because every cell on the site is a
- * sentence or a name.
+ * A ledger: labels in the text face over one black rule, rows on hairlines,
+ * no fills. Cells wrap, because every cell on the site is a sentence or a
+ * name.
  */
 function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
@@ -25,7 +25,7 @@ function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
   return (
     <thead
       data-slot="table-header"
-      className={cn("[&_tr]:border-b [&_tr]:border-border", className)}
+      className={cn("[&_tr]:border-b [&_tr]:border-foreground", className)}
       {...props}
     />
   )

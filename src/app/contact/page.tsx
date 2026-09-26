@@ -64,9 +64,9 @@ const identity = [
 /* A machine string is set in mono at the size of the values around it. */
 const machineValue = "font-mono";
 
-/* A link in the copy is set in the coral, as on the legal pages. The two
+/* A link in the copy is set in the blue, as on the legal pages. The two
  * buttons are not copy and keep their own colours. */
-const coralLinks = "[&_a]:text-signal-foreground";
+const signalLinks = "[&_a]:text-signal-foreground";
 
 export default function Contact() {
   return (
@@ -76,7 +76,7 @@ export default function Contact() {
         <Band flush>
           <HeroCopy className="wrap">
             <HeroTitle>Contact</HeroTitle>
-            <Lede wide className={coralLinks}>
+            <Lede wide className={signalLinks}>
               Two ways in: book a call, or write to {mailbox}. Send the issue
               you would hand to a new senior engineer, or describe the work you
               want an agent to take over.
@@ -128,7 +128,7 @@ export default function Contact() {
         <Band aria-labelledby="identity-title">
           <Unit>
             <UnitHead title="Who you are writing to" titleId="identity-title">
-              <HeadNote className={coralLinks}>
+              <HeadNote className={signalLinks}>
                 The full register entry is on the{" "}
                 <Link href={imprintPage.path}>imprint</Link>.
               </HeadNote>

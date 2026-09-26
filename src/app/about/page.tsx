@@ -15,7 +15,6 @@ import {
   UnitHead,
 } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   aboutPage,
   brand,
@@ -125,35 +124,31 @@ export default function About() {
                 work. Nothing in them is edited.
               </HeadNote>
             </UnitHead>
-            <ul className="grid min-w-0 gap-4">
+            <ul className="grid min-w-0 divide-y divide-hairline">
               {references.map((reference) => (
-                <li key={reference.name}>
-                  <Card size="lg">
-                    <CardContent className="sm:px-7">
-                      <figure>
-                        <blockquote>
-                          <p className="max-w-[62ch] font-serif text-[1.12rem] leading-[1.55] text-foreground italic">
-                            {reference.quote}
-                          </p>
-                        </blockquote>
-                        <figcaption className="mt-4.5 flex items-center gap-3.5 border-t border-hairline pt-4">
-                          <img
-                            className="size-11 rounded-full object-cover grayscale contrast-105"
-                            src={reference.portrait}
-                            alt={`${reference.name}, ${reference.position}`}
-                            width={176}
-                            height={176}
-                            loading="lazy"
-                            decoding="async"
-                          />
-                          <span className="flex flex-col font-heading text-[0.9rem] leading-[1.35]">
-                            <b className="font-bold text-foreground">{reference.name}</b>
-                            <span className="text-[0.82rem] text-faint">{reference.position}</span>
-                          </span>
-                        </figcaption>
-                      </figure>
-                    </CardContent>
-                  </Card>
+                <li className="py-7 first:pt-0" key={reference.name}>
+                  <figure>
+                    <blockquote>
+                      <p className="max-w-[60ch] text-[1.15rem] leading-[1.5] font-medium tracking-[-0.01em] text-foreground">
+                        {reference.quote}
+                      </p>
+                    </blockquote>
+                    <figcaption className="mt-4 flex items-center gap-3.5">
+                      <img
+                        className="size-11 rounded-sm object-cover grayscale contrast-105"
+                        src={reference.portrait}
+                        alt={`${reference.name}, ${reference.position}`}
+                        width={176}
+                        height={176}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span className="flex flex-col text-[0.92rem] leading-[1.35]">
+                        <b className="font-semibold text-foreground">{reference.name}</b>
+                        <span className="text-[0.84rem] text-faint">{reference.position}</span>
+                      </span>
+                    </figcaption>
+                  </figure>
                 </li>
               ))}
             </ul>

@@ -3,8 +3,9 @@ import { cn } from "cn"
 import { ChevronDownIcon } from "lucide-react"
 
 /*
- * Questions and answers on hairlines. The chevron is the coral and turns over
- * when the answer opens.
+ * Questions and answers on rules. The chevron is the blue, because opening
+ * a question is the one action in the list, and it turns over when the
+ * answer opens.
  */
 function Accordion({ className, ...props }: AccordionPrimitive.Root.Props) {
   return (

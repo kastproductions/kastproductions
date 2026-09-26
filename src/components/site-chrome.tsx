@@ -18,7 +18,7 @@ import {
   slackPage,
 } from "@/app/content";
 import { MobileNav } from "@/components/mobile-nav";
-import { Actions, Dot, PullLink } from "@/components/section";
+import { Actions, PullLink } from "@/components/section";
 import { buttonVariants } from "@/components/ui/button";
 
 type Chrome = { route?: string };
@@ -32,16 +32,17 @@ type Chrome = { route?: string };
  * or not the sheet ever opens.
  */
 
+/* The nameplate: a black square with the initial, and the name beside it. */
 function Brand({ route }: Chrome) {
   return (
     <Link
-      className="inline-flex shrink-0 items-center gap-2.75 font-heading text-[1.1rem] font-bold tracking-[-0.02em] no-underline"
+      className="inline-flex shrink-0 items-center gap-2.5 font-heading text-[1.08rem] font-bold tracking-[-0.03em] no-underline"
       href={homePage.path}
       prefetch={route === homePage.path ? false : undefined}
     >
       <span
         aria-hidden="true"
-        className="inline-flex size-8 items-center justify-center rounded-full border-[1.5px] border-foreground pr-[0.1em] font-serif text-[1.05rem] leading-none italic"
+        className="inline-flex size-7.5 items-center justify-center rounded-sm bg-foreground text-[1rem] leading-none font-extrabold text-background"
       >
         K
       </span>
@@ -147,7 +148,7 @@ export function SiteHeader({ route }: Chrome) {
 
         <nav aria-label="Pages" className="ml-auto hidden items-center gap-6.5 md:flex">
           <NavLinks
-            linkClassName="font-heading text-[0.92rem] font-medium text-prose no-underline transition-colors hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline aria-[current=page]:decoration-signal aria-[current=page]:underline-offset-[0.5em]"
+            linkClassName="font-heading text-[0.92rem] font-medium text-prose no-underline decoration-signal decoration-2 underline-offset-[0.45em] transition-colors hover:text-foreground aria-[current=page]:text-foreground aria-[current=page]:underline"
             route={route}
           />
         </nav>
@@ -173,10 +174,10 @@ export function SiteHeader({ route }: Chrome) {
 function FooterColumn({ title, children }: { title: string; children: ReactNode }) {
   return (
     <div>
-      <h2 className="mb-3.5 font-heading text-[0.8rem] font-semibold text-faint">
+      <h2 className="mb-3.5 font-heading text-[0.82rem] font-medium text-faint">
         {title}
       </h2>
-      <ul className="grid gap-2 text-prose [&_a]:font-heading [&_a]:text-[0.92rem] [&_a]:no-underline [&_a]:transition-colors [&_a:hover]:text-signal-foreground">
+      <ul className="grid gap-2 text-foreground [&_a]:font-heading [&_a]:text-[0.94rem] [&_a]:no-underline [&_a]:decoration-signal [&_a]:decoration-2 [&_a]:underline-offset-[0.3em] [&_a:hover]:underline">
         {children}
       </ul>
     </div>
@@ -185,8 +186,8 @@ function FooterColumn({ title, children }: { title: string; children: ReactNode 
 
 export function SiteFooter({ route }: Chrome) {
   return (
-    <footer className="border-t pt-[clamp(3rem,6vw,5rem)] pb-8" id="contact">
-      <div className="wrap">
+    <footer className="pt-(--band) pb-10" id="contact">
+      <div className="wrap border-t border-foreground pt-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_repeat(4,minmax(0,1fr))]">
           <div className="flex flex-col items-start gap-4 sm:col-span-full lg:col-span-1">
             <Brand route={route} />
@@ -272,21 +273,14 @@ export function SiteFooter({ route }: Chrome) {
           </FooterColumn>
         </div>
 
-        <div className="mt-12 flex flex-wrap justify-between gap-x-8 gap-y-2 border-t border-hairline pt-5 text-[0.82rem] text-faint">
+        <div className="mt-14 flex flex-wrap gap-x-8 gap-y-2 border-t border-hairline pt-5 text-[0.84rem] text-faint">
+          <span>{company.legalName}</span>
           <span>
-            {company.legalName} · {location.city}, {location.country}
+            {location.city}, {location.country}
           </span>
-          <span className="font-mono text-[0.8rem]">
+          <span className="font-mono text-[0.8rem] sm:ml-auto">
             Registration {company.registrationCode}
           </span>
-        </div>
-
-        <div
-          aria-hidden="true"
-          className="mt-10 overflow-hidden font-heading text-[clamp(2.6rem,9.4vw,9.5rem)] leading-[0.85] font-extrabold tracking-[-0.05em] whitespace-nowrap select-none [&_em]:font-serif [&_em]:font-normal [&_em]:tracking-[-0.02em]"
-        >
-          Kast <em>Productions</em>
-          <Dot />
         </div>
       </div>
     </footer>
