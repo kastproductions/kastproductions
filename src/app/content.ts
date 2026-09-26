@@ -154,7 +154,7 @@ export type Price = { amount: string; per: string };
 
 export const hero = {
   heading: "An agent that works the way your company works.",
-  lede: "A generic agent knows your tools. It has never been told how your company works, so nobody can hold it to your definition of right. We build one standing agent for one company, deploy it into that company's own accounts, and keep it right after it is live.",
+  lede: "A generic agent knows your tools. It has never been told how your company works, so nobody can hold it to your definition of right. We build one standing agent for one company, deploy it into that company’s own accounts, and keep it right after it is live.",
 };
 
 /* `catalogue: true` marks anything that only becomes true once a ready-made
@@ -195,7 +195,7 @@ export const mention = {
     { label: "Runs in", value: "Your own Cloudflare account" },
   ],
   asker: "Nadia",
-  ask: "summarise last night's failed payments and draft the follow-up to each customer",
+  ask: "summarise last night’s failed payments and draft the follow-up to each customer",
   reply: "Nine payments failed after 21:00, four of them over €500. Nine drafts are ready in your outbox.",
   state: "Waiting on a named person",
   gate: "Sending reaches your customers, so it needs a name on it.",
@@ -245,11 +245,11 @@ export const mechanism = [
   },
   {
     title: "Approval gates",
-    body: "We approve changes inside your agent's own repository and deployment. Every outward action waits for a named person at your company. That means anything reaching a customer, an inbox, a published page or a payment.",
+    body: "We approve changes inside your agent’s own repository and deployment. Every outward action waits for a named person at your company. That means anything reaching a customer, an inbox, a published page or a payment.",
   },
   {
     title: "A named engineer",
-    body: "One of our engineers owns your agent and answers inside business hours. Your agent runs in your own cloud account, so its uptime is your platform's. We do not promise uptime for software we do not run.",
+    body: "One of our engineers owns your agent and answers inside business hours. Your agent runs in your own cloud account, so its uptime is your platform’s. We do not promise uptime for software we do not run.",
   },
   {
     title: "The spend cap",
@@ -363,7 +363,7 @@ export const issueToPullRequest: Product = {
     },
     {
       title: "Implement",
-      body: "Works in a sandbox, runs your repository's own checks, and pushes a branch when they pass.",
+      body: "Works in a sandbox, runs your repository’s own checks, and pushes a branch when they pass.",
     },
     {
       title: "Review",
@@ -581,7 +581,7 @@ export const supportTicketTriage: JobPage = {
     },
     {
       title: "Drafts the reply where the answer is known",
-      body: "Where the answer is already written down, in your help centre or in a reply your team sent before, the agent writes it into the ticket as a draft, in your team's own wording. The draft waits for a name.",
+      body: "Where the answer is already written down, in your help centre or in a reply your team sent before, the agent writes it into the ticket as a draft, in your team’s own wording. The draft waits for a name.",
     },
     {
       title: "Files the bug",
@@ -610,14 +610,14 @@ export const failedPaymentRecovery: JobPage = {
   description:
     "Failed payment recovery, run by a standing agent: every charge Stripe failed comes back as a drafted message that waits for your approval.",
   date: "2026-09-21",
-  heading: "An agent that works last night's failed payments.",
+  heading: "An agent that works last night’s failed payments.",
   lede: "Every charge Stripe failed overnight comes back as one summary, with a drafted message per customer waiting in your outbox. Nothing reaches a customer until a named person approves it.",
   authority:
     "It acts behind an approval gate. Reading Stripe, sorting the failures and writing the drafts needs nobody, and every draft then stops.",
   gate: "The gate sits before a message leaves your company. A follow-up reaches your customer, so a named person reads it and sends it.",
   steps: [
     {
-      title: "Reads the night's failures",
+      title: "Reads the night’s failures",
       body: "The failed charge itself wakes the agent. It reads the amount, the reason the card gave, the invoice behind it and how long that customer has been paying you.",
     },
     {
@@ -656,7 +656,7 @@ export const shopifyOperations: JobPage = {
   heading: "An agent that watches your store, so a person sees only the exceptions.",
   lede: "On the schedule you set, the agent reads your Shopify store for what is out of line: stock running low, a price outside the range you set, an order that stalled. It reports what it found in one place and brings the ones that need a decision to a named person.",
   authority:
-    "It reads and reports. Nothing in your store changes because the agent looked: it reads Shopify, sorts what it found and writes one summary. Every change is a person's to make.",
+    "It reads and reports. Nothing in your store changes because the agent looked: it reads Shopify, sorts what it found and writes one summary. Every change is a person’s to make.",
   gate: "The gate sits in front of every change to the store, and this agent stops there every time. An exception that needs a decision comes to a named person with the product, the order or the price it concerns and the choices open, and that person makes the change in Shopify.",
   steps: [
     {
@@ -673,7 +673,7 @@ export const shopifyOperations: JobPage = {
     },
     {
       title: "Brings a decision to a person",
-      body: "An exception that needs a decision comes to a named person with everything the decision needs: the product, the order or the price, and what the choices are. The change is that person's to make, in Shopify.",
+      body: "An exception that needs a decision comes to a named person with everything the decision needs: the product, the order or the price, and what the choices are. The change is that person’s to make, in Shopify.",
     },
   ],
   systems: [
@@ -853,7 +853,7 @@ export const questions: Question[] = [
   },
   {
     q: "What is it built on?",
-    a: "Flue, the open agent harness the Astro organisation publishes, deployed into your own Cloudflare account, or onto Node.js where your platform needs it. Four pieces are ours rather than the framework's: the approval gates, the spend cap, the tool that opens a pull request, and the filter that decides what starts a run.",
+    a: "Flue, the open agent harness the Astro organisation publishes, deployed into your own Cloudflare account, or onto Node.js where your platform needs it. Four pieces are ours rather than the framework’s: the approval gates, the spend cap, the tool that opens a pull request, and the filter that decides what starts a run.",
   },
   {
     q: "Do you promise uptime?",
@@ -1034,7 +1034,7 @@ export const slackPage: PageRecord = {
   path: "/slack",
   title: "AI agent for Slack",
   description:
-    "An AI agent for Slack, built for one company: your team addresses it by name in a channel, and every outward action waits for a named person's approval.",
+    "An AI agent for Slack, built for one company: your team addresses it by name in a channel, and every outward action waits for a named person’s approval.",
   date: "2026-09-21",
 };
 

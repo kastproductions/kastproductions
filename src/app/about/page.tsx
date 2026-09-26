@@ -66,7 +66,7 @@ export default function About() {
             <Lede>
               He founded {brand} in {location.city}, {location.country}. He
               owns the agents we build and signs the merges we make on a
-              client&apos;s repository.
+              client’s repository.
             </Lede>
           </HeroCopy>
         </Band>
@@ -97,7 +97,7 @@ export default function About() {
                 <Row stack>
                   <FactTerm>Profiles</FactTerm>
                   <FactValue>
-                    His own, as against the company&apos;s. Both link back here.
+                    His own, as against the company’s. Both link back here.
                   </FactValue>
                   {profiles.map((profile) => (
                     <PullLink

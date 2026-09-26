@@ -261,7 +261,7 @@ export default function Home() {
                       </p>
                       <figcaption className="mt-4.5 flex items-center gap-3.5 border-t border-hairline pt-4">
                         <img
-                          alt=""
+                          alt={`${reference.name}, ${reference.position}`}
                           className="size-11 rounded-full object-cover contrast-105 grayscale"
                           decoding="async"
                           height={176}
