@@ -125,7 +125,7 @@ const website: GraphNode = {
   name: brand,
   description: homePage.description,
   publisher: { "@id": organizationId },
-  inLanguage: "en",
+  inLanguage: "en-GB",
 };
 
 /* The nodes that are true on every route. The root layout renders these, and a
@@ -169,7 +169,7 @@ function webPage(page: PageRecord, questions?: Question[]): GraphNode {
     dateModified: page.date,
     isPartOf: { "@id": websiteId },
     about: { "@id": organizationId },
-    inLanguage: "en",
+    inLanguage: "en-GB",
     /* The trail from the home page to this one, on every page but the home
      * page, which is where the trail starts. */
     ...(page.path === homePage.path

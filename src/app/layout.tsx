@@ -75,7 +75,7 @@ const jsonLdHtml = graphHtml(siteNodes);
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang="en-GB"
       className={cn(schibsted.variable, plexMono.variable)}
     >
       <body>
