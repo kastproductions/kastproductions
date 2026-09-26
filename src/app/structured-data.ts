@@ -15,6 +15,7 @@ import {
   founder,
   founderProfiles,
   homePage,
+  language,
   location,
   type PageRecord,
   pageUrl,
@@ -125,7 +126,7 @@ const website: GraphNode = {
   name: brand,
   description: homePage.description,
   publisher: { "@id": organizationId },
-  inLanguage: "en-GB",
+  inLanguage: language,
 };
 
 /* The nodes that are true on every route. The root layout renders these, and a
@@ -169,7 +170,7 @@ function webPage(page: PageRecord, questions?: Question[]): GraphNode {
     dateModified: page.date,
     isPartOf: { "@id": websiteId },
     about: { "@id": organizationId },
-    inLanguage: "en-GB",
+    inLanguage: language,
     /* The trail from the home page to this one, on every page but the home
      * page, which is where the trail starts. */
     ...(page.path === homePage.path
