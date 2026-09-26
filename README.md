@@ -207,6 +207,8 @@ tests/
   about.test.ts        # The founder node points at the about page, every header links
                        #   it, and the page prints every client and every reference
                        #   as `content.ts` holds them
+  definition-lists.test.ts  # Everything inside a definition list sits in a term or a
+                       #   value, so a screen reader reads it with its term
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
