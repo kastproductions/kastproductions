@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Inter_Tight, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -8,42 +8,29 @@ import { graphHtml, siteNodes } from "./structured-data";
 import "./globals.css";
 
 /*
- * The four families the theme reads, each on its own --font-* variable:
- * Inter Tight for headings, Inter for prose, Playfair Display for the italic
- * words inside a display heading, JetBrains Mono for strings a machine wrote.
- * globals.css maps them onto Tailwind's font-heading, font-sans, font-serif
- * and font-mono. next/font self-hosts them and preloads each one, so no
- * request leaves for Google at runtime. They load `swap` with size-adjusted
- * fallbacks, which is what keeps the hero from moving when a font arrives
- * after the first paint.
+ * The two families the theme reads, each on its own --font-* variable:
+ * Schibsted Grotesk for every word a person wrote, headings and prose alike,
+ * and IBM Plex Mono for strings a machine wrote. globals.css maps them onto
+ * Tailwind's font-heading, font-sans and font-mono. next/font self-hosts
+ * them and preloads each one, so no request leaves for Google at runtime.
+ * They load `swap` with size-adjusted fallbacks, which is what keeps the hero
+ * from moving when a font arrives after the first paint.
  */
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
   display: "swap",
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  style: "italic",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#efe7d2",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
 };
@@ -89,18 +76,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={cn(
-        interTight.variable,
-        inter.variable,
-        playfair.variable,
-        jetbrainsMono.variable,
-      )}
+      className={cn(schibsted.variable, plexMono.variable)}
     >
       <body>
         <a
           className={cn(
             buttonVariants(),
-            "absolute -top-16 left-(--gutter) z-100 transition-[top] focus:top-3",
+            "absolute top-3 left-(--gutter) z-100 -translate-y-24 transition-transform focus:translate-y-0",
           )}
           href="#main"
         >

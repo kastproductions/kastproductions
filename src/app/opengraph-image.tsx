@@ -12,35 +12,40 @@ const HEADLINE = hero.heading;
 const LINE = `Software factory on demand, ${location.city}, ${location.country}`;
 
 /* The page's own tokens. A preview that drifts from the site it links to is a
- * broken promise before a reader has clicked. */
-const FIELD = "#0d1330";
-const TYPE = "#e9eaf4";
-const TYPE_2 = "#98a2cf";
-const RULE = "#2f3b73";
-const SIGNAL = "#ffb92e";
+ * broken promise before a reader has clicked. The mailbox is the one action
+ * the card offers, so it is the one thing in the signature blue. */
+const FIELD = "#ffffff";
+const TYPE = "#000000";
+const TYPE_2 = "#5f636c";
+const SIGNAL = "#2340e0";
 
 /*
  * Satori reads TTF only. Google Fonts serves a static, subset TTF when the
- * request comes from a non-browser client, so the face is fetched once at build
- * time with just the glyphs this image uses. The display weight and width match
- * the page's own display setting.
+ * request comes from a non-browser client, so each weight is fetched once at
+ * build time with just the glyphs this image uses. The weights match the
+ * page's own: 800 for the display heading, 500 for everything else.
  */
-async function loadArchivo(text: string): Promise<ArrayBuffer> {
+async function loadSchibsted(weight: number, text: string): Promise<ArrayBuffer> {
   const css = await fetch(
-    `https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@118,600&text=${encodeURIComponent(text)}`,
+    `https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@${weight}&text=${encodeURIComponent(text)}`,
   ).then((response) => response.text());
   const url = css.match(/src: url\((.+?)\) format\('truetype'\)/)?.[1];
   if (!url) {
-    throw new Error("opengraph-image: Google Fonts returned no TTF source for Archivo");
+    throw new Error(
+      `opengraph-image: Google Fonts returned no TTF source for Schibsted Grotesk ${weight}`,
+    );
   }
   const response = await fetch(url);
   if (!response.ok) {
-    throw new Error(`opengraph-image: ${response.status} fetching Archivo`);
+    throw new Error(`opengraph-image: ${response.status} fetching Schibsted Grotesk ${weight}`);
   }
   return response.arrayBuffer();
 }
 
-const archivo = await loadArchivo(`${brand}${HEADLINE}${LINE}${contactEmail}`);
+const [display, text] = await Promise.all([
+  loadSchibsted(800, `K${brand}${HEADLINE}`),
+  loadSchibsted(500, `${LINE}${contactEmail}`),
+]);
 
 export default function Image() {
   return new ImageResponse(
@@ -55,20 +60,44 @@ export default function Image() {
           padding: "60px 72px",
           background: FIELD,
           color: TYPE,
-          fontFamily: "Archivo",
+          fontFamily: "Schibsted Grotesk",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 32 }}>
-          <div style={{ width: 11, height: 34, background: SIGNAL }} />
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            fontSize: 32,
+            fontWeight: 800,
+            letterSpacing: "-0.03em",
+          }}
+        >
+          <div
+            style={{
+              width: 44,
+              height: 44,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 4,
+              background: TYPE,
+              color: FIELD,
+              fontSize: 28,
+            }}
+          >
+            K
+          </div>
           {brand}
         </div>
         <div
           style={{
             display: "flex",
-            fontSize: 78,
-            lineHeight: 1.02,
-            letterSpacing: "-0.03em",
-            maxWidth: 900,
+            fontSize: 84,
+            fontWeight: 800,
+            lineHeight: 0.98,
+            letterSpacing: "-0.05em",
+            maxWidth: 980,
           }}
         >
           {HEADLINE}
@@ -77,20 +106,24 @@ export default function Image() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            paddingTop: 26,
-            borderTop: `1px solid ${RULE}`,
+            paddingTop: 24,
+            borderTop: `2px solid ${TYPE}`,
             fontSize: 26,
+            fontWeight: 500,
             color: TYPE_2,
           }}
         >
           <span>{LINE}</span>
-          <span>{contactEmail}</span>
+          <span style={{ color: SIGNAL }}>{contactEmail}</span>
         </div>
       </div>
     ),
     {
       ...size,
-      fonts: [{ name: "Archivo", data: archivo, weight: 600, style: "normal" }],
+      fonts: [
+        { name: "Schibsted Grotesk", data: display, weight: 800, style: "normal" },
+        { name: "Schibsted Grotesk", data: text, weight: 500, style: "normal" },
+      ],
     },
   );
 }

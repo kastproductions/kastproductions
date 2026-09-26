@@ -1,48 +1,45 @@
 "use client";
 
 import { MenuIcon } from "lucide-react";
-import { type ReactNode, useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { type ComponentType, type ReactNode, useState } from "react";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+type MenuSheetComponent = ComponentType<{ children: ReactNode }>;
+
+/* The sheet and the dialog behind it are about a third of the script every
+ * page would otherwise load, for a menu only a narrow screen shows and only
+ * some readers open. The module arrives when a pointer reaches the button or
+ * focus lands on it, which is usually before the press that needs it. */
+const loadMenuSheet = () =>
+  import("./menu-sheet").then((module): MenuSheetComponent => module.MenuSheet);
 
 /*
- * The header's links on a narrow screen, in a sheet that drops from the top.
- * A link to a section of the page it is on changes nothing but the hash, so
- * the sheet closes on any link a reader picks rather than staying over the
- * section they asked for. The links themselves are drawn by the header and
- * passed in, so the two lists cannot drift.
+ * The header's menu button on a narrow screen. Until a reader presses it, it
+ * is a plain button; the press loads `MenuSheet`, which takes its place and
+ * mounts open. The links are drawn by the header and passed in, so the two
+ * lists cannot drift.
  */
 export function MobileNav({ children }: { children: ReactNode }) {
-  const [open, setOpen] = useState(false);
+  const [MenuSheet, setMenuSheet] = useState<MenuSheetComponent | null>(null);
+
+  if (MenuSheet) return <MenuSheet>{children}</MenuSheet>;
+
   return (
-    <Sheet onOpenChange={setOpen} open={open}>
-      <SheetTrigger
-        aria-label="Menu"
-        render={<Button className="ml-auto md:hidden" size="sm" variant="outline" />}
-      >
-        Menu
-        <MenuIcon data-icon="inline-end" />
-      </SheetTrigger>
-      <SheetContent side="top">
-        <SheetHeader className="sr-only">
-          <SheetTitle>Menu</SheetTitle>
-        </SheetHeader>
-        <nav
-          aria-label="Pages"
-          className="flex max-h-[calc(100dvh-4.5rem)] flex-col overflow-y-auto overscroll-contain px-(--gutter) pt-3 pb-5"
-          onClick={(event) => {
-            if ((event.target as HTMLElement).closest("a")) setOpen(false);
-          }}
-        >
-          {children}
-        </nav>
-      </SheetContent>
-    </Sheet>
+    <button
+      aria-expanded={false}
+      aria-haspopup="dialog"
+      aria-label="Menu"
+      className={cn(buttonVariants({ size: "sm", variant: "outline" }), "ml-auto md:hidden")}
+      onClick={() => {
+        void loadMenuSheet().then((component) => setMenuSheet(() => component));
+      }}
+      onFocus={loadMenuSheet}
+      onPointerEnter={loadMenuSheet}
+      type="button"
+    >
+      Menu
+      <MenuIcon data-icon="inline-end" />
+    </button>
   );
 }

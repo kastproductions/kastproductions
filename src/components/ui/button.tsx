@@ -4,19 +4,19 @@ import { cn } from "cn"
 
 /*
  * Every call to action on the site is a link, so pages use `buttonVariants`
- * on an <a> or a <Link> and keep it a server-rendered anchor. The pill, the
- * heading face and the lift on hover are the brand's; `default` is the one
- * action a reader can take, `outline` the one beside it.
+ * on an <a> or a <Link> and keep it a server-rendered anchor. `default` is
+ * the one action a reader can take, filled in the signature blue; `outline`
+ * is the one beside it, drawn with a black edge like a form field.
  */
 const buttonStyles = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-full border border-transparent bg-clip-padding font-heading leading-tight font-semibold whitespace-nowrap no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-200 ease-settle outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-250 [&_svg:not([class*='size-'])]:size-[0.9em]",
+  "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding font-heading leading-tight font-semibold whitespace-nowrap no-underline transition-[background-color,color,border-color] duration-150 ease-settle outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-200 [&_svg:not([class*='size-'])]:size-[0.95em]",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-lift hover:-translate-y-px hover:bg-signal hover:shadow-lift-signal hover:[&_svg]:translate-x-0.5 hover:[&_svg]:-translate-y-0.5",
+          "bg-primary text-primary-foreground hover:bg-[color-mix(in_oklch,var(--primary),black_18%)] hover:[&_svg]:translate-x-0.5 hover:[&_svg]:-translate-y-0.5",
         outline:
-          "border-border bg-transparent text-foreground hover:border-foreground hover:bg-accent aria-expanded:border-foreground aria-expanded:bg-primary aria-expanded:text-primary-foreground",
+          "border-foreground bg-transparent text-foreground hover:bg-accent aria-expanded:bg-foreground aria-expanded:text-background",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:

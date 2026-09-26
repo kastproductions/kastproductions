@@ -8,44 +8,46 @@ Live at [www.kastproductions.com](https://www.kastproductions.com).
 
 - **Framework**: Next.js 16 (App Router, static export)
 - **Styling**: Tailwind CSS v4 utilities, and shadcn/ui components on Base UI (`components.json`, style `base-nova`). The theme lives in `src/app/globals.css`
-- **Fonts**: Inter Tight for headings, Inter for prose, Playfair Display italic for the two or three words a display heading leans on, JetBrains Mono for machine strings; all four load through `next/font`
+- **Fonts**: Schibsted Grotesk for every word a person wrote, headings and prose alike, and IBM Plex Mono for machine strings; both load through `next/font`
 - **Language**: TypeScript (strict)
 - **Runtime**: Bun
 
 ## The design
 
-The page is warm paper, ink type, and one coral signal. It is the same world
-on every page, and three rules hold it together. Breaking one is a bug rather
+The page is a signed document: white paper, black type in one grotesque, and
+one blue, the blue of the ink a person signs with. It is the same world on
+every page, and three rules hold it together. Breaking one is a bug rather
 than a variation.
 
-1. **A hairline and a panel are the only structure.** A `Band` is one course
-   of the page, on one rule. A `Unit` splits a band into a head column and a
-   body column. A panel is a bone surface with a hairline and one soft
-   shadow: a `Card` for the doors, the ways to buy and the references, and
-   the console and the run record drawn to match. It is reserved for the
-   things a reader compares or acts on. Rows and lists
-   sit on hairlines with no box around them. Nothing is drawn for looks: no
-   section numbers, no eyebrow labels, no coordinates, no illustration
-   standing in for content.
-2. **`signal` (the coral) means someone must act.** It marks the gate the
+1. **A rule and a sheet are the only structure.** A `Band` is one course of
+   the page. A `Unit` splits it into a head column and a body column under one
+   black rule that runs the width of the content, the way a form rules off
+   each of its parts. A sheet is a white panel with a drawn edge and no
+   shadow: a `Card` for the doors and the ways to buy, and the hero slip and
+   the run record drawn with a black edge. It is reserved for the things a
+   reader compares or acts on. A fact a reader can check is a form field, its
+   label in the top of the box. Rows and lists sit on hairlines with no box
+   around them. Nothing is drawn for looks: no section numbers, no eyebrow
+   labels, no coordinates, no illustration standing in for content.
+2. **`signal` (the blue) means someone must act.** It marks the gate the
    agent stops at and the one action a reader can take in a view: the primary
-   button on hover, the link that leads somewhere, the marker on a question
-   that opens. A rule, a number or a table cell is never coral. On an ink
-   section (`Band tone="ink"`, which sets the `dark` class) the primary button
-   itself is coral, because an ink button on ink has no edge.
+   button, the underline under a link that leads somewhere, the marker on a
+   question that opens. A rule, a number or a table cell is never blue. A
+   surface set in the blue (`Band tone="signal"` or a `lead` plan, which set
+   the `dark` class) turns the primary button white, because a blue button on
+   blue has no edge.
 3. **`font-mono` means a machine wrote this string.** A handle, a channel, a
    timestamp, a diff, a registration code. A label a person wrote is set in
    the text face, never in mono and never in tracked capitals.
 
-Playfair italic is the voice of a display heading, not a decoration: it
-carries the words the heading turns on (`your company`, `your workflow`) and
-appears nowhere below the heading level.
+A heading carries no emphasis of its own: no italic word, no coloured full
+stop. Its weight and size are the emphasis.
 
-Motion is one orchestrated entrance per page, on load: the hero console rises
-part by part and lands on the gate lamp, or the run record ticks in on a
-product page. A page carries one or the other, never both, and nothing else on
-the site moves unless a reader asks it to. `prefers-reduced-motion` gets the
-end state immediately.
+Motion is one orchestrated entrance per page, on load: the hero slip rises
+part by part and ends by drawing its signature line, or the run record ticks
+in on a product page. A page carries one or the other, never both, and nothing
+else on the site moves unless a reader asks it to. `prefers-reduced-motion`
+gets the end state immediately.
 
 A number in front of a row means the rows are a sequence. Only the four
 stations of a run earn `<Rows sequence>`, because only they are one.
@@ -152,7 +154,9 @@ src/components/
   site-chrome.tsx      # Header, footer and brand mark, shared by every page. The
                        #   header links the about page, and the footer links privacy,
                        #   terms, the imprint and the contact page from every page
-  mobile-nav.tsx       # The header's links in a sheet on a narrow screen
+  mobile-nav.tsx       # The header's menu button on a narrow screen. Loads the
+                       #   sheet on first press, so no page ships it up front
+  menu-sheet.tsx       # The header's links in a sheet, mounted open by that press
   section.tsx          # The shapes every page is built from: band, unit, hero,
                        #   lede, note, pull link, rows
   plan-card.tsx        # One way to buy as a card, and the grid the cards sit in
@@ -164,15 +168,16 @@ src/components/
   job-page.tsx         # One job we take, on its own page
   job-rows.tsx         # The jobs we take, as rows, on the home page and the door
   run-record.tsx       # The example run, on a product page
-  agent-console.tsx    # The example agent in the home page hero: its nameplate, the
-                       #   exchange, and the gate it stops at
+  agent-console.tsx    # The example agent in the home page hero: a sign-off slip
+                       #   with its nameplate, the exchange, and the gate it stops at
   analytics.tsx        # Vercel Web Analytics: the tracker this deployment serves,
                        #   and one event per call to action clicked
 src/lib/
   utils.ts             # `cn`, which merges class names
 public/
   reviewers/           # Portraits for the references on the about page
-  logo.png             # 512px raster logo, for the Organization node in the graph
+  logo.png             # icon.svg at 512px, for the Organization node in the graph
+                       #   and the manifest's installable icon
 tests/
   export.ts            # Shared helpers: the export root, a file reader, the file a
                        #   record's page was written to, the body of a page, tag parsing,

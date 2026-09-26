@@ -3,8 +3,9 @@ import { cn } from "cn"
 import { ChevronDownIcon } from "lucide-react"
 
 /*
- * Questions and answers on hairlines. The chevron is the coral and turns over
- * when the answer opens.
+ * Questions and answers on rules. The chevron is the blue, because opening
+ * a question is the one action in the list, and it turns over when the
+ * answer opens.
  */
 function Accordion({ className, ...props }: AccordionPrimitive.Root.Props) {
   return (
@@ -36,7 +37,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "group/accordion-trigger relative flex flex-1 items-center justify-between gap-6 border border-transparent py-4.5 text-left font-heading text-[1.08rem] font-semibold tracking-tight text-foreground transition-colors outline-none hover:text-signal-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-disabled:pointer-events-none aria-disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:size-4.5 **:data-[slot=accordion-trigger-icon]:text-signal",
+          "group/accordion-trigger relative flex flex-1 items-center justify-between gap-6 border border-transparent py-4.5 text-left font-heading text-[1.08rem] font-semibold tracking-tight text-pretty text-foreground transition-colors outline-none hover:text-signal-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-disabled:pointer-events-none aria-disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:size-4.5 **:data-[slot=accordion-trigger-icon]:text-signal",
           className
         )}
         {...props}

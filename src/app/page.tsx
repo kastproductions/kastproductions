@@ -9,7 +9,6 @@ import { PlanCard, Plans } from "@/components/plan-card";
 import {
   Actions,
   Band,
-  Dot,
   HeadNote,
   HeroCopy,
   HeroTitle,
@@ -104,12 +103,9 @@ export default function Home() {
 
       <main id="main">
         <Band flush id="hero">
-          <div className="wrap grid items-center gap-[clamp(2rem,5vw,5rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
+          <div className="wrap grid items-center gap-[clamp(2.5rem,5vw,5rem)] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
             <HeroCopy>
-              <HeroTitle>
-                An agent that works the way <em>your company</em> works
-                <Dot />
-              </HeroTitle>
+              <HeroTitle>{hero.heading}</HeroTitle>
               <Lede>{hero.lede}</Lede>
               <Actions>
                 <a className={buttonVariants()} href={briefHref}>
@@ -120,7 +116,7 @@ export default function Home() {
                   Book a call
                 </a>
               </Actions>
-              <dl className="mt-6 grid md:grid-cols-3 md:border-t">
+              <dl className="mt-3 grid rounded-md border border-foreground md:grid-cols-3">
                 <Fact label="Spec and fixed price">Within one working day</Fact>
                 <Fact label="Ready-made agent live">In {leadTime}</Fact>
                 <Fact label="Who owns it">Your accounts, your keys, your code</Fact>
@@ -166,11 +162,7 @@ export default function Home() {
                 kind={customDoor.name}
                 more={customDoor.more}
                 prices={custom.prices}
-                title={
-                  <>
-                    Shaped around <em>your workflow</em>
-                  </>
-                }
+                title="Shaped around your workflow"
               />
             </UnitBody>
           </Unit>
@@ -252,33 +244,27 @@ export default function Home() {
               </PullLink>
             </UnitHead>
             <UnitBody>
-              <figure>
-                <Card size="lg">
-                  <CardContent>
-                    <blockquote>
-                      <p className="font-serif text-[clamp(1.15rem,1rem+0.6vw,1.45rem)] leading-[1.45] text-pretty italic">
-                        &ldquo;{reference.quote}&rdquo;
-                      </p>
-                      <figcaption className="mt-4.5 flex items-center gap-3.5 border-t border-hairline pt-4">
-                        <img
-                          alt={`${reference.name}, ${reference.position}`}
-                          className="size-11 rounded-full object-cover contrast-105 grayscale"
-                          decoding="async"
-                          height={176}
-                          loading="lazy"
-                          src={reference.portrait}
-                          width={176}
-                        />
-                        <span className="flex flex-col font-heading text-[0.9rem] leading-[1.35]">
-                          <b className="font-bold">{reference.name}</b>
-                          <span className="text-[0.82rem] text-faint">
-                            {reference.position}
-                          </span>
-                        </span>
-                      </figcaption>
-                    </blockquote>
-                  </CardContent>
-                </Card>
+              <figure className="border-l-2 border-foreground pl-6 sm:pl-8">
+                <blockquote>
+                  <p className="text-[clamp(1.2rem,1rem+0.8vw,1.6rem)] leading-[1.35] font-medium tracking-[-0.02em] text-pretty">
+                    &ldquo;{reference.quote}&rdquo;
+                  </p>
+                </blockquote>
+                <figcaption className="mt-6 flex items-center gap-3.5">
+                  <img
+                    alt={`${reference.name}, ${reference.position}`}
+                    className="size-11 rounded-sm object-cover contrast-105 grayscale"
+                    decoding="async"
+                    height={176}
+                    loading="lazy"
+                    src={reference.portrait}
+                    width={176}
+                  />
+                  <span className="flex flex-col text-[0.92rem] leading-[1.35]">
+                    <b className="font-semibold">{reference.name}</b>
+                    <span className="text-[0.84rem] text-faint">{reference.position}</span>
+                  </span>
+                </figcaption>
               </figure>
               <Note className="mt-6">
                 Written about his earlier work, before this offer existed. There
@@ -337,18 +323,16 @@ export default function Home() {
           </Unit>
         </Band>
 
-        <Band aria-labelledby="cta-title" id="cta" tone="ink">
-          <div className="wrap grid items-end gap-(--split) lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-            <div>
+        <Band aria-labelledby="cta-title" id="cta" tone="signal">
+          <div className="wrap grid items-end gap-(--split) lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
+            <div className="flex flex-col gap-6">
               <h2
-                className="font-heading text-[clamp(2rem,1.2rem+2.8vw,3.6rem)] leading-[1.04] font-extrabold tracking-[-0.035em] text-balance"
+                className="max-w-[18ch] font-heading text-[clamp(2.2rem,1.2rem+3.4vw,4.2rem)] leading-[0.98] font-extrabold tracking-[-0.045em] text-balance"
                 id="cta-title"
               >
-                Send us the issue you would hand to a{" "}
-                <em>new senior engineer</em>
-                <Dot />
+                Send us the issue you would hand to a new senior engineer
               </h2>
-              <p className="mt-5 max-w-[52ch] text-[1.05rem] leading-relaxed text-prose">
+              <p className="max-w-[52ch] text-[1.08rem] leading-relaxed text-prose">
                 Or describe the work you want an agent to take over. We reply
                 within one working day with a short spec and a fixed price.
               </p>
@@ -362,10 +346,13 @@ export default function Home() {
                 </a>
               </Actions>
             </div>
-            <div className="grid gap-3 text-[0.9rem] text-faint *:border-t *:border-hairline *:pt-3 [&_b]:block [&_b]:font-heading [&_b]:font-semibold [&_b]:text-foreground">
+            <div className="grid gap-3 text-[0.92rem] text-prose *:border-t *:border-hairline *:pt-3 [&_b]:block [&_b]:font-semibold [&_b]:text-foreground">
               <div>
                 <b>Write to</b>
-                <a className="text-foreground" href={`mailto:${contactEmail}`}>
+                <a
+                  className="text-foreground decoration-1 underline-offset-[0.3em] hover:decoration-2"
+                  href={`mailto:${contactEmail}`}
+                >
                   {contactEmail}
                 </a>
               </div>
@@ -395,16 +382,18 @@ export default function Home() {
 /* The two-column grid of titled points the fit and mechanism sections share. */
 const pointGrid =
   "grid min-w-0 md:grid-cols-2 md:gap-x-(--split) *:border-t *:border-hairline *:py-5 *:first:border-t-0 *:first:pt-0 md:*:nth-2:border-t-0 md:*:nth-2:pt-0";
-const pointTitle = "mb-1.5 font-heading text-[1.05rem] font-bold tracking-[-0.01em]";
-const pointText = "text-[0.95rem] leading-relaxed text-prose";
+const pointTitle =
+  "mb-1.5 font-heading text-[1.1rem] font-semibold tracking-[-0.015em] text-balance";
+const pointText = "text-[0.97rem] leading-relaxed text-prose";
 
 /* One of the three readings under the hero copy: facts a reader can check on
- * the pages below, set as a small spec sheet rather than as statistics. */
+ * the pages below, drawn as the fields of a form, the same fields the hero
+ * slip beside them uses. */
 function Fact({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-t border-hairline py-3 md:block md:border-t-0 md:border-r md:py-0 md:pt-4 md:pr-5 md:not-first:pl-5 md:last:border-r-0">
-      <dt className="font-heading text-[0.78rem] font-semibold text-faint">{label}</dt>
-      <dd className="text-right font-heading text-[0.95rem] font-semibold tracking-[-0.01em] text-balance md:mt-0.5 md:text-left md:text-[1.02rem]">
+    <div className="flex flex-col gap-1 px-4 py-3 not-first:border-t not-first:border-hairline md:not-first:border-t-0 md:not-first:border-l">
+      <dt className="text-[0.75rem] font-medium text-faint">{label}</dt>
+      <dd className="text-[0.98rem] leading-snug font-semibold tracking-[-0.01em] text-balance">
         {children}
       </dd>
     </div>
@@ -428,14 +417,14 @@ function Door({
   href: string;
 }) {
   return (
-    <Link className="group/door flex rounded-xl text-inherit no-underline" href={href}>
+    <Link className="group/door flex rounded-lg text-inherit no-underline" href={href}>
       <Card
-        className="w-full transition-[border-color,transform,box-shadow] duration-300 ease-settle group-hover/door:-translate-y-0.5 group-hover/door:border-foreground group-hover/door:shadow-plate"
+        className="w-full transition-colors duration-150 group-hover/door:border-foreground"
         size="lg"
       >
         <CardHeader>
-          <span className="font-heading text-[0.8rem] font-semibold text-faint">{kind}</span>
-          <CardTitle className="text-[1.55rem] tracking-[-0.025em]">{title}</CardTitle>
+          <span className="text-[0.84rem] font-medium text-faint">{kind}</span>
+          <CardTitle className="text-[1.65rem] leading-[1.08] tracking-[-0.035em]">{title}</CardTitle>
           <CardDescription className="flex flex-col gap-3">{body}</CardDescription>
         </CardHeader>
         <CardContent className="mt-auto">
@@ -446,7 +435,7 @@ function Door({
                 key={price.per}
               >
                 <span>{price.per}</span>
-                <b className="font-heading font-bold text-foreground tabular-nums">
+                <b className="font-heading font-bold text-foreground">
                   {price.amount}
                 </b>
               </div>

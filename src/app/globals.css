@@ -1,20 +1,23 @@
 /*
  * KastProductions theme.
  *
- * One visual world for every page: warm paper, ink type, a coral signal that
- * marks the one action a reader can take, Playfair italics for the two or
- * three words a display heading leans on, and mono only where a machine wrote
- * the string. Structure is a hairline and a panel; nothing is drawn for looks.
+ * The page is a signed document. White paper, black type in one grotesque,
+ * and one blue: the blue of the ink a person signs with. Blue marks the place
+ * a person acts, the gate a standing agent stops at and the one action a
+ * reader can take in a view, so it is never a decoration. Mono appears only
+ * where a machine wrote the string. Structure is a rule and a sheet: a band
+ * sits on a rule, and a sheet is a white panel with a drawn edge and no
+ * shadow. A field a person fills in is drawn as a form field, with its label
+ * in the top of the box.
  *
  * Every style is a Tailwind utility in the component that draws it, and every
  * control is a shadcn/ui component in src/components/ui. This file holds only
- * what those read: the shadcn theme variables, set to the paper and ink
- * palette, the site's own tokens beside them, and the few base rules no
- * single component owns. A section that sits on ink carries the `dark` class,
- * which turns the same variables over, so a component never states a colour
- * for one background.
+ * what those read: the shadcn theme variables, the site's own tokens beside
+ * them, and the few base rules no single component owns. A surface set in
+ * the signature blue carries the `dark` class, which turns the same variables
+ * over, so a component never states a colour for one background.
  *
- * The fonts load through next/font in layout.tsx, which sets the four
+ * The fonts load through next/font in layout.tsx, which sets the two
  * --font-* variables on <html>.
  */
 
@@ -25,10 +28,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-heading: var(--font-inter-tight), system-ui, sans-serif;
-  --font-serif: var(--font-playfair), Georgia, serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-sans: var(--font-schibsted), system-ui, sans-serif;
+  --font-heading: var(--font-schibsted), system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -49,9 +51,10 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* The site's own tokens. Signal is the coral, signal-foreground the coral
-   * dark enough to set type in, prose the colour of body copy, faint the
-   * colour of a label, hairline the soft rule inside a panel. */
+  /* The site's own tokens. Signal is the signature blue, signal-foreground
+   * the colour to set type in where the blue marks an action, signal-tint the
+   * wash behind a gate. Prose is the colour of body copy, faint the colour of
+   * a label, hairline the soft rule inside a sheet. */
   --color-signal: var(--signal);
   --color-signal-foreground: var(--signal-foreground);
   --color-signal-tint: var(--signal-tint);
@@ -62,27 +65,24 @@
   --color-pass-tint: var(--pass-tint);
   --color-halt-tint: var(--halt-tint);
 
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  /* Three radii for three kinds of thing: a tag, a control, a sheet. */
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.5);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 2.5);
+  --radius-4xl: calc(var(--radius) * 3);
 
   /* The one entrance a page may carry: see the motion rule in README.md.
    * An element staggers its rise through --rise-delay (and may slow it
-   * through --rise-duration); the gate lamp waits for --gate-delay. They
-   * are inline so each var() resolves on the element that animates. */
-  --animate-rise: rise var(--rise-duration, 0.7s) var(--ease-settle) var(--rise-delay, 0s) both;
-  --animate-lamp: lamp 1.4s var(--ease-settle) var(--gate-delay, 600ms) both;
+   * through --rise-duration); the signature line waits for --sign-delay.
+   * They are inline so each var() resolves on the element that animates. */
+  --animate-rise: rise var(--rise-duration, 0.6s) var(--ease-settle) var(--rise-delay, 0s) both;
+  --animate-sign: sign 0.9s var(--ease-settle) var(--sign-delay, 600ms) both;
 }
 
 @theme {
-  --shadow-plate: 0 24px 48px -28px rgb(21 20 15 / 0.35), 0 2px 6px -2px rgb(21 20 15 / 0.12);
-  /* The resting shadow under the lead button, and the coral one it takes on hover. */
-  --shadow-lift: 0 8px 18px -12px rgb(21 20 15 / 0.7);
-  --shadow-lift-signal: 0 12px 22px -12px rgb(226 98 78 / 0.8);
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* The site's three breakpoints, replacing Tailwind's: at sm a button
@@ -95,91 +95,96 @@
   @keyframes rise {
     from {
       opacity: 0;
-      transform: translateY(14px);
+      transform: translateY(10px);
     }
     to {
       opacity: 1;
       transform: none;
     }
   }
-  @keyframes lamp {
-    0% {
-      box-shadow: 0 0 0 0 rgb(226 98 78 / 0.6);
+  /* The signature line of the gate, drawn left to right. */
+  @keyframes sign {
+    from {
+      transform: scaleX(0);
     }
-    100% {
-      box-shadow: 0 0 0 3px var(--signal-tint);
+    to {
+      transform: scaleX(1);
     }
   }
 }
 
 :root {
-  --background: #efe7d2;
-  --foreground: #15140f;
-  --card: #fbf7ea;
-  --card-foreground: #15140f;
-  --popover: #fbf7ea;
-  --popover-foreground: #15140f;
-  --primary: #15140f;
-  --primary-foreground: #fbf7ea;
-  --secondary: #f7f1de;
-  --secondary-foreground: #15140f;
-  --muted: #f7f1de;
-  --muted-foreground: #5a5448;
-  --accent: #fbf7ea;
-  --accent-foreground: #15140f;
-  --destructive: #c74b39;
-  --border: rgb(21 20 15 / 0.18);
-  --input: rgb(21 20 15 / 0.18);
-  --ring: #e2624e;
-  --radius: 10px;
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --primary: #2340e0;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f2f4;
+  --secondary-foreground: #000000;
+  --muted: #f1f2f4;
+  --muted-foreground: #4d525c;
+  --accent: #f1f2f4;
+  --accent-foreground: #000000;
+  --destructive: #c42b2b;
+  --border: rgb(0 0 0 / 0.2);
+  --input: rgb(0 0 0 / 0.2);
+  --ring: #2340e0;
+  --radius: 6px;
 
-  --signal: #e2624e;
-  --signal-foreground: #b8442f;
-  --signal-tint: rgb(226 98 78 / 0.12);
-  --prose: #2a2620;
-  --faint: #7c7666;
-  --hairline: rgb(21 20 15 / 0.09);
-  --pass: #3b8b64;
-  --pass-tint: rgb(59 139 100 / 0.12);
-  --halt-tint: rgb(199 75 57 / 0.12);
+  --signal: #2340e0;
+  --signal-foreground: #2340e0;
+  --signal-tint: rgb(35 64 224 / 0.07);
+  --prose: #2e3138;
+  --faint: #5f636c;
+  --hairline: rgb(0 0 0 / 0.1);
+  --pass: #127a4a;
+  --pass-tint: rgb(18 122 74 / 0.1);
+  --halt-tint: rgb(196 43 43 / 0.1);
 
   --measure: 66ch;
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
-  --band: clamp(3.5rem, 7vw, 6.5rem);
-  --head-col: 19rem;
+  --band: clamp(3rem, 5.5vw, 5rem);
+  --head-col: 21rem;
   --split: clamp(2rem, 5vw, 5rem);
 }
 
-/* Ink. The one action on an ink section is the coral, because an ink button
- * on ink is a label with no edge. */
+/* The signature blue as a surface. On it the one action is a white button,
+ * because a blue button on blue is a label with no edge, and everything that
+ * marks an action on paper turns white. */
 .dark {
-  --background: #15140f;
-  --foreground: #efe7d2;
-  --card: #15140f;
-  --card-foreground: #efe7d2;
-  --popover: #15140f;
-  --popover-foreground: #efe7d2;
-  --primary: #e2624e;
-  --primary-foreground: #fbf7ea;
-  --secondary: rgb(239 231 210 / 0.08);
-  --secondary-foreground: #efe7d2;
-  --muted: rgb(239 231 210 / 0.08);
-  --muted-foreground: rgb(239 231 210 / 0.7);
-  --accent: rgb(239 231 210 / 0.08);
-  --accent-foreground: #efe7d2;
-  --border: rgb(239 231 210 / 0.35);
-  --input: rgb(239 231 210 / 0.35);
+  --background: #2340e0;
+  --foreground: #ffffff;
+  --card: #2340e0;
+  --card-foreground: #ffffff;
+  --popover: #2340e0;
+  --popover-foreground: #ffffff;
+  --primary: #ffffff;
+  --primary-foreground: #2340e0;
+  --secondary: rgb(255 255 255 / 0.12);
+  --secondary-foreground: #ffffff;
+  --muted: rgb(255 255 255 / 0.12);
+  --muted-foreground: rgb(255 255 255 / 0.84);
+  --accent: rgb(255 255 255 / 0.12);
+  --accent-foreground: #ffffff;
+  --border: rgb(255 255 255 / 0.45);
+  --input: rgb(255 255 255 / 0.45);
+  --ring: #ffffff;
 
-  --signal-foreground: #efe7d2;
-  --prose: rgb(239 231 210 / 0.8);
-  --faint: rgb(239 231 210 / 0.65);
-  --hairline: rgb(239 231 210 / 0.18);
+  --signal: #ffffff;
+  --signal-foreground: #ffffff;
+  --signal-tint: rgb(255 255 255 / 0.14);
+  --prose: rgb(255 255 255 / 0.9);
+  --faint: rgb(255 255 255 / 0.8);
+  --hairline: rgb(255 255 255 / 0.25);
 
   color-scheme: dark;
 }
 
 @utility wrap {
-  width: min(100% - var(--gutter) * 2, 76rem);
+  width: min(100% - var(--gutter) * 2, 78rem);
   margin-inline: auto;
 }
 
@@ -200,10 +205,6 @@
   body {
     min-height: 100dvh;
     overflow-x: clip;
-    background:
-      radial-gradient(60rem 40rem at 10% -10%, rgb(120 100 50 / 0.08), transparent 60%),
-      radial-gradient(50rem 30rem at 100% 110%, rgb(120 100 50 / 0.07), transparent 60%),
-      var(--background);
   }
   @media (prefers-reduced-motion: no-preference) {
     html {
@@ -212,19 +213,19 @@
   }
   ::selection {
     background: var(--signal);
-    color: var(--card);
+    color: var(--background);
   }
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 2px;
   }
   /* Tailwind's preflight takes the underline off every link; a link in
    * running text keeps it here, and a link drawn as a control says
    * `no-underline`. */
   a {
     text-decoration-line: underline;
-    text-underline-offset: 0.18em;
+    text-underline-offset: 0.2em;
     text-decoration-thickness: 1px;
   }
   a,
@@ -232,25 +233,18 @@
   summary {
     touch-action: manipulation;
   }
-  /* Hash links land below the sticky header, so the band's top hairline
-   * stays in view. */
+  /* Hash links land below the sticky header, so the band's top rule stays
+   * in view. */
   [id] {
     scroll-margin-top: 4.5rem;
   }
   b,
   strong {
-    font-weight: 600;
+    font-weight: 650;
   }
   code {
     font-family: var(--font-mono);
-    font-size: 0.92em;
-  }
-  /* The two or three words a display heading leans on. */
-  :is(h1, h2, h3) em {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 500;
-    letter-spacing: -0.005em;
+    font-size: 0.9em;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {
