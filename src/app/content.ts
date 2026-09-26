@@ -954,7 +954,7 @@ export const privacyPage: PageRecord = {
   path: "/privacy",
   title: "Privacy",
   description:
-    "What this site collects, who processes it, how long it is kept, and how to ask us to delete it.",
+    "What this site collects and what it does not: visits counted by Vercel Web Analytics with no cookie, who processes the data, and how to have it deleted.",
   date: "2026-09-21",
 };
 
@@ -970,7 +970,7 @@ export const imprintPage: PageRecord = {
   path: "/imprint",
   title: "Imprint",
   description:
-    "The company behind this site: legal name, registration code, VAT number, registered address and director.",
+    `The company behind ${brand}: legal name, registration code, VAT number, registered address in ${location.city}, ${location.country}, and director.`,
   date: "2026-09-21",
 };
 
@@ -983,7 +983,7 @@ export const contactPage: PageRecord = {
   path: "/contact",
   title: "Contact",
   description:
-    "Book a call or write to KastProductions. What you get within one working day of writing, and the registered company you are writing to.",
+    `Book a call or write to ${brand} in ${location.city}: what comes back within one working day of writing, and the registered company you are writing to.`,
   date: "2026-09-21",
 };
 export const contactSubject = "Contact page";

@@ -82,7 +82,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <a
           className={cn(
             buttonVariants(),
-            "absolute -top-16 left-(--gutter) z-100 transition-[top] focus:top-3",
+            "absolute top-3 left-(--gutter) z-100 -translate-y-24 transition-transform focus:translate-y-0",
           )}
           href="#main"
         >

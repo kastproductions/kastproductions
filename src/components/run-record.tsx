@@ -127,7 +127,7 @@ export function RunRecord() {
               ) : null}
               {step.diff ? (
                 <Collapsible className="mt-1.5">
-                  <CollapsibleTrigger className="font-heading text-[0.82rem] font-semibold text-foreground underline decoration-signal decoration-2 underline-offset-[0.3em]">
+                  <CollapsibleTrigger className="font-heading text-[0.82rem] font-semibold text-foreground underline decoration-signal decoration-2 underline-offset-[0.3em] transition-colors hover:text-signal-foreground">
                     Show six lines of the diff
                   </CollapsibleTrigger>
                   <CollapsibleContent hiddenUntilFound>
@@ -136,6 +136,7 @@ export function RunRecord() {
                       className="mt-2 overflow-x-auto rounded-md border border-hairline bg-secondary px-3.5 py-2.5 font-mono text-[0.78rem] leading-[1.55]"
                       role="region"
                       tabIndex={0}
+                      translate="no"
                     >
                       {step.diff.map((line) => (
                         <span

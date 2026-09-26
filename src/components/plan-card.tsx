@@ -85,7 +85,7 @@ export function Plans({ className, ...props }: ComponentProps<"div">) {
   return (
     <UnitBody
       className={cn(
-        "grid grid-cols-[repeat(auto-fit,minmax(17rem,1fr))] items-stretch gap-4 [&>p]:col-span-full",
+        "grid grid-cols-[repeat(auto-fit,minmax(min(100%,17rem),1fr))] items-stretch gap-4 [&>p]:col-span-full",
         className,
       )}
       {...props}

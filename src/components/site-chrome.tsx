@@ -188,7 +188,7 @@ export function SiteFooter({ route }: Chrome) {
   return (
     <footer className="pt-(--band) pb-10" id="contact">
       <div className="wrap border-t border-foreground pt-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_repeat(4,minmax(0,1fr))]">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.6fr)_repeat(4,minmax(0,1fr))]">
           <div className="flex flex-col items-start gap-4 sm:col-span-full lg:col-span-1">
             <Brand route={route} />
             <p className="max-w-[30ch] text-[0.9rem] leading-relaxed text-muted-foreground">
@@ -279,7 +279,7 @@ export function SiteFooter({ route }: Chrome) {
             {location.city}, {location.country}
           </span>
           <span className="font-mono text-[0.8rem] sm:ml-auto">
-            Registration {company.registrationCode}
+            Registration&nbsp;<span translate="no">{company.registrationCode}</span>
           </span>
         </div>
       </div>

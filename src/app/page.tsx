@@ -349,7 +349,10 @@ export default function Home() {
             <div className="grid gap-3 text-[0.92rem] text-prose *:border-t *:border-hairline *:pt-3 [&_b]:block [&_b]:font-semibold [&_b]:text-foreground">
               <div>
                 <b>Write to</b>
-                <a className="text-foreground" href={`mailto:${contactEmail}`}>
+                <a
+                  className="text-foreground decoration-1 underline-offset-[0.3em] hover:decoration-2"
+                  href={`mailto:${contactEmail}`}
+                >
                   {contactEmail}
                 </a>
               </div>
@@ -379,7 +382,8 @@ export default function Home() {
 /* The two-column grid of titled points the fit and mechanism sections share. */
 const pointGrid =
   "grid min-w-0 md:grid-cols-2 md:gap-x-(--split) *:border-t *:border-hairline *:py-5 *:first:border-t-0 *:first:pt-0 md:*:nth-2:border-t-0 md:*:nth-2:pt-0";
-const pointTitle = "mb-1.5 font-heading text-[1.1rem] font-semibold tracking-[-0.015em]";
+const pointTitle =
+  "mb-1.5 font-heading text-[1.1rem] font-semibold tracking-[-0.015em] text-balance";
 const pointText = "text-[0.97rem] leading-relaxed text-prose";
 
 /* One of the three readings under the hero copy: facts a reader can check on

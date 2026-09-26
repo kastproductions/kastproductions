@@ -32,7 +32,7 @@ export function AgentConsole() {
         className="flex items-center justify-between gap-4 px-4 py-3.5 sm:px-5"
         style={riseOrder(0)}
       >
-        <b className="font-mono text-[1.05rem] font-semibold" id="console-title">
+        <b className="font-mono text-[1.05rem] font-semibold" id="console-title" translate="no">
           {mention.handle}
         </b>
         <Badge variant="signal">{mention.label}</Badge>
@@ -49,7 +49,10 @@ export function AgentConsole() {
           >
             <dt className="text-[0.75rem] font-medium text-faint">{reading.label}</dt>
             <dd className="flex flex-col gap-0.5 text-[0.9rem] leading-snug font-semibold">
-              <span className={cn(reading.mono && "font-mono text-[0.92em]")}>
+              <span
+                className={cn(reading.mono && "font-mono text-[0.92em]")}
+                translate={reading.mono ? "no" : undefined}
+              >
                 {reading.value}
               </span>
               {reading.note ? (
@@ -69,14 +72,16 @@ export function AgentConsole() {
         <li className="grid gap-1 py-3.5 sm:grid-cols-[4.75rem_minmax(0,1fr)] sm:gap-3">
           <span className="font-semibold">{mention.asker}</span>
           <p className="text-prose">
-            <span className="font-mono text-[0.88em] font-semibold text-foreground">
+            <span className="font-mono text-[0.88em] font-semibold text-foreground" translate="no">
               {mention.handle}
             </span>{" "}
             {mention.ask}
           </p>
         </li>
         <li className="grid gap-1 py-3.5 sm:grid-cols-[4.75rem_minmax(0,1fr)] sm:gap-3">
-          <span className="font-mono text-[0.88em] font-semibold">{mention.handle}</span>
+          <span className="font-mono text-[0.88em] font-semibold" translate="no">
+            {mention.handle}
+          </span>
           <p className="text-prose">{mention.reply}</p>
         </li>
       </ol>

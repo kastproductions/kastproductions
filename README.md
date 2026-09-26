@@ -154,7 +154,9 @@ src/components/
   site-chrome.tsx      # Header, footer and brand mark, shared by every page. The
                        #   header links the about page, and the footer links privacy,
                        #   terms, the imprint and the contact page from every page
-  mobile-nav.tsx       # The header's links in a sheet on a narrow screen
+  mobile-nav.tsx       # The header's menu button on a narrow screen. Loads the
+                       #   sheet on first press, so no page ships it up front
+  menu-sheet.tsx       # The header's links in a sheet, mounted open by that press
   section.tsx          # The shapes every page is built from: band, unit, hero,
                        #   lede, note, pull link, rows
   plan-card.tsx        # One way to buy as a card, and the grid the cards sit in
@@ -166,15 +168,16 @@ src/components/
   job-page.tsx         # One job we take, on its own page
   job-rows.tsx         # The jobs we take, as rows, on the home page and the door
   run-record.tsx       # The example run, on a product page
-  agent-console.tsx    # The example agent in the home page hero: its nameplate, the
-                       #   exchange, and the gate it stops at
+  agent-console.tsx    # The example agent in the home page hero: a sign-off slip
+                       #   with its nameplate, the exchange, and the gate it stops at
   analytics.tsx        # Vercel Web Analytics: the tracker this deployment serves,
                        #   and one event per call to action clicked
 src/lib/
   utils.ts             # `cn`, which merges class names
 public/
   reviewers/           # Portraits for the references on the about page
-  logo.png             # 512px raster logo, for the Organization node in the graph
+  logo.png             # icon.svg at 512px, for the Organization node in the graph
+                       #   and the manifest's installable icon
 tests/
   export.ts            # Shared helpers: the export root, a file reader, the file a
                        #   record's page was written to, the body of a page, tag parsing,

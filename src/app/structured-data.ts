@@ -170,6 +170,11 @@ function webPage(page: PageRecord, questions?: Question[]): GraphNode {
     isPartOf: { "@id": websiteId },
     about: { "@id": organizationId },
     inLanguage: "en",
+    /* The trail from the home page to this one, on every page but the home
+     * page, which is where the trail starts. */
+    ...(page.path === homePage.path
+      ? {}
+      : { breadcrumb: { "@id": nodeId(page.path, "breadcrumbs") } }),
     ...(questions ? { mainEntity: questions.map(question) } : {}),
   };
 }

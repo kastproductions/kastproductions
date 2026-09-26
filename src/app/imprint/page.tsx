@@ -66,7 +66,10 @@ export default function Imprint() {
                 {entry.map((line) => (
                   <Row stack key={line.label}>
                     <FactTerm>{line.label}</FactTerm>
-                    <FactValue className={cn(line.machine && machineValue)}>
+                    <FactValue
+                      className={cn(line.machine && machineValue)}
+                      translate={line.machine ? "no" : undefined}
+                    >
                       {line.value}
                     </FactValue>
                   </Row>

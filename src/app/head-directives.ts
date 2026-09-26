@@ -23,21 +23,19 @@ import { brand, homePage, type PageRecord } from "./content";
  * the same file does: `/opengraph-image?e07326629fdb9f68`. Slack, X and
  * Facebook key their unfurl caches on the image URL and hold it for months, so
  * a redrawn image under this URL keeps unfurling the old picture. Whoever
- * redesigns `src/app/opengraph-image.tsx` changes this path in the same
- * commit, `/opengraph-image?v=2` being enough, and every scraper then fetches
- * the new picture.
+ * redesigns `src/app/opengraph-image.tsx` bumps the `v` in this path in the
+ * same commit, and every scraper then fetches the new picture.
+ *
+ * The picture is the same on every page, and it states the home page's
+ * heading, but its `alt` names the page being shared: a reader who hears the
+ * card read out hears which page the link goes to.
  */
 const openGraphImage = {
-  images: [
-    {
-      url: "/opengraph-image?v=2",
-      width: 1200,
-      height: 630,
-      alt: homePage.title,
-      type: "image/png",
-    },
-  ],
-};
+  url: "/opengraph-image?v=3",
+  width: 1200,
+  height: 630,
+  type: "image/png",
+} as const;
 
 /* What we ask a crawler to do with a page we publish. */
 const indexedRobots = {
@@ -80,7 +78,7 @@ export function pageMetadata(page: PageRecord): Metadata {
     alternates: { canonical: page.path },
     robots: indexedRobots,
     openGraph: {
-      ...openGraphImage,
+      images: [{ ...openGraphImage, alt: title }],
       type: "website",
       url: page.path,
       siteName: brand,
