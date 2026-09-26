@@ -233,10 +233,11 @@
   summary {
     touch-action: manipulation;
   }
-  /* Hash links land below the sticky header, so the band's top rule stays
-   * in view. */
-  [id] {
-    scroll-margin-top: 4.5rem;
+  /* The sticky header covers the top 4.25rem of the viewport. Scroll padding
+   * keeps a hash target's top rule below it, and keeps an element that takes
+   * keyboard focus from scrolling in underneath it. */
+  html {
+    scroll-padding-top: 4.5rem;
   }
   b,
   strong {
