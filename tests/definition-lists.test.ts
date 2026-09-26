@@ -20,12 +20,26 @@ const voidTags: Record<string, true> = {
 };
 const groupTags: Record<string, true> = { div: true, dt: true, dd: true, script: true, template: true };
 
+/* A start or end tag. An attribute value in quotes may hold a `>`, so the
+ * pattern steps over quoted values rather than stopping at the first `>`. */
+const tagPattern = /<(\/?)([a-zA-Z][\w-]*)(?:[^>"']|"[^"]*"|'[^']*')*>/g;
+
+/* The page with comments removed and the bodies of script, style and template
+ * elements emptied: their text is not markup in the page, even where it looks
+ * like a tag. The elements themselves stay, because a `<dl>` may hold a script
+ * or a template. */
+function markupOf(document: string): string {
+  return document
+    .replace(/<!--[\s\S]*?-->/g, "")
+    .replace(/<(script|style|template)\b((?:[^>"']|"[^"]*"|'[^']*')*)>[\s\S]*?<\/\1>/gi, "<$1$2></$1>");
+}
+
 /* Every element inside a `<dl>` that is not inside a `<dt>` or a `<dd>` and is
  * not a group, as `tag` with the path from the list to it. */
 function strayChildren(document: string): string[] {
   const stray: string[] = [];
   const stack: string[] = [];
-  for (const [, closing, name] of document.matchAll(/<(\/?)([a-zA-Z][\w-]*)[^>]*>/g)) {
+  for (const [, closing, name] of markupOf(document).matchAll(tagPattern)) {
     const tag = name.toLowerCase();
     if (closing) {
       const at = stack.lastIndexOf(tag);
