@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 /*
  * A sheet: white, one drawn edge, no shadow. `lg` is the size every door,

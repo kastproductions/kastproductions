@@ -1,5 +1,5 @@
 import * as React from "react"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 /*
  * A ledger: labels in the text face over one black rule, rows on hairlines,

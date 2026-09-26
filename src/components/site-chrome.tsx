@@ -177,7 +177,7 @@ function FooterColumn({ title, children }: { title: string; children: ReactNode 
       <h2 className="mb-3.5 font-heading text-[0.82rem] font-medium text-faint">
         {title}
       </h2>
-      <ul className="grid gap-2 text-foreground [&_a]:font-heading [&_a]:text-[0.94rem] [&_a]:no-underline [&_a]:decoration-signal [&_a]:decoration-2 [&_a]:underline-offset-[0.3em] [&_a:hover]:underline">
+      <ul className="grid gap-2 text-foreground [&_a]:font-heading [&_a]:text-[0.94rem] [&_a]:no-underline [&_a]:decoration-signal [&_a]:decoration-2 [&_a]:underline-offset-[0.3em] [&_a:hover]:underline [&_a[aria-current=page]]:underline">
         {children}
       </ul>
     </div>

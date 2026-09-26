@@ -14,7 +14,7 @@
  * else.
  */
 import type { Metadata } from "next";
-import { brand, homePage, type PageRecord } from "./content";
+import { brand, homePage, language, type PageRecord } from "./content";
 
 /*
  * The unfurl image, named by the route that renders it.
@@ -82,7 +82,8 @@ export function pageMetadata(page: PageRecord): Metadata {
       type: "website",
       url: page.path,
       siteName: brand,
-      locale: "en_GB",
+      /* Open Graph spells a locale with an underscore: en_GB, not en-GB. */
+      locale: language.replace("-", "_"),
       title,
       description: page.description,
     },

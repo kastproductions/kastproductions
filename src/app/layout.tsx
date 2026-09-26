@@ -3,7 +3,7 @@ import { IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
 import { Analytics } from "@/components/analytics";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { brand, founder, founderHandle, homePage, siteUrl } from "./content";
+import { brand, founder, founderHandle, homePage, language, siteUrl } from "./content";
 import { graphHtml, siteNodes } from "./structured-data";
 import "./globals.css";
 
@@ -75,7 +75,7 @@ const jsonLdHtml = graphHtml(siteNodes);
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="en"
+      lang={language}
       className={cn(schibsted.variable, plexMono.variable)}
     >
       <body>

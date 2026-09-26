@@ -1,5 +1,9 @@
 export const brand = "KastProductions";
 export const siteUrl = "https://www.kastproductions.com";
+/* The language the copy is written in: British English. The `lang` attribute,
+ * the graph's `inLanguage` and the unfurl locale all read it, so the three
+ * cannot disagree. */
+export const language = "en-GB";
 /* A page's absolute URL. The home page is the bare site URL with no trailing
  * slash, and every other path maps straight across. The canonical tag, the
  * sitemap and the structured data graph all state a page's URL, and a crawler

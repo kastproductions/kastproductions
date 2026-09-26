@@ -89,9 +89,9 @@ export default function About() {
                 <Row stack>
                   <FactTerm>In the register</FactTerm>
                   <FactValue>Director of {company.legalName}</FactValue>
-                  <PullLink className="mt-0.5" href={imprintPage.path}>
-                    Read the register entry
-                  </PullLink>
+                  <dd className="mt-0.5">
+                    <PullLink href={imprintPage.path}>Read the register entry</PullLink>
+                  </dd>
                 </Row>
                 <Row stack>
                   <FactTerm>Profiles</FactTerm>
@@ -99,14 +99,15 @@ export default function About() {
                     His own, as against the company’s. Both link back here.
                   </FactValue>
                   {profiles.map((profile) => (
-                    <PullLink
-                      className="mt-0.5 font-mono text-[0.92em]"
-                      href={profile.href}
-                      rel="me noreferrer"
-                      key={profile.href}
-                    >
-                      {profile.label}
-                    </PullLink>
+                    <dd className="mt-0.5" key={profile.href}>
+                      <PullLink
+                        className="font-mono text-[0.92em]"
+                        href={profile.href}
+                        rel="me noreferrer"
+                      >
+                        {profile.label}
+                      </PullLink>
+                    </dd>
                   ))}
                 </Row>
               </FactRows>
