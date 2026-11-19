@@ -192,7 +192,8 @@ tests/
                        #   description each record states, each unique and short
                        #   enough to print whole; the sitemap and robots file
   opengraph.test.ts    # An unfurl image, title and description per route, and one
-                       #   robots directive on the 404
+                       #   robots directive on the 404; the image is a 1200 by 630
+                       #   PNG set on the paper colour the manifest states
   sitemap.test.ts      # Real dates, no build time, and no Host directive
   llms-txt.test.ts     # The plain-text index lists the URLs the sitemap lists, with
                        #   the description each record states
@@ -429,7 +430,7 @@ The site runs on Vercel, and `vercel.json` carries two settings the static expor
 
 `llms.txt` needs no such header. The build writes it under its own name, extension and all, so a static host reads the content type off the `.txt` the way it already does for `robots.txt`.
 
-The Open Graph image fetches Archivo from Google Fonts during `bun run build`, so the build machine needs network access. It is drawn from the same tokens as the page, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
+The Open Graph image fetches Chakra Petch and Azeret Mono from Google Fonts during `bun run build`, so the build machine needs network access. It reads its colours from the tokens in `src/app/globals.css`, the same tokens the page uses, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
 
 ## Analytics
 

@@ -4,13 +4,13 @@
 
 **Blocked by:** 01
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `/backlog` builds from one page record in the written pages list, with its prose in its own route file (ADR-0004).
-- [ ] The plans carry a field that says which page prints them. The backlog page prints Managed and Sprint from the content module, so the prices are written in one place.
-- [ ] The backlog page's graph carries the Managed and Sprint offers. A test in the structured data or page graph suite asserts that.
-- [ ] The title and description fit the lengths the head suite measures. The page is in the sitemap and in `llms.txt`, and the existing suites cover it with no new route list.
-- [ ] Every claim follows the Claims section of the README. A synthetic run on the page carries the "Example" label.
-- [ ] Copy is edited against the humanizer checklist, and the record's copy date is the commit day.
-- [ ] Checked with agent-browser at 390px and 1440px.
-- [ ] `bun run test` passes.
+- [x] `/backlog` builds from one page record in the written pages list, with its prose in its own route file (ADR-0004).
+- [x] The plans carry a field that says which page prints them. The backlog page prints Managed and Sprint from the content module, so the prices are written in one place.
+- [x] The backlog page's graph carries the Managed and Sprint offers. A test in the structured data or page graph suite asserts that.
+- [x] The title and description fit the lengths the head suite measures. The page is in the sitemap and in `llms.txt`, and the existing suites cover it with no new route list.
+- [x] Every claim follows the Claims section of the README. A synthetic run on the page carries the "Example" label.
+- [x] Copy is edited against the humanizer checklist, and the record's copy date is the commit day.
+- [x] Checked with agent-browser at 390px and 1440px.
+- [x] `bun run test` passes.
