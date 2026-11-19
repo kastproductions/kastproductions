@@ -4,13 +4,13 @@
 
 **Blocked by:** None (can start immediately).
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `PRODUCT.md` and `DESIGN.md` exist at the repo root and describe the Neo Mirai world as ADR-0006 adapts it (no Japanese text, light only).
-- [ ] The theme tokens hold the Neo Mirai palette, and no component hard-codes a colour that a token holds.
-- [ ] The three families load self-hosted through the framework's font loader. A name with Latin Extended glyphs (for example "Povilas Nanevičius") renders in a matching serif fallback, not a system font.
-- [ ] The dark class, its variables and its custom variant are gone. A system set to dark mode gets the light page, fully legible.
-- [ ] The header, footer and skip link are redrawn. The KP seal and the sun and eclipse ornaments are hand-drawn SVG with no ray motif.
-- [ ] Focus is visible on every interactive element, and colour contrast meets WCAG AA for body text and controls.
-- [ ] Every page reads at 390px and 1440px wide with no sideways scroll, checked with agent-browser screenshots.
-- [ ] `bun run test` passes.
+- [x] `PRODUCT.md` and `DESIGN.md` exist at the repo root and describe the Neo Mirai world as ADR-0006 adapts it (no Japanese text, light only).
+- [x] The theme tokens hold the Neo Mirai palette, and no component hard-codes a colour that a token holds.
+- [x] The three families load self-hosted through the framework's font loader. A name with Latin Extended glyphs (for example "Povilas Nanevičius") renders in a matching serif fallback, not a system font.
+- [x] The dark class, its variables and its custom variant are gone. A system set to dark mode gets the light page, fully legible.
+- [x] The header, footer and skip link are redrawn. The KP seal and the sun and eclipse ornaments are hand-drawn SVG with no ray motif.
+- [x] Focus is visible on every interactive element, and colour contrast meets WCAG AA for body text and controls.
+- [x] Every page reads at 390px and 1440px wide with no sideways scroll, checked with agent-browser screenshots.
+- [x] `bun run test` passes.
