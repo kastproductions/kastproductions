@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { Actions, Band, HeroCopy, HeroTitle, Lede } from "@/components/section";
+import { Eclipse } from "@/components/ornaments";
+import { Actions, Band, HeroFrame, HeroTitle, Lede } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { buttonVariants } from "@/components/ui/button";
 
@@ -9,6 +10,9 @@ import { buttonVariants } from "@/components/ui/button";
  * next, and it carries no canonical and no robots directive of its own: the
  * framework writes `noindex` here, and a second directive beside it would
  * leave a crawler to choose. See `tests/opengraph.test.ts`.
+ *
+ * The eclipse beside the words is the light the reader came for, covered.
+ * It is not the sun disc, because the footer sets that one just below.
  */
 export const metadata: Metadata = {
   title: "Page not found",
@@ -21,7 +25,7 @@ export default function NotFound() {
 
       <main id="main">
         <Band flush>
-          <HeroCopy className="wrap">
+          <HeroFrame ornament={<Eclipse className="size-28 lg:size-36" />}>
             <HeroTitle>No page at this address.</HeroTitle>
             <Lede>
               The link is either old or mistyped. Everything we publish is one
@@ -36,7 +40,7 @@ export default function NotFound() {
                 See the work we take
               </Link>
             </Actions>
-          </HeroCopy>
+          </HeroFrame>
         </Band>
       </main>
 

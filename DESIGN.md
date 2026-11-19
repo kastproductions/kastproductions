@@ -190,6 +190,8 @@ All three load through `next/font/google` in `src/app/layout.tsx`, so the export
 
 The page is a stack of `Band`s. A `Unit` splits a band into a heading column (21rem from the `lg` breakpoint, sticky) and a body column under one ink rule that runs the width of the content. Content sits in `wrap`: `min(100% - 2 * gutter, 78rem)`, centred. The band rhythm is `clamp(3rem, 5.5vw, 5rem)`.
 
+A `UnitHead` takes an `index`, which sets the section's number over its heading in mono caps (`01`, then a short line rule). The number is hidden from a screen reader, because the heading already names the section. A page with one section has no number. A page with no scene opens with a `HeroFrame`: the hero column, and one ornament beside it from `md` up (the seal on the about page, the eclipse on the contact, legal and not-found pages).
+
 Breakpoints replace Tailwind's: `sm` 35.0625rem (a button shares its row), `md` 55.0625rem (the header shows its links), `lg` 67.5625rem (the heading takes its own column), and `rail` 86rem (the margin is wide enough for the vertical rail).
 
 The body carries the 112px grid in two linear gradients, a gold radial light at 66% across and 7% down, and the paper colour under them. A fixed grain overlay (three fine dot fields, multiplied, `pointer-events: none`) sits over the content and under the sticky header.
