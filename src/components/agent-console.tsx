@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
  * under the handle are form fields holding the words the rest of the page
  * uses, so a reader meets channel, authority and the deployment in the first
  * object they see. The exchange is a transcript, and the gate at the foot is
- * the signature field: blue, because it is where a person acts. It carries
+ * the signature field: stamp red, because it is where a person acts. It carries
  * the "Example" badge until a real exchange replaces it: see the Claims
  * section of README.md.
  *
@@ -104,7 +104,7 @@ export function AgentConsole() {
           </div>
           <span
             aria-hidden="true"
-            className="rounded-md bg-signal px-4 py-2 text-[0.85rem] font-semibold text-background"
+            className="rounded-md bg-signal px-4 py-2 text-[0.85rem] font-semibold text-primary-foreground"
           >
             {mention.approve}
           </span>

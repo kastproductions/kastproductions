@@ -323,11 +323,11 @@ export default function Home() {
           </Unit>
         </Band>
 
-        <Band aria-labelledby="cta-title" id="cta" tone="signal">
+        <Band aria-labelledby="cta-title" id="cta" tone="night">
           <div className="wrap grid items-end gap-(--split) lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
             <div className="flex flex-col gap-6">
               <h2
-                className="max-w-[18ch] font-heading text-[clamp(2.2rem,1.2rem+3.4vw,4.2rem)] leading-[0.98] font-extrabold tracking-[-0.045em] text-balance"
+                className="max-w-[18ch] font-heading text-[clamp(2.2rem,1.2rem+3.4vw,4.2rem)] leading-[0.98] font-light uppercase text-balance"
                 id="cta-title"
               >
                 Send us the issue you would hand to a new senior engineer
@@ -383,7 +383,7 @@ export default function Home() {
 const pointGrid =
   "grid min-w-0 md:grid-cols-2 md:gap-x-(--split) *:border-t *:border-hairline *:py-5 *:first:border-t-0 *:first:pt-0 md:*:nth-2:border-t-0 md:*:nth-2:pt-0";
 const pointTitle =
-  "mb-1.5 font-heading text-[1.1rem] font-semibold tracking-[-0.015em] text-balance";
+  "mb-1.5 font-heading text-[1.1rem] font-semibold text-balance";
 const pointText = "text-[0.97rem] leading-relaxed text-prose";
 
 /* One of the three readings under the hero copy: facts a reader can check on
@@ -424,7 +424,7 @@ function Door({
       >
         <CardHeader>
           <span className="text-[0.84rem] font-medium text-faint">{kind}</span>
-          <CardTitle className="text-[1.65rem] leading-[1.08] tracking-[-0.035em]">{title}</CardTitle>
+          <CardTitle className="text-[1.65rem] leading-[1.08] font-medium">{title}</CardTitle>
           <CardDescription className="flex flex-col gap-3">{body}</CardDescription>
         </CardHeader>
         <CardContent className="mt-auto">
@@ -435,7 +435,7 @@ function Door({
                 key={price.per}
               >
                 <span>{price.per}</span>
-                <b className="font-heading font-bold text-foreground">
+                <b className="font-heading font-semibold text-foreground">
                   {price.amount}
                 </b>
               </div>
