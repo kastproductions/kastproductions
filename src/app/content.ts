@@ -141,6 +141,55 @@ export const references = [
 ];
 
 /* ---------------------------------------------------------------------------
+ * The scenes
+ *
+ * The generated illustrations the pages place: one hero scene of a future
+ * Vilnius, and four scenes of teams at work with an agent. They are pictures,
+ * not evidence: no scene shows a client, a product screen or a figure, so
+ * none of them needs the "Example" label the Claims section asks of synthetic
+ * runs. The files live in `public/scenes/`, next to `prompts.txt`, which holds
+ * the shared style prompt and each scene's prompt so a matching scene can be
+ * made later. Width and height are the file's own pixels: a page sets them on
+ * the `img` so the layout holds its place before the file arrives. The hero
+ * loads eagerly where it is placed, and every other scene loads lazily.
+ * ------------------------------------------------------------------------- */
+
+export type Scene = { src: string; width: number; height: number; alt: string };
+
+export const scenes = {
+  hero: {
+    src: "/scenes/vilnius-skyline.webp",
+    width: 1536,
+    height: 864,
+    alt: "",
+  },
+  supportDesk: {
+    src: "/scenes/support-desk.webp",
+    width: 1200,
+    height: 900,
+    alt: "",
+  },
+  financeDesk: {
+    src: "/scenes/finance-desk.webp",
+    width: 1200,
+    height: 900,
+    alt: "",
+  },
+  pullRequestReview: {
+    src: "/scenes/pull-request-review.webp",
+    width: 1200,
+    height: 900,
+    alt: "",
+  },
+  shopFloor: {
+    src: "/scenes/shop-floor.webp",
+    width: 1200,
+    height: 900,
+    alt: "",
+  },
+} satisfies Record<string, Scene>;
+
+/* ---------------------------------------------------------------------------
  * The offer
  *
  * One promise, two doors. Fit leads, convenience follows, and correctness sits
