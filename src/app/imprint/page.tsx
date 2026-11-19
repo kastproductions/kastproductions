@@ -3,13 +3,14 @@ import {
   FactRows,
   FactTerm,
   FactValue,
-  HeroCopy,
+  HeroFrame,
   HeroTitle,
   Row,
   Unit,
   UnitBody,
   UnitHead,
 } from "@/components/section";
+import { Eclipse } from "@/components/ornaments";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { cn } from "@/lib/utils";
 import { company, contactEmail, imprintPage } from "../content";
@@ -53,9 +54,9 @@ export default function Imprint() {
 
       <main id="main">
         <Band flush>
-          <HeroCopy className="wrap">
+          <HeroFrame ornament={<Eclipse className="size-28 lg:size-36" />}>
             <HeroTitle>Imprint</HeroTitle>
-          </HeroCopy>
+          </HeroFrame>
         </Band>
 
         <Band aria-labelledby="entry-title">

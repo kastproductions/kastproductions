@@ -988,7 +988,7 @@ export const contactPage: PageRecord = {
   title: "Contact",
   description:
     `Book a call or write to ${brand} in ${location.city}: what comes back within one working day of writing, and the registered company you are writing to.`,
-  date: "2026-09-21",
+  date: "2026-11-19",
 };
 export const contactSubject = "Contact page";
 
@@ -1023,7 +1023,7 @@ export const aboutPage: PageRecord = {
   path: "/about",
   title: `${founder}, founder`,
   description: `${founder} founded ${brand} in ${location.city} and signs the merges we make. Seventeen companies he has shipped for, and six references quoted as written.`,
-  date: "2026-09-21",
+  date: "2026-11-19",
 };
 
 /* The Slack page. A buyer names the channel as often as the job, and Slack is

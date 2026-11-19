@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   Band,
-  HeroCopy,
+  HeroFrame,
   HeroTitle,
   Lede,
   Note,
@@ -10,6 +10,7 @@ import {
   UnitBody,
   UnitHead,
 } from "@/components/section";
+import { Eclipse } from "@/components/ornaments";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { company, contactEmail, imprintPage, privacyPage } from "../content";
 import { pageMetadata } from "../head-directives";
@@ -40,19 +41,19 @@ export default function Privacy() {
 
       <main id="main">
         <Band flush>
-          <HeroCopy className="wrap">
+          <HeroFrame ornament={<Eclipse className="size-28 lg:size-36" />}>
             <HeroTitle>Privacy</HeroTitle>
             <Lede wide>
               This site is a set of static files. It counts visits, and every
               call to action on it opens a mail link. That is all of it, and
               this page says what each one means for you.
             </Lede>
-          </HeroCopy>
+          </HeroFrame>
         </Band>
 
         <Band aria-labelledby="holder-title">
           <Unit>
-            <UnitHead title="Who holds it" titleId="holder-title" />
+            <UnitHead index={1} title="Who holds it" titleId="holder-title" />
             <UnitBody>
               <Prose>
                 {company.legalName} holds anything this site collects. The
@@ -66,7 +67,7 @@ export default function Privacy() {
 
         <Band aria-labelledby="counts-title">
           <Unit>
-            <UnitHead title="What the site counts" titleId="counts-title" />
+            <UnitHead index={2} title="What the site counts" titleId="counts-title" />
             <UnitBody>
               <Prose>
                 The site counts visits with Vercel Web Analytics. The processor
@@ -95,7 +96,7 @@ export default function Privacy() {
 
         <Band aria-labelledby="mailbox-title">
           <Unit>
-            <UnitHead title="What the mailbox receives" titleId="mailbox-title" />
+            <UnitHead index={3} title="What the mailbox receives" titleId="mailbox-title" />
             <UnitBody>
               <Prose>
                 Every call to action on this site is a mail link. When you
@@ -112,7 +113,7 @@ export default function Privacy() {
 
         <Band aria-labelledby="basis-title">
           <Unit>
-            <UnitHead title="Why we are allowed to" titleId="basis-title" />
+            <UnitHead index={4} title="Why we are allowed to" titleId="basis-title" />
             <UnitBody>
               <Prose>
                 Under the GDPR, our lawful basis for the visit counts is
@@ -130,7 +131,7 @@ export default function Privacy() {
 
         <Band aria-labelledby="host-title">
           <Unit>
-            <UnitHead title="Who serves the page" titleId="host-title" />
+            <UnitHead index={5} title="Who serves the page" titleId="host-title" />
             <UnitBody>
               <Prose>
                 Vercel Inc. hosts the site. A host receives the request your
@@ -146,7 +147,7 @@ export default function Privacy() {
 
         <Band aria-labelledby="kept-title">
           <Unit>
-            <UnitHead title="How long it stays" titleId="kept-title" />
+            <UnitHead index={6} title="How long it stays" titleId="kept-title" />
             <UnitBody>
               <Prose>
                 The hash behind a counted visit is discarded 24 hours later.
@@ -163,7 +164,7 @@ export default function Privacy() {
 
         <Band aria-labelledby="ask-title">
           <Unit>
-            <UnitHead title="What you can ask for" titleId="ask-title" />
+            <UnitHead index={7} title="What you can ask for" titleId="ask-title" />
             <UnitBody>
               <Prose>
                 Write to {mailbox} and ask what we hold about you, ask us to

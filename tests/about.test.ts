@@ -57,3 +57,22 @@ test("the about page prints the founder, every client and every reference as wri
     expect(main).toContain(`src="${reference.portrait}"`);
   }
 });
+
+test("every reference portrait keeps its alt text and its size", () => {
+  /* A portrait with no size moves the quote under it when it loads, and one
+   * with no alt text leaves a screen reader to read out a file name. The alt
+   * text names the person and the position the content module holds, so a
+   * reader who cannot see the face still knows whose words they are. */
+  const main = decodeEntities(mainOf(fileFor(aboutPage.path)));
+  const images = [...main.matchAll(/<img\b[^>]*>/g)].map(([tag]) => tag);
+
+  for (const reference of references) {
+    const portrait = images.find((tag) => tag.includes(`src="${reference.portrait}"`));
+    if (!portrait) {
+      throw new Error(`the about page prints no portrait of ${reference.name}.`);
+    }
+    expect(portrait).toContain(`alt="${reference.name}, ${reference.position}"`);
+    expect(portrait).toMatch(/\swidth="\d+"/);
+    expect(portrait).toMatch(/\sheight="\d+"/);
+  }
+});

@@ -58,18 +58,25 @@ export function Unit({ className, ...props }: ComponentProps<"div">) {
 }
 
 /* The heading column: the section's h2, then whatever the page says beside
- * it. It stays in view while the body scrolls, from lg up. */
+ * it. It stays in view while the body scrolls, from lg up.
+ *
+ * `index` numbers the section in mono over its heading, the way the Neo Mirai
+ * reference labels its sections. The number is layout and says nothing the
+ * heading does not, so a screen reader skips it. */
 export function UnitHead({
   title,
   titleId,
+  index,
   children,
 }: {
   title: ReactNode;
   titleId?: string;
+  index?: number;
   children?: ReactNode;
 }) {
   return (
     <div className="flex flex-col items-start lg:sticky lg:top-24">
+      {index !== undefined && <SectionNumber className="mb-3" index={index} />}
       <h2
         className="font-heading text-[clamp(1.6rem,1.1rem+1.5vw,2.4rem)] leading-[1.04] font-normal uppercase text-balance"
         id={titleId}
@@ -121,9 +128,49 @@ export function Prose({ className, ...props }: ComponentProps<"p">) {
   );
 }
 
+/* A section's number in mono caps, two digits, with a short rule after it.
+ * It is hidden from a screen reader, because it only orders what the
+ * headings already name. */
+export function SectionNumber({ index, className }: { index: number; className?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn("flex items-center gap-3 label-mono text-faint", className)}
+    >
+      {String(index).padStart(2, "0")}
+      <span className="h-px w-8 bg-line" />
+    </span>
+  );
+}
+
 /* The hero column: heading, lede, actions, stacked. */
 export function HeroCopy({ className, ...props }: ComponentProps<"div">) {
   return <div className={cn("flex flex-col gap-6", className)} {...props} />;
+}
+
+/* The first screen of a page that has no scene: the hero column, and one
+ * ornament beside it from md up. Below md the ornament goes, because a phone
+ * needs the width for the words. */
+export function HeroFrame({
+  ornament,
+  className,
+  children,
+}: {
+  ornament: ReactNode;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={cn(
+        "wrap grid items-end gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[minmax(0,1fr)_auto]",
+        className,
+      )}
+    >
+      <HeroCopy>{children}</HeroCopy>
+      <div className="hidden md:block">{ornament}</div>
+    </div>
+  );
 }
 
 export function HeroTitle({ className, ...props }: ComponentProps<"h1">) {
