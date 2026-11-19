@@ -4,11 +4,11 @@
 
 **Blocked by:** 01
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The six references are printed exactly as the content module holds them, with portraits that keep their alt text, width and height.
-- [ ] The legal pages state the same facts as before. A diff of their text content shows layout and markup changes only.
-- [ ] `/contact` keeps its own mailto subject, and every booking link reads the one booking source, as the contact test asserts.
-- [ ] Copy changes on about and contact are edited against the humanizer checklist, and each changed record's copy date is the commit day.
-- [ ] Checked with agent-browser at 390px and 1440px.
-- [ ] `bun run test` passes.
+- [x] The six references are printed exactly as the content module holds them, with portraits that keep their alt text, width and height.
+- [x] The legal pages state the same facts as before. A diff of their text content shows layout and markup changes only.
+- [x] `/contact` keeps its own mailto subject, and every booking link reads the one booking source, as the contact test asserts.
+- [x] Copy changes on about and contact are edited against the humanizer checklist, and each changed record's copy date is the commit day.
+- [x] Checked with agent-browser at 390px and 1440px.
+- [x] `bun run test` passes.
