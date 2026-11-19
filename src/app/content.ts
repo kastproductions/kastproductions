@@ -756,6 +756,12 @@ export const custom = {
  * README.md. A build price is a floor, because the work follows the number of
  * systems the agent touches. A monthly price buys the work in `mechanism`.
  * `lead` marks the one plan the price list sets on ink.
+ *
+ * `page` is the path of the page that sells a plan. Self-run and the custom
+ * agent are ways to buy an agent, so the home page sells them. Managed and
+ * Sprint are our coding agents on the client's backlog, so the backlog page
+ * sells them, and its graph offers them. The path is written out, because the
+ * page records are declared at the foot of this file.
  * ------------------------------------------------------------------------- */
 
 export const pricingIntro = {
@@ -778,14 +784,15 @@ export const prices = [
     subject: "Self-run build",
     lead: false,
     catalogue: true,
+    page: "/",
   },
   {
     title: "Managed",
-    body: "We build it and we run it. Our coding agents take the runs, our reviewer reads every diff, and the agent still lives in your accounts.",
+    body: "We build the issue to pull request agent into your own accounts and run it on your backlog. Our coding agents do the work, and our engineer reads every diff before it merges.",
     amount: "From €7,500",
     per: "to build, then from €4,000 a month",
     includes: [
-      "As many briefs as the capacity allows, prioritised with you weekly",
+      "As many issues as the month allows, in the order we agree with you each week",
       "A named engineer signs every merge",
       "Cancel at the end of any month, and your agent keeps running",
     ],
@@ -793,6 +800,7 @@ export const prices = [
     subject: "Managed build",
     lead: false,
     catalogue: true,
+    page: "/backlog",
   },
   {
     title: "Custom agent",
@@ -808,10 +816,11 @@ export const prices = [
     subject: "Custom agent",
     lead: false,
     catalogue: false,
+    page: "/",
   },
   {
     title: "Sprint",
-    body: "One brief, two weeks, one fixed price. Our own agents work it on your repository, and our reviewer signs the merge. Nothing is deployed and nothing is connected, so this buys one piece of finished work rather than an agent.",
+    body: "One brief, two weeks, one fixed price. Our coding agents work it on your repository, and our engineer signs the merge. Nothing is deployed and nothing is connected to your systems. You buy one piece of finished work.",
     amount: "From €4,000",
     per: "per brief",
     includes: [
@@ -823,6 +832,7 @@ export const prices = [
     subject: "Sprint: one brief",
     lead: true,
     catalogue: false,
+    page: "/backlog",
   },
 ];
 
@@ -830,7 +840,9 @@ export const prices = [
  * product waits until the catalogue holds one: see the Catalogue entry in
  * CONTEXT.md. The home page prints this list and its graph offers it, and the
  * terms state what it buys, so none of the three can state a plan the others
- * do not. */
+ * do not. The home page still prints every plan here, its own and the backlog
+ * page's; when it prints only its own, it filters on `page` the way
+ * `backlogPlans` does. */
 export const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
 
 /* One question the home page answers, in the words it prints. The page renders
@@ -935,7 +947,7 @@ export const homePage: PageRecord = {
   path: "/",
   title: `AI agent development company | ${brand}`,
   description: `An AI agent development company in ${location.city}, ${location.country}. We build one standing agent for one company, deploy it into your own accounts and keep it right.`,
-  date: "2026-09-21",
+  date: "2026-11-19",
 };
 
 /* The custom door. Its description is its own sentence rather than the lede
@@ -1046,9 +1058,32 @@ export const slackPage: PageRecord = {
  * how the analytics event names the door a reader came through. */
 export const slackSubject = "Agent in Slack";
 
+/* The page about our coding agents on a client's backlog: Managed and
+ * Sprint, which buy work on a repository and not an agent of the client's
+ * own. It is the one page of its kind, so its prose is in its route file
+ * (ADR-0004), and it prints the plans filed under its path, which its graph
+ * offers. The title leads with the phrase a buyer types; the page's own
+ * heading is in the site's voice. */
+export const backlogPage: PageRecord = {
+  path: "/backlog",
+  title: "AI coding agents for your backlog",
+  description:
+    "Our coding agents plan, build and test the issues on your backlog, and our engineer signs every merge. Month to month as Managed, or one brief as a Sprint.",
+  date: "2026-11-19",
+};
+
+/* The mail subject the page's own calls to action carry, which is how the
+ * analytics event names the door a reader came through. A plan's button
+ * carries the plan's own subject. */
+export const backlogSubject = "Coding agents on the backlog";
+
+/* The plans the backlog page prints and its graph offers, in price list
+ * order. */
+export const backlogPlans = openPrices.filter((plan) => plan.page === backlogPage.path);
+
 /* The pages we write by hand, as against the job pages the jobs hold and the
- * product pages the catalogue makes. The two doors are the written pages
- * that state an offer; every other page here states none, the terms
+ * product pages the catalogue makes. The two doors and the backlog page are
+ * the written pages that state an offer; every other page here states none, the terms
  * included, which print the plans to say what a build buys and not to sell
  * one. The graph suite reads that off this list. */
 export const writtenPages: PageRecord[] = [
@@ -1059,6 +1094,7 @@ export const writtenPages: PageRecord[] = [
   aboutPage,
   contactPage,
   slackPage,
+  backlogPage,
 ];
 
 /* The record of a product's page. A product already states its slug, its

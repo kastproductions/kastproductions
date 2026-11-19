@@ -11,17 +11,21 @@
  */
 import { expect, test } from "bun:test";
 import {
+  backlogPage,
+  backlogPlans,
   custom,
   customPage,
   homePage,
   jobPages,
   openPrices,
   type Price,
+  prices as plans,
   products,
   questions,
   writtenPages,
 } from "../src/app/content";
 import {
+  fileFor,
   type GraphNode,
   graphNodes,
   indexableRoutes,
@@ -68,8 +72,8 @@ function claim(amount: string): { currency: string; value: number } {
 
 /*
  * The offers a route owes, read off the lists the content module already
- * keeps. The home page offers the plans it prints, and the custom door the
- * door's own prices. A job page sells the custom door's work at the door's
+ * keeps. The home page offers the plans it prints, the custom door the
+ * door's own prices, and the backlog page the plans filed under it. A job page sells the custom door's work at the door's
  * own prices: a job we shape an agent around carries no price of its own,
  * and a second number for it would be one the door does not state. A product
  * page offers the product's own. Every other page we write by hand offers
@@ -85,6 +89,7 @@ function claim(amount: string): { currency: string; value: number } {
 function pricesFor(path: string): Price[] | null {
   if (path === homePage.path) return openPrices;
   if (path === customPage.path) return custom.prices;
+  if (path === backlogPage.path) return backlogPlans;
   if (jobPages.some((job) => job.path === path)) return custom.prices;
   const product = products.find((entry) => `/${entry.slug}` === path);
   if (product) return product.prices;
@@ -188,4 +193,25 @@ test("the home page marks up every question it answers", () => {
   expect(asked.map((question) => (question.acceptedAnswer as GraphNode).text)).toEqual(
     questions.map((item) => item.a),
   );
+});
+
+test("the backlog page offers Managed and Sprint, and no other plan", () => {
+  /* The two plans are named here, not read off the field that files a plan
+   * under a page: a plan filed under the wrong page would pass a test that
+   * asked the field which plans belong. */
+  const owed = ["Managed", "Sprint"].map((title) => {
+    const plan = plans.find((entry) => entry.title === title);
+    if (!plan) throw new Error(`the price list has no plan called ${title}.`);
+    return plan;
+  });
+  const sold = only(
+    nodesOfType(readExport(fileFor(backlogPage.path)), "Service"),
+    "Service",
+    backlogPage.path,
+  );
+  const offers = sold.offers as GraphNode[];
+  expect(offers.map((offer) => offer.description)).toEqual(owed.map((plan) => plan.per));
+  expect(
+    offers.map((offer) => (offer.priceSpecification as GraphNode).minPrice),
+  ).toEqual(owed.map((plan) => claim(plan.amount).value));
 });
