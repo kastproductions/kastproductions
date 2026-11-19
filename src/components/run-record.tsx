@@ -93,7 +93,7 @@ export function RunRecord() {
         className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-foreground px-5 py-3.5"
         style={head}
       >
-        <span className="font-heading text-[0.95rem] font-bold" id="run-title">
+        <span className="font-heading text-[0.95rem] font-semibold" id="run-title">
           Run 4127
         </span>
         <span className="font-mono text-[0.78rem] text-faint">
