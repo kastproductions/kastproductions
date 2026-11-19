@@ -178,7 +178,7 @@ export function ProductPage({ product }: { product: Product }) {
                       <TableCell
                         className={cn(
                           stackedCell,
-                          "w-16 font-heading first:font-bold max-md:w-auto",
+                          "w-16 font-heading first:font-semibold max-md:w-auto",
                         )}
                         data-label="Who"
                       >

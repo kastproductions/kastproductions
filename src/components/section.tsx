@@ -12,14 +12,14 @@ import { cn } from "@/lib/utils";
  * utilities copied into twelve files.
  */
 
-type Tone = "paper" | "panel" | "signal";
+type Tone = "paper" | "panel" | "night";
 
 const tones: Record<Tone, string> = {
   paper: "",
   panel: "bg-secondary",
-  /* `dark` turns the theme over for everything inside the band: the band is
-   * set in the signature blue. */
-  signal: "dark bg-background text-foreground",
+  /* `night` turns the theme over for everything inside the band: the band is
+   * set in night teal. */
+  night: "night",
 };
 
 /* A full-width section with the band rhythm. `flush` is the first band on a
@@ -71,7 +71,7 @@ export function UnitHead({
   return (
     <div className="flex flex-col items-start lg:sticky lg:top-24">
       <h2
-        className="font-heading text-[clamp(1.75rem,1.15rem+1.7vw,2.6rem)] leading-[1.04] font-bold tracking-[-0.035em] text-balance"
+        className="font-heading text-[clamp(1.6rem,1.1rem+1.5vw,2.4rem)] leading-[1.04] font-normal uppercase text-balance"
         id={titleId}
       >
         {title}
@@ -95,7 +95,7 @@ export function HeadNote({ className, ...props }: ComponentProps<"p">) {
 }
 
 /* The body column. A paragraph set straight in it reads as body copy, a
- * `Note` included, and its links are the blue. */
+ * `Note` included, and its links are the stamp red. */
 export function UnitBody({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
@@ -130,7 +130,7 @@ export function HeroTitle({ className, ...props }: ComponentProps<"h1">) {
   return (
     <h1
       className={cn(
-        "max-w-[17ch] font-heading text-[clamp(2.5rem,1.4rem+3.4vw,4.35rem)] leading-[1] font-extrabold tracking-[-0.042em] text-balance",
+        "max-w-[17ch] font-heading text-[clamp(2.3rem,1.2rem+3.6vw,4.6rem)] leading-[0.98] font-light uppercase text-balance",
         className,
       )}
       {...props}
@@ -156,7 +156,7 @@ export function Lede({
 }
 
 /* A side remark under a block. `gate` marks the sentence that says where a
- * person has to sign, with the blue rule a gate carries everywhere. */
+ * person has to sign, with the red rule a gate carries everywhere. */
 export function Note({
   gate = false,
   className,
@@ -190,7 +190,7 @@ export function Actions({ className, ...props }: ComponentProps<"div">) {
 const pullClass =
   "font-heading text-[0.95rem] font-semibold text-foreground underline decoration-signal decoration-2 underline-offset-[0.3em] transition-colors hover:text-signal-foreground";
 
-/* A link onward, underlined in the blue. A page on this site goes through
+/* A link onward, underlined in the stamp red. A page on this site goes through
  * next/link; a mailbox or another site is a plain anchor. */
 export function PullLink({
   href,
@@ -212,7 +212,7 @@ export function PullLabel({ className, ...props }: ComponentProps<"span">) {
 
 const rowsClass = "flex flex-col divide-y divide-hairline";
 const rowLabelClass =
-  "font-heading text-[1.05rem] font-semibold tracking-[-0.015em] text-foreground";
+  "font-heading text-[1.05rem] font-semibold text-foreground";
 const rowTextClass =
   "max-w-(--measure) text-[1rem] leading-relaxed text-prose [&_a]:text-signal-foreground";
 

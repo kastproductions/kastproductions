@@ -1,11 +1,11 @@
 import type { MetadataRoute } from "next";
 import { brand, homePage } from "./content";
+import { paper } from "./theme";
 
 export const dynamic = "force-static";
 
 /* The splash screen and the system chrome take the paper colour, the same
  * colour the viewport's theme-color states in layout.tsx. */
-const paper = "#ffffff";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
