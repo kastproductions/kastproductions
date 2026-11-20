@@ -8,13 +8,14 @@
  * hold is a broken image on the live site. So this reads every page the build
  * wrote and every `img` tag on it, the reference portraits included.
  *
- * The scenes are the illustrations the content module lists for the pages to
- * place. A scene that no page places yet is still a file the site ships, so
- * each one is checked where it lands in the export: it is a webp, it is the
- * size the content module says it renders at, and it stays inside the weight
- * a first screen can afford.
+ * The scenes are drawn as inline SVG, so they reach a reader as markup and not
+ * as a file. A drawing a page marks as an image (`role="img"`) has to carry a
+ * name, or a screen reader says "image" and nothing more. It also has to set
+ * a `viewBox`, because a drawing with no viewBox cannot scale to its column.
+ * The content module holds each scene's alt text, and a name too short to
+ * describe a picture is a label, not alt text.
  */
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { expect, test } from "bun:test";
 import { scenes } from "../src/app/content";
@@ -76,43 +77,43 @@ for (const file of pages) {
 }
 
 /*
- * The pixel size a webp file declares, read from its header. The three
- * encodings put it in three places: lossy (`VP8 `), lossless (`VP8L`) and
- * extended (`VP8X`, which carries alpha or animation).
+ * The accessible name of an SVG drawing, the way a browser computes it for
+ * `role="img"`: `aria-labelledby` names the elements whose text is the name,
+ * and `aria-label` gives the name itself. A `<title>` that no attribute points
+ * at is a tooltip in some readers and silence in others, so it does not count.
  */
-function webpSize(bytes: Buffer): { width: number; height: number } {
-  if (bytes.toString("ascii", 0, 4) !== "RIFF" || bytes.toString("ascii", 8, 12) !== "WEBP") {
-    throw new Error("the file is not a webp.");
+function svgName(document: string, svg: Record<string, string>): string {
+  if (svg["aria-labelledby"]) {
+    return svg["aria-labelledby"]
+      .split(/\s+/)
+      .map((id) => {
+        const escaped = id.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const found = new RegExp(`<(\\w+)\\b[^>]*\\bid="${escaped}"[^>]*>([\\s\\S]*?)</\\1>`).exec(document);
+        return found ? decodeEntities(found[2].replace(/<[^>]*>/g, "")) : "";
+      })
+      .join(" ")
+      .trim();
   }
-  const chunk = bytes.toString("ascii", 12, 16);
-  if (chunk === "VP8 ") {
-    return { width: bytes.readUInt16LE(26) & 0x3fff, height: bytes.readUInt16LE(28) & 0x3fff };
-  }
-  if (chunk === "VP8L") {
-    const bits = bytes.readUInt32LE(21);
-    return { width: (bits & 0x3fff) + 1, height: ((bits >> 14) & 0x3fff) + 1 };
-  }
-  if (chunk === "VP8X") {
-    return { width: bytes.readUIntLE(24, 3) + 1, height: bytes.readUIntLE(27, 3) + 1 };
-  }
-  throw new Error(`the webp has an unknown first chunk, ${chunk}.`);
+  return svg["aria-label"]?.trim() ?? "";
 }
 
-/* The weight each scene may have. The hero paints on the first screen, so it
- * gets more room than a scene a reader scrolls to. */
-const kilobyte = 1024;
-const budget = (key: string) => (key === "hero" ? 250 : 150) * kilobyte;
+for (const file of pages) {
+  const document = readExport(file);
+  const drawings = [...document.matchAll(/<svg\b[^>]*>/g)]
+    .map(([tag]) => attributes(tag))
+    .filter((svg) => svg.role === "img");
+
+  for (const [index, svg] of drawings.entries()) {
+    const name = `${file} drawing ${index + 1}`;
+
+    test(`${name} has an accessible name and a viewBox`, () => {
+      expect(svgName(document, svg)).not.toBe("");
+      expect(svg.viewBox ?? "").toMatch(/^[\d.]+ [\d.]+ [\d.]+ [\d.]+$/);
+    });
+  }
+}
 
 for (const [key, scene] of Object.entries(scenes)) {
-  test(`the ${key} scene ships as a webp at the size it renders at`, () => {
-    expect(scene.src).toStartWith("/");
-    expect(scene.src).toEndWith(".webp");
-    expect(inExport(scene.src)).toBe(true);
-    const bytes = readFileSync(join(exportRoot, scene.src));
-    expect(webpSize(bytes)).toEqual({ width: scene.width, height: scene.height });
-    expect(bytes.length).toBeLessThanOrEqual(budget(key));
-  });
-
   test(`the ${key} scene has alt text that describes it`, () => {
     /* A sentence, not a label: a screen reader reads it in place of the
      * picture. */

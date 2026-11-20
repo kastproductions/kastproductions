@@ -4,12 +4,12 @@
 
 **Blocked by:** None (can start immediately).
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] About five scene components exist. Each draws with the gold, sun, night, ink and paper tokens and uses no literal colour.
-- [ ] The scenes read as one set: the same palette, the same line weight and the same flat style as the Neo Mirai reference. None shows Japanese text, Japanese landmarks or a ray motif.
-- [ ] Each scene carries `role="img"` and an accessible name. The content module holds that alt text, written as a description of what the scene shows.
-- [ ] Each scene sets a `viewBox` and scales to its container with no layout shift.
-- [ ] A new export test asserts that every `img` in `out/` has non-empty alt text, a width and a height, and a `src` that resolves to a file in the export, and that every `svg` with `role="img"` has a non-empty accessible name. The test covers the existing portraits too.
-- [ ] No generated image and no prompt file ships in `public/`.
-- [ ] `bun run test` passes.
+- [x] About five scene components exist. Each draws with the gold, sun, night, ink and paper tokens and uses no literal colour.
+- [x] The scenes read as one set: the same palette, the same line weight and the same flat style as the Neo Mirai reference. None shows Japanese text, Japanese landmarks or a ray motif.
+- [x] Each scene carries `role="img"` and an accessible name. The content module holds that alt text, written as a description of what the scene shows.
+- [x] Each scene sets a `viewBox` and scales to its container with no layout shift.
+- [x] A new export test asserts that every `img` in `out/` has non-empty alt text, a width and a height, and a `src` that resolves to a file in the export, and that every `svg` with `role="img"` has a non-empty accessible name. The test covers the existing portraits too.
+- [x] No generated image and no prompt file ships in `public/`.
+- [x] `bun run test` passes.

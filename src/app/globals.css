@@ -69,6 +69,18 @@
   --color-gold: var(--gold);
   --color-gold-bright: var(--gold-bright);
   --color-eclipse: var(--eclipse);
+  /* The raw palette, for the scenes in src/components/scenes.tsx. A scene is
+   * a picture, so it keeps its own colours on any surface: these do not turn
+   * over under the night utility. A component reads the semantic tokens
+   * above, never these. */
+  --color-paper: var(--paper);
+  --color-paper-soft: var(--paper-soft);
+  --color-rice: var(--rice);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-night: var(--night);
+  --color-night-soft: var(--night-soft);
+  --color-sun-deep: var(--sun-deep);
   --color-pass: var(--pass);
   --color-pass-tint: var(--pass-tint);
   --color-halt-tint: var(--halt-tint);
