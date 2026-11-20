@@ -72,10 +72,9 @@ function claim(amount: string): { currency: string; value: number } {
 
 /*
  * The offers a route owes, read off the lists the content module already
- * keeps. The home page offers the plans it prints, the custom door the
- * custom plan the home page prints, and the backlog page the plans filed
- * under it. A job page sells the custom door's work at the door's
- * own prices: a job we shape an agent around carries no price of its own,
+ * keeps. The home page offers the plans it prints, and the backlog page the
+ * plans filed under it. The custom door offers its own two prices, and a job
+ * page sells the custom door's work at those same prices: a job we shape an agent around carries no price of its own,
  * and a second number for it would be one the door does not state. A product
  * page offers the product's own. Every other page we write by hand offers
  * nothing: a legal page, an explainer, the about page, the contact page and
@@ -89,9 +88,10 @@ function claim(amount: string): { currency: string; value: number } {
  */
 function pricesFor(path: string): Price[] | null {
   if (path === homePage.path) return homePlans;
-  if (path === customPage.path) return plans.filter((plan) => plan.title === "Custom agent");
   if (path === backlogPage.path) return backlogPlans;
-  if (jobPages.some((job) => job.path === path)) return custom.prices;
+  if (path === customPage.path || jobPages.some((job) => job.path === path)) {
+    return custom.prices;
+  }
   const product = products.find((entry) => `/${entry.slug}` === path);
   if (product) return product.prices;
   if (writtenPages.some((page) => page.path === path)) return null;

@@ -38,7 +38,7 @@ type Chrome = { route?: string };
 function Brand({ route }: Chrome) {
   return (
     <Link
-      className="inline-flex min-h-11 shrink-0 items-center gap-2.5 font-heading text-note font-medium tracking-[0.06em] uppercase no-underline"
+      className="inline-flex min-h-11 shrink-0 items-center gap-2.5 font-heading text-note font-medium uppercase no-underline"
       href={homePage.path}
       prefetch={route === homePage.path ? false : undefined}
     >
@@ -156,7 +156,7 @@ export function SiteHeader({ route }: Chrome) {
 
         <MobileNav>
           <NavLinks
-            linkClassName="block border-b border-hairline py-3.5 font-heading text-body font-medium tracking-[0.04em] uppercase no-underline aria-[current=page]:text-signal-foreground"
+            linkClassName="block border-b border-hairline py-3.5 font-heading text-body font-medium uppercase no-underline aria-[current=page]:text-signal-foreground"
             route={route}
           />
           <Actions className="mt-4 *:flex-1">

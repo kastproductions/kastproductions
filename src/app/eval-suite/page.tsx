@@ -30,7 +30,7 @@ const covers = [
   "The result. What a correct result for the task contains, and what it must not contain.",
   "What it may touch. Which systems the agent reads, which it writes to, and which it never touches.",
   "Where it stops. Before anything that reaches someone outside your company (a sent email, a published page, a posted message, a payment), the agent stops and waits for a named person.",
-  "What it may spend. Each task has a spend cap, a ceiling on model cost that we agree with you. A task that reaches it stops and asks a person, or stops and reports when nobody is there to ask.",
+  "What it may spend. Each session has a spend cap, a ceiling on model cost that we agree with you. A session that reaches it stops and asks a person, or stops and reports when nobody is there to ask.",
 ];
 
 export default function EvalSuite() {

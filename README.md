@@ -20,7 +20,7 @@ teal, Chakra Petch caps for display, Zen Old Mincho for reading and Azeret
 Mono caps for labels. It has one light theme and no Japanese text.
 `DESIGN.md` is the full system and `PRODUCT.md` is the brief; read both before
 a design change. It is the same world on every page, and three rules hold it
-together. Breaking one is a bug rather than a variation.
+together. Breaking one is a bug.
 
 1. **A rule and a sheet are the only structure.** A `Band` is one course of
    the page. A `Unit` splits it into a head column and a body column under one
@@ -173,7 +173,8 @@ src/components/
   mobile-nav.tsx       # The header's menu button on a narrow screen. Loads the
                        #   sheet on first press, so no page ships it up front
   menu-sheet.tsx       # The header's links in a sheet, mounted open by that press
-  section.tsx          # The shapes every page is built from: band, unit, hero,
+  section.tsx          # The shapes every page is built from: band, unit, hero
+                       #   (with its scene or ornament, and its calls to action),
                        #   lede, note, pull link, rows
   plan-card.tsx        # One way to buy as a card, and the grid the cards sit in
   ui/                  # shadcn/ui components, themed to the palette in their source
@@ -235,9 +236,13 @@ tests/
   examples.test.ts     # Every synthetic part carries the Example label
   accessibility.test.ts  # No heading skips a level; every drawing is named or hidden
   chrome.test.ts       # The header and the footer use no internal term
-  job-pages.test.ts    # A job page and the product page read in one order
+  job-pages.test.ts    # A job page and the product page read in one order, and
+                       #   print the steps, prerequisites and prices content.ts holds
   custom-slack-eval.test.ts  # The custom, Slack and eval suite pages: buyer words,
-                       #   one custom price, the Flue links, no price on an explainer
+                       #   the custom prices in one shape on the door and every job
+                       #   page, the Flue links, no price on an explainer
+  backlog.test.ts      # The backlog page numbers its sections and draws an ornament
+  vocabulary.test.ts   # A spend cap caps a session, never a task, on every page
   theme.test.ts        # One light theme, the fonts from the export, every colour
                        #   through a token, the skip link and the ornaments
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image

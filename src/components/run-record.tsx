@@ -41,7 +41,7 @@ const STEPS: Step[] = [
     ),
     detail: (
       <>
-        <span className="font-mono text-[0.92em]">+214 −38</span> across 4 files
+        <span className="font-mono text-caption">+214 −38</span> across 4 files
       </>
     ),
     diff: [
@@ -60,7 +60,7 @@ const STEPS: Step[] = [
     datetime: "PT7M3S",
     label: "07:03",
     title: "Ran the test suite",
-    detail: <span className="font-mono text-[0.92em]">53 passed, 0 failed, 0 skipped</span>,
+    detail: <span className="font-mono text-caption">53 passed, 0 failed, 0 skipped</span>,
   },
   {
     datetime: "PT7M20S",

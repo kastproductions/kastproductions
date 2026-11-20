@@ -85,8 +85,8 @@
   --color-pass-tint: var(--pass-tint);
   --color-halt-tint: var(--halt-tint);
 
-  /* Paper is cut, not moulded: a corner is square to the eye. A seal is the
-   * one round thing. */
+  /* A corner is square to the eye, as cut paper is. A seal is the one round
+   * thing. */
   --radius-sm: calc(var(--radius) * 0.5);
   --radius-md: var(--radius);
   --radius-lg: var(--radius);
@@ -205,6 +205,12 @@
   --pass: oklch(45% 0.11 150);
   --pass-tint: oklch(45% 0.11 150 / 0.1);
   --halt-tint: oklch(50% 0.17 30 / 0.1);
+  /* The paper's own light and grid, which the body draws and the Open Graph
+   * image reads: the gold light high on the page, and the vertical and
+   * horizontal lines of the 112px grid. */
+  --paper-light: oklch(82% 0.11 79 / 0.55);
+  --grid-x: oklch(20% 0.015 80 / 0.035);
+  --grid-y: oklch(20% 0.015 80 / 0.028);
 
   --measure: 66ch;
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
@@ -225,7 +231,7 @@
   --card-foreground: var(--rice);
   --popover: var(--night);
   --popover-foreground: var(--rice);
-  --primary: oklch(76% 0.165 80);
+  --primary: var(--gold-bright);
   --primary-foreground: var(--ink);
   --primary-hover: oklch(84% 0.13 84);
   --secondary: var(--night-soft);
@@ -236,11 +242,11 @@
   --accent-foreground: var(--rice);
   --border: oklch(73% 0.055 77 / 0.55);
   --input: oklch(73% 0.055 77 / 0.7);
-  --ring: oklch(76% 0.165 80);
+  --ring: var(--gold-bright);
 
-  --signal: oklch(76% 0.165 80);
-  --signal-foreground: oklch(76% 0.165 80);
-  --signal-tint: oklch(76% 0.165 80 / 0.12);
+  --signal: var(--gold-bright);
+  --signal-foreground: var(--gold-bright);
+  --signal-tint: color-mix(in oklch, var(--gold-bright) 12%, transparent);
   --prose: oklch(93% 0.03 82);
   --faint: oklch(80% 0.07 82);
   --hairline: oklch(73% 0.055 77 / 0.3);
@@ -286,9 +292,9 @@
     min-height: 100dvh;
     overflow-x: clip;
     background:
-      radial-gradient(circle at 66% 7%, oklch(82% 0.11 79 / 0.55), transparent 17rem),
-      linear-gradient(90deg, oklch(20% 0.015 80 / 0.035) 1px, transparent 1px),
-      linear-gradient(0deg, oklch(20% 0.015 80 / 0.028) 1px, transparent 1px),
+      radial-gradient(circle at 66% 7%, var(--paper-light), transparent 17rem),
+      linear-gradient(90deg, var(--grid-x) 1px, transparent 1px),
+      linear-gradient(0deg, var(--grid-y) 1px, transparent 1px),
       var(--paper);
     background-size:
       auto,

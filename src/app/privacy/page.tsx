@@ -182,7 +182,7 @@ export default function Privacy() {
               </Prose>
               <Note>
                 Last changed on{" "}
-                <time className="font-mono text-[0.92em]" dateTime={privacyPage.date}>
+                <time className="font-mono text-caption" dateTime={privacyPage.date}>
                   {privacyPage.date}
                 </time>
                 .

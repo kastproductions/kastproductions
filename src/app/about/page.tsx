@@ -114,7 +114,7 @@ export default function About() {
                   {profiles.map((profile) => (
                     <dd className="mt-0.5" key={profile.href}>
                       <PullLink
-                        className="font-mono text-[0.92em]"
+                        className="font-mono text-caption"
                         href={profile.href}
                         rel="me noreferrer"
                       >
@@ -141,10 +141,10 @@ export default function About() {
               </HeadNote>
             </UnitHead>
             <ul className="grid min-w-0 divide-y divide-hairline">
-              {references.map((reference, at) => (
+              {references.map((reference, index) => (
                 <li className="py-7 first:pt-0" key={reference.name}>
                   <figure>
-                    <SectionNumber className="mb-3" index={at + 1} />
+                    <SectionNumber className="mb-3" index={index + 1} />
                     <blockquote>
                       <p className="max-w-[60ch] text-title leading-[1.55] text-foreground">
                         {reference.quote}

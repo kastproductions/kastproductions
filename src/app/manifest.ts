@@ -4,9 +4,6 @@ import { paper } from "./theme";
 
 export const dynamic = "force-static";
 
-/* The splash screen and the system chrome take the paper colour, the same
- * colour the viewport's theme-color states in layout.tsx. */
-
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: homePage.title,
@@ -14,6 +11,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: homePage.description,
     start_url: "/",
     display: "standalone",
+    /* The splash screen and the system chrome take the paper colour, the
+     * same colour the viewport's theme-color states in layout.tsx. */
     background_color: paper,
     theme_color: paper,
     /* A browser offers to install a site only when the manifest names a

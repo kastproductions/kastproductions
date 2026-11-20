@@ -9,7 +9,8 @@ import {
   Actions,
   Band,
   HeadNote,
-  HeroCopy,
+  HeroActions,
+  HeroSplit,
   HeroTitle,
   Lede,
   Note,
@@ -116,28 +117,17 @@ export default function Home() {
 
       <main id="main">
         <Band aria-labelledby="hero-title" flush id="hero">
-          <div className="wrap grid items-center gap-[clamp(2.5rem,5vw,5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
-            <HeroCopy>
-              <HeroTitle id="hero-title">{hero.heading}</HeroTitle>
-              <Lede>{hero.lede}</Lede>
-              <Actions>
-                <a className={buttonVariants()} href={briefHref}>
-                  {briefCta}
-                  <ArrowUpRightIcon data-icon="inline-end" />
-                </a>
-                <a className={buttonVariants({ variant: "ghost" })} href={callHref}>
-                  Or book a call
-                </a>
-              </Actions>
-              <p className="label-mono text-faint">
-                Reply within one working day
-              </p>
-            </HeroCopy>
-
-            <div className="border border-foreground">
-              <HeroScene />
-            </div>
-          </div>
+          <HeroSplit
+            aside={
+              <div className="border border-foreground">
+                <HeroScene />
+              </div>
+            }
+          >
+            <HeroTitle id="hero-title">{hero.heading}</HeroTitle>
+            <Lede>{hero.lede}</Lede>
+            <HeroActions href={briefHref} />
+          </HeroSplit>
         </Band>
 
         <ClientsStrip

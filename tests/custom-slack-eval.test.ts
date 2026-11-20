@@ -2,18 +2,19 @@
  * What a buyer reads on the custom page, the Slack page and the eval suite
  * page, read off the export.
  *
- * The custom page prints the custom plan the way the home page prints it, so
- * the two pages state one price in one form. The Slack page states only what
+ * The custom page prints the custom prices the way every job page prints
+ * them, so the custom plan has one price in one form. The Slack page states only what
  * Flue's channel documentation states, so it keeps the links to that
  * documentation, and it prints no price. The eval suite page sells nothing and
  * explains one part of the work in a buyer's words.
  *
- * The prices, the links and the internal terms are written here, not read from
- * `content.ts`, so a price printed in a second form, a lost link or a term
- * that slips back into the copy fails.
+ * The prices come from `custom.prices` in `content.ts`, so a price change
+ * moves the page and the suite together. The links and the internal terms
+ * are written here, so a lost link or a term that slips back into the copy
+ * fails.
  */
 import { expect, test } from "bun:test";
-import { customPage, evalSuitePage, slackPage } from "../src/app/content";
+import { custom, customPage, evalSuitePage, jobPages, slackPage } from "../src/app/content";
 import { decodeEntities, fileFor, mainOf } from "./export";
 
 /* Text with its tags taken out, as a reader hears it. */
@@ -43,16 +44,21 @@ for (const page of [customPage, slackPage, evalSuitePage]) {
   });
 }
 
-test(`${customPage.path} prints the custom plan as the home page prints it`, () => {
-  const pricing = section(customPage.path, "pricing");
-  const titles = [...pricing.matchAll(/data-slot="card-title"[^>]*>([^<]*)</g)].map(([, title]) =>
-    decodeEntities(title),
-  );
-  expect(titles).toEqual(["Custom agent"]);
-  const words = text(pricing);
-  expect(words).toContain("From €10,000");
-  expect(words).toContain("to build, then from €1,500 a month");
-});
+for (const page of [customPage, ...jobPages]) {
+  test(`${page.path} prints the custom prices in one shape, one line per price`, () => {
+    const pricing = section(page.path, "pricing");
+    const titles = [...pricing.matchAll(/data-slot="card-title"[^>]*>([^<]*)</g)].map(
+      ([, title]) => decodeEntities(title),
+    );
+    expect(titles).toEqual([custom.subject]);
+    const words = text(pricing);
+    for (const price of custom.prices) {
+      expect(words).toContain(`${price.amount} ${price.per}`);
+    }
+    /* One figure per price, and no second line that restates them. */
+    expect(words.match(/€/g)?.length).toBe(custom.prices.length);
+  });
+}
 
 test(`${customPage.path} says what comes back and when`, () => {
   expect(text(mainOf(fileFor(customPage.path)))).toContain(

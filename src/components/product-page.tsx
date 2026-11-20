@@ -1,13 +1,12 @@
-import { ArrowUpRightIcon } from "lucide-react";
 import { ChannelsSection } from "@/components/channels-section";
 import { PlanCard, Plans } from "@/components/plan-card";
 import { RunRecord } from "@/components/run-record";
 import { PullRequestScene } from "@/components/scenes";
 import {
-  Actions,
   Band,
   HeadNote,
-  HeroCopy,
+  HeroActions,
+  HeroSplit,
   HeroTitle,
   Lede,
   Note,
@@ -22,7 +21,6 @@ import {
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { StopPoint } from "@/components/stop-point";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -35,7 +33,6 @@ import { cn } from "@/lib/utils";
 import type { Product } from "@/app/content";
 import {
   briefCta,
-  callHref,
   leadTime,
   mailtoFor,
   productPage,
@@ -53,7 +50,7 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
  *
  * The page reads in the order a buyer asks: how a run goes, in numbered
  * steps, and where it stops for a named person; what a run looks like, as a
- * labelled example; which systems it touches and who sets up each one; where
+ * labelled example; what a buyer needs first and who sets up each line; where
  * the team reaches it; and what it costs, with the lead time beside the price.
  */
 
@@ -79,25 +76,11 @@ export function ProductPage({ product }: { product: Product }) {
 
       <main id="main">
         <Band aria-labelledby="hero-title" flush id="hero">
-          <div className="wrap grid grid-cols-1 items-center gap-[clamp(2rem,5vw,5rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
-            <HeroCopy>
-              <HeroTitle id="hero-title">{product.name}</HeroTitle>
-              <Lede>{product.lede}</Lede>
-              <Actions>
-                <a className={buttonVariants()} href={brief}>
-                  {briefCta}
-                  <ArrowUpRightIcon data-icon="inline-end" />
-                </a>
-                <a className={buttonVariants({ variant: "ghost" })} href={callHref}>
-                  Or book a call
-                </a>
-              </Actions>
-              <p className="label-mono text-faint">
-                Reply within one working day
-              </p>
-            </HeroCopy>
-            <RunRecord />
-          </div>
+          <HeroSplit aside={<RunRecord />}>
+            <HeroTitle id="hero-title">{product.name}</HeroTitle>
+            <Lede>{product.lede}</Lede>
+            <HeroActions href={brief} />
+          </HeroSplit>
         </Band>
 
         <Band aria-labelledby="steps-title" id="steps">
@@ -183,7 +166,7 @@ export function ProductPage({ product }: { product: Product }) {
 
         <Band aria-labelledby="systems-title" id="systems">
           <Unit>
-            <UnitHead index={3} title="What it touches" titleId="systems-title">
+            <UnitHead index={3} title="What you need first" titleId="systems-title">
               <HeadNote>
                 It works in {product.systems}. Deploying the code is quick.
                 Connecting it to your company is the part nobody prints, so we

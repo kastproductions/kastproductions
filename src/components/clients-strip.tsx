@@ -14,7 +14,7 @@ export function ClientsStrip({ heading }: { heading: ReactNode }) {
     <Band aria-labelledby="clients-title" className="py-8" id="clients">
       <div className="wrap grid items-baseline gap-5 border-t border-foreground pt-5 lg:grid-cols-[var(--head-col)_minmax(0,1fr)] lg:gap-(--split)">
         <h2
-          className="text-small leading-[1.4] font-medium text-faint"
+          className="text-small leading-[1.4] text-faint"
           id="clients-title"
         >
           {heading}
@@ -23,7 +23,7 @@ export function ClientsStrip({ heading }: { heading: ReactNode }) {
           {clients.map((client) => (
             <li key={client.name}>
               <a
-                className="text-note font-semibold whitespace-nowrap text-muted-foreground no-underline decoration-signal decoration-2 underline-offset-[0.3em] hover:text-foreground hover:underline"
+                className="text-note font-bold whitespace-nowrap text-muted-foreground no-underline decoration-signal decoration-2 underline-offset-[0.3em] hover:text-foreground hover:underline"
                 href={client.url}
                 rel="noreferrer"
               >
