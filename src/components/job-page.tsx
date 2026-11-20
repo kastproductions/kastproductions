@@ -1,14 +1,10 @@
-import type { ReactNode } from "react";
 import { ChannelsSection } from "@/components/channels-section";
-import { SunDisc } from "@/components/ornaments";
 import { PlanCard, Plans } from "@/components/plan-card";
-import { FinanceDeskScene, ShopFloorScene, SupportDeskScene } from "@/components/scenes";
 import {
   Band,
   HeadNote,
   HeroActions,
   HeroFrame,
-  HeroSplit,
   HeroTitle,
   Lede,
   Note,
@@ -44,9 +40,8 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
  *
  * The page reads in the order a buyer asks: what the agent does, in numbered
  * steps, and where it stops for a named person; which systems it touches;
- * where the team reaches it; and what it costs. A job whose team one of the
- * room scenes shows opens on that scene, and every other job opens on the sun
- * disc, so each first screen has its picture.
+ * where the team reaches it; and what it costs. The first screen is words
+ * only: the job's heading, what it does, and the one action.
  *
  * The page prints the custom door's prices and no others. A job we shape an
  * agent around is custom work, so a price of its own would be a number the
@@ -58,13 +53,6 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
  * either: the motion rule in README.md gives a page one or the other, and this
  * one is a sheet a reader reads.
  */
-/* The room scene for each job a scene shows, by the key on the record. */
-const sceneFor: Record<NonNullable<JobPageRecord["scene"]>, () => ReactNode> = {
-  supportDesk: () => <SupportDeskScene />,
-  financeDesk: () => <FinanceDeskScene />,
-  shopFloor: () => <ShopFloorScene />,
-};
-
 export function JobPage({ page }: { page: JobPageRecord }) {
   /* The page's own nodes, beside the site-wide ones the layout renders: the
    * page itself, the custom work it sells at the door's prices, and the way
@@ -74,35 +62,22 @@ export function JobPage({ page }: { page: JobPageRecord }) {
    * click is counted under the job a reader came in on. */
   const brief = mailtoFor(page.subject);
 
-  /* The words of the first screen, beside a scene or an ornament. */
-  const heroWords = (
-    <>
-      <HeroTitle id="hero-title">{page.heading}</HeroTitle>
-      <Lede>{page.lede}</Lede>
-      <HeroActions href={brief} />
-    </>
-  );
-
   return (
     <>
       <SiteHeader route={page.path} />
 
       <main id="main">
         <Band aria-labelledby="hero-title" flush id="hero">
-          {page.scene ? (
-            <HeroSplit
-              aside={<div className="border border-foreground">{sceneFor[page.scene]()}</div>}
-            >
-              {heroWords}
-            </HeroSplit>
-          ) : (
-            <HeroFrame ornament={<SunDisc className="w-48 lg:w-60" />}>{heroWords}</HeroFrame>
-          )}
+          <HeroFrame>
+            <HeroTitle id="hero-title">{page.heading}</HeroTitle>
+            <Lede>{page.lede}</Lede>
+            <HeroActions href={brief} />
+          </HeroFrame>
         </Band>
 
         <Band aria-labelledby="job-steps-title" id="steps">
           <Unit>
-            <UnitHead index={1} title="What the agent does" titleId="job-steps-title">
+            <UnitHead title="What the agent does" titleId="job-steps-title">
               <HeadNote>{page.authority}</HeadNote>
             </UnitHead>
             <UnitBody>
@@ -124,7 +99,7 @@ export function JobPage({ page }: { page: JobPageRecord }) {
 
         <Band aria-labelledby="job-systems-title" id="systems" tone="panel">
           <Unit>
-            <UnitHead index={2} title="What it touches" titleId="job-systems-title">
+            <UnitHead title="What it touches" titleId="job-systems-title">
               <HeadNote>
                 It works in the systems your team already uses. We connect it
                 to each one, and the spec names every account it needs before
@@ -146,11 +121,11 @@ export function JobPage({ page }: { page: JobPageRecord }) {
           </Unit>
         </Band>
 
-        <ChannelsSection index={3} />
+        <ChannelsSection />
 
         <Band aria-labelledby="job-price-title" id="pricing" tone="panel">
           <Unit>
-            <UnitHead index={4} title="What it costs" titleId="job-price-title">
+            <UnitHead title="What it costs" titleId="job-price-title">
               {/* The floor, and what the month buys, are the custom page's
                   own sentences. This page says which price list a job like
                   this one is on and sends a reader there for the rest. */}

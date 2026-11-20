@@ -1,6 +1,5 @@
 import { ArrowUpRightIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { Eclipse } from "@/components/ornaments";
 import { PlanCard, Plans } from "@/components/plan-card";
 import {
   Actions,
@@ -71,12 +70,9 @@ const exampleSlip = (
   <figure
     aria-labelledby="example-run-title"
     data-example
-    className="overflow-hidden rounded-md border border-foreground bg-card"
+    className="overflow-hidden rounded-xl border bg-card shadow-sheet"
   >
-    <figcaption className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-foreground px-5 py-3.5">
-      {/* The agent's mark, as every room scene draws it (DESIGN.md,
-          Scenes): the run on this slip is an agent's work. */}
-      <Eclipse className="size-7" />
+    <figcaption className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b px-5 py-3.5">
       <span className="font-heading text-note font-semibold" id="example-run-title">
         Issue 212
       </span>
@@ -93,12 +89,12 @@ const exampleSlip = (
           className="grid grid-cols-[7.5rem_minmax(0,1fr)] gap-3 px-5 py-3"
           key={line.label}
         >
-          <dt className="pt-0.5 label-mono text-faint">{line.label}</dt>
+          <dt className="pt-0.5 meta text-faint">{line.label}</dt>
           <dd className="text-note leading-snug">{line.value}</dd>
         </div>
       ))}
       <div className={cn(gateClass, "grid grid-cols-[7.5rem_minmax(0,1fr)] gap-3 px-5 py-3")}>
-        <dt className="pt-0.5 label-mono text-signal-foreground">Merge</dt>
+        <dt className="pt-0.5 meta text-signal-foreground">Merge</dt>
         <dd className="text-note leading-snug font-semibold">
           Waits for our engineer to sign it
         </dd>
@@ -129,7 +125,7 @@ export default function Backlog() {
 
         <Band aria-labelledby="run-title" id="run">
           <Unit>
-            <UnitHead index={1} title="From an issue to a signed pull request" titleId="run-title">
+            <UnitHead title="From an issue to a signed pull request" titleId="run-title">
               <HeadNote>
                 Every issue goes through the same four steps. A separate agent
                 does each step and stops at the end of it, and one of our
@@ -159,7 +155,7 @@ export default function Backlog() {
 
         <Band aria-labelledby="fit-title" id="fit" tone="panel">
           <Unit>
-            <UnitHead index={2} title="Which one fits" titleId="fit-title">
+            <UnitHead title="Which one fits" titleId="fit-title">
               <HeadNote>
                 Both plans end in a pull request our engineer signs. Sprint is
                 one brief over two weeks. Managed runs month to month on a
@@ -209,7 +205,7 @@ export default function Backlog() {
 
         <Band aria-labelledby="pricing-title" id="pricing">
           <Unit>
-            <UnitHead index={3} title="What coding agents on your backlog cost" titleId="pricing-title">
+            <UnitHead title="What coding agents on your backlog cost" titleId="pricing-title">
               <HeadNote>
                 Every price is a floor. The price in your spec is fixed, and we
                 name it before any work starts.
@@ -240,11 +236,11 @@ export default function Backlog() {
           </Unit>
         </Band>
 
-        <Band aria-labelledby="cta-title" id="cta" tone="night">
+        <Band aria-labelledby="cta-title" id="cta" tone="ink">
           <div className="wrap grid items-end gap-(--split) lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
             <div className="flex flex-col gap-6">
               <h2
-                className="max-w-[18ch] font-heading text-display leading-[0.98] font-light uppercase text-balance"
+                className="max-w-[18ch] font-heading text-display font-semibold text-balance"
                 id="cta-title"
               >
                 Send us one issue from your backlog

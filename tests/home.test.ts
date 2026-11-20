@@ -15,7 +15,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "bun:test";
-import { backlogPage, prices as plans } from "../src/app/content";
+import { backlogPage, mention, prices as plans } from "../src/app/content";
 import { decodeEntities, fileFor, type GraphNode, mainOf, nodesOfType, readExport } from "./export";
 
 const home = () => readExport(fileFor("/"));
@@ -56,15 +56,16 @@ test("the home page tells its story in the order the spec lists", () => {
   ]);
 });
 
-test("the hero places the hero scene with its size set", () => {
-  /* A drawing with a width and a height holds its place on the first paint,
-   * so the hero does not move when it renders. */
-  const svg = /<svg\b[^>]*\bdata-scene="hero"[^>]*>/.exec(section("hero"));
-  if (!svg) {
-    throw new Error("The hero carries no hero scene.");
+test("the hero shows the example approval message, labelled as an example", () => {
+  /* The picture beside the hero's words is the thing the agent makes: a
+   * message that waits for a named person. It is synthetic, so it carries
+   * the example marker the Claims section of README.md asks for. */
+  const figure = /<figure\b[^>]*\bdata-example\b[^>]*>[\s\S]*?<\/figure>/.exec(section("hero"));
+  if (!figure) {
+    throw new Error("The hero carries no example figure.");
   }
-  expect(Number(/\bwidth="([\d.]+)"/.exec(svg[0])?.[1])).toBeGreaterThan(0);
-  expect(Number(/\bheight="([\d.]+)"/.exec(svg[0])?.[1])).toBeGreaterThan(0);
+  expect(figure[0]).toContain("Example");
+  expect(figure[0]).toContain(mention.approve);
 });
 
 test("the hero has one main call to action", () => {

@@ -1,6 +1,5 @@
 import { ChannelsSection } from "@/components/channels-section";
 import { JobRows } from "@/components/job-rows";
-import { SunDisc } from "@/components/ornaments";
 import { PlanCard, Plans } from "@/components/plan-card";
 import {
   Band,
@@ -52,7 +51,7 @@ export default function Custom() {
 
       <main id="main">
         <Band flush>
-          <HeroFrame ornament={<SunDisc className="w-36 lg:w-44" />}>
+          <HeroFrame>
             <HeroTitle>{custom.heading}</HeroTitle>
             <Lede wide>{custom.lede}</Lede>
             <HeroActions href={brief} />
@@ -61,7 +60,7 @@ export default function Custom() {
 
         <Band aria-labelledby="how-title" id="how">
           <Unit>
-            <UnitHead index={1} title={custom.howHeading} titleId="how-title">
+            <UnitHead title={custom.howHeading} titleId="how-title">
               <HeadNote>{custom.howLede}</HeadNote>
             </UnitHead>
             <UnitBody>
@@ -81,7 +80,7 @@ export default function Custom() {
 
         <Band aria-labelledby="spec-title" id="spec" tone="panel">
           <Unit>
-            <UnitHead index={2} title={custom.specHeading} titleId="spec-title">
+            <UnitHead title={custom.specHeading} titleId="spec-title">
               <HeadNote>{custom.specLede}</HeadNote>
               <PullLink className="mt-4" href={evalSuitePage.path}>
                 {custom.specMore}
@@ -104,7 +103,7 @@ export default function Custom() {
 
         <Band aria-labelledby="jobs-title" id="jobs">
           <Unit>
-            <UnitHead index={3} title={custom.jobsHeading} titleId="jobs-title">
+            <UnitHead title={custom.jobsHeading} titleId="jobs-title">
               <HeadNote>{custom.jobsLede}</HeadNote>
             </UnitHead>
             <UnitBody>
@@ -113,11 +112,11 @@ export default function Custom() {
           </Unit>
         </Band>
 
-        <ChannelsSection index={4} />
+        <ChannelsSection />
 
         <Band aria-labelledby="custom-price-title" id="pricing">
           <Unit>
-            <UnitHead index={5} title={custom.pricingHeading} titleId="custom-price-title">
+            <UnitHead title={custom.pricingHeading} titleId="custom-price-title">
               <HeadNote>{custom.pricingLede}</HeadNote>
             </UnitHead>
             {/* One card, so the note takes the column beside it from xl up

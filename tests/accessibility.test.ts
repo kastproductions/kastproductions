@@ -3,11 +3,10 @@
  *
  * A screen reader user moves through a page by its headings, so a heading
  * that skips a level (an h2 followed by an h4) reads as a missing section.
- * An ornament (the seal, the sun disc, the eclipse, an icon) says nothing the
- * words beside it do not, so it must be hidden, or a screen reader announces
- * an unnamed graphic. A drawing that does say something is a scene, which
- * marks itself `role="img"` and carries a name: `tests/images.test.ts` holds
- * it to that.
+ * An icon says nothing the words beside it do not, so it must be hidden, or a
+ * screen reader announces an unnamed graphic. A drawing that does say
+ * something marks itself `role="img"` and carries a name:
+ * `tests/images.test.ts` holds it to that.
  */
 import { expect, test } from "bun:test";
 import { everyPage, readExport } from "./export";

@@ -1,7 +1,6 @@
 import { ChannelsSection } from "@/components/channels-section";
 import { PlanCard, Plans } from "@/components/plan-card";
 import { RunRecord } from "@/components/run-record";
-import { PullRequestScene } from "@/components/scenes";
 import {
   Band,
   HeadNote,
@@ -85,7 +84,7 @@ export function ProductPage({ product }: { product: Product }) {
 
         <Band aria-labelledby="steps-title" id="steps">
           <Unit>
-            <UnitHead index={1} title="How a run goes" titleId="steps-title">
+            <UnitHead title="How a run goes" titleId="steps-title">
               <HeadNote>{product.stationsIntro}</HeadNote>
             </UnitHead>
             <UnitBody>
@@ -100,24 +99,17 @@ export function ProductPage({ product }: { product: Product }) {
                   </li>
                 ))}
               </Rows>
-              <div className="mt-8 grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-                <div>
-                  <StopPoint className="mt-0" titleId="stop-title">
-                    {product.authority} {product.boundary}
-                  </StopPoint>
-                  <Note>{product.record}</Note>
-                </div>
-                <div className="border border-foreground">
-                  <PullRequestScene />
-                </div>
-              </div>
+              <StopPoint titleId="stop-title">
+                {product.authority} {product.boundary}
+              </StopPoint>
+              <Note>{product.record}</Note>
             </UnitBody>
           </Unit>
         </Band>
 
         <Band aria-labelledby="work-title" data-example id="work" tone="panel">
           <Unit>
-            <UnitHead index={2} title="What a run looks like" titleId="work-title">
+            <UnitHead title="What a run looks like" titleId="work-title">
               <HeadNote>
                 <Badge className="align-middle" variant="signal">
                   Example
@@ -166,7 +158,7 @@ export function ProductPage({ product }: { product: Product }) {
 
         <Band aria-labelledby="systems-title" id="systems">
           <Unit>
-            <UnitHead index={3} title="What you need first" titleId="systems-title">
+            <UnitHead title="What you need first" titleId="systems-title">
               <HeadNote>
                 It works in {product.systems}. Deploying the code is quick.
                 Connecting it to your company is the part nobody prints, so we
@@ -205,11 +197,11 @@ export function ProductPage({ product }: { product: Product }) {
           </Unit>
         </Band>
 
-        <ChannelsSection index={4} />
+        <ChannelsSection />
 
         <Band aria-labelledby="product-price-title" id="pricing" tone="panel">
           <Unit>
-            <UnitHead index={5} title="What it costs" titleId="product-price-title">
+            <UnitHead title="What it costs" titleId="product-price-title">
               <HeadNote>
                 The build price is a floor, because the work follows the number
                 of systems your agent touches. The monthly price pays for the

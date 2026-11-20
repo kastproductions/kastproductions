@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils";
  * One way to buy, as a card: what it is, what it costs, what it includes,
  * and the one link that asks for it. The home page, the custom door, a job
  * page and a product page all print prices this way, so the card lives here
- * rather than in four page files. `lead` sets the card in night teal,
+ * rather than in four page files. `lead` sets the card in the ink colour,
  * which is how the price list marks the plan it leads with, and makes its
  * link the filled one.
  */
@@ -42,7 +42,7 @@ export function PlanCard({
      * prices of cards side by side start on one line whatever the length of
      * the words above them. */
     <Card
-      className={cn("row-span-3 grid grid-rows-subgrid", lead && "night border-transparent")}
+      className={cn("row-span-3 grid grid-rows-subgrid", lead && "inverse border-transparent")}
       size="lg"
     >
       <CardHeader>
@@ -55,18 +55,18 @@ export function PlanCard({
         <div className="flex flex-col gap-1 border-t border-hairline pt-4">
           {prices.map((price) => (
             <div
-              className="font-heading text-figure leading-tight font-medium"
+              className="font-heading text-figure leading-tight font-semibold"
               key={price.per}
             >
               {price.amount}{" "}
-              <span className="mt-1 block label-mono text-faint">
+              <span className="mt-1 block meta font-normal tracking-normal text-faint">
                 {price.per}
               </span>
             </div>
           ))}
         </div>
         {includes.length > 0 ? (
-          <ul className="mt-4 grid gap-2 text-small leading-normal text-prose *:relative *:pl-4 *:before:absolute *:before:top-[0.7em] *:before:left-0 *:before:h-px *:before:w-2 *:before:bg-foreground">
+          <ul className="mt-4 grid gap-2 text-small leading-normal text-prose *:relative *:pl-4 *:before:absolute *:before:top-[0.7em] *:before:left-0 *:before:h-px *:before:w-2 *:before:bg-faint">
             {includes.map((item) => (
               <li key={item}>{item}</li>
             ))}

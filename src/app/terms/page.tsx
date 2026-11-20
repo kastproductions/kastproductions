@@ -15,7 +15,6 @@ import {
   UnitBody,
   UnitHead,
 } from "@/components/section";
-import { Eclipse } from "@/components/ornaments";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   company,
@@ -45,7 +44,7 @@ export default function Terms() {
 
       <main id="main">
         <Band flush>
-          <HeroFrame ornament={<Eclipse className="size-28 lg:size-36" />}>
+          <HeroFrame>
             <HeroTitle>Terms of service</HeroTitle>
             <Lede wide>
               These terms say what the prices on this site buy and what both
@@ -57,7 +56,7 @@ export default function Terms() {
 
         <Band aria-labelledby="parties-title">
           <Unit>
-            <UnitHead index={1} title="Who these terms are between" titleId="parties-title" />
+            <UnitHead title="Who these terms are between" titleId="parties-title" />
             <UnitBody>
               <Prose>
                 They are between {company.legalName}, called &ldquo;we&rdquo;
@@ -71,7 +70,7 @@ export default function Terms() {
 
         <Band aria-labelledby="sell-title">
           <Unit>
-            <UnitHead index={2} title="What we sell" titleId="sell-title" />
+            <UnitHead title="What we sell" titleId="sell-title" />
             <UnitBody>
               <Prose>
                 A build is the work of building one standing agent and
@@ -104,7 +103,7 @@ export default function Terms() {
 
         <Band aria-labelledby="price-title">
           <Unit>
-            <UnitHead index={3} title="What a price means" titleId="price-title">
+            <UnitHead title="What a price means" titleId="price-title">
               <HeadNote>
                 The prices this site prints today, and what each of them is a
                 price for.
@@ -145,7 +144,7 @@ export default function Terms() {
 
         <Band aria-labelledby="own-title">
           <Unit>
-            <UnitHead index={4} title="What you own" titleId="own-title" />
+            <UnitHead title="What you own" titleId="own-title" />
             <UnitBody>
               <Prose>
                 You own the agent and the code. It lives in your repository and
@@ -162,7 +161,7 @@ export default function Terms() {
 
         <Band aria-labelledby="authority-title">
           <Unit>
-            <UnitHead index={5} title="What the agent may do" titleId="authority-title" />
+            <UnitHead title="What the agent may do" titleId="authority-title" />
             <UnitBody>
               <Prose>
                 A named person at your company approves every outward action:
@@ -180,7 +179,7 @@ export default function Terms() {
 
         <Band aria-labelledby="promise-title">
           <Unit>
-            <UnitHead index={6} title="What we promise" titleId="promise-title" />
+            <UnitHead title="What we promise" titleId="promise-title" />
             <UnitBody>
               <Prose>
                 We do not promise uptime, and nobody honestly can for software
@@ -197,7 +196,7 @@ export default function Terms() {
 
         <Band aria-labelledby="end-title">
           <Unit>
-            <UnitHead index={7} title="Ending it" titleId="end-title" />
+            <UnitHead title="Ending it" titleId="end-title" />
             <UnitBody>
               <Prose>
                 Cancel the monthly work at the end of any month. Your agent

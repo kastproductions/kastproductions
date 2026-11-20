@@ -38,7 +38,7 @@ A buyer takes a ready-made agent (issue to pull request) or has one built for th
 ## Brand Commitments
 
 - The name is KastProductions, written as one word. The legal name is in `company` in `content.ts`.
-- The visual world is Impeccable's Neo Mirai, as ADR-0006 adapts it: light only, no Japanese text, and scenes of a future Vilnius and teams at work. `DESIGN.md` records the system.
+- The design is Signed off (ADR-0007): a white page, ink, and one signature blue for the places a person acts. Light only, and no drawn pictures: where a page needs one, it shows what the agent makes, labelled as an example. `DESIGN.md` records the system.
 - Other people's names belong to them. Flue is named in text with a link, never as a logo.
 
 ## Evidence on Hand
@@ -59,4 +59,4 @@ There is no case study, metric, press mention or named client for any agent we h
 
 ## Accessibility & Inclusion
 
-WCAG AA: body text and controls meet AA contrast, focus is visible on every interactive element, every page has a skip link and a correct heading order, and every illustration has alt text. A reader whose system asks for dark mode gets the light page, fully legible. A reader who asks for reduced motion gets the end state at once.
+WCAG AA: body text and controls meet AA contrast, focus is visible on every interactive element, every page has a skip link and a correct heading order, and every image has alt text. A reader whose system asks for dark mode gets the light page, fully legible. A reader who asks for reduced motion gets the end state at once.

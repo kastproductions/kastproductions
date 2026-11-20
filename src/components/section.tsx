@@ -8,21 +8,21 @@ import { cn } from "@/lib/utils";
 /*
  * The shapes every page is built from, so a page states what a block is and
  * never restates how it looks. A page is a stack of bands. A band holds a
- * unit: the heading column and the body column, under one black rule that
- * runs the width of the content, the way a form rules off each of its parts.
+ * unit: the heading column and the body column, under one rule that runs the
+ * width of the content.
  * Type that recurs across pages (the hero heading, a lede, a note, a pull
  * link, a row of label and body) is a component here rather than a string of
  * utilities copied into twelve files.
  */
 
-type Tone = "paper" | "panel" | "night";
+type Tone = "paper" | "panel" | "ink";
 
 const tones: Record<Tone, string> = {
   paper: "",
   panel: "bg-secondary",
-  /* `night` turns the theme over for everything inside the band: the band is
-   * set in night teal. */
-  night: "night",
+  /* `ink` turns the theme over for everything inside the band: the band is
+   * set in the ink colour. */
+  ink: "inverse",
 };
 
 /* A full-width section with the band rhythm. `flush` is the first band on a
@@ -52,7 +52,7 @@ export function Unit({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "wrap grid items-start gap-6 border-t border-foreground pt-6 lg:grid-cols-[var(--head-col)_minmax(0,1fr)] lg:gap-(--split) lg:pt-8",
+        "wrap grid items-start gap-6 border-t border-line pt-8 lg:grid-cols-[var(--head-col)_minmax(0,1fr)] lg:gap-(--split) lg:pt-10",
         className,
       )}
       {...props}
@@ -61,27 +61,20 @@ export function Unit({ className, ...props }: ComponentProps<"div">) {
 }
 
 /* The heading column: the section's h2, then whatever the page says beside
- * it. It stays in view while the body scrolls, from lg up.
- *
- * `index` numbers the section in mono over its heading, the way the Neo Mirai
- * reference labels its sections. The number is layout and says nothing the
- * heading does not, so a screen reader skips it. */
+ * it. It stays in view while the body scrolls, from lg up. */
 export function UnitHead({
   title,
   titleId,
-  index,
   children,
 }: {
   title: ReactNode;
   titleId?: string;
-  index?: number;
   children?: ReactNode;
 }) {
   return (
     <div className="flex flex-col items-start lg:sticky lg:top-24">
-      {index !== undefined && <SectionNumber className="mb-3" index={index} />}
       <h2
-        className="font-heading text-headline leading-[1.04] font-normal uppercase text-balance"
+        className="font-heading text-headline font-semibold text-balance"
         id={titleId}
       >
         {title}
@@ -105,7 +98,7 @@ export function HeadNote({ className, ...props }: ComponentProps<"p">) {
 }
 
 /* The body column. A paragraph set straight in it reads as body copy, a
- * `Note` included, and its links are the stamp red. */
+ * `Note` included, and its links are the signature blue. */
 export function UnitBody({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
@@ -131,57 +124,33 @@ export function Prose({ className, ...props }: ComponentProps<"p">) {
   );
 }
 
-/* A section's number in mono caps, two digits, with a short rule after it.
- * It is hidden from a screen reader, because it only orders what the
- * headings already name. */
-export function SectionNumber({ index, className }: { index: number; className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn("flex items-center gap-3 label-mono text-faint", className)}
-    >
-      {String(index).padStart(2, "0")}
-      <span className="h-px w-8 bg-line" />
-    </span>
-  );
-}
-
 /* The hero column: heading, lede, actions, stacked. */
 export function HeroCopy({ className, ...props }: ComponentProps<"div">) {
   return <div className={cn("flex flex-col gap-6", className)} {...props} />;
 }
 
-/* The first screen of a page that has no scene: the hero column, and one
- * ornament beside it from md up. Below md the ornament goes, because a phone
- * needs the width for the words. */
+/* The first screen of a page with words only: the hero column, left aligned
+ * at reading width. */
 export function HeroFrame({
-  ornament,
   className,
   children,
 }: {
-  ornament: ReactNode;
   className?: string;
   children: ReactNode;
 }) {
   return (
-    <div
-      className={cn(
-        "wrap grid items-end gap-(--split) md:grid-cols-[minmax(0,1fr)_auto]",
-        className,
-      )}
-    >
-      <HeroCopy>{children}</HeroCopy>
-      <div className="hidden md:block">{ornament}</div>
+    <div className={cn("wrap", className)}>
+      <HeroCopy className="max-w-[52rem]">{children}</HeroCopy>
     </div>
   );
 }
 
-/* The first screen of a page with a scene or a sheet beside its words: the
- * hero column, and the picture in a column of the same width from lg up.
- * Below lg the picture goes under the words. */
+/* The first screen of a page with an example beside its words: the hero
+ * column, and the example in the wider column from lg up. Below lg the
+ * example goes under the words. */
 export function HeroSplit({ aside, children }: { aside: ReactNode; children: ReactNode }) {
   return (
-    <div className="wrap grid grid-cols-1 items-center gap-(--split) lg:grid-cols-2">
+    <div className="wrap grid grid-cols-1 items-center gap-(--split) lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)]">
       <HeroCopy>{children}</HeroCopy>
       {aside}
     </div>
@@ -192,7 +161,7 @@ export function HeroTitle({ className, ...props }: ComponentProps<"h1">) {
   return (
     <h1
       className={cn(
-        "max-w-[17ch] font-heading text-display leading-[0.98] font-light uppercase text-balance",
+        "max-w-[18ch] font-heading text-display font-semibold text-balance",
         className,
       )}
       {...props}
@@ -217,13 +186,13 @@ export function Lede({
   );
 }
 
-/* The red rule and the wash a gate carries everywhere (DESIGN.md, the Stamp
- * Rule): a `Note` with `gate`, the stop point on a product or job page, and
- * the merge line of an example run. */
+/* The blue rule and the wash a gate carries everywhere (DESIGN.md, the
+ * Signature Rule): a `Note` with `gate`, the stop point on a product or job
+ * page, and the merge line of an example run. */
 export const gateClass = "border-l-2 border-signal bg-signal-tint";
 
 /* A side remark under a block. `gate` marks the sentence that says where a
- * person has to sign, with the red rule a gate carries everywhere. */
+ * person has to sign, with the blue rule a gate carries everywhere. */
 export function Note({
   gate = false,
   className,
@@ -233,7 +202,7 @@ export function Note({
     <p
       className={cn(
         "mt-5 max-w-(--measure) text-note leading-relaxed text-muted-foreground",
-        gate && cn(gateClass, "py-3 pr-4 pl-4 text-foreground"),
+        gate && cn(gateClass, "rounded-r-md py-3 pr-4 pl-4 text-foreground"),
         className,
       )}
       {...props}
@@ -255,7 +224,7 @@ export function Actions({ className, ...props }: ComponentProps<"div">) {
 }
 
 /* The calls to action under a hero heading: the one action a reader can
- * take, filled in the stamp red and named by what comes back, the call
+ * take, filled in the signature blue and named by what comes back, the call
  * beside it in outline, and the reply time under both. `href` carries the
  * page's own mail subject, so a click counts under the door a reader came
  * through. */
@@ -271,15 +240,15 @@ export function HeroActions({ href, cta = briefCta }: { href: string; cta?: Reac
           Book a call
         </a>
       </Actions>
-      <p className="label-mono text-faint">Reply within one working day</p>
+      <p className="meta text-faint">We reply within one working day.</p>
     </>
   );
 }
 
 const pullClass =
-  "font-heading text-note font-semibold text-foreground underline decoration-signal decoration-2 underline-offset-[0.3em] transition-colors hover:text-signal-foreground";
+  "font-heading text-note font-semibold text-signal-foreground underline decoration-signal/35 decoration-1 underline-offset-[0.3em] transition-[text-decoration-color] hover:decoration-signal";
 
-/* A link onward, underlined in the stamp red. A page on this site goes through
+/* A link onward, in the signature blue. A page on this site goes through
  * next/link; a mailbox or another site is a plain anchor. */
 export function PullLink({
   href,
@@ -306,8 +275,7 @@ const rowTextClass =
   "max-w-(--measure) text-body leading-relaxed text-prose [&_a]:text-signal-foreground";
 
 /* Rows of a label and its body on hairlines. `sequence` numbers them, which
- * only a list that really is steps in order may do. A person wrote the
- * numbers, so they are in the text face, not the mono. */
+ * only a list that really is steps in order may do. */
 export function Rows({
   sequence = false,
   className,
@@ -316,7 +284,7 @@ export function Rows({
   const classes = cn(
     rowsClass,
     sequence &&
-      "[counter-reset:seq] *:[counter-increment:seq] **:data-[slot=row-label]:before:mr-3 **:data-[slot=row-label]:before:font-medium **:data-[slot=row-label]:before:text-faint **:data-[slot=row-label]:before:tabular-nums **:data-[slot=row-label]:before:content-[counter(seq,decimal-leading-zero)]",
+      "[counter-reset:seq] *:[counter-increment:seq] **:data-[slot=row-label]:before:mr-2.5 **:data-[slot=row-label]:before:font-medium **:data-[slot=row-label]:before:text-faint **:data-[slot=row-label]:before:tabular-nums **:data-[slot=row-label]:before:content-[counter(seq)'.']",
     className,
   );
   return sequence ? (

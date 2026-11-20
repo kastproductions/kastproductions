@@ -65,7 +65,7 @@ export default function Slack() {
 
         <Band aria-labelledby="address-title" id="address">
           <Unit>
-            <UnitHead index={1} title="How your team asks it for work" titleId="address-title">
+            <UnitHead title="How your team asks it for work" titleId="address-title">
               <HeadNote>
                 The agent has a name in your workspace, the way a colleague
                 does. Nobody learns a new tool: they ask in the channel where
@@ -115,7 +115,7 @@ export default function Slack() {
 
         <Band aria-labelledby="gate-title" id="gate" tone="panel">
           <Unit>
-            <UnitHead index={2} title="Where it stops for approval" titleId="gate-title">
+            <UnitHead title="Where it stops for approval" titleId="gate-title">
               <HeadNote>
                 Before the agent does anything that reaches outside your
                 company, it stops and waits for a named person. In Slack, that
@@ -167,7 +167,7 @@ export default function Slack() {
 
         <Band aria-labelledby="prerequisites-title" id="prerequisites">
           <Unit>
-            <UnitHead index={3} title="What you provide" titleId="prerequisites-title">
+            <UnitHead title="What you provide" titleId="prerequisites-title">
               <HeadNote>
                 Three things, all of them yours. We set the agent up inside
                 them with you, so the account, the keys and the code are yours
@@ -212,7 +212,7 @@ export default function Slack() {
 
         <Band aria-labelledby="teams-title" id="teams">
           <Unit>
-            <UnitHead index={4} title="If your team is in Microsoft Teams" titleId="teams-title">
+            <UnitHead title="If your team is in Microsoft Teams" titleId="teams-title">
               <HeadNote>
                 Your team uses it the same way: a person mentions the agent in
                 a channel, and it replies in that conversation. The setup on
@@ -251,7 +251,7 @@ export default function Slack() {
 
         <Band aria-labelledby="slack-cost-title" id="cost" tone="panel">
           <Unit>
-            <UnitHead index={5} title="What it costs" titleId="slack-cost-title">
+            <UnitHead title="What it costs" titleId="slack-cost-title">
               <HeadNote>
                 An agent in Slack is built around the work your team asks it
                 for, so it is a custom agent, at the custom price.

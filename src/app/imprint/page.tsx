@@ -10,7 +10,6 @@ import {
   UnitBody,
   UnitHead,
 } from "@/components/section";
-import { Eclipse } from "@/components/ornaments";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { cn } from "@/lib/utils";
 import { company, contactEmail, imprintPage } from "../content";
@@ -54,7 +53,7 @@ export default function Imprint() {
 
       <main id="main">
         <Band flush>
-          <HeroFrame ornament={<Eclipse className="size-28 lg:size-36" />}>
+          <HeroFrame>
             <HeroTitle>Imprint</HeroTitle>
           </HeroFrame>
         </Band>

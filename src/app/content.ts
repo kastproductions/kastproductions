@@ -145,41 +145,6 @@ export const references = [
 ];
 
 /* ---------------------------------------------------------------------------
- * The scenes
- *
- * The illustrations the pages place: one hero scene of a future Vilnius, and
- * four scenes of teams at work with an agent. They are drawn by hand as inline
- * SVG in `src/components/scenes.tsx`, so they add no request and paint with
- * the theme tokens. They are pictures and prove nothing: no scene shows a client,
- * a readable product screen or a figure, so none of them needs the "Example"
- * label the Claims section asks of synthetic runs.
- *
- * The alt text describes what each scene shows, because a screen reader
- * reads it in place of the picture. A scene component takes its own entry
- * here as its accessible name.
- * ------------------------------------------------------------------------- */
-
-export type Scene = { alt: string };
-
-export const scenes = {
-  hero: {
-    alt: "Vilnius at sunset, seen from a terrace above the old town. Red roofs, the white cathedral bell tower, the brick spires of St Anne's Church and Gediminas' Tower on its hill stand in front of tall new towers across the river. A large red sun sits low in a gold sky, and a few people stand at the railing and look at the city.",
-  },
-  supportDesk: {
-    alt: "A support team at a long desk in the evening light. Three people with headsets answer customers on their screens, while the agent sorts the next requests into their queues. A tall window behind them shows the old town spires and a low red sun.",
-  },
-  financeDesk: {
-    alt: "A finance desk late at night. One person checks a ledger under a desk lamp, and a colleague brings a folder. On the screen, the agent marks one row that does not match. The window shows the lit city and the moon.",
-  },
-  pullRequestReview: {
-    alt: "An engineer reviews a pull request at a desk under a hanging lamp. The large screen shows the changed lines, and a second screen shows the agent's checks, all passed. A red stamp to approve the merge waits by the engineer's hand, and a colleague stands near the desk to look.",
-  },
-  shopFloor: {
-    alt: "The floor of an online shop. One person packs an order at a table, and another pushes a cart of parcels past tall shelves. The agent above them matches each parcel to its order. High windows let in the low sun.",
-  },
-} satisfies Record<string, Scene>;
-
-/* ---------------------------------------------------------------------------
  * The offer
  *
  * One promise, two doors. Fit leads, convenience follows, and correctness sits
@@ -494,10 +459,6 @@ export type JobPage = PageRecord & {
   /* The words the two job lists link to this page with. Its own, so a reader
    * meeting five of these rows hears five different links. */
   more: string;
-  /* The room scene the page's first screen shows, where one of the set in
-   * `scenes` shows this job's team at work. A job with no matching scene
-   * shows an ornament there instead. */
-  scene?: "supportDesk" | "financeDesk" | "shopFloor";
 };
 
 export const contentPublishing: JobPage = {
@@ -627,7 +588,6 @@ export const supportTicketTriage: JobPage = {
   ],
   subject: "Support ticket triage",
   more: "How the triage works",
-  scene: "supportDesk",
 };
 
 export const failedPaymentRecovery: JobPage = {
@@ -673,7 +633,6 @@ export const failedPaymentRecovery: JobPage = {
   ],
   subject: "Failed payment recovery",
   more: "How the follow-up works",
-  scene: "financeDesk",
 };
 
 export const shopifyOperations: JobPage = {
@@ -713,7 +672,6 @@ export const shopifyOperations: JobPage = {
   ],
   subject: "Shopify operations",
   more: "How the store is watched",
-  scene: "shopFloor",
 };
 
 export const jobs: Job[] = [

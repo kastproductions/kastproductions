@@ -14,7 +14,6 @@ import {
   UnitBody,
   UnitHead,
 } from "@/components/section";
-import { Eclipse } from "@/components/ornaments";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -65,7 +64,7 @@ const identity = [
 /* A machine string is set in mono at the size of the values around it. */
 const machineValue = "font-mono";
 
-/* A link in the copy is set in the stamp red, as on the legal pages. The two
+/* A link in the copy is set in the signature blue, as on the legal pages. The two
  * buttons are not copy and keep their own colours. */
 const signalLinks = "[&_a]:text-signal-foreground";
 
@@ -75,7 +74,7 @@ export default function Contact() {
       <SiteHeader route={contactPage.path} />
       <main id="main">
         <Band flush>
-          <HeroFrame ornament={<Eclipse className="size-28 lg:size-36" />}>
+          <HeroFrame>
             <HeroTitle>Book a call, or write to us.</HeroTitle>
             <Lede wide className={signalLinks}>
               Write to {mailbox} and describe the work you want an agent to
@@ -95,7 +94,7 @@ export default function Contact() {
 
         <Band aria-labelledby="next-title">
           <Unit>
-            <UnitHead index={1} title="What happens after you write" titleId="next-title" />
+            <UnitHead title="What happens after you write" titleId="next-title" />
             <UnitBody>
               <FactRows>
                 <Row stack>
@@ -128,7 +127,7 @@ export default function Contact() {
 
         <Band aria-labelledby="identity-title">
           <Unit>
-            <UnitHead index={2} title="Who you are writing to" titleId="identity-title">
+            <UnitHead title="Who you are writing to" titleId="identity-title">
               <HeadNote className={signalLinks}>
                 The full register entry is on the{" "}
                 <Link href={imprintPage.path}>imprint</Link>.

@@ -2,9 +2,9 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 /*
- * A sheet: a slip of rice paper on the gold, one drawn edge, no shadow. `lg`
- * is the size every door, plan and reference on the site uses. A card with
- * the `night` utility, or inside a band that has it, is set in night teal.
+ * A sheet: a white card with one grey edge and no shadow. `lg` is the size
+ * every plan and reference on the site uses. A card with the `inverse`
+ * utility, or inside a band that has it, is set in the ink colour.
  */
 function Card({
   className,
