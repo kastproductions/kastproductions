@@ -92,13 +92,14 @@ export default function Backlog() {
 
             <figure
               aria-labelledby="example-run-title"
+              data-example
               className="overflow-hidden rounded-md border border-foreground bg-card"
             >
               <figcaption className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-foreground px-5 py-3.5">
-                <span className="font-heading text-[0.95rem] font-semibold" id="example-run-title">
+                <span className="font-heading text-note font-semibold" id="example-run-title">
                   Issue 212
                 </span>
-                <span className="font-mono text-[0.78rem] text-faint">
+                <span className="font-mono text-caption text-faint">
                   Add CSV export to invoices
                 </span>
                 <Badge className="ml-auto" variant="signal">
@@ -112,12 +113,12 @@ export default function Backlog() {
                     key={line.label}
                   >
                     <dt className="pt-0.5 label-mono text-faint">{line.label}</dt>
-                    <dd className="text-[0.95rem] leading-snug">{line.value}</dd>
+                    <dd className="text-note leading-snug">{line.value}</dd>
                   </div>
                 ))}
                 <div className="grid grid-cols-[7.5rem_minmax(0,1fr)] gap-3 border-l-2 border-signal bg-signal-tint px-5 py-3">
                   <dt className="pt-0.5 label-mono text-signal-foreground">Merge</dt>
-                  <dd className="text-[0.95rem] leading-snug font-semibold">
+                  <dd className="text-note leading-snug font-semibold">
                     Waits for our engineer to sign it
                   </dd>
                 </div>
@@ -243,12 +244,12 @@ export default function Backlog() {
           <div className="wrap grid items-end gap-(--split) lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
             <div className="flex flex-col gap-6">
               <h2
-                className="max-w-[18ch] font-heading text-[clamp(2.2rem,1.2rem+3.4vw,4.2rem)] leading-[0.98] font-light uppercase text-balance"
+                className="max-w-[18ch] font-heading text-display leading-[0.98] font-light uppercase text-balance"
                 id="cta-title"
               >
                 Send us one issue from your backlog
               </h2>
-              <p className="max-w-[52ch] text-[1.08rem] leading-relaxed text-prose">
+              <p className="max-w-[52ch] text-body leading-relaxed text-prose">
                 Pick one your team keeps putting off. We reply within one
                 working day with a short spec and a fixed price.
               </p>
@@ -262,7 +263,7 @@ export default function Backlog() {
                 </a>
               </Actions>
             </div>
-            <div className="grid gap-3 text-[0.92rem] text-prose *:border-t *:border-hairline *:pt-3 [&_b]:block [&_b]:font-semibold [&_b]:text-foreground">
+            <div className="grid gap-3 text-note text-prose *:border-t *:border-hairline *:pt-3 [&_b]:block [&_b]:font-semibold [&_b]:text-foreground">
               <div>
                 <b>Write to</b>
                 <a

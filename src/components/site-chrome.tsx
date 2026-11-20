@@ -38,7 +38,7 @@ type Chrome = { route?: string };
 function Brand({ route }: Chrome) {
   return (
     <Link
-      className="inline-flex min-h-11 shrink-0 items-center gap-2.5 font-heading text-[0.98rem] font-medium tracking-[0.06em] uppercase no-underline"
+      className="inline-flex min-h-11 shrink-0 items-center gap-2.5 font-heading text-note font-medium tracking-[0.06em] uppercase no-underline"
       href={homePage.path}
       prefetch={route === homePage.path ? false : undefined}
     >
@@ -145,7 +145,7 @@ export function SiteHeader({ route }: Chrome) {
 
         <nav aria-label="Pages" className="ml-auto hidden items-center gap-5 md:flex lg:gap-7">
           <NavLinks
-            linkClassName="relative inline-flex min-h-11 items-center label-mono text-[0.68rem] text-prose no-underline transition-colors after:absolute after:bottom-1.5 after:left-1/2 after:size-1.25 after:-translate-x-1/2 after:translate-y-1 after:rounded-full after:bg-signal after:opacity-0 after:transition-[opacity,translate] after:duration-200 hover:text-foreground hover:after:translate-y-0 hover:after:opacity-100 aria-[current=page]:text-foreground aria-[current=page]:after:translate-y-0 aria-[current=page]:after:opacity-100"
+            linkClassName="relative inline-flex min-h-11 items-center label-mono text-label-sm text-prose no-underline transition-colors after:absolute after:bottom-1.5 after:left-1/2 after:size-1.25 after:-translate-x-1/2 after:translate-y-1 after:rounded-full after:bg-signal after:opacity-0 after:transition-[opacity,translate] after:duration-200 hover:text-foreground hover:after:translate-y-0 hover:after:opacity-100 aria-[current=page]:text-foreground aria-[current=page]:after:translate-y-0 aria-[current=page]:after:opacity-100"
             route={route}
           />
         </nav>
@@ -156,7 +156,7 @@ export function SiteHeader({ route }: Chrome) {
 
         <MobileNav>
           <NavLinks
-            linkClassName="block border-b border-hairline py-3.5 font-heading text-[1.05rem] font-medium tracking-[0.04em] uppercase no-underline aria-[current=page]:text-signal-foreground"
+            linkClassName="block border-b border-hairline py-3.5 font-heading text-body font-medium tracking-[0.04em] uppercase no-underline aria-[current=page]:text-signal-foreground"
             route={route}
           />
           <Actions className="mt-4 *:flex-1">
@@ -172,7 +172,7 @@ function FooterColumn({ title, children }: { title: string; children: ReactNode 
   return (
     <div>
       <h2 className="mb-4 label-mono text-faint">{title}</h2>
-      <ul className="grid gap-1 text-foreground [&_a]:inline-flex [&_a]:min-h-8 [&_a]:items-center [&_a]:text-[0.98rem] [&_a]:no-underline [&_a]:decoration-signal [&_a]:decoration-1 [&_a]:underline-offset-[0.3em] [&_a:hover]:underline [&_a[aria-current=page]]:underline">
+      <ul className="grid gap-1 text-foreground [&_a]:inline-flex [&_a]:min-h-8 [&_a]:items-center [&_a]:text-note [&_a]:no-underline [&_a]:decoration-signal [&_a]:decoration-1 [&_a]:underline-offset-[0.3em] [&_a:hover]:underline [&_a[aria-current=page]]:underline">
         {children}
       </ul>
     </div>
@@ -181,7 +181,14 @@ function FooterColumn({ title, children }: { title: string; children: ReactNode 
 
 export function SiteFooter({ route }: Chrome) {
   return (
-    <footer className="night mt-(--band) pt-[clamp(2.5rem,5vw,4rem)] pb-10" id="contact">
+    /* No margin above: the last band's own padding is the gap, so a night
+     * band runs straight into the night footer with no strip of paper between
+     * them, and the hairline marks where the page ends. The footer stacks over
+     * the vertical rail, so on a short page the rail goes under it. */
+    <footer
+      className="night relative z-1 border-t border-hairline pt-[clamp(2.5rem,5vw,4rem)] pb-10"
+      id="contact"
+    >
       <div className="wrap">
         {/* The nameplate, and the sun setting on the rule under it. */}
         <div className="mb-10 flex items-end justify-between gap-6 border-b border-hairline">
@@ -192,10 +199,11 @@ export function SiteFooter({ route }: Chrome) {
         </div>
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.6fr)_repeat(4,minmax(0,1fr))]">
           <div className="flex flex-col items-start gap-4 sm:col-span-full lg:col-span-1">
-            <p className="max-w-[30ch] text-[0.95rem] leading-relaxed text-muted-foreground">
-              Software factory on demand. One standing agent for one company,
-              deployed into that company&rsquo;s own accounts, stopped at an
-              approval gate before anything reaches a customer.
+            <p className="max-w-[30ch] text-note leading-relaxed text-muted-foreground">
+              Software factory on demand. We build one agent for one company,
+              deploy it into that company&rsquo;s own accounts and keep it
+              correct. Anything it sends to a customer waits for a named person
+              to approve it.
             </p>
             <PullLink href={`mailto:${contactEmail}`}>{contactEmail}</PullLink>
           </div>
@@ -298,18 +306,20 @@ export function SiteFooter({ route }: Chrome) {
  * The vertical rail of the reference, in the margin beside the first screen
  * once the margin is wide enough for it: the eclipse, a line, and the name
  * and the city set down the page in mono caps. It scrolls away with the first
- * screen, as the reference's rail does, so it never crosses a night band. It
- * repeats what the footer states, so a screen reader skips it.
+ * screen, as the reference's rail does, so it never crosses a night band. On
+ * a page shorter than the rail, the footer stacks over it and the rail ends
+ * at the footer's edge. It repeats what the footer states, so a screen reader
+ * skips it.
  */
 export function Rail() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute top-48 left-[max(1.25rem,calc((100vw-78rem)/2-4.5rem))] z-40 hidden flex-col items-center gap-4 text-faint rail:flex"
+      className="pointer-events-none absolute top-48 left-[max(1.25rem,calc((100vw-78rem)/2-4.5rem))] z-0 hidden flex-col items-center gap-4 text-faint rail:flex"
     >
       <Eclipse className="size-7" />
       <span className="h-20 w-px bg-line" />
-      <span className="label-mono text-[0.66rem] [writing-mode:vertical-rl]" translate="no">
+      <span className="label-mono text-label-sm [writing-mode:vertical-rl]" translate="no">
         {brand} · {location.city}, {location.country}
       </span>
       <span className="h-20 w-px bg-line" />

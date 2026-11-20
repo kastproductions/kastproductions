@@ -29,12 +29,12 @@ export function StopPoint({
       role="group"
     >
       <h3
-        className="font-heading text-[1.05rem] font-semibold text-balance text-foreground"
+        className="font-heading text-body font-semibold text-balance text-foreground"
         id={titleId}
       >
         Where it stops for a person
       </h3>
-      <p className="mt-2 text-[1.05rem] leading-relaxed text-foreground">{children}</p>
+      <p className="mt-2 text-body leading-relaxed text-foreground">{children}</p>
     </div>
   );
 }

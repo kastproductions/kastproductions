@@ -233,7 +233,7 @@ export default function Home() {
               </ul>
               <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,16rem)]">
                 <AgentConsole />
-                <p className="text-[0.92rem] leading-relaxed text-muted-foreground">
+                <p className="text-note leading-relaxed text-muted-foreground">
                   What the first rule looks like in a chat channel. The agent
                   drafts the follow-ups, and sending waits for a person. The
                   names and figures in it are made up.
@@ -301,7 +301,7 @@ export default function Home() {
               <div>
                 <figure className="border-l border-foreground pl-6 sm:pl-8">
                   <blockquote>
-                    <p className="text-[clamp(1.2rem,1rem+0.8vw,1.55rem)] leading-[1.4] text-pretty">
+                    <p className="text-quote leading-[1.4] text-pretty">
                       &ldquo;{reference.quote}&rdquo;
                     </p>
                   </blockquote>
@@ -315,9 +315,9 @@ export default function Home() {
                       src={reference.portrait}
                       width={176}
                     />
-                    <span className="flex flex-col text-[0.92rem] leading-[1.35]">
+                    <span className="flex flex-col text-note leading-[1.35]">
                       <b className="font-heading font-semibold">{reference.name}</b>
-                      <span className="text-[0.84rem] text-faint">{reference.position}</span>
+                      <span className="text-small text-faint">{reference.position}</span>
                     </span>
                   </figcaption>
                 </figure>
@@ -364,12 +364,12 @@ export default function Home() {
           <div className="wrap grid items-end gap-(--split) lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
             <div className="flex flex-col gap-6">
               <h2
-                className="max-w-[18ch] font-heading text-[clamp(2.2rem,1.2rem+3.4vw,4.2rem)] leading-[0.98] font-light uppercase text-balance"
+                className="max-w-[18ch] font-heading text-display leading-[0.98] font-light uppercase text-balance"
                 id="cta-title"
               >
                 Tell us the work you want off your team
               </h2>
-              <p className="max-w-[52ch] text-[1.08rem] leading-relaxed text-prose">
+              <p className="max-w-[52ch] text-body leading-relaxed text-prose">
                 A few lines are enough. Within one working day you get a short
                 spec and one fixed price for the build.
               </p>
@@ -383,7 +383,7 @@ export default function Home() {
                 </a>
               </Actions>
             </div>
-            <div className="grid gap-3 text-[0.92rem] text-prose *:border-t *:border-hairline *:pt-3 [&_b]:block [&_b]:font-semibold [&_b]:text-foreground">
+            <div className="grid gap-3 text-note text-prose *:border-t *:border-hairline *:pt-3 [&_b]:block [&_b]:font-semibold [&_b]:text-foreground">
               <div>
                 <b>Write to</b>
                 <a
@@ -420,5 +420,5 @@ export default function Home() {
 const pointGrid =
   "grid min-w-0 md:grid-cols-2 md:gap-x-(--split) *:border-t *:border-hairline *:py-5 *:first:border-t-0 *:first:pt-0 md:*:nth-2:border-t-0 md:*:nth-2:pt-0";
 const pointTitle =
-  "mb-1.5 font-heading text-[1.1rem] font-semibold text-balance";
-const pointText = "text-[0.97rem] leading-relaxed text-prose";
+  "mb-1.5 font-heading text-title font-semibold text-balance";
+const pointText = "text-note leading-relaxed text-prose";

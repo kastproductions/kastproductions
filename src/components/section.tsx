@@ -78,7 +78,7 @@ export function UnitHead({
     <div className="flex flex-col items-start lg:sticky lg:top-24">
       {index !== undefined && <SectionNumber className="mb-3" index={index} />}
       <h2
-        className="font-heading text-[clamp(1.6rem,1.1rem+1.5vw,2.4rem)] leading-[1.04] font-normal uppercase text-balance"
+        className="font-heading text-headline leading-[1.04] font-normal uppercase text-balance"
         id={titleId}
       >
         {title}
@@ -93,7 +93,7 @@ export function HeadNote({ className, ...props }: ComponentProps<"p">) {
   return (
     <p
       className={cn(
-        "mt-4 max-w-(--measure) text-[0.98rem] leading-relaxed text-muted-foreground lg:max-w-[36ch]",
+        "mt-4 max-w-(--measure) text-note leading-relaxed text-muted-foreground lg:max-w-[36ch]",
         className,
       )}
       {...props}
@@ -107,7 +107,7 @@ export function UnitBody({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "min-w-0 [&>p]:max-w-(--measure) [&>p]:text-[1.05rem] [&>p]:leading-[1.65] [&>p]:text-prose [&>p_a]:text-signal-foreground [&>p+p]:mt-4",
+        "min-w-0 [&>p]:max-w-(--measure) [&>p]:text-body [&>p]:leading-[1.65] [&>p]:text-prose [&>p_a]:text-signal-foreground [&>p+p]:mt-4",
         className,
       )}
       {...props}
@@ -120,7 +120,7 @@ export function Prose({ className, ...props }: ComponentProps<"p">) {
   return (
     <p
       className={cn(
-        "mt-4 max-w-(--measure) text-[1.05rem] leading-[1.65] text-prose first:mt-0 [&_a]:text-signal-foreground",
+        "mt-4 max-w-(--measure) text-body leading-[1.65] text-prose first:mt-0 [&_a]:text-signal-foreground",
         className,
       )}
       {...props}
@@ -177,7 +177,7 @@ export function HeroTitle({ className, ...props }: ComponentProps<"h1">) {
   return (
     <h1
       className={cn(
-        "max-w-[17ch] font-heading text-[clamp(2.3rem,1.2rem+3.6vw,4.6rem)] leading-[0.98] font-light uppercase text-balance",
+        "max-w-[17ch] font-heading text-display leading-[0.98] font-light uppercase text-balance",
         className,
       )}
       {...props}
@@ -193,7 +193,7 @@ export function Lede({
   return (
     <p
       className={cn(
-        "max-w-[54ch] text-[clamp(1.1rem,1rem+0.4vw,1.28rem)] leading-[1.5] text-pretty text-prose",
+        "max-w-[54ch] text-lede leading-[1.5] text-pretty text-prose",
         wide && "max-w-(--measure)",
         className,
       )}
@@ -212,7 +212,7 @@ export function Note({
   return (
     <p
       className={cn(
-        "mt-5 max-w-(--measure) text-[0.92rem] leading-relaxed text-muted-foreground",
+        "mt-5 max-w-(--measure) text-note leading-relaxed text-muted-foreground",
         gate && "border-l-2 border-signal bg-signal-tint py-3 pr-4 pl-4 text-foreground",
         className,
       )}
@@ -235,7 +235,7 @@ export function Actions({ className, ...props }: ComponentProps<"div">) {
 }
 
 const pullClass =
-  "font-heading text-[0.95rem] font-semibold text-foreground underline decoration-signal decoration-2 underline-offset-[0.3em] transition-colors hover:text-signal-foreground";
+  "font-heading text-note font-semibold text-foreground underline decoration-signal decoration-2 underline-offset-[0.3em] transition-colors hover:text-signal-foreground";
 
 /* A link onward, underlined in the stamp red. A page on this site goes through
  * next/link; a mailbox or another site is a plain anchor. */
@@ -259,9 +259,9 @@ export function PullLabel({ className, ...props }: ComponentProps<"span">) {
 
 const rowsClass = "flex flex-col divide-y divide-hairline";
 const rowLabelClass =
-  "font-heading text-[1.05rem] font-semibold text-foreground";
+  "font-heading text-body font-semibold text-foreground";
 const rowTextClass =
-  "max-w-(--measure) text-[1rem] leading-relaxed text-prose [&_a]:text-signal-foreground";
+  "max-w-(--measure) text-body leading-relaxed text-prose [&_a]:text-signal-foreground";
 
 /* Rows of a label and its body on hairlines. `sequence` numbers them, which
  * only a list that really is steps in order may do. A person wrote the
@@ -326,7 +326,7 @@ export function RowText({ className, ...props }: ComponentProps<"p">) {
 export function RowNote({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
-      className={cn("font-mono text-[0.78rem] text-faint", className)}
+      className={cn("font-mono text-caption text-faint", className)}
       {...props}
     />
   );

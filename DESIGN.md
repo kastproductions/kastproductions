@@ -35,9 +35,24 @@ typography:
     fontWeight: 400
     lineHeight: 1.04
     letterSpacing: "0em"
+  figure:
+    fontFamily: "Chakra Petch, Noto Sans, system-ui, sans-serif"
+    fontSize: "1.9rem"
+    fontWeight: 500
+    lineHeight: 1
+  quote:
+    fontFamily: "Zen Old Mincho, Noto Serif, Georgia, serif"
+    fontSize: "clamp(1.2rem, 1rem + 0.8vw, 1.55rem)"
+    fontWeight: 400
+    lineHeight: 1.4
+  lede:
+    fontFamily: "Zen Old Mincho, Noto Serif, Georgia, serif"
+    fontSize: "clamp(1.1rem, 1rem + 0.4vw, 1.28rem)"
+    fontWeight: 400
+    lineHeight: 1.5
   title:
     fontFamily: "Chakra Petch, Noto Sans, system-ui, sans-serif"
-    fontSize: "1.05rem"
+    fontSize: "1.15rem"
     fontWeight: 600
     lineHeight: 1.25
   body:
@@ -45,9 +60,30 @@ typography:
     fontSize: "1.05rem"
     fontWeight: 400
     lineHeight: 1.65
+  note:
+    fontFamily: "Zen Old Mincho, Noto Serif, Georgia, serif"
+    fontSize: "0.95rem"
+    fontWeight: 400
+    lineHeight: 1.6
+  small:
+    fontFamily: "Zen Old Mincho, Noto Serif, Georgia, serif"
+    fontSize: "0.88rem"
+    fontWeight: 400
+    lineHeight: 1.5
+  caption:
+    fontFamily: "Azeret Mono, ui-monospace, monospace"
+    fontSize: "0.8rem"
+    fontWeight: 400
+    lineHeight: 1.4
   label:
     fontFamily: "Azeret Mono, ui-monospace, monospace"
     fontSize: "0.72rem"
+    fontWeight: 500
+    lineHeight: 1.3
+    letterSpacing: "0.08em"
+  label-sm:
+    fontFamily: "Azeret Mono, ui-monospace, monospace"
+    fontSize: "0.66rem"
     fontWeight: 500
     lineHeight: 1.3
     letterSpacing: "0.08em"
@@ -174,11 +210,19 @@ All three load through `next/font/google` in `src/app/layout.tsx`, so the export
 
 ### Hierarchy
 
-- **Display** (Chakra Petch 300, caps, `clamp(2.3rem, 1.2rem + 3.6vw, 4.6rem)`, line-height 0.98): the one h1 of a page (`HeroTitle`).
-- **Headline** (Chakra Petch 400, caps, `clamp(1.6rem, 1.1rem + 1.5vw, 2.4rem)`, line-height 1.04): a section's h2 (`UnitHead`).
-- **Title** (Chakra Petch 500 to 600, sentence case, 1.05rem to 1.65rem): a card title, a row label, an accordion question, a price.
-- **Body** (Zen Old Mincho 400, 1.05rem, line-height 1.65, max 66ch): prose and every answer.
-- **Label** (Azeret Mono 500, caps, 0.66rem to 0.76rem, tracking 0.08em): buttons, navigation, badges, column titles in the footer, the price unit, the registration line. The `label-mono` utility sets it.
+The ramp is a set of `--text-*` tokens in `src/app/globals.css`, used as `text-display`, `text-note` and so on. A size off the ramp is drift: take the nearest step. `src/lib/utils.ts` names every step for `cn`.
+
+- **Display** (`text-display`, Chakra Petch 300, caps, `clamp(2.3rem, 1.2rem + 3.6vw, 4.6rem)`, line-height 0.98): the one h1 of a page (`HeroTitle`), and the heading of a closing night band.
+- **Headline** (`text-headline`, Chakra Petch 400, caps, `clamp(1.6rem, 1.1rem + 1.5vw, 2.4rem)`, line-height 1.04): a section's h2 (`UnitHead`).
+- **Figure** (`text-figure`, Chakra Petch 500, 1.9rem): the price on a plan card.
+- **Quote** (`text-quote`, Zen Old Mincho, `clamp(1.2rem, 1rem + 0.8vw, 1.55rem)`): the one reference the home page quotes.
+- **Lede** (`text-lede`, Zen Old Mincho, `clamp(1.1rem, 1rem + 0.4vw, 1.28rem)`): the paragraph under the h1.
+- **Title** (`text-title`, 1.15rem): the title of a point in the safety section, in Chakra Petch 600, and a reference's quote on the about page, in the serif. A row label, a card title and an accordion question take Chakra Petch 600 at `text-body`.
+- **Body** (`text-body`, Zen Old Mincho 400, 1.05rem, line-height 1.65, max 66ch): prose and every answer.
+- **Note** (`text-note`, 0.95rem): a side remark, the paragraph beside a section's h2, a footer link.
+- **Small** (`text-small`, 0.88rem): the words inside a form or a record, such as the console's exchange or a plan's list.
+- **Caption** (`text-caption`, Azeret Mono, 0.8rem): a machine string, such as the systems under a job or an issue key.
+- **Label** (`text-label`, Azeret Mono 500, caps, 0.72rem, tracking 0.08em): buttons, badges in a sentence, column titles in the footer, the price unit, the registration line. The `label-mono` utility sets it. **Label small** (`text-label-sm`, 0.66rem) is the header's links, a badge and the vertical rail.
 
 ### Named Rules
 
@@ -234,7 +278,7 @@ Paper is cut, not moulded: every radius token resolves to 2px or less, so a corn
 
 ### Navigation
 
-The header holds the seal nameplate, the page links in mono caps (0.68rem, 44px tall), and two calls to action. A dot in stamp red rises under a link on hover and stays under the current page. Below `md`, the links fold into a sheet that drops from the top; its links are display caps on hairlines, and the current page is set in stamp red.
+The header holds the seal nameplate, the page links in mono caps (`text-label-sm`, 44px tall), and two calls to action. A dot in stamp red rises under a link on hover and stays under the current page. Below `md`, the links fold into a sheet that drops from the top; its links are display caps on hairlines, and the current page is set in stamp red.
 
 ### Skip Link
 

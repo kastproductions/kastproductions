@@ -25,8 +25,8 @@ together. Breaking one is a bug rather than a variation.
 1. **A rule and a sheet are the only structure.** A `Band` is one course of
    the page. A `Unit` splits it into a head column and a body column under one
    ink rule that runs the width of the content. A sheet is a rice-paper panel
-   with a drawn edge and no shadow: a `Card` for the doors and the ways to
-   buy, and the hero slip and the run record. It is reserved for the things a
+   with a drawn edge and no shadow: a `Card` for the ways to buy, and the
+   example console and the run records. It is reserved for the things a
    reader compares or acts on. Rows and lists sit on hairlines with no box
    around them. The ornaments (the KP seal, the sun disc, the eclipse and the
    vertical rail) are drawn in `src/components/ornaments.tsx` and
@@ -45,9 +45,10 @@ together. Breaking one is a bug rather than a variation.
 A heading carries no emphasis of its own: no italic word, no coloured full
 stop. Its weight and size are the emphasis.
 
-Motion is one orchestrated entrance per page, on load: the hero slip rises
-part by part and ends by drawing its signature line, or the run record ticks
-in on a product page. A page carries one or the other, never both, and nothing
+Motion is one orchestrated entrance per page, on load: the example console
+rises part by part and ends by drawing its signature line (in the home page's
+safety section and in the Slack page's hero), or the run record ticks in on a
+product page. A page carries one or the other, never both, and nothing
 else on the site moves unless a reader asks it to. `prefers-reduced-motion`
 gets the end state immediately.
 
@@ -56,7 +57,11 @@ agent takes in order earn `<Rows sequence>`: the four stations of a run on a
 product page, the steps on a job page, and the steps of a build on the home
 page.
 
-Every style is a utility in the component that draws it. A shape that recurs
+Every style is a utility in the component that draws it. A font size is a
+step on the type ramp in `globals.css` (`text-display`, `text-headline`,
+`text-body`, `text-note`, `text-caption`, `text-label` and the rest, listed
+in `DESIGN.md`), never an arbitrary value: the Impeccable detector flags a
+size off the ramp. A shape that recurs
 across pages is a component in `src/components/section.tsx` or
 `src/components/plan-card.tsx`, and a control is a shadcn/ui component in
 `src/components/ui`, themed to the palette in its own source. Add or update
@@ -97,8 +102,11 @@ src/app/
                        #   channels, prices, the founder, questions, closing call to
                        #   action;
                        #   metadata and graph built from its page record
-  custom/page.tsx      # The custom door: the jobs we take, channels, price; metadata
-                       #   and graph built from its page record
+  custom/page.tsx      # The custom door: the jobs we take, how a custom build goes,
+                       #   what the spec settles, channels, price; metadata and graph
+                       #   built from its page record
+  backlog/page.tsx     # Our coding agents on a client's backlog: Managed and Sprint,
+                       #   their prices from `backlogPlans`, and an example run
   content-publishing/page.tsx
   social-scheduling/page.tsx
   support-ticket-triage/page.tsx
@@ -176,8 +184,11 @@ src/components/
   job-page.tsx         # One job we take, on its own page
   job-rows.tsx         # The jobs we take, as rows, on the home page and the door
   run-record.tsx       # The example run, on a product page
-  agent-console.tsx    # The example agent in the home page hero: a sign-off slip
-                       #   with its nameplate, the exchange, and the gate it stops at
+  agent-console.tsx    # The example agent, in the home page's safety section and the
+                       #   Slack page's hero: a sign-off slip with its nameplate, the
+                       #   exchange, and the gate it stops at
+  scenes.tsx           # The five scenes, drawn by hand as inline SVG from the tokens
+  stop-point.tsx       # Where an agent stops for a person, on a product or job page
   analytics.tsx        # Vercel Web Analytics: the tracker this deployment serves,
                        #   and one event per call to action clicked
 src/lib/
@@ -220,6 +231,15 @@ tests/
                        #   as `content.ts` holds them
   definition-lists.test.ts  # Everything inside a definition list sits in a term or a
                        #   value, so a screen reader reads it with its term
+  images.test.ts       # Every img has alt text, a size and a file; every scene a name
+  examples.test.ts     # Every synthetic part carries the Example label
+  accessibility.test.ts  # No heading skips a level; every drawing is named or hidden
+  chrome.test.ts       # The header and the footer use no internal term
+  job-pages.test.ts    # A job page and the product page read in one order
+  custom-slack-eval.test.ts  # The custom, Slack and eval suite pages: buyer words,
+                       #   one custom price, the Flue links, no price on an explainer
+  theme.test.ts        # One light theme, the fonts from the export, every colour
+                       #   through a token, the skip link and the ornaments
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
@@ -253,7 +273,7 @@ Every word of both doors and of every job we take lives in `src/app/content.ts`,
 
 The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the upkeep the home page's build steps describe: the eval suite on every change, the fixes and the monthly report. Change a number here only when the business changes it.
 
-The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `homePlans` and the backlog page `backlogPlans`, the plans filed under each page's path, so a plan a page does not print is a plan its graph does not claim. One offer states one number, which is the `amount`, so a way to buy whose `per` words carry a second figure ("to build, then from €1,500 a month") offers its build floor and leaves the monthly one in prose. `custom.prices` and a product's prices avoid that by holding the build and the monthly price as two prices, and a way to buy would have to print them as two lines to do the same.
+The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `homePlans` and the backlog page `backlogPlans`, the plans filed under each page's path, so a plan a page does not print is a plan its graph does not claim. One offer states one number, which is the `amount`, so a way to buy whose `per` words carry a second figure ("to build, then from €1,500 a month") offers its build floor and leaves the monthly one in prose. `custom.prices` and a product's prices avoid that by holding the build and the monthly price as two prices, and a way to buy would have to print them as two lines to do the same. The Self-run and Custom agent plans build their one line from those two prices (`buildThenMonthly` in `content.ts`), so each number is written once.
 
 `company` holds what the Lithuanian register of legal entities holds: the legal name, the legal form, the registration code, the VAT number, the registered address and the director. The imprint prints those six, and `contactEmail` under them so a reader who has finished checking can write; nothing else goes on that page. `tests/legal.test.ts` fails if one of the six stops appearing there. A reader is on that page to check us against the register, so a detail we cannot point at in the register does not go in. Note that `company.registeredAddress` is not `location`: the copy says Vilnius, where the studio works, and the register holds an address in the Lazdijai district.
 
@@ -284,7 +304,16 @@ line in `llms.txt`, the page's own graph nodes, and the suite's coverage of all 
      date: "2026-09-21",
    };
 
-   export const writtenPages: PageRecord[] = [homePage, customPage, ...legalPages, aboutPage];
+   export const writtenPages: PageRecord[] = [
+     homePage,
+     customPage,
+     ...legalPages,
+     evalSuitePage,
+     aboutPage,
+     contactPage,
+     slackPage,
+     backlogPage,
+   ];
    ```
 
 2. Add the route file at the path the record states, here `src/app/about/page.tsx`:
@@ -423,7 +452,7 @@ The strictest case is `company`, which the imprint prints: every line of it is i
 
 Also checkable, and worth keeping checkable: the channel lists in `channels` are the channels [Flue](https://flueframework.com/docs/ecosystem/) verifies, split into the chat channels a person addresses an agent in and the services that wake one with an event. The Slack page at `src/app/slack/page.tsx` says how one of those channels behaves, and every sentence it states about Slack or Teams is one Flue's [Slack](https://flueframework.com/docs/ecosystem/channels/slack/) or [Teams](https://flueframework.com/docs/ecosystem/channels/teams/) channel documentation states; the page links both so a reader can check. The four items in `stack.ours` are the pieces Flue does not provide, so we write them. If Flue's ecosystem or its feature set moves, these lists and that page move with it.
 
-Synthetic, and labelled as an example wherever a visitor could read it as fact: the agent console in `src/components/agent-console.tsx`, the hero run record in `src/components/run-record.tsx`, and the `work` table on a product page. Each one carries a visible "Example" label, a `Badge` with `variant="signal"`. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
+Synthetic, and labelled as an example wherever a visitor could read it as fact: the agent console in `src/components/agent-console.tsx` (on the home page and the Slack page), the run record in `src/components/run-record.tsx` (on a product page), the example run on the backlog page, and the `work` table on a product page. Each one carries a visible "Example" label, a `Badge` with `variant="signal"`, and the element that holds it carries `data-example`. `tests/examples.test.ts` holds every `data-example` block to its label, and holds the synthetic words the content module prints (the console's handle, the work table's briefs) to sitting inside such a block. A new synthetic part takes the same mark. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
 
 Other people's names belong to them. Flue is Apache-2.0, and §6 of that licence permits the descriptive use of the name, so we write "Flue" in text with a link, never as a logo, and never in a way that implies Flue endorses us. Never adopt a name from somebody else's repository as a KastProductions product name: a product is named for the outcome it delivers.
 
