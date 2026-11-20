@@ -109,7 +109,7 @@ components:
 
 **Creative North Star: "Golden hour in a future Vilnius"**
 
-The site takes its world from Impeccable's Neo Mirai reference, as ADR-0006 adapts it. We took the system and left the place. The page is warm gold paper with a faint 112px grid and a fine grain. Ink type sits on it. A red sun, a gold light and night teal are the only other colours. Headings speak in Chakra Petch caps, the reading text is Zen Old Mincho, and labels are Azeret Mono caps. A stamp seal with a KP monogram is the nameplate, and a sun disc and an eclipse are the ornaments. Future scenes of Vilnius and of teams at work come later, in the illustration set.
+The site takes its world from Impeccable's Neo Mirai reference, as ADR-0006 adapts it. We took the system and left the place. The page is warm gold paper with a faint 112px grid and a fine grain. Ink type sits on it. A red sun, a gold light and night teal are the only other colours. Headings speak in Chakra Petch caps, the reading text is Zen Old Mincho, and labels are Azeret Mono caps. A stamp seal with a KP monogram is the nameplate, and a sun disc and an eclipse are the ornaments. Five scenes, drawn by hand as SVG, show a future Vilnius at golden hour and teams at work with an agent.
 
 The tone is warm and optimistic, and also exact: an agency that signs its work. Density is that of a well-set document, with generous bands and a reading measure of 66ch.
 
@@ -252,6 +252,19 @@ A night teal surface. The seal nameplate and the sun disc sit on one hairline ru
 - **Sun disc:** a disc that runs from gold light to sun, cut by the horizon, with three horizon lines under it that shorten towards the viewer.
 - **Eclipse:** a gold disc with a thin ring of light, crossed by a disc in the `eclipse` token (ink on paper, night on night teal).
 
+### Scenes
+
+`src/components/scenes.tsx` holds the illustration set: `HeroScene` (Vilnius at golden hour, 16:9) and four room scenes at 4:3, `SupportDeskScene`, `FinanceDeskScene`, `PullRequestScene` and `ShopFloorScene`. Each is inline SVG, so a scene adds no request. The rules that make them one set:
+
+- **Palette:** paper, rice, gold, gold light, sun, stamp red, night teal and ink, through the raw palette classes (`fill-paper`, `fill-night`, `fill-ink` and the rest) that `globals.css` maps for the scenes alone. A scene is a picture, so it keeps its colours on a night surface. Distance is the same colours at a lower opacity, with a gold haze laid over the far rows.
+- **Line:** one ink line, 2 units in the hero and 2 to 3 units in a room scene, so it renders near 1.5px at the size each scene is placed. Shadow is fine diagonal ink hatching, never a blur.
+- **Sun:** a plain disc cut by bands of haze. Window light on a floor is a set of flat gold patches with the mullions as gaps. Never a ray.
+- **Figures:** small flat silhouettes with a fine light line for the arms. In a room, the people sit with their backs to the viewer and face their screens, as the people on the hero's terrace face the city.
+- **The agent:** the same mark in every room, a small eclipse (a gold disc and ring crossed by a dark moon), with thin dashed gold lines to the work it does.
+- **The city:** every room has a window onto the old town skyline, by day with the red sun and by night with the moon and lit windows.
+
+Each scene carries `role="img"`, takes its accessible name from `scenes` in `src/app/content.ts` through a `<title>` that `aria-labelledby` points at, sets a viewBox, a width and a height, and fills the width of its container at its own ratio. Screens show bars, never words, so no scene carries text.
+
 ### Vertical Rail
 
 From the `rail` breakpoint, the margin beside the first screen holds the eclipse, a line, and the brand and the city set down the page in mono caps. It scrolls away with the first screen, so it never crosses a night band.
@@ -264,7 +277,7 @@ From the `rail` breakpoint, the margin beside the first screen holds the eclipse
 - **Do** set a night surface with the `night` utility, never with hand-picked colours.
 - **Do** keep body text at 4.5:1 or better and a control's edge at 3:1 or better against its surface.
 - **Do** keep each ornament in a neutral form: a disc, a ring, an eclipse, a horizon line, a seal.
-- **Do** give every scene alt text from the content module, a width and a height.
+- **Do** give every scene alt text from the content module, a viewBox, a width and a height.
 
 ### Don't:
 
