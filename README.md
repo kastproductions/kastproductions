@@ -51,8 +51,10 @@ in on a product page. A page carries one or the other, never both, and nothing
 else on the site moves unless a reader asks it to. `prefers-reduced-motion`
 gets the end state immediately.
 
-A number in front of a row means the rows are a sequence. Only the four
-stations of a run earn `<Rows sequence>`, because only they are one.
+A number in front of a row means the rows are a sequence. Only the steps an
+agent takes in order earn `<Rows sequence>`: the four stations of a run on a
+product page, the steps on a job page, and the steps of a build on the home
+page.
 
 Every style is a utility in the component that draws it. A shape that recurs
 across pages is a component in `src/components/section.tsx` or
@@ -339,15 +341,16 @@ job is written twice. The prose the five pages share, their section headings amo
      path: "/failed-payment-recovery",
      title: "Failed payment recovery agent", // written for a search result
      description: "...",
-     date: "2026-09-21",
+     date: "2026-11-20",
      heading: "An agent that works last night's failed payments.", // written for the reader
      lede: "...",
-     authority: "It acts behind an approval gate. ...", // one of the three in CONTEXT.md
-     gate: "The gate sits before a message leaves your company. ...",
+     authority: "On its own, it reads Stripe, ...", // one of the three in CONTEXT.md, in buyer words
+     gate: "It stops before a message leaves your company. ...",
      steps: [{ title: "Reads the night's failures", body: "..." }],
      systems: [{ name: "Stripe", role: "..." }],
      subject: "Failed payment recovery", // the mail subject, and the door in an event
      more: "How the follow-up works", // the words the two job lists link with
+     scene: "financeDesk", // optional: the room scene the first screen shows
    };
    ```
 
@@ -376,9 +379,11 @@ stay one page in five voices rather than five pages drifting apart.
 
 A job page prints the custom door's prices, read from `custom.prices`, and no number of its
 own: a job we shape an agent around is custom work, and the door is where it is priced. It
-states one of the three authorities in `CONTEXT.md` and the gate that authority stops at.
-`tests/links.test.ts` holds it to being reachable: both job lists link to it and it leads on to
-the door.
+states one of the three authorities in `CONTEXT.md` and the gate that authority stops at, in a
+buyer's words: the page heads the gate "Where it stops for a person", and neither term is
+printed. `tests/links.test.ts` holds it to being reachable: both job lists link to it and it
+leads on to the door. `tests/job-pages.test.ts` holds it, and the product page, to the order a
+buyer reads in: the steps and where the agent stops, the systems, the channels and the price.
 
 ## The catalogue
 
