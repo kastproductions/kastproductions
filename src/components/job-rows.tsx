@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { jobs } from "@/app/content";
 import { PullLink, Row, RowLabel, RowNote, RowText, Rows } from "@/components/section";
 
@@ -10,10 +11,15 @@ import { PullLink, Row, RowLabel, RowNote, RowText, Rows } from "@/components/se
  * A job with a page of its own is linked from the row that names it, in the
  * page's own words. A job without one is a row and nothing more: see `jobs` in
  * `content.ts`.
+ *
+ * `first` is a row the page puts above the jobs, inside the same list: the
+ * home page leads with the ready-made agent, so a reader finds the product
+ * and the jobs in one place.
  */
-export function JobRows() {
+export function JobRows({ first }: { first?: ReactNode }) {
   return (
     <Rows>
+      {first}
       {jobs.map((job) => (
         <li key={job.title}>
           <Row>

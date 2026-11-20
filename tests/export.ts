@@ -177,6 +177,17 @@ export function tagTexts(document: string, tag: string): string[] {
 }
 
 /*
+ * The document's own title, as a tab, a search result and an unfurl read it:
+ * every `<title>` in the head. A drawing in the body names itself with a
+ * `<title>` too, and that is the drawing's name, not the page's, so the body
+ * is left out.
+ */
+export function documentTitles(document: string): string[] {
+  const head = /<head\b[^>]*>([\s\S]*?)<\/head>/.exec(document);
+  return head ? tagTexts(head[1], "title") : [];
+}
+
+/*
  * Every URL the built sitemap lists, in the order it states them. The sitemap
  * is the list of routes a crawler is asked to fetch, so three files read it:
  * one checks it against the page records, one checks each entry resolves to a

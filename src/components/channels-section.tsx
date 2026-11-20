@@ -20,18 +20,20 @@ import { Badge } from "@/components/ui/badge";
  * three page files. The Slack page is the one channel with a page of its own,
  * and this section is where a reader finds it, so the link is here rather than
  * on each of those pages.
+ *
+ * `index` numbers the section where the page numbers its sections.
  */
-export function ChannelsSection() {
+export function ChannelsSection({ index }: { index?: number } = {}) {
   return (
     <Band aria-labelledby="channels-title" id="channels">
       <Unit>
-        <UnitHead title={channels.heading} titleId="channels-title">
+        <UnitHead index={index} title={channels.heading} titleId="channels-title">
           <HeadNote>{channels.lede}</HeadNote>
         </UnitHead>
         <UnitBody>
           <div className="grid gap-10 md:grid-cols-2">
             <div>
-              <h3 className="mb-3.5 font-heading text-[0.85rem] font-semibold text-faint">
+              <h3 className="mb-3.5 font-heading text-small font-semibold text-faint">
                 A person reaches it in
               </h3>
               <ul className="flex flex-wrap gap-2">
@@ -49,7 +51,7 @@ export function ChannelsSection() {
               <Note>{channels.teamsNote}</Note>
             </div>
             <div>
-              <h3 className="mb-3.5 font-heading text-[0.85rem] font-semibold text-faint">
+              <h3 className="mb-3.5 font-heading text-small font-semibold text-faint">
                 An event wakes it from
               </h3>
               <ul className="flex flex-wrap gap-2">

@@ -20,6 +20,10 @@ export const contactEmail = "hello@kastproductions.com";
 export const mailtoFor = (subject: string) =>
   `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`;
 export const briefHref = mailtoFor("New brief");
+/* The words a buyer asks with, on the main call to action of the home page,
+ * the product page and every job page. What comes back is the reason to
+ * write, so the button names it. */
+export const briefCta = "Get a spec and a fixed price";
 /* Put a booking URL here and "Book a call" points at it instead of the mailbox.
  * Empty until one exists, because a dead link costs more than a mailto. */
 export const bookingUrl = "";
@@ -141,6 +145,41 @@ export const references = [
 ];
 
 /* ---------------------------------------------------------------------------
+ * The scenes
+ *
+ * The illustrations the pages place: one hero scene of a future Vilnius, and
+ * four scenes of teams at work with an agent. They are drawn by hand as inline
+ * SVG in `src/components/scenes.tsx`, so they add no request and paint with
+ * the theme tokens. They are pictures and prove nothing: no scene shows a client,
+ * a readable product screen or a figure, so none of them needs the "Example"
+ * label the Claims section asks of synthetic runs.
+ *
+ * The alt text describes what each scene shows, because a screen reader
+ * reads it in place of the picture. A scene component takes its own entry
+ * here as its accessible name.
+ * ------------------------------------------------------------------------- */
+
+export type Scene = { alt: string };
+
+export const scenes = {
+  hero: {
+    alt: "Vilnius at sunset, seen from a terrace above the old town. Red roofs, the white cathedral bell tower, the brick spires of St Anne's Church and Gediminas' Tower on its hill stand in front of tall new towers across the river. A large red sun sits low in a gold sky, and a few people stand at the railing and look at the city.",
+  },
+  supportDesk: {
+    alt: "A support team at a long desk in the evening light. Three people with headsets answer customers on their screens, while the agent sorts the next requests into their queues. A tall window behind them shows the old town spires and a low red sun.",
+  },
+  financeDesk: {
+    alt: "A finance desk late at night. One person checks a ledger under a desk lamp, and a colleague brings a folder. On the screen, the agent marks one row that does not match. The window shows the lit city and the moon.",
+  },
+  pullRequestReview: {
+    alt: "An engineer reviews a pull request at a desk under a hanging lamp. The large screen shows the changed lines, and a second screen shows the agent's checks, all passed. A red stamp to approve the merge waits by the engineer's hand, and a colleague stands near the desk to look.",
+  },
+  shopFloor: {
+    alt: "The floor of an online shop. One person packs an order at a table, and another pushes a cart of parcels past tall shelves. The agent above them matches each parcel to its order. High windows let in the low sun.",
+  },
+} satisfies Record<string, Scene>;
+
+/* ---------------------------------------------------------------------------
  * The offer
  *
  * One promise, two doors. Fit leads, convenience follows, and correctness sits
@@ -153,12 +192,14 @@ export const references = [
 /* A price as a reader sees it, and the only place the number lives. The ways to
  * buy in `prices`, `custom.prices` and the `prices` field on a product all hold
  * these, and `src/app/structured-data.ts` reads the number and the currency
- * back out of the string so the page and the graph cannot drift apart. */
+ * back out of the string so the page and the graph cannot drift apart. The
+ * custom door and a product write each number once, in their own `prices`:
+ * the Self-run and Custom agent plans build their one line from those. */
 export type Price = { amount: string; per: string };
 
 export const hero = {
   heading: "An agent that works the way your company works.",
-  lede: "A generic agent knows your tools. It has never been told how your company works, so nobody can hold it to your definition of right. We build one standing agent for one company, deploy it into that company’s own accounts, and keep it right after it is live.",
+  lede: "Tell us the work you want off your team. We build one agent for it, deploy it into your own accounts, and keep it correct after it goes live. Anything it sends outside your company waits for a named person to approve it.",
 };
 
 /* `catalogue: true` marks anything that only becomes true once a ready-made
@@ -182,10 +223,9 @@ export const doors = [
   },
 ];
 
-/* The hero console: one standing agent, answering in a channel and stopping at
- * its gate. The three nameplate readings are the vocabulary the rest of the
- * page uses, so a reader meets `channel`, `authority` and the deployment in
- * the first object they see.
+/* The example console: one standing agent, answering in a channel and
+ * stopping at its gate. The three readings say where it is reached, what it
+ * may do on its own (its authority, in buyer words) and where it runs.
  *
  * Labelled as an example until @brief is live in our own Slack. Then this
  * becomes a screenshot of a real exchange and the label comes off. */
@@ -195,7 +235,7 @@ export const mention = {
   handle: "@atlas",
   readings: [
     { label: "Channel", value: "#payments", mono: true, note: "where the finance team already works" },
-    { label: "Authority", value: "Acts behind an approval gate" },
+    { label: "May do alone", value: "Draft, then wait for approval" },
     { label: "Runs in", value: "Your own Cloudflare account" },
   ],
   asker: "Nadia",
@@ -206,62 +246,35 @@ export const mention = {
   approve: "Approve and send",
 };
 
-export const fitIntro = {
-  heading: "What we shape your agent around",
-  lede: "We take each of the five points below from your company. We write them down before we build, and your agent follows what we wrote.",
-};
-
-export const fitDimensions = [
-  {
-    title: "Who asks",
-    body: "Which people can start your agent, from which channel, and what they may ask it for.",
-  },
-  {
-    title: "Who approves",
-    body: "Which actions stop and wait, and whose name goes on the approval when they do.",
-  },
-  {
-    title: "The systems it touches",
-    body: "The tools your team already runs. Your agent uses the permissions of the person who asked. There is no shared key.",
-  },
-  {
-    title: "Your words",
-    body: "The names your company uses for things. We take them from your issues, your docs and your tickets. The answers then read like your team wrote them.",
-  },
-  {
-    title: "What finished means",
-    body: "Your definition of a finished piece of work. We write it down, so you can hold your agent to it.",
-  },
-];
-
-/* `more` is the words the section links the eval suite explainer with, as a
- * door's `more` links its page. The path is on `evalSuitePage`, below. */
-export const mechanismIntro = {
-  heading: "How we keep it right",
-  lede: "The five points above are a promise. These five are how we prove it, every month, for as long as we operate your agent.",
+/* Why it is safe to let the agent run: the four points the home page makes
+ * in place of the old lists of what we shape an agent around and how we keep
+ * it right. Each is a mechanism from CONTEXT.md (the approval gate on an
+ * outward action, the spend cap, the eval suite, and the client's own
+ * accounts), stated in buyer words. A monthly price buys the work that keeps
+ * the second and third true. `more` links the eval suite explainer, whose path
+ * is on `evalSuitePage`, below. */
+export const safetyIntro = {
+  heading: "Why it is safe to let it run",
+  lede: "Four rules hold for every agent we build, ready-made or custom. We write them into the spec before the build starts.",
   more: "What an eval suite is",
 };
 
-export const mechanism = [
+export const safety = [
   {
-    title: "The eval suite",
-    body: "The written definition of correct for your agent. It runs on every change we make, and a failing suite stops the change. When we cannot describe correct for a task, we say so before we build it.",
+    title: "A named person approves what goes out",
+    body: "Anything that reaches someone outside your company waits for a named person at your company: an email to a customer, a published page, a posted message, a payment.",
   },
   {
-    title: "Approval gates",
-    body: "We approve changes inside your agent’s own repository and deployment. Every outward action waits for a named person at your company. That means anything reaching a customer, an inbox, a published page or a payment.",
+    title: "A spend cap on every session",
+    body: "We agree a ceiling on model cost for each session: one piece of work, from the message that starts it to the answer that ends it. A session that reaches the cap stops and asks a person, or stops and reports when nobody is there to ask.",
   },
   {
-    title: "A named engineer",
-    body: "One of our engineers owns your agent and answers inside business hours. Your agent runs in your own cloud account, so its uptime is your platform’s. We do not promise uptime for software we do not run.",
+    title: "A written test of correct, run on every change",
+    body: "We write down what correct means for your agent, and that eval suite runs on every change we make. A failing suite stops the change. When we cannot write correct down for a task, we tell you before we build it.",
   },
   {
-    title: "The spend cap",
-    body: "Every session has a spend cap that we agree with you. A session that reaches the cap and has someone to ask stops and asks. A session running unattended stops and reports.",
-  },
-  {
-    title: "The monthly report",
-    body: "What your agent did, what it cost, what we changed, and what we would do next. Cancel at the end of any month. Our work stops and your agent keeps running.",
+    title: "Your accounts, your keys, your code",
+    body: "The agent runs in your own cloud account with your keys, and the code sits in your repository from the first commit. Stop paying us and it keeps running.",
   },
 ];
 
@@ -339,6 +352,9 @@ export type Product = {
   record: string;
   prerequisites: { item: string; who: "You" | "We" }[];
   prices: Price[];
+  /* The systems the agent works in, as the home page's work list names them
+   * beside each job. */
+  systems: string;
   subject: string;
   /* The day this product's page copy last changed, written YYYY-MM-DD. The
    * sitemap states it, so editing the copy above means editing this date. */
@@ -351,11 +367,11 @@ export const issueToPullRequest: Product = {
   promise: "Takes an issue off your tracker and opens a draft pull request.",
   description:
     "Issue to pull request, run by a standing agent: label an issue in your tracker and get a draft pull request on your repository. A named person signs the merge.",
-  lede: "Your team labels an issue, or delegates it in Linear. The agent works it through four stations and opens a draft pull request on your repository, with the run record attached. A named person signs the merge.",
-  authority: "It acts behind an approval gate.",
-  boundary: "It never merges. Every branch it pushes waits for a signature.",
+  lede: "Your team labels an issue, or hands it to the agent in Linear. The agent works it in four steps and opens a draft pull request on your repository, with a record of the run attached. A named person on your team merges it.",
+  authority: "On its own, it plans the change, writes the code, runs your checks and opens a draft pull request.",
+  boundary: "It never merges. Every branch it pushes waits for a named person on your team to review it and merge it.",
   stationsIntro:
-    "A station is one step of a run, worked by a subagent that does that step and nothing else.",
+    "Four steps, in order. A separate part of the agent does each step and nothing else, and the last step checks the whole change against the plan.",
   stations: [
     {
       title: "Triage",
@@ -375,7 +391,7 @@ export const issueToPullRequest: Product = {
     },
   ],
   record:
-    "Every run attaches its run record to the draft pull request: each tool call, each test result, each verdict and what the run cost. When you ask why it chose an approach, the answer is in the pull request.",
+    "Every run attaches its record to the draft pull request: each tool call, each test result, each verdict and what the run cost. When you ask why it chose an approach, the answer is in the pull request.",
   prerequisites: [
     { item: "A GitHub organisation and the repository the agent works on", who: "You" },
     { item: "A tracker: GitHub Issues, or Linear with agent sessions enabled", who: "You" },
@@ -390,8 +406,9 @@ export const issueToPullRequest: Product = {
     { amount: "From €7,500", per: "to build" },
     { amount: "From €1,500", per: "a month to operate" },
   ],
+  systems: "GitHub, GitHub Issues or Linear",
   subject: "Issue to pull request",
-  date: "2026-09-22",
+  date: "2026-11-20",
 };
 
 export const products: Product[] = [issueToPullRequest];
@@ -426,8 +443,9 @@ export const work = [
 ];
 
 export const jobsIntro = {
-  heading: "Work we take off your team",
-  lede: "Five jobs, with the systems each one touches. None is a product on a shelf: we build the agent for the company that asks. Your work does not have to be on this list.",
+  heading: "Work an agent can take off your team",
+  lede: "One agent we have already built, then five jobs we build an agent for. Each line names the systems the agent works in.",
+  more: "Describe work that is not on this list",
 };
 
 /* The five jobs. The home page indexes them by title and systems; the custom
@@ -461,7 +479,8 @@ export type JobPage = PageRecord & {
   heading: string;
   lede: string;
   /* What the agent may do on its own. One of the three authorities in
-   * CONTEXT.md, and never a fourth. */
+   * CONTEXT.md, and never a fourth, said in buyer words: the page prints
+   * it, and the word "authority" stays off the page. */
   authority: string;
   /* Where the agent stops and waits for a named person. */
   gate: string;
@@ -475,6 +494,10 @@ export type JobPage = PageRecord & {
   /* The words the two job lists link to this page with. Its own, so a reader
    * meeting five of these rows hears five different links. */
   more: string;
+  /* The room scene the page's first screen shows, where one of the set in
+   * `scenes` shows this job's team at work. A job with no matching scene
+   * shows an ornament there instead. */
+  scene?: "supportDesk" | "financeDesk" | "shopFloor";
 };
 
 export const contentPublishing: JobPage = {
@@ -482,12 +505,12 @@ export const contentPublishing: JobPage = {
   title: "Content publishing agent",
   description:
     "Content publishing, run by a standing agent: a brief in Notion comes back as a drafted and edited page in your CMS, and publishing waits for a name.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that turns a brief into a page ready to publish.",
   lede: "A brief in Notion comes back as a drafted and edited page, waiting unpublished in your CMS. Nothing goes live until a named person publishes it.",
   authority:
-    "It acts behind an approval gate. Reading the brief, drafting the page and editing the draft against the brief needs nobody, and the finished draft then stops.",
-  gate: "The gate sits before a page is published. A published page reaches everyone outside your company, so a named person reads it and publishes it.",
+    "On its own, it reads the brief, drafts the page and edits the draft against the brief. Then it stops.",
+  gate: "It stops before the page is published. A published page reaches everyone outside your company, so a named person on your team reads it and publishes it.",
   steps: [
     {
       title: "Reads the brief",
@@ -525,12 +548,12 @@ export const socialScheduling: JobPage = {
   title: "Social scheduling agent",
   description:
     "Social scheduling, run by a standing agent: your team asks in Slack, the agent drafts in Typefully, and a post joins the queue once a named person approves it.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that drafts and schedules your posts from a channel.",
   lede: "Your team asks for a post in the channel they already work in. The agent drafts it in Typefully, and it joins the queue once a named person approves it. Every batch comes back as one summary of what went out.",
   authority:
-    "It acts behind an approval gate. Reading the ask, drafting the post and reporting the batch needs nobody, and every draft then stops.",
-  gate: "The gate sits before a post joins the queue. A queued post goes out under your name at its time, so a named person reads the draft and approves it.",
+    "On its own, it takes the ask, drafts the post and reports on each batch. Every draft then stops for approval.",
+  gate: "It stops before a post joins the queue. A queued post goes out under your name at its time, so a named person reads the draft and approves it.",
   steps: [
     {
       title: "Takes the ask in the channel",
@@ -568,12 +591,12 @@ export const supportTicketTriage: JobPage = {
   title: "Support ticket triage agent",
   description:
     "Support ticket triage, run by a standing agent: every new ticket read and grouped, a reply drafted where the answer is known, a GitHub issue where it is a bug.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that reads every support ticket before your team does.",
   lede: "Every new ticket in Zendesk or Intercom is read and grouped as it arrives. Where the answer is already written down, the reply is drafted in the ticket and waits for a name. Where the ticket is a bug, it is filed as a GitHub issue.",
   authority:
-    "It acts behind an approval gate. Reading the ticket, grouping it, drafting the reply and filing the issue needs nobody, and every reply then stops.",
-  gate: "The gate sits before a reply reaches your customer. A drafted reply waits in the ticket, and a named person on your support team reads it and sends it. An issue in your own repository crosses no gate.",
+    "On its own, it reads each ticket, groups it, drafts the reply and files the bug. Every reply then stops for a person.",
+  gate: "It stops before a reply reaches your customer. The draft waits in the ticket, and a named person on your support team reads it and sends it. Filing an issue in your own repository needs no approval.",
   steps: [
     {
       title: "Reads the ticket as it arrives",
@@ -604,6 +627,7 @@ export const supportTicketTriage: JobPage = {
   ],
   subject: "Support ticket triage",
   more: "How the triage works",
+  scene: "supportDesk",
 };
 
 export const failedPaymentRecovery: JobPage = {
@@ -613,12 +637,12 @@ export const failedPaymentRecovery: JobPage = {
    * read left to right. The title carries the same words. */
   description:
     "Failed payment recovery, run by a standing agent: every charge Stripe failed comes back as a drafted message that waits for your approval.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that works last night’s failed payments.",
   lede: "Every charge Stripe failed overnight comes back as one summary, with a drafted message per customer waiting in your outbox. Nothing reaches a customer until a named person approves it.",
   authority:
-    "It acts behind an approval gate. Reading Stripe, sorting the failures and writing the drafts needs nobody, and every draft then stops.",
-  gate: "The gate sits before a message leaves your company. A follow-up reaches your customer, so a named person reads it and sends it.",
+    "On its own, it reads Stripe, sorts the failures and writes the drafts. Every draft then stops for a person.",
+  gate: "It stops before a message leaves your company. A follow-up reaches your customer, so a named person reads it and sends it.",
   steps: [
     {
       title: "Reads the night’s failures",
@@ -649,6 +673,7 @@ export const failedPaymentRecovery: JobPage = {
   ],
   subject: "Failed payment recovery",
   more: "How the follow-up works",
+  scene: "financeDesk",
 };
 
 export const shopifyOperations: JobPage = {
@@ -656,12 +681,12 @@ export const shopifyOperations: JobPage = {
   title: "Shopify operations agent",
   description:
     "Shopify operations, run by a standing agent: stock, pricing and order exceptions watched on a schedule, and the ones that need a decision brought to a person.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that watches your store, so a person sees only the exceptions.",
   lede: "On the schedule you set, the agent reads your Shopify store for what is out of line: stock running low, a price outside the range you set, an order that stalled. It reports what it found in one place and brings the ones that need a decision to a named person.",
   authority:
-    "It reads and reports. Nothing in your store changes because the agent looked: it reads Shopify, sorts what it found and writes one summary. Every change is a person’s to make.",
-  gate: "The gate sits in front of every change to the store, and this agent stops there every time. An exception that needs a decision comes to a named person with the product, the order or the price it concerns and the choices open, and that person makes the change in Shopify.",
+    "It only reads and reports. It reads Shopify, sorts what it found and writes one summary. Nothing in your store changes because the agent looked.",
+  gate: "It stops in front of every change to the store, every time. An exception that needs a decision comes to a named person with the product, the order or the price it concerns and the choices open. That person makes the change in Shopify.",
   steps: [
     {
       title: "Reads the store on a schedule",
@@ -688,6 +713,7 @@ export const shopifyOperations: JobPage = {
   ],
   subject: "Shopify operations",
   more: "How the store is watched",
+  scene: "shopFloor",
 };
 
 export const jobs: Job[] = [
@@ -733,15 +759,74 @@ export const jobPages: JobPage[] = jobs.flatMap((job) => job.page ?? []);
  * The custom door
  * ------------------------------------------------------------------------- */
 
+/* Every word the custom door prints, as README.md "Content" and ADR-0004
+ * set out: the door is the offer itself, so its prose lives here and the
+ * route file only lays it out. */
 export const custom = {
   heading: "An agent shaped around how you already work",
-  lede: "No two companies work the same way, and the work you want taken over probably matches nothing on a shelf. Describe it. You get a short spec and a fixed price within one working day.",
+  lede: "Describe the work you want off your team in a few lines. You get a spec and a fixed price within one working day, and we build the agent around the way your company already does that work.",
+  howHeading: "How a custom build goes",
+  howLede: "From your first email to a live agent, and what we do after it is live.",
+  /* How a custom build goes, from the first email to the monthly upkeep. */
+  steps: [
+    {
+      title: "You describe the work",
+      body: "A few lines are enough: what comes in, what should come out, and who checks it today.",
+    },
+    {
+      title: "A spec and a fixed price",
+      body: "Within one working day we send a short spec and one fixed price for the build. We write no code before you accept the price.",
+    },
+    {
+      title: "Built around your workflow",
+      body: "We write the eval suite first: the tasks the agent must get right, and what a correct result for each one contains. Then we build the agent in your repository, deploy it into your own cloud account and connect it to the chat your team already uses.",
+    },
+    {
+      title: "Kept correct after launch",
+      body: "One of our engineers owns your agent. Every change we make must pass the eval suite, and each month you get a report of what the agent did, what it cost and what we changed.",
+    },
+  ],
+  specHeading: "What the spec settles",
+  specLede: "The spec is short, and you can check every line of it before you accept the price.",
+  specMore: "What an eval suite is",
+  /* What the spec settles before the build. Each line is a mechanism from
+   * CONTEXT.md (the job, the agent's authority, the approval gate, the spend
+   * cap, the eval suite), stated in buyer words. */
+  spec: [
+    {
+      title: "The work",
+      body: "What starts a session, what the agent produces, and what done looks like, written from your description.",
+    },
+    {
+      title: "The systems",
+      body: "Every account the agent reads from or writes to, and the ones it never touches.",
+    },
+    {
+      title: "Where it stops",
+      body: "Each action that reaches someone outside your company, and the named person at your company who approves it.",
+    },
+    {
+      title: "The spend cap",
+      body: "A ceiling on model cost for each session. A session that reaches it stops and asks a person.",
+    },
+    {
+      title: "The test of correct",
+      body: "The tasks the eval suite checks. Work we cannot write a test for goes to a person, and the spec says which work that is.",
+    },
+  ],
   jobsHeading: "Work we take",
   jobsLede:
-    "Five jobs we take, to measure your own against. Each one names the systems it touches. None of them is a product you can buy today, and none carries a price until we have read your workflow.",
+    "Five jobs we build an agent for, to measure your own work against. Each line names the systems the agent works in. None of them has a price until we have read how your team does the work.",
   /* Written for the search the door's title answers, the way
    * `pricingIntro.heading` is on the home page. */
   pricingHeading: "What custom AI agent development costs",
+  pricingLede: "The build price is a floor, because the work grows with the number of systems your agent touches. The spec states the exact price. The monthly price pays an engineer to keep the agent correct: the eval suite on every change, the fixes and a report each month.",
+  pricingNote: "Which accounts you need depends on the systems your agent touches. The spec names every one of them, next to the price, before you commit to anything.",
+  /* The plan's name, on the home price list, the door's card and every job
+   * page's card. */
+  title: "Custom agent",
+  /* The plan's two prices. The door and every job page print them as two
+   * lines, and the home price list builds its one line from them. */
   prices: [
     { amount: "From €10,000", per: "to build" },
     { amount: "From €1,500", per: "a month to operate" },
@@ -754,21 +839,39 @@ export const custom = {
  *
  * Prices are real evidence and must not be invented: see the Claims section of
  * README.md. A build price is a floor, because the work follows the number of
- * systems the agent touches. A monthly price buys the work in `mechanism`.
+ * systems the agent touches. A monthly price buys the upkeep: the eval suite
+ * on every change, the fixes, a named engineer and the monthly report.
  * `lead` marks the one plan the price list sets on ink.
+ *
+ * `page` is the path of the page that sells a plan. Self-run and the custom
+ * agent are ways to buy an agent, so the home page sells them. Managed and
+ * Sprint are our coding agents on the client's backlog, so the backlog page
+ * sells them, and its graph offers them. The path is written out, because the
+ * page records are declared at the foot of this file.
  * ------------------------------------------------------------------------- */
 
 export const pricingIntro = {
   heading: "What AI agent development costs",
-  lede: "A build price is a floor, because the work follows the number of systems your agent touches. Every monthly price buys the evals, the changes and the report.",
+  lede: "A build price is a floor, because the work grows with the number of systems your agent touches. The monthly price pays for the upkeep: the eval suite on every change, the fixes and a report each month.",
 };
+
+/* A way to buy that prices one agent prints its build and monthly price as one
+ * line, "From €7,500 to build, then from €1,500 a month". The line is built
+ * from the agent's own two prices, so the price list, the agent's page and
+ * the graph all read the one number. */
+function buildThenMonthly([build, monthly]: Price[]): Price {
+  if (!monthly?.per.startsWith("a month")) {
+    throw new Error(`"${monthly?.amount} ${monthly?.per}" is not a monthly price.`);
+  }
+  const from = monthly.amount.charAt(0).toLowerCase() + monthly.amount.slice(1);
+  return { amount: build.amount, per: `${build.per}, then ${from} a month` };
+}
 
 export const prices = [
   {
     title: "Self-run",
-    body: "We build your agent, deploy it into your own accounts and hand over the keys. Your team runs it and your engineers sign the merges.",
-    amount: "From €7,500",
-    per: "to build, then from €1,500 a month",
+    body: "We build the issue to pull request agent into your own accounts and hand over the keys. Your team runs it, and your own engineers sign the merges.",
+    ...buildThenMonthly(issueToPullRequest.prices),
     includes: [
       `Live in your own channel in ${leadTime}`,
       "Your accounts, your keys, your code from the first commit",
@@ -778,14 +881,17 @@ export const prices = [
     subject: "Self-run build",
     lead: false,
     catalogue: true,
+    page: "/",
   },
   {
     title: "Managed",
-    body: "We build it and we run it. Our coding agents take the runs, our reviewer reads every diff, and the agent still lives in your accounts.",
-    amount: "From €7,500",
-    per: "to build, then from €4,000 a month",
+    body: "We build the issue to pull request agent into your own accounts and run it on your backlog. Our coding agents do the work, and our engineer reads every diff before it merges.",
+    /* The build is the product's own build price, so the number is written
+     * once, on the product. */
+    amount: issueToPullRequest.prices[0].amount,
+    per: `${issueToPullRequest.prices[0].per}, then from €4,000 a month`,
     includes: [
-      "As many briefs as the capacity allows, prioritised with you weekly",
+      "As many issues as the month allows, in the order we agree with you each week",
       "A named engineer signs every merge",
       "Cancel at the end of any month, and your agent keeps running",
     ],
@@ -793,25 +899,26 @@ export const prices = [
     subject: "Managed build",
     lead: false,
     catalogue: true,
+    page: "/backlog",
   },
   {
-    title: "Custom agent",
+    title: custom.title,
     body: "For work that matches nothing we have built. You describe it, we write the spec and name the price, and the agent is shaped around your workflow.",
-    amount: "From €10,000",
-    per: "to build, then from €1,500 a month",
+    ...buildThenMonthly(custom.prices),
     includes: [
       "A spec and a fixed price within one working day",
       "The same terms: your accounts, your keys, your code",
-      "The same mechanism: evals, approval gates, a named engineer",
+      "The same four safety rules, and a named engineer who owns your agent",
     ],
     cta: "Describe the work",
     subject: "Custom agent",
     lead: false,
     catalogue: false,
+    page: "/",
   },
   {
     title: "Sprint",
-    body: "One brief, two weeks, one fixed price. Our own agents work it on your repository, and our reviewer signs the merge. Nothing is deployed and nothing is connected, so this buys one piece of finished work rather than an agent.",
+    body: "One brief, two weeks, one fixed price. Our coding agents work it on your repository, and our engineer signs the merge. Nothing is deployed and nothing is connected to your systems. You buy one piece of finished work.",
     amount: "From €4,000",
     per: "per brief",
     includes: [
@@ -823,14 +930,15 @@ export const prices = [
     subject: "Sprint: one brief",
     lead: true,
     catalogue: false,
+    page: "/backlog",
   },
 ];
 
 /* The ways to buy the site prints today. A plan that prices a ready-made
  * product waits until the catalogue holds one: see the Catalogue entry in
- * CONTEXT.md. The home page prints this list and its graph offers it, and the
- * terms state what it buys, so none of the three can state a plan the others
- * do not. */
+ * CONTEXT.md. The terms state what every plan here buys. The home page and the
+ * backlog page each print, and offer in their graph, the plans filed under
+ * their own path: `homePlans` and `backlogPlans`, below. */
 export const openPrices = prices.filter((plan) => !plan.catalogue || products.length > 0);
 
 /* One question the home page answers, in the words it prints. The page renders
@@ -845,39 +953,23 @@ export const questions: Question[] = [
   },
   {
     q: "What do we need to have already?",
-    a: "Every product prints its prerequisites next to its price, and each line says whether you already own it or we set it up. Nothing is hidden until the third day of a build.",
+    a: "The ready-made agent lists its prerequisites next to its price, and each line says whether you already own it or we set it up. A custom spec names every account the agent needs before the build starts.",
   },
   {
     q: "What stops it spending our money overnight?",
-    a: "Every session has a spend cap that we agree with you. A session that reaches the cap stops and asks you. A session running unattended stops and reports. The cap is our code, because the framework reports what a call cost and enforces nothing.",
-  },
-  {
-    q: "Who approves what the agent does?",
-    a: "A named person at your company approves every outward action. That covers anything reaching a customer, an inbox, a published page or a payment. Our name never goes on something your customers see.",
+    a: "Every session has a spend cap that we agree with you. A session that reaches the cap stops and asks you. A session that runs unattended stops and reports. The cap is our code, because the framework reports what a call cost and enforces nothing.",
   },
   {
     q: "What is it built on?",
-    a: "Flue, the open agent harness the Astro organisation publishes, deployed into your own Cloudflare account, or onto Node.js where your platform needs it. Four pieces are ours rather than the framework’s: the approval gates, the spend cap, the tool that opens a pull request, and the filter that decides what starts a run.",
+    a: "Flue, the open agent harness the Astro organisation publishes, deployed into your own Cloudflare account, or onto Node.js where your platform needs it. We write four pieces the framework does not provide: the approval gate, the spend cap, the tool that opens a pull request, and the filter that decides what starts a session.",
   },
   {
     q: "Do you promise uptime?",
-    a: "No, and nobody honestly can for software running in your own cloud account. We promise four things. A named engineer. An answer inside business hours. A green eval suite on every change we make. A monthly report of what your agent did.",
-  },
-  {
-    q: "How do we know it is working?",
-    a: "We write an eval suite for every agent: the written definition of correct, run on every change we make. You can read it. Sometimes we cannot write down what correct means for something you want, and we tell you that before we build it.",
-  },
-  {
-    q: "Can one agent answer to several names?",
-    a: "No. One agent is one deployment with one name. A second name is a second agent, a second build and a second monthly line. One agent can still run several subagents behind its single name.",
-  },
-  {
-    q: "Can it live in Microsoft Teams?",
-    a: "Yes. Teams needs one step that Slack does not: an Azure Bot registration and an app password stored in your project. We do that work and quote it as its own line.",
+    a: "No. The agent runs in your own cloud account, so its uptime is your platform’s. We promise a named engineer, an answer inside business hours, a passing eval suite on every change we make, and a monthly report of what your agent did.",
   },
   {
     q: "Why not build it ourselves?",
-    a: "You can, and the framework is open source. The framework is the easy part. The work is shaping the agent to your workflow, setting the approval policy, writing the eval suite, and holding all three steady while the framework moves under it.",
+    a: "You can, and the framework is open source. The framework is the easy part. The work is shaping the agent to your workflow, setting who approves what, writing the eval suite, and holding all three steady while the framework moves under it.",
   },
 ];
 
@@ -935,7 +1027,7 @@ export const homePage: PageRecord = {
   path: "/",
   title: `AI agent development company | ${brand}`,
   description: `An AI agent development company in ${location.city}, ${location.country}. We build one standing agent for one company, deploy it into your own accounts and keep it right.`,
-  date: "2026-09-21",
+  date: "2026-11-20",
 };
 
 /* The custom door. Its description is its own sentence rather than the lede
@@ -946,7 +1038,7 @@ export const customPage: PageRecord = {
   title: "Custom AI agent development",
   description:
     "Custom AI agent development for work that matches nothing on a shelf. Describe it and get a short spec and a fixed price within one working day.",
-  date: "2026-09-21",
+  date: "2026-11-20",
 };
 
 /* The pages a buyer reads before a first call. They state no offer, they
@@ -988,7 +1080,7 @@ export const contactPage: PageRecord = {
   title: "Contact",
   description:
     `Book a call or write to ${brand} in ${location.city}: what comes back within one working day of writing, and the registered company you are writing to.`,
-  date: "2026-09-21",
+  date: "2026-11-19",
 };
 export const contactSubject = "Contact page";
 
@@ -1005,13 +1097,13 @@ export const legalPages: PageRecord[] = [privacyPage, termsPage, imprintPage];
  * offered an autonomous agent and asks how anyone knows it is right types
  * the word the field uses for that, and no competing page in this category
  * answers it. The title leads with the phrase; the heading on the page reads
- * in the site's voice, the way `mechanismIntro.heading` does. */
+ * in the site's voice, the way `safetyIntro.heading` does. */
 export const evalSuitePage: PageRecord = {
   path: "/eval-suite",
   title: "AI agent eval suite: what correct means",
   description:
     "What an AI agent eval suite is: the written definition of correct for one agent, run on every change, and what we do when correct cannot be written down.",
-  date: "2026-09-21",
+  date: "2026-11-20",
 };
 
 /* The page that says who is behind the work: the founder, the companies he
@@ -1023,7 +1115,7 @@ export const aboutPage: PageRecord = {
   path: "/about",
   title: `${founder}, founder`,
   description: `${founder} founded ${brand} in ${location.city} and signs the merges we make. Seventeen companies he has shipped for, and six references quoted as written.`,
-  date: "2026-09-21",
+  date: "2026-11-19",
 };
 
 /* The Slack page. A buyer names the channel as often as the job, and Slack is
@@ -1039,16 +1131,43 @@ export const slackPage: PageRecord = {
   title: "AI agent for Slack",
   description:
     "An AI agent for Slack, built for one company: your team addresses it by name in a channel, and every outward action waits for a named person’s approval.",
-  date: "2026-09-21",
+  date: "2026-11-20",
 };
 
 /* The mail subject every call to action on the Slack page carries, which is
  * how the analytics event names the door a reader came through. */
 export const slackSubject = "Agent in Slack";
 
+/* The page about our coding agents on a client's backlog: Managed and
+ * Sprint, which buy work on a repository and not an agent of the client's
+ * own. It is the one page of its kind, so its prose is in its route file
+ * (ADR-0004), and it prints the plans filed under its path, which its graph
+ * offers. The title leads with the phrase a buyer types; the page's own
+ * heading is in the site's voice. */
+export const backlogPage: PageRecord = {
+  path: "/backlog",
+  title: "AI coding agents for your backlog",
+  description:
+    "Our coding agents plan, build and test the issues on your backlog, and our engineer signs every merge. Month to month as Managed, or one brief as a Sprint.",
+  date: "2026-11-20",
+};
+
+/* The mail subject the page's own calls to action carry, which is how the
+ * analytics event names the door a reader came through. A plan's button
+ * carries the plan's own subject. */
+export const backlogSubject = "Coding agents on the backlog";
+
+/* The plans the home page prints and its graph offers: the ways to buy an
+ * agent, in price list order. */
+export const homePlans = openPrices.filter((plan) => plan.page === homePage.path);
+
+/* The plans the backlog page prints and its graph offers, in price list
+ * order. */
+export const backlogPlans = openPrices.filter((plan) => plan.page === backlogPage.path);
+
 /* The pages we write by hand, as against the job pages the jobs hold and the
- * product pages the catalogue makes. The two doors are the written pages
- * that state an offer; every other page here states none, the terms
+ * product pages the catalogue makes. The two doors and the backlog page are
+ * the written pages that state an offer; every other page here states none, the terms
  * included, which print the plans to say what a build buys and not to sell
  * one. The graph suite reads that off this list. */
 export const writtenPages: PageRecord[] = [
@@ -1059,6 +1178,7 @@ export const writtenPages: PageRecord[] = [
   aboutPage,
   contactPage,
   slackPage,
+  backlogPage,
 ];
 
 /* The record of a product's page. A product already states its slug, its

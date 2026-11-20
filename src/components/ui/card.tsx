@@ -2,9 +2,9 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 /*
- * A sheet: white, one drawn edge, no shadow. `lg` is the size every door,
- * plan and reference on the site uses. A card with the `dark` class, or
- * inside a section that has it, is set in the signature blue.
+ * A sheet: a slip of rice paper on the gold, one drawn edge, no shadow. `lg`
+ * is the size every door, plan and reference on the site uses. A card with
+ * the `night` utility, or inside a band that has it, is set in night teal.
  */
 function Card({
   className,
@@ -42,7 +42,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"h3">) {
     <h3
       data-slot="card-title"
       className={cn(
-        "font-heading text-lg leading-tight font-bold tracking-tight text-balance group-data-[size=sm]/card:text-sm",
+        "font-heading text-body leading-tight font-semibold text-balance group-data-[size=sm]/card:text-note",
         className
       )}
       {...props}
@@ -55,7 +55,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-description"
       className={cn(
-        "text-sm text-muted-foreground group-data-[size=lg]/card:text-[0.92rem] group-data-[size=lg]/card:leading-relaxed group-data-[size=lg]/card:text-prose",
+        "text-sm text-muted-foreground group-data-[size=lg]/card:text-note group-data-[size=lg]/card:leading-relaxed group-data-[size=lg]/card:text-prose",
         className
       )}
       {...props}

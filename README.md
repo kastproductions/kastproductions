@@ -8,51 +8,60 @@ Live at [www.kastproductions.com](https://www.kastproductions.com).
 
 - **Framework**: Next.js 16 (App Router, static export)
 - **Styling**: Tailwind CSS v4 utilities, and shadcn/ui components on Base UI (`components.json`, style `base-nova`). The theme lives in `src/app/globals.css`
-- **Fonts**: Schibsted Grotesk for every word a person wrote, headings and prose alike, and IBM Plex Mono for machine strings; both load through `next/font`
+- **Fonts**: Chakra Petch for display, Zen Old Mincho for reading, and Azeret Mono for labels and machine strings; all three load through `next/font`, so the export serves them
 - **Language**: TypeScript (strict)
 - **Runtime**: Bun
 
 ## The design
 
-The page is a signed document: white paper, black type in one grotesque, and
-one blue, the blue of the ink a person signs with. It is the same world on
-every page, and three rules hold it together. Breaking one is a bug rather
-than a variation.
+The site wears Impeccable's Neo Mirai world, as ADR-0006 adapts it: warm gold
+paper with a 112px grid and a grain, ink type, a red sun, gold light and night
+teal, Chakra Petch caps for display, Zen Old Mincho for reading and Azeret
+Mono caps for labels. It has one light theme and no Japanese text.
+`DESIGN.md` is the full system and `PRODUCT.md` is the brief; read both before
+a design change. It is the same world on every page, and three rules hold it
+together. Breaking one is a bug.
 
 1. **A rule and a sheet are the only structure.** A `Band` is one course of
    the page. A `Unit` splits it into a head column and a body column under one
-   black rule that runs the width of the content, the way a form rules off
-   each of its parts. A sheet is a white panel with a drawn edge and no
-   shadow: a `Card` for the doors and the ways to buy, and the hero slip and
-   the run record drawn with a black edge. It is reserved for the things a
-   reader compares or acts on. A fact a reader can check is a form field, its
-   label in the top of the box. Rows and lists sit on hairlines with no box
-   around them. Nothing is drawn for looks: no section numbers, no eyebrow
-   labels, no coordinates, no illustration standing in for content.
-2. **`signal` (the blue) means someone must act.** It marks the gate the
+   ink rule that runs the width of the content. A sheet is a rice-paper panel
+   with a drawn edge and no shadow: a `Card` for the ways to buy, and the
+   example console and the run records. It is reserved for the things a
+   reader compares or acts on. Rows and lists sit on hairlines with no box
+   around them. The ornaments (the KP seal, the sun disc, the eclipse and the
+   vertical rail) are drawn in `src/components/ornaments.tsx` and
+   `site-chrome.tsx`, in neutral forms only: no rays.
+2. **`signal` (the stamp red) means someone must act.** It marks the gate the
    agent stops at and the one action a reader can take in a view: the primary
    button, the underline under a link that leads somewhere, the marker on a
-   question that opens. A rule, a number or a table cell is never blue. A
-   surface set in the blue (`Band tone="signal"` or a `lead` plan, which set
-   the `dark` class) turns the primary button white, because a blue button on
-   blue has no edge.
-3. **`font-mono` means a machine wrote this string.** A handle, a channel, a
-   timestamp, a diff, a registration code. A label a person wrote is set in
-   the text face, never in mono and never in tracked capitals.
+   question that opens. A rule, a number or a table cell is never red. A
+   surface set in night teal (`Band tone="night"`, a `lead` plan, the footer)
+   carries the `night` utility, which turns the same variables over, so the
+   primary button turns gold with ink type.
+3. **`font-mono` is a label or a machine string.** A button, a navigation
+   link, a badge, a price unit, a handle, a channel, a timestamp, a diff, a
+   registration code. Running text a person wrote is set in the serif.
 
 A heading carries no emphasis of its own: no italic word, no coloured full
 stop. Its weight and size are the emphasis.
 
-Motion is one orchestrated entrance per page, on load: the hero slip rises
-part by part and ends by drawing its signature line, or the run record ticks
-in on a product page. A page carries one or the other, never both, and nothing
+Motion is one orchestrated entrance per page, on load: the example console
+rises part by part and ends by drawing its signature line (in the home page's
+safety section and in the Slack page's hero), or the run record ticks in on a
+product page. A page carries one or the other, never both, and nothing
 else on the site moves unless a reader asks it to. `prefers-reduced-motion`
 gets the end state immediately.
 
-A number in front of a row means the rows are a sequence. Only the four
-stations of a run earn `<Rows sequence>`, because only they are one.
+A number in front of a row means the rows are a sequence. Only the steps an
+agent takes in order earn `<Rows sequence>`: the four stations of a run on a
+product page, the steps on a job page, and the steps of a build on the home
+page.
 
-Every style is a utility in the component that draws it. A shape that recurs
+Every style is a utility in the component that draws it. A font size is a
+step on the type ramp in `globals.css` (`text-display`, `text-headline`,
+`text-body`, `text-note`, `text-caption`, `text-label` and the rest, listed
+in `DESIGN.md`), never an arbitrary value: the Impeccable detector flags a
+size off the ramp. A shape that recurs
 across pages is a component in `src/components/section.tsx` or
 `src/components/plan-card.tsx`, and a control is a shadcn/ui component in
 `src/components/ui`, themed to the palette in its own source. Add or update
@@ -88,12 +97,16 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 src/app/
   layout.tsx           # Root layout: fonts, site-wide metadata, the site-wide graph,
                        #   analytics
-  page.tsx             # Home: hero and console, clients, the two doors, the work we
-                       #   take, fit, mechanism and stack, channels, reviewer, prices,
-                       #   questions, closing call to action;
+  page.tsx             # Home: hero and scene, clients, the work an agent can take,
+                       #   how a build goes, why it is safe (with the example console),
+                       #   channels, prices, the founder, questions, closing call to
+                       #   action;
                        #   metadata and graph built from its page record
-  custom/page.tsx      # The custom door: the jobs we take, channels, price; metadata
-                       #   and graph built from its page record
+  custom/page.tsx      # The custom door: the jobs we take, how a custom build goes,
+                       #   what the spec settles, channels, price; metadata and graph
+                       #   built from its page record
+  backlog/page.tsx     # Our coding agents on a client's backlog: Managed and Sprint,
+                       #   their prices from `backlogPlans`, and an example run
   content-publishing/page.tsx
   social-scheduling/page.tsx
   support-ticket-triage/page.tsx
@@ -135,9 +148,11 @@ src/app/
                        #   `pageNodes`, which builds what a page adds from that same
                        #   record: the page with the date its copy changed and the
                        #   questions it answers, the service it sells, the breadcrumb
-  globals.css          # The theme: shadcn's variables set to paper and ink, the
-                       #   site's own tokens beside them, the breakpoints, the
-                       #   entrance keyframes, and the few base rules no component owns
+  globals.css          # The theme: shadcn's variables set to the Neo Mirai palette,
+                       #   the site's own tokens beside them, the `night` surface, the
+                       #   breakpoints, the entrance keyframes, the paper grid and
+                       #   grain, and the few base rules no component owns
+  theme.ts             # The paper colour as hex, for the viewport and the manifest
   opengraph-image.tsx  # Open Graph image, rendered at build time
   manifest.ts          # Web app manifest
   robots.ts            # robots.txt
@@ -151,13 +166,15 @@ src/app/
                        #   `noindex` there, and a second beside it is a contradiction
   icon.svg             # Favicon, drawn as the brand mark
 src/components/
-  site-chrome.tsx      # Header, footer and brand mark, shared by every page. The
+  ornaments.tsx        # The KP seal, the sun disc and the eclipse, hand-drawn SVG
+  site-chrome.tsx      # Header, footer, nameplate and vertical rail, shared by every page. The
                        #   header links the about page, and the footer links privacy,
                        #   terms, the imprint and the contact page from every page
   mobile-nav.tsx       # The header's menu button on a narrow screen. Loads the
                        #   sheet on first press, so no page ships it up front
   menu-sheet.tsx       # The header's links in a sheet, mounted open by that press
-  section.tsx          # The shapes every page is built from: band, unit, hero,
+  section.tsx          # The shapes every page is built from: band, unit, hero
+                       #   (with its scene or ornament, and its calls to action),
                        #   lede, note, pull link, rows
   plan-card.tsx        # One way to buy as a card, and the grid the cards sit in
   ui/                  # shadcn/ui components, themed to the palette in their source
@@ -168,8 +185,11 @@ src/components/
   job-page.tsx         # One job we take, on its own page
   job-rows.tsx         # The jobs we take, as rows, on the home page and the door
   run-record.tsx       # The example run, on a product page
-  agent-console.tsx    # The example agent in the home page hero: a sign-off slip
-                       #   with its nameplate, the exchange, and the gate it stops at
+  agent-console.tsx    # The example agent, in the home page's safety section and the
+                       #   Slack page's hero: a sign-off slip with its nameplate, the
+                       #   exchange, and the gate it stops at
+  scenes.tsx           # The five scenes, drawn by hand as inline SVG from the tokens
+  stop-point.tsx       # Where an agent stops for a person, on a product or job page
   analytics.tsx        # Vercel Web Analytics: the tracker this deployment serves,
                        #   and one event per call to action clicked
 src/lib/
@@ -187,11 +207,14 @@ tests/
                        #   description each record states, each unique and short
                        #   enough to print whole; the sitemap and robots file
   opengraph.test.ts    # An unfurl image, title and description per route, and one
-                       #   robots directive on the 404
+                       #   robots directive on the 404; the image is a 1200 by 630
+                       #   PNG set on the paper colour the manifest states
   sitemap.test.ts      # Real dates, no build time, and no Host directive
   llms-txt.test.ts     # The plain-text index lists the URLs the sitemap lists, with
                        #   the description each record states
   structured-data.test.ts  # The company states only what it can support
+  home.test.ts         # The home page's section order, its one offer, its questions,
+                       #   its words, and the /work redirect
   page-graph.test.ts   # Each route describes itself: the date its copy changed, the
                        #   printed prices as offers, the questions the home page
                        #   answers, and one spelling of the site URL in every identifier
@@ -209,6 +232,19 @@ tests/
                        #   as `content.ts` holds them
   definition-lists.test.ts  # Everything inside a definition list sits in a term or a
                        #   value, so a screen reader reads it with its term
+  images.test.ts       # Every img has alt text, a size and a file; every scene a name
+  examples.test.ts     # Every synthetic part carries the Example label
+  accessibility.test.ts  # No heading skips a level; every drawing is named or hidden
+  chrome.test.ts       # The header and the footer use no internal term
+  job-pages.test.ts    # A job page and the product page read in one order, and
+                       #   print the steps, prerequisites and prices content.ts holds
+  custom-slack-eval.test.ts  # The custom, Slack and eval suite pages: buyer words,
+                       #   the custom prices in one shape on the door and every job
+                       #   page, the Flue links, no price on an explainer
+  backlog.test.ts      # The backlog page numbers its sections and draws an ornament
+  vocabulary.test.ts   # A spend cap caps a session, never a task, on every page
+  theme.test.ts        # One light theme, the fonts from the export, every colour
+                       #   through a token, the skip link and the ornaments
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
@@ -240,9 +276,9 @@ what the build emitted, never what Google accepted.
 
 Every word of both doors and of every job we take lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the page records with the day each page's copy last changed. What a page tells a machine rather than a reader is not there, and neither is the prose a shared component prints on every page of a kind. The metadata each page derives from its record, with the unfurl image and the indexing directive, lives in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`, and the decisions that shape the site, the test seam and where prose lives among them, are recorded in `docs/adr/`.
 
-The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
+The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the upkeep the home page's build steps describe: the eval suite on every change, the fixes and the monthly report. Change a number here only when the business changes it.
 
-The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `openPrices`, which is the plans the catalogue leaves standing, so a plan the page keeps back is a plan the graph does not claim. One offer states one number, which is the `amount`, so a way to buy whose `per` words carry a second figure ("to build, then from €1,500 a month") offers its build floor and leaves the monthly one in prose. `custom.prices` and a product's prices avoid that by holding the build and the monthly price as two prices, and a way to buy would have to print them as two lines to do the same.
+The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `homePlans` and the backlog page `backlogPlans`, the plans filed under each page's path, so a plan a page does not print is a plan its graph does not claim. One offer states one number, which is the `amount`, so a way to buy whose `per` words carry a second figure ("to build, then from €1,500 a month") offers its build floor and leaves the monthly one in prose. `custom.prices` and a product's prices avoid that by holding the build and the monthly price as two prices, and a way to buy would have to print them as two lines to do the same. The Self-run and Custom agent plans build their one line from those two prices (`buildThenMonthly` in `content.ts`), so each number is written once.
 
 `company` holds what the Lithuanian register of legal entities holds: the legal name, the legal form, the registration code, the VAT number, the registered address and the director. The imprint prints those six, and `contactEmail` under them so a reader who has finished checking can write; nothing else goes on that page. `tests/legal.test.ts` fails if one of the six stops appearing there. A reader is on that page to check us against the register, so a detail we cannot point at in the register does not go in. Note that `company.registeredAddress` is not `location`: the copy says Vilnius, where the studio works, and the register holds an address in the Lazdijai district.
 
@@ -250,7 +286,7 @@ The printed price is also the only source for the machine-readable offer in the 
 
 `evalSuitePage` is the first explainer: one page on one part of the mechanism, written for the reader who searches the part. An explainer sells nothing and prints no price, so it states no offer, as every written page that is not a door does; it stays out of the header and the footer, and the home page hands a reader on to it from the section it explains. A second explainer is a record in `writtenPages` and a route file.
 
-`openPrices` is `prices` with the catalogue rule applied: a way to buy that depends on a ready-made product stays off every page until one runs. The home page and the terms page both print that list, so neither can print a price the other does not.
+`openPrices` is `prices` with the catalogue rule applied: a way to buy that depends on a ready-made product stays off every page until one runs. The terms page prints that whole list, and the home page and the backlog page each print the part filed under their own path, so no page prints a price the terms do not explain.
 
 `bookingUrl` is the one constant the owner sets once a booking link exists. `callHref` reads it, and every booking link on the site, the contact page's included, is `callHref`: set the URL and all of them point at it in the next build, with no other edit. While it is empty, `callHref` falls back to a `mailto:` with `callSubject`, "First call", so a click on it still names the door the reader came through; once it is set, that click leaves the site instead of opening a mail client, and the `mailto` event in `## Analytics` below stops counting it. `tests/contact.test.ts` knows a booking link by that destination and not by its words, so once the URL is set, a page still carrying the fallback mailto fails there. `contactEmail` is the mailbox the whole site uses, the privacy page included: it is the route by which a visitor's own words reach us. The contact page prints it with `contactSubject`, so a mail written from there says so.
 
@@ -273,7 +309,16 @@ line in `llms.txt`, the page's own graph nodes, and the suite's coverage of all 
      date: "2026-09-21",
    };
 
-   export const writtenPages: PageRecord[] = [homePage, customPage, ...legalPages, aboutPage];
+   export const writtenPages: PageRecord[] = [
+     homePage,
+     customPage,
+     ...legalPages,
+     evalSuitePage,
+     aboutPage,
+     contactPage,
+     slackPage,
+     backlogPage,
+   ];
    ```
 
 2. Add the route file at the path the record states, here `src/app/about/page.tsx`:
@@ -330,15 +375,16 @@ job is written twice. The prose the five pages share, their section headings amo
      path: "/failed-payment-recovery",
      title: "Failed payment recovery agent", // written for a search result
      description: "...",
-     date: "2026-09-21",
+     date: "2026-11-20",
      heading: "An agent that works last night's failed payments.", // written for the reader
      lede: "...",
-     authority: "It acts behind an approval gate. ...", // one of the three in CONTEXT.md
-     gate: "The gate sits before a message leaves your company. ...",
+     authority: "On its own, it reads Stripe, ...", // one of the three in CONTEXT.md, in buyer words
+     gate: "It stops before a message leaves your company. ...",
      steps: [{ title: "Reads the night's failures", body: "..." }],
      systems: [{ name: "Stripe", role: "..." }],
      subject: "Failed payment recovery", // the mail subject, and the door in an event
      more: "How the follow-up works", // the words the two job lists link with
+     scene: "financeDesk", // optional: the room scene the first screen shows
    };
    ```
 
@@ -367,13 +413,15 @@ stay one page in five voices rather than five pages drifting apart.
 
 A job page prints the custom door's prices, read from `custom.prices`, and no number of its
 own: a job we shape an agent around is custom work, and the door is where it is priced. It
-states one of the three authorities in `CONTEXT.md` and the gate that authority stops at.
-`tests/links.test.ts` holds it to being reachable: both job lists link to it and it leads on to
-the door.
+states one of the three authorities in `CONTEXT.md` and the gate that authority stops at, in a
+buyer's words: the page heads the gate "Where it stops for a person", and neither term is
+printed. `tests/links.test.ts` holds it to being reachable: both job lists link to it and it
+leads on to the door. `tests/job-pages.test.ts` holds it, and the product page, to the order a
+buyer reads in: the steps and where the agent stops, the systems, the channels and the price.
 
 ## The catalogue
 
-`products` holds only a product that runs today, and today it holds issue to pull request. A job we have not built yet belongs to the custom door, on the custom page or on a job page of its own. Were the array empty, the home page would show one door, the self-run and managed plans would stay off the home page's price list, out of the offers in its graph and off the terms, and no product would appear in the nav, the sitemap or `llms.txt`. `openPrices` and the home page's `openDoors` both read the array's length, so the plans and the door switch together.
+`products` holds only a product that runs today, and today it holds issue to pull request. A job we have not built yet belongs to the custom door, on the custom page or on a job page of its own. Were the array empty, the home page's work list would open with the five jobs, the Self-run and Managed plans would stay off every price list, out of the offers in every graph and off the terms, and no product would appear in the nav, the sitemap or `llms.txt`. `openPrices` and the home page's work list both read the array, so the plans and the list switch together.
 
 A product takes two edits, because `output: "export"` refuses a dynamic route segment that generates no paths. Issue to pull request is the worked example:
 
@@ -409,7 +457,7 @@ The strictest case is `company`, which the imprint prints: every line of it is i
 
 Also checkable, and worth keeping checkable: the channel lists in `channels` are the channels [Flue](https://flueframework.com/docs/ecosystem/) verifies, split into the chat channels a person addresses an agent in and the services that wake one with an event. The Slack page at `src/app/slack/page.tsx` says how one of those channels behaves, and every sentence it states about Slack or Teams is one Flue's [Slack](https://flueframework.com/docs/ecosystem/channels/slack/) or [Teams](https://flueframework.com/docs/ecosystem/channels/teams/) channel documentation states; the page links both so a reader can check. The four items in `stack.ours` are the pieces Flue does not provide, so we write them. If Flue's ecosystem or its feature set moves, these lists and that page move with it.
 
-Synthetic, and labelled as an example wherever a visitor could read it as fact: the agent console in `src/components/agent-console.tsx`, the hero run record in `src/components/run-record.tsx`, and the `work` table on a product page. Each one carries a visible "Example" label, a `Badge` with `variant="signal"`. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
+Synthetic, and labelled as an example wherever a visitor could read it as fact: the agent console in `src/components/agent-console.tsx` (on the home page and the Slack page), the run record in `src/components/run-record.tsx` (on a product page), the example run on the backlog page, and the `work` table on a product page. Each one carries a visible "Example" label, a `Badge` with `variant="signal"`, and the element that holds it carries `data-example`. `tests/examples.test.ts` holds every `data-example` block to its label, and holds the synthetic words the content module prints (the console's handle, the work table's briefs) to sitting inside such a block. A new synthetic part takes the same mark. There is no case study, metric, press mention or named client for any agent we have built. Do not invent one, and do not put an invented figure in a slot that reads as a statistic.
 
 Other people's names belong to them. Flue is Apache-2.0, and §6 of that licence permits the descriptive use of the name, so we write "Flue" in text with a link, never as a logo, and never in a way that implies Flue endorses us. Never adopt a name from somebody else's repository as a KastProductions product name: a product is named for the outcome it delivers.
 
@@ -424,7 +472,7 @@ The site runs on Vercel, and `vercel.json` carries two settings the static expor
 
 `llms.txt` needs no such header. The build writes it under its own name, extension and all, so a static host reads the content type off the `.txt` the way it already does for `robots.txt`.
 
-The Open Graph image fetches Archivo from Google Fonts during `bun run build`, so the build machine needs network access. It is drawn from the same tokens as the page, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
+The Open Graph image fetches Chakra Petch and Azeret Mono from Google Fonts during `bun run build`, so the build machine needs network access. It reads its colours from the tokens in `src/app/globals.css`, the same tokens the page uses, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
 
 ## Analytics
 

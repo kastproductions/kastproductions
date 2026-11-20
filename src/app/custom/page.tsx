@@ -1,30 +1,49 @@
 import { ChannelsSection } from "@/components/channels-section";
 import { JobRows } from "@/components/job-rows";
+import { SunDisc } from "@/components/ornaments";
 import { PlanCard, Plans } from "@/components/plan-card";
 import {
-  Actions,
   Band,
   HeadNote,
-  HeroCopy,
+  HeroActions,
+  HeroFrame,
   HeroTitle,
   Lede,
   Note,
+  PullLink,
+  Row,
+  RowLabel,
+  RowText,
+  Rows,
   Unit,
   UnitBody,
   UnitHead,
 } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import { buttonVariants } from "@/components/ui/button";
-import { callHref, custom, customPage, mailtoFor } from "../content";
+import { custom, customPage, evalSuitePage, homePlans, mailtoFor } from "../content";
 import { pageMetadata } from "../head-directives";
 import { graphHtml, pageNodes } from "../structured-data";
 
 export const metadata = pageMetadata(customPage);
 
+/* The custom plan's body and what it includes, as the home price list prints
+ * them. The prices are the door's own two, as every job page prints them, so
+ * the custom plan has one price in one form wherever a card shows it. */
+function customPlan() {
+  const found = homePlans.find((entry) => entry.title === custom.title);
+  if (!found) {
+    throw new Error("The home price list holds no custom plan for the custom door to print.");
+  }
+  return found;
+}
+const plan = customPlan();
+
 /* The door's own nodes, beside the site-wide ones the layout renders: the
  * page itself, the service it sells with the prices it prints, and the way
  * here from the home page. */
 const graph = graphHtml(pageNodes(customPage, { prices: custom.prices }));
+
+const brief = mailtoFor(custom.subject);
 
 export default function Custom() {
   return (
@@ -33,23 +52,59 @@ export default function Custom() {
 
       <main id="main">
         <Band flush>
-          <HeroCopy className="wrap">
+          <HeroFrame ornament={<SunDisc className="w-36 lg:w-44" />}>
             <HeroTitle>{custom.heading}</HeroTitle>
             <Lede wide>{custom.lede}</Lede>
-            <Actions>
-              <a className={buttonVariants()} href={mailtoFor(custom.subject)}>
-                Describe the work
-              </a>
-              <a className={buttonVariants({ variant: "outline" })} href={callHref}>
-                Book a call
-              </a>
-            </Actions>
-          </HeroCopy>
+            <HeroActions href={brief} />
+          </HeroFrame>
         </Band>
 
-        <Band id="jobs" aria-labelledby="jobs-title">
+        <Band aria-labelledby="how-title" id="how">
           <Unit>
-            <UnitHead title={custom.jobsHeading} titleId="jobs-title">
+            <UnitHead index={1} title={custom.howHeading} titleId="how-title">
+              <HeadNote>{custom.howLede}</HeadNote>
+            </UnitHead>
+            <UnitBody>
+              <Rows sequence>
+                {custom.steps.map((step) => (
+                  <li key={step.title}>
+                    <Row>
+                      <RowLabel>{step.title}</RowLabel>
+                      <RowText>{step.body}</RowText>
+                    </Row>
+                  </li>
+                ))}
+              </Rows>
+            </UnitBody>
+          </Unit>
+        </Band>
+
+        <Band aria-labelledby="spec-title" id="spec" tone="panel">
+          <Unit>
+            <UnitHead index={2} title={custom.specHeading} titleId="spec-title">
+              <HeadNote>{custom.specLede}</HeadNote>
+              <PullLink className="mt-4" href={evalSuitePage.path}>
+                {custom.specMore}
+              </PullLink>
+            </UnitHead>
+            <UnitBody>
+              <Rows>
+                {custom.spec.map((line) => (
+                  <li key={line.title}>
+                    <Row>
+                      <RowLabel>{line.title}</RowLabel>
+                      <RowText>{line.body}</RowText>
+                    </Row>
+                  </li>
+                ))}
+              </Rows>
+            </UnitBody>
+          </Unit>
+        </Band>
+
+        <Band aria-labelledby="jobs-title" id="jobs">
+          <Unit>
+            <UnitHead index={3} title={custom.jobsHeading} titleId="jobs-title">
               <HeadNote>{custom.jobsLede}</HeadNote>
             </UnitHead>
             <UnitBody>
@@ -58,40 +113,26 @@ export default function Custom() {
           </Unit>
         </Band>
 
-        <ChannelsSection />
+        <ChannelsSection index={4} />
 
-        <Band tone="panel" id="pricing" aria-labelledby="custom-price-title">
+        <Band aria-labelledby="custom-price-title" id="pricing">
           <Unit>
-            <UnitHead title={custom.pricingHeading} titleId="custom-price-title">
-              <HeadNote>
-                The build price is a floor, because the work follows the number
-                of systems your agent touches. The monthly price buys the eval
-                suite, the changes and the report.
-              </HeadNote>
+            <UnitHead index={5} title={custom.pricingHeading} titleId="custom-price-title">
+              <HeadNote>{custom.pricingLede}</HeadNote>
             </UnitHead>
-            <Plans>
+            {/* One card, so the note takes the column beside it from xl up
+                rather than a row of its own under a narrow card. */}
+            <Plans className="xl:grid-cols-[minmax(0,25rem)_minmax(0,1fr)] xl:items-start xl:[&>p]:col-span-1">
               <PlanCard
-                title="Custom agent"
-                body={
-                  <>
-                    You describe the work. We write the spec and name the price,
-                    then build the agent around how your company already runs.
-                  </>
-                }
+                body={plan.body}
+                cta={plan.cta}
+                href={brief}
+                includes={plan.includes}
+                lead={plan.lead}
                 prices={custom.prices}
-                includes={[
-                  "A fixed price before we write any code",
-                  "Your accounts, your keys, your code from the first commit",
-                  "An eval suite, approval gates and a spend cap written for you",
-                ]}
-                href={mailtoFor(custom.subject)}
-                cta="Describe the work"
+                title={custom.title}
               />
-              <Note>
-                Which accounts you need depends on the systems your agent
-                touches. The spec names every one of them, next to the price,
-                before you commit to anything.
-              </Note>
+              <Note className="xl:mt-0">{custom.pricingNote}</Note>
             </Plans>
           </Unit>
         </Band>
@@ -99,8 +140,8 @@ export default function Custom() {
 
       <SiteFooter route={customPage.path} />
       <script
-        type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: graph }}
+        type="application/ld+json"
       />
     </>
   );

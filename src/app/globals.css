@@ -1,36 +1,37 @@
 /*
- * KastProductions theme.
+ * KastProductions theme: the Neo Mirai world (ADR-0006).
  *
- * The page is a signed document. White paper, black type in one grotesque,
- * and one blue: the blue of the ink a person signs with. Blue marks the place
- * a person acts, the gate a standing agent stops at and the one action a
- * reader can take in a view, so it is never a decoration. Mono appears only
- * where a machine wrote the string. Structure is a rule and a sheet: a band
- * sits on a rule, and a sheet is a white panel with a drawn edge and no
- * shadow. A field a person fills in is drawn as a form field, with its label
- * in the top of the box.
+ * Warm gold paper with a faint 112px grid and a grain, ink type, a red sun,
+ * and night teal. The red of the sun is the red of a stamp seal, so it marks
+ * the place a person acts: the one action a reader can take in a view, the
+ * gate a standing agent stops at, and the seal on the nameplate. Gold is the
+ * light on the paper, never the colour of a word a reader must read. Night
+ * teal is the one other surface: a band or a sheet set on it turns the same
+ * variables over through the `night` utility, so a component never states a
+ * colour for one background. There is one theme, and a system that asks for
+ * dark mode gets the same paper.
+ *
+ * Chakra Petch is the display face, Zen Old Mincho the face of every word a
+ * person reads at length, and Azeret Mono the face of a label and of any
+ * string a machine wrote. The fonts load through next/font in layout.tsx,
+ * which sets the three --font-* variables on <html>.
  *
  * Every style is a Tailwind utility in the component that draws it, and every
  * control is a shadcn/ui component in src/components/ui. This file holds only
  * what those read: the shadcn theme variables, the site's own tokens beside
- * them, and the few base rules no single component owns. A surface set in
- * the signature blue carries the `dark` class, which turns the same variables
- * over, so a component never states a colour for one background.
- *
- * The fonts load through next/font in layout.tsx, which sets the two
- * --font-* variables on <html>.
+ * them, and the few base rules no single component owns.
  */
 
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
-  --font-sans: var(--font-schibsted), system-ui, sans-serif;
-  --font-heading: var(--font-schibsted), system-ui, sans-serif;
-  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  /* Zen Old Mincho carries Latin Extended. The serifs after it are the
+   * fallback for a letter it lacks, so the letter stays in a serif. */
+  --font-sans: var(--font-mincho), "Noto Serif", Georgia, serif;
+  --font-heading: var(--font-chakra), "Noto Sans", system-ui, sans-serif;
+  --font-mono: var(--font-azeret), ui-monospace, monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -40,6 +41,7 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -51,28 +53,47 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* The site's own tokens. Signal is the signature blue, signal-foreground
-   * the colour to set type in where the blue marks an action, signal-tint the
-   * wash behind a gate. Prose is the colour of body copy, faint the colour of
-   * a label, hairline the soft rule inside a sheet. */
+  /* The site's own tokens. Signal is the stamp red, signal-foreground the
+   * colour to set type in where the red marks an action, signal-tint the wash
+   * behind a gate. Prose is the colour of body copy, faint the colour of a
+   * label, hairline the soft rule inside a sheet. Sun, gold and line draw the
+   * ornaments: the sun disc, the eclipse and the horizon lines. */
   --color-signal: var(--signal);
   --color-signal-foreground: var(--signal-foreground);
   --color-signal-tint: var(--signal-tint);
   --color-prose: var(--prose);
   --color-faint: var(--faint);
   --color-hairline: var(--hairline);
+  --color-line: var(--line);
+  --color-sun: var(--sun);
+  --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
+  --color-eclipse: var(--eclipse);
+  /* The raw palette, for the scenes in src/components/scenes.tsx. A scene is
+   * a picture, so it keeps its own colours on any surface: these do not turn
+   * over under the night utility. A component reads the semantic tokens
+   * above, never these. */
+  --color-paper: var(--paper);
+  --color-paper-soft: var(--paper-soft);
+  --color-rice: var(--rice);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-night: var(--night);
+  --color-night-soft: var(--night-soft);
+  --color-sun-deep: var(--sun-deep);
   --color-pass: var(--pass);
   --color-pass-tint: var(--pass-tint);
   --color-halt-tint: var(--halt-tint);
 
-  /* Three radii for three kinds of thing: a tag, a control, a sheet. */
+  /* A corner is square to the eye, as cut paper is. A seal is the one round
+   * thing. */
   --radius-sm: calc(var(--radius) * 0.5);
   --radius-md: var(--radius);
-  --radius-lg: calc(var(--radius) * 1.5);
-  --radius-xl: calc(var(--radius) * 1.5);
-  --radius-2xl: calc(var(--radius) * 2);
-  --radius-3xl: calc(var(--radius) * 2.5);
-  --radius-4xl: calc(var(--radius) * 3);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius);
+  --radius-3xl: var(--radius);
+  --radius-4xl: var(--radius);
 
   /* The one entrance a page may carry: see the motion rule in README.md.
    * An element staggers its rise through --rise-delay (and may slow it
@@ -85,12 +106,37 @@
 @theme {
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* The site's three breakpoints, replacing Tailwind's: at sm a button
-   * shares its row, at md the header shows its links and two columns sit
-   * side by side, at lg a section's heading takes its own column. */
+  /* The type ramp, as DESIGN.md lists it. A size not on it is drift: pick
+   * the nearest step. Display is the h1, headline a section's h2, lede the
+   * paragraph under the h1, quote a pulled quote. Title is a card's name or a
+   * question, body is reading text, note a side remark, small a figure in a
+   * form or a list, caption a machine string, label and label-sm mono caps.
+   * Figure is a price. The two labels keep the line height of `label-mono`,
+   * so a size step never loosens a label. src/lib/utils.ts names every step
+   * for `cn`, so a size and a colour on one element both survive a merge. */
+  --text-display: clamp(2.3rem, 1.2rem + 3.6vw, 4.6rem);
+  --text-headline: clamp(1.6rem, 1.1rem + 1.5vw, 2.4rem);
+  --text-figure: 1.9rem;
+  --text-quote: clamp(1.2rem, 1rem + 0.8vw, 1.55rem);
+  --text-lede: clamp(1.1rem, 1rem + 0.4vw, 1.28rem);
+  --text-title: 1.15rem;
+  --text-body: 1.05rem;
+  --text-note: 0.95rem;
+  --text-small: 0.88rem;
+  --text-caption: 0.8rem;
+  --text-label: 0.72rem;
+  --text-label--line-height: 1.3;
+  --text-label-sm: 0.66rem;
+  --text-label-sm--line-height: 1.3;
+
+  /* The site's breakpoints, replacing Tailwind's: at sm a button shares its
+   * row, at md the header shows its links and two columns sit side by side,
+   * at lg a section's heading takes its own column, and at rail the margin
+   * beside the content is wide enough for the vertical rail. */
   --breakpoint-sm: 35.0625rem;
   --breakpoint-md: 55.0625rem;
   --breakpoint-lg: 67.5625rem;
+  --breakpoint-rail: 86rem;
 
   @keyframes rise {
     from {
@@ -114,35 +160,57 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #000000;
-  --card: #ffffff;
-  --card-foreground: #000000;
-  --popover: #ffffff;
-  --popover-foreground: #000000;
-  --primary: #2340e0;
-  --primary-foreground: #ffffff;
-  --secondary: #f1f2f4;
-  --secondary-foreground: #000000;
-  --muted: #f1f2f4;
-  --muted-foreground: #4d525c;
-  --accent: #f1f2f4;
-  --accent-foreground: #000000;
-  --destructive: #c42b2b;
-  --border: rgb(0 0 0 / 0.2);
-  --input: rgb(0 0 0 / 0.2);
-  --ring: #2340e0;
-  --radius: 6px;
+  /* The palette of the reference, kept in its own OKLCH values. */
+  --paper: oklch(94% 0.035 78);
+  --paper-soft: oklch(91% 0.045 78);
+  --ink: oklch(18% 0.035 82);
+  --ink-soft: oklch(32% 0.045 80);
+  --rice: oklch(97% 0.02 82);
+  --night: oklch(17% 0.035 185);
+  --night-soft: oklch(24% 0.04 170);
+  --sun-deep: oklch(52% 0.17 38);
 
-  --signal: #2340e0;
-  --signal-foreground: #2340e0;
-  --signal-tint: rgb(35 64 224 / 0.07);
-  --prose: #2e3138;
-  --faint: #5f636c;
-  --hairline: rgb(0 0 0 / 0.1);
-  --pass: #127a4a;
-  --pass-tint: rgb(18 122 74 / 0.1);
-  --halt-tint: rgb(196 43 43 / 0.1);
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--rice);
+  --card-foreground: var(--ink);
+  --popover: var(--paper);
+  --popover-foreground: var(--ink);
+  --primary: var(--sun-deep);
+  --primary-foreground: var(--rice);
+  --primary-hover: oklch(44% 0.15 36);
+  --secondary: var(--paper-soft);
+  --secondary-foreground: var(--ink);
+  --muted: var(--paper-soft);
+  --muted-foreground: oklch(38% 0.045 79);
+  --accent: var(--paper-soft);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(50% 0.17 30);
+  --border: oklch(73% 0.055 77);
+  --input: oklch(54% 0.04 80);
+  --ring: oklch(58% 0.18 42);
+  --radius: 2px;
+
+  --signal: var(--sun-deep);
+  --signal-foreground: oklch(48% 0.16 38);
+  --signal-tint: oklch(64% 0.19 43 / 0.09);
+  --prose: var(--ink-soft);
+  --faint: oklch(44% 0.045 78);
+  --hairline: oklch(58% 0.06 76 / 0.3);
+  --line: oklch(73% 0.055 77);
+  --sun: oklch(64% 0.19 43);
+  --gold: oklch(68% 0.145 74);
+  --gold-bright: oklch(76% 0.165 80);
+  --eclipse: var(--ink);
+  --pass: oklch(45% 0.11 150);
+  --pass-tint: oklch(45% 0.11 150 / 0.1);
+  --halt-tint: oklch(50% 0.17 30 / 0.1);
+  /* The paper's own light and grid, which the body draws and the Open Graph
+   * image reads: the gold light high on the page, and the vertical and
+   * horizontal lines of the 112px grid. */
+  --paper-light: oklch(82% 0.11 79 / 0.55);
+  --grid-x: oklch(20% 0.015 80 / 0.035);
+  --grid-y: oklch(20% 0.015 80 / 0.028);
 
   --measure: 66ch;
   --gutter: clamp(1.25rem, 4vw, 3.5rem);
@@ -151,41 +219,57 @@
   --split: clamp(2rem, 5vw, 5rem);
 }
 
-/* The signature blue as a surface. On it the one action is a white button,
- * because a blue button on blue is a label with no edge, and everything that
- * marks an action on paper turns white. */
-.dark {
-  --background: #2340e0;
-  --foreground: #ffffff;
-  --card: #2340e0;
-  --card-foreground: #ffffff;
-  --popover: #2340e0;
-  --popover-foreground: #ffffff;
-  --primary: #ffffff;
-  --primary-foreground: #2340e0;
-  --secondary: rgb(255 255 255 / 0.12);
-  --secondary-foreground: #ffffff;
-  --muted: rgb(255 255 255 / 0.12);
-  --muted-foreground: rgb(255 255 255 / 0.84);
-  --accent: rgb(255 255 255 / 0.12);
-  --accent-foreground: #ffffff;
-  --border: rgb(255 255 255 / 0.45);
-  --input: rgb(255 255 255 / 0.45);
-  --ring: #ffffff;
+/*
+ * Night teal as a surface: a band, the footer, the plan a price list leads
+ * with. On it the action turns gold with ink type, because the stamp red
+ * reads as a stain on teal, and the ornaments keep their light.
+ */
+@utility night {
+  --background: var(--night);
+  --foreground: var(--rice);
+  --card: var(--night-soft);
+  --card-foreground: var(--rice);
+  --popover: var(--night);
+  --popover-foreground: var(--rice);
+  --primary: var(--gold-bright);
+  --primary-foreground: var(--ink);
+  --primary-hover: oklch(84% 0.13 84);
+  --secondary: var(--night-soft);
+  --secondary-foreground: var(--rice);
+  --muted: var(--night-soft);
+  --muted-foreground: oklch(88% 0.04 82);
+  --accent: var(--night-soft);
+  --accent-foreground: var(--rice);
+  --border: oklch(73% 0.055 77 / 0.55);
+  --input: oklch(73% 0.055 77 / 0.7);
+  --ring: var(--gold-bright);
 
-  --signal: #ffffff;
-  --signal-foreground: #ffffff;
-  --signal-tint: rgb(255 255 255 / 0.14);
-  --prose: rgb(255 255 255 / 0.9);
-  --faint: rgb(255 255 255 / 0.8);
-  --hairline: rgb(255 255 255 / 0.25);
+  --signal: var(--gold-bright);
+  --signal-foreground: var(--gold-bright);
+  --signal-tint: color-mix(in oklch, var(--gold-bright) 12%, transparent);
+  --prose: oklch(93% 0.03 82);
+  --faint: oklch(80% 0.07 82);
+  --hairline: oklch(73% 0.055 77 / 0.3);
+  --eclipse: var(--night);
 
-  color-scheme: dark;
+  background-color: var(--background);
+  color: var(--foreground);
 }
 
 @utility wrap {
   width: min(100% - var(--gutter) * 2, 78rem);
   margin-inline: auto;
+}
+
+/* A label: a mono caps string, the voice of the reference's dates, prices
+ * and section labels. */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
 }
 
 @layer base {
@@ -194,17 +278,48 @@
   }
   html {
     @apply bg-background font-sans text-foreground antialiased;
-    line-height: 1.55;
+    line-height: 1.6;
     text-size-adjust: 100%;
-    scrollbar-color: var(--faint) transparent;
+    scrollbar-color: var(--line) transparent;
     accent-color: var(--signal);
     caret-color: var(--signal);
     color-scheme: light;
     -webkit-tap-highlight-color: transparent;
   }
+  /* The paper: a gold light high on the page, the 112px grid, and under it
+   * the paper colour. */
   body {
     min-height: 100dvh;
     overflow-x: clip;
+    background:
+      radial-gradient(circle at 66% 7%, var(--paper-light), transparent 17rem),
+      linear-gradient(90deg, var(--grid-x) 1px, transparent 1px),
+      linear-gradient(0deg, var(--grid-y) 1px, transparent 1px),
+      var(--paper);
+    background-size:
+      auto,
+      112px 112px,
+      112px 112px,
+      auto;
+  }
+  /* The grain: three fine dot fields, multiplied over everything below the
+   * header, which never takes a pointer. */
+  body::before {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    content: "";
+    opacity: 0.42;
+    mix-blend-mode: multiply;
+    background:
+      radial-gradient(circle at 18% 21%, oklch(100% 0 0 / 0.6), transparent 0.08rem),
+      radial-gradient(circle at 76% 63%, oklch(36% 0.05 70 / 0.18), transparent 0.07rem),
+      radial-gradient(circle at 48% 88%, oklch(38% 0.07 35 / 0.14), transparent 0.06rem);
+    background-size:
+      0.7rem 0.85rem,
+      1.1rem 1.3rem,
+      0.95rem 1.05rem;
   }
   @media (prefers-reduced-motion: no-preference) {
     html {
@@ -213,19 +328,20 @@
   }
   ::selection {
     background: var(--signal);
-    color: var(--background);
+    color: var(--primary-foreground);
   }
+  /* A focus ring in the sun colour, clear of the edge it rings, on every
+   * surface: the night utility sets the ring to gold. */
   :focus-visible {
-    outline: 2px solid var(--ring);
-    outline-offset: 3px;
-    border-radius: 2px;
+    outline: 3px solid var(--ring);
+    outline-offset: 4px;
   }
   /* Tailwind's preflight takes the underline off every link; a link in
    * running text keeps it here, and a link drawn as a control says
    * `no-underline`. */
   a {
     text-decoration-line: underline;
-    text-underline-offset: 0.2em;
+    text-underline-offset: 0.22em;
     text-decoration-thickness: 1px;
   }
   a,
@@ -233,19 +349,19 @@
   summary {
     touch-action: manipulation;
   }
-  /* The sticky header covers the top 4.25rem of the viewport. Scroll padding
+  /* The sticky header covers the top 4.5rem of the viewport. Scroll padding
    * keeps a hash target's top rule below it, and keeps an element that takes
    * keyboard focus from scrolling in underneath it. */
   html {
-    scroll-padding-top: 4.5rem;
+    scroll-padding-top: 4.75rem;
   }
   b,
   strong {
-    font-weight: 650;
+    font-weight: 700;
   }
   code {
     font-family: var(--font-mono);
-    font-size: 0.9em;
+    font-size: 0.86em;
   }
   button:not(:disabled),
   [role="button"]:not(:disabled) {

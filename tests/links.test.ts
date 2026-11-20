@@ -18,7 +18,7 @@ import {
   products,
   slackPage,
 } from "../src/app/content";
-import { decodeEntities, fileFor, mainOf, readExport } from "./export";
+import { decodeEntities, everyPage, fileFor, mainOf, readExport } from "./export";
 
 /* Every path a piece of markup links to, in document order. */
 function linkedPaths(markup: string): string[] {
@@ -61,17 +61,36 @@ for (const page of products.map(productPage)) {
   });
 }
 
-test(`${evalSuitePage.path} is linked from the mechanism section of the home page`, () => {
-  /* The explainer is the fuller answer to the one line the mechanism section
-   * gives on the eval suite, so that section is where a reader is handed on.
-   * A link elsewhere on the page is not that. */
+test(`${evalSuitePage.path} is linked from the safety section of the home page`, () => {
+  /* The explainer is the fuller answer to the one point the safety section
+   * makes about the eval suite, so that section is where a reader is handed
+   * on. A link elsewhere on the page is not that. */
   const home = readExport(fileFor("/"));
-  const section = /<section\b[^>]*\bid="mechanism"[^>]*>([\s\S]*?)<\/section>/.exec(home);
+  const section = /<section\b[^>]*\bid="safety"[^>]*>([\s\S]*?)<\/section>/.exec(home);
   if (!section) {
-    throw new Error("The home page carries no mechanism section.");
+    throw new Error("The home page carries no safety section.");
   }
   expect(linkedPaths(section[1])).toContain(evalSuitePage.path);
 });
+
+/*
+ * Every link on the site that names a section of a page lands on it. A
+ * fragment that names no id drops the reader at the top of the page with no
+ * word of warning, and a section renamed on one page leaves links on another
+ * pointing at nothing.
+ */
+for (const file of everyPage) {
+  test(`${file} links only to sections that exist`, () => {
+    const dangling = linkedPaths(readExport(file))
+      .filter((href) => href.includes("#") && (href.startsWith("/") || href.startsWith("#")))
+      .filter((href) => {
+        const [path, fragment] = href.split("#");
+        const target = path === "" ? readExport(file) : readExport(fileFor(path));
+        return !new RegExp(`\\sid="${fragment}"`).test(target);
+      });
+    expect(dangling).toEqual([]);
+  });
+}
 
 /* The pages that print the channels section, which is where the Slack page is
  * linked from: the home page, the custom door and every job page. */

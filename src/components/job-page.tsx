@@ -1,10 +1,14 @@
+import type { ReactNode } from "react";
 import { ChannelsSection } from "@/components/channels-section";
+import { SunDisc } from "@/components/ornaments";
 import { PlanCard, Plans } from "@/components/plan-card";
+import { FinanceDeskScene, ShopFloorScene, SupportDeskScene } from "@/components/scenes";
 import {
-  Actions,
   Band,
   HeadNote,
-  HeroCopy,
+  HeroActions,
+  HeroFrame,
+  HeroSplit,
   HeroTitle,
   Lede,
   Note,
@@ -18,12 +22,12 @@ import {
   UnitHead,
 } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import { buttonVariants } from "@/components/ui/button";
+import { StopPoint } from "@/components/stop-point";
 /* The record is the job's page, and this component draws it, so the two carry
  * one name between them: the record is aliased here rather than renamed
  * everywhere else. */
 import type { JobPage as JobPageRecord } from "@/app/content";
-import { callHref, custom, customPage, mailtoFor } from "@/app/content";
+import { briefCta, custom, customPage, mailtoFor } from "@/app/content";
 import { graphHtml, pageNodes } from "@/app/structured-data";
 
 /*
@@ -38,6 +42,12 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
  * word about one job is on the record; the prose the five pages share, their
  * section headings among it, is here.
  *
+ * The page reads in the order a buyer asks: what the agent does, in numbered
+ * steps, and where it stops for a named person; which systems it touches;
+ * where the team reaches it; and what it costs. A job whose team one of the
+ * room scenes shows opens on that scene, and every other job opens on the sun
+ * disc, so each first screen has its picture.
+ *
  * The page prints the custom door's prices and no others. A job we shape an
  * agent around is custom work, so a price of its own would be a number the
  * door does not state. `custom.prices` is read here rather than copied, which
@@ -48,6 +58,13 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
  * either: the motion rule in README.md gives a page one or the other, and this
  * one is a sheet a reader reads.
  */
+/* The room scene for each job a scene shows, by the key on the record. */
+const sceneFor: Record<NonNullable<JobPageRecord["scene"]>, () => ReactNode> = {
+  supportDesk: () => <SupportDeskScene />,
+  financeDesk: () => <FinanceDeskScene />,
+  shopFloor: () => <ShopFloorScene />,
+};
+
 export function JobPage({ page }: { page: JobPageRecord }) {
   /* The page's own nodes, beside the site-wide ones the layout renders: the
    * page itself, the custom work it sells at the door's prices, and the way
@@ -57,33 +74,40 @@ export function JobPage({ page }: { page: JobPageRecord }) {
    * click is counted under the job a reader came in on. */
   const brief = mailtoFor(page.subject);
 
+  /* The words of the first screen, beside a scene or an ornament. */
+  const heroWords = (
+    <>
+      <HeroTitle id="hero-title">{page.heading}</HeroTitle>
+      <Lede>{page.lede}</Lede>
+      <HeroActions href={brief} />
+    </>
+  );
+
   return (
     <>
       <SiteHeader route={page.path} />
 
       <main id="main">
-        <Band flush>
-          <HeroCopy className="wrap">
-            <HeroTitle>{page.heading}</HeroTitle>
-            <Lede wide>{page.lede}</Lede>
-            <Actions>
-              <a className={buttonVariants()} href={brief}>
-                Describe the work
-              </a>
-              <a className={buttonVariants({ variant: "outline" })} href={callHref}>
-                Book a call
-              </a>
-            </Actions>
-          </HeroCopy>
+        <Band aria-labelledby="hero-title" flush id="hero">
+          {page.scene ? (
+            <HeroSplit
+              aside={<div className="border border-foreground">{sceneFor[page.scene]()}</div>}
+            >
+              {heroWords}
+            </HeroSplit>
+          ) : (
+            <HeroFrame ornament={<SunDisc className="w-48 lg:w-60" />}>{heroWords}</HeroFrame>
+          )}
         </Band>
 
-        <Band id="work" aria-labelledby="job-work-title">
+        <Band aria-labelledby="job-steps-title" id="steps">
           <Unit>
-            <UnitHead title="What the agent does" titleId="job-work-title">
+            <UnitHead index={1} title="What the agent does" titleId="job-steps-title">
               <HeadNote>{page.authority}</HeadNote>
             </UnitHead>
             <UnitBody>
-              <Rows>
+              {/* Numbered, because the agent does these in order. */}
+              <Rows sequence>
                 {page.steps.map((step) => (
                   <li key={step.title}>
                     <Row stack>
@@ -93,18 +117,18 @@ export function JobPage({ page }: { page: JobPageRecord }) {
                   </li>
                 ))}
               </Rows>
-              <Note gate>{page.gate}</Note>
+              <StopPoint titleId="job-stop-title">{page.gate}</StopPoint>
             </UnitBody>
           </Unit>
         </Band>
 
-        <Band id="systems" aria-labelledby="job-systems-title">
+        <Band aria-labelledby="job-systems-title" id="systems" tone="panel">
           <Unit>
-            <UnitHead title="What it touches" titleId="job-systems-title">
+            <UnitHead index={2} title="What it touches" titleId="job-systems-title">
               <HeadNote>
-                Your agent works in the systems your team already pays for. We
-                connect it to each one, and the spec names every account it
-                needs before you commit to anything.
+                It works in the systems your team already uses. We connect it
+                to each one, and the spec names every account it needs before
+                you commit to anything.
               </HeadNote>
             </UnitHead>
             <UnitBody>
@@ -122,23 +146,23 @@ export function JobPage({ page }: { page: JobPageRecord }) {
           </Unit>
         </Band>
 
-        <ChannelsSection />
+        <ChannelsSection index={3} />
 
-        <Band tone="panel" id="pricing" aria-labelledby="job-price-title">
+        <Band aria-labelledby="job-price-title" id="pricing" tone="panel">
           <Unit>
-            <UnitHead title="What it costs" titleId="job-price-title">
-              {/* The floor, and what the month buys, are the door's own
-                  sentences. This page states which price list a job like this
-                  one is on and sends a reader there for the rest. */}
+            <UnitHead index={4} title="What it costs" titleId="job-price-title">
+              {/* The floor, and what the month buys, are the custom page's
+                  own sentences. This page says which price list a job like
+                  this one is on and sends a reader there for the rest. */}
               <HeadNote>
-                A job we have not built before is custom work, so this one is
-                priced at the custom door. The numbers below are floors: we
-                read your workflow first, then name one fixed price.
+                We build an agent for this job around how your team runs it, so
+                it is priced as a custom agent. The prices are floors: we read
+                your workflow first, then name one fixed price.
               </HeadNote>
             </UnitHead>
             <Plans>
               <PlanCard
-                title="Custom agent"
+                title={custom.title}
                 body={
                   <>
                     You describe this job as your company runs it. We write the
@@ -147,11 +171,11 @@ export function JobPage({ page }: { page: JobPageRecord }) {
                 }
                 prices={custom.prices}
                 href={brief}
-                cta="Describe the work"
+                cta={briefCta}
               />
               <Note>
-                The door says what a custom agent needs from you, and what the
-                month after it goes live buys.{" "}
+                The custom page says what a custom agent needs from you, and
+                what the monthly price pays for once it is live.{" "}
                 <PullLink href={customPage.path}>
                   How a custom agent is built
                 </PullLink>

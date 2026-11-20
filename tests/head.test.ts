@@ -15,6 +15,7 @@ import {
   readExport,
   siteUrl,
   sitemapUrls,
+  documentTitles,
   tagTexts,
 } from "./export";
 
@@ -34,7 +35,7 @@ for (const route of indexableRoutes) {
 
     /* One each: a second of either leaves the crawler to choose the search
      * result a person reads. */
-    const titles = tagTexts(document, "title");
+    const titles = documentTitles(document);
     expect(titles).toHaveLength(1);
 
     /* The page record is the one place the title and the description are
@@ -53,7 +54,7 @@ for (const route of indexableRoutes) {
     /* A result prints about 60 characters of the title and about 160 of the
      * description, and cuts the rest mid-word. The custom door shipped a
      * 181-character description for months, because nothing measured one. */
-    expect(tagTexts(document, "title")[0].length).toBeLessThan(60);
+    expect(documentTitles(document)[0].length).toBeLessThan(60);
     expect(metaContents(document, "description")[0].length).toBeLessThan(160);
   });
 
@@ -74,7 +75,7 @@ test("no two routes state the same title or description", () => {
    * the query, and it may choose neither. Every record is written by hand,
    * and copying a neighbour's line is the easy mistake. */
   const documents = indexableRoutes.map((route) => readExport(route.file));
-  const titles = documents.map((document) => tagTexts(document, "title")[0]);
+  const titles = documents.map((document) => documentTitles(document)[0]);
   const descriptions = documents.map((document) => metaContents(document, "description")[0]);
 
   expect(new Set(titles).size).toBe(titles.length);

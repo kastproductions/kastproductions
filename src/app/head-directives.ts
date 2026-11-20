@@ -31,7 +31,7 @@ import { brand, homePage, language, type PageRecord } from "./content";
  * card read out hears which page the link goes to.
  */
 const openGraphImage = {
-  url: "/opengraph-image?v=3",
+  url: "/opengraph-image?v=4",
   width: 1200,
   height: 630,
   type: "image/png",

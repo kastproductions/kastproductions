@@ -41,7 +41,7 @@ const STEPS: Step[] = [
     ),
     detail: (
       <>
-        <span className="font-mono text-[0.92em]">+214 −38</span> across 4 files
+        <span className="font-mono text-caption">+214 −38</span> across 4 files
       </>
     ),
     diff: [
@@ -60,7 +60,7 @@ const STEPS: Step[] = [
     datetime: "PT7M3S",
     label: "07:03",
     title: "Ran the test suite",
-    detail: <span className="font-mono text-[0.92em]">53 passed, 0 failed, 0 skipped</span>,
+    detail: <span className="font-mono text-caption">53 passed, 0 failed, 0 skipped</span>,
   },
   {
     datetime: "PT7M20S",
@@ -87,20 +87,21 @@ export function RunRecord() {
   return (
     <figure
       aria-labelledby="run-title"
-      className="overflow-hidden rounded-lg border border-foreground bg-card text-[0.9rem]"
+      data-example
+      className="overflow-hidden rounded-lg border border-foreground bg-card text-small"
     >
       <figcaption
         className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-foreground px-5 py-3.5"
         style={head}
       >
-        <span className="font-heading text-[0.95rem] font-bold" id="run-title">
+        <span className="font-heading text-note font-semibold" id="run-title">
           Run 4127
         </span>
-        <span className="font-mono text-[0.78rem] text-faint">
+        <span className="font-mono text-caption text-faint">
           ACME-212: Add CSV export to invoices
         </span>
         <Badge variant="signal">Example</Badge>
-        <span className="ml-auto inline-flex items-center gap-1.5 font-heading text-[0.82rem] font-semibold text-pass">
+        <span className="ml-auto inline-flex items-center gap-1.5 font-heading text-caption font-semibold text-pass">
           <span
             aria-hidden="true"
             className="size-2 rounded-full bg-pass shadow-[0_0_0_3px_var(--pass-tint)]"
@@ -115,25 +116,25 @@ export function RunRecord() {
             key={step.datetime}
             style={{ "--i": index + 1 } as CSSProperties}
           >
-            <time className="pt-0.5 font-mono text-[0.78rem] text-faint" dateTime={step.datetime}>
+            <time className="pt-0.5 font-mono text-caption text-faint" dateTime={step.datetime}>
               {step.label}
             </time>
             <div>
               <b className="block font-semibold">{step.title}</b>
               {step.detail ? (
-                <small className="mt-0.5 block text-[0.8rem] text-muted-foreground">
+                <small className="mt-0.5 block text-caption text-muted-foreground">
                   {step.detail}
                 </small>
               ) : null}
               {step.diff ? (
                 <Collapsible className="mt-1.5">
-                  <CollapsibleTrigger className="font-heading text-[0.82rem] font-semibold text-foreground underline decoration-signal decoration-2 underline-offset-[0.3em] transition-colors hover:text-signal-foreground">
+                  <CollapsibleTrigger className="font-heading text-caption font-semibold text-foreground underline decoration-signal decoration-2 underline-offset-[0.3em] transition-colors hover:text-signal-foreground">
                     Show six lines of the diff
                   </CollapsibleTrigger>
                   <CollapsibleContent hiddenUntilFound>
                     <pre
                       aria-label="Diff, scrolls sideways"
-                      className="mt-2 overflow-x-auto rounded-md border border-hairline bg-secondary px-3.5 py-2.5 font-mono text-[0.78rem] leading-[1.55]"
+                      className="mt-2 overflow-x-auto rounded-md border border-hairline bg-secondary px-3.5 py-2.5 font-mono text-caption leading-[1.55]"
                       role="region"
                       tabIndex={0}
                       translate="no"

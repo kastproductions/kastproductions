@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
  * under the handle are form fields holding the words the rest of the page
  * uses, so a reader meets channel, authority and the deployment in the first
  * object they see. The exchange is a transcript, and the gate at the foot is
- * the signature field: blue, because it is where a person acts. It carries
+ * the signature field: stamp red, because it is where a person acts. It carries
  * the "Example" badge until a real exchange replaces it: see the Claims
  * section of README.md.
  *
@@ -25,6 +25,7 @@ export function AgentConsole() {
   return (
     <figure
       aria-labelledby="console-title"
+      data-example
       className="relative flex flex-col overflow-hidden rounded-lg border border-foreground bg-card *:[--rise-delay:calc(var(--i,0)*130ms_+_80ms)] motion-safe:*:animate-rise"
       style={{ "--sign-delay": signDelay } as CSSProperties}
     >
@@ -32,7 +33,7 @@ export function AgentConsole() {
         className="flex items-center justify-between gap-4 px-4 py-3.5 sm:px-5"
         style={riseOrder(0)}
       >
-        <b className="font-mono text-[1.05rem] font-semibold" id="console-title" translate="no">
+        <b className="font-mono text-body font-semibold" id="console-title" translate="no">
           {mention.handle}
         </b>
         <Badge variant="signal">{mention.label}</Badge>
@@ -47,16 +48,16 @@ export function AgentConsole() {
             className="flex flex-col gap-1 border-hairline px-4 py-3 not-first:border-t sm:px-5 sm:not-first:border-t-0 sm:not-first:border-l"
             key={reading.label}
           >
-            <dt className="text-[0.75rem] font-medium text-faint">{reading.label}</dt>
-            <dd className="flex flex-col gap-0.5 text-[0.9rem] leading-snug font-semibold">
+            <dt className="text-label font-medium text-faint">{reading.label}</dt>
+            <dd className="flex flex-col gap-0.5 text-small leading-snug font-semibold">
               <span
-                className={cn(reading.mono && "font-mono text-[0.92em]")}
+                className={cn(reading.mono && "font-mono text-caption")}
                 translate={reading.mono ? "no" : undefined}
               >
                 {reading.value}
               </span>
               {reading.note ? (
-                <span className="text-[0.78rem] font-normal text-muted-foreground">
+                <span className="text-caption font-normal text-muted-foreground">
                   {reading.note}
                 </span>
               ) : null}
@@ -66,20 +67,20 @@ export function AgentConsole() {
       </dl>
 
       <ol
-        className="grid divide-y divide-hairline px-4 text-[0.92rem] leading-normal sm:px-5"
+        className="grid divide-y divide-hairline px-4 text-note leading-normal sm:px-5"
         style={riseOrder(2)}
       >
         <li className="grid gap-1 py-3.5 sm:grid-cols-[4.75rem_minmax(0,1fr)] sm:gap-3">
           <span className="font-semibold">{mention.asker}</span>
           <p className="text-prose">
-            <span className="font-mono text-[0.88em] font-semibold text-foreground" translate="no">
+            <span className="font-mono text-caption font-semibold text-foreground" translate="no">
               {mention.handle}
             </span>{" "}
             {mention.ask}
           </p>
         </li>
         <li className="grid gap-1 py-3.5 sm:grid-cols-[4.75rem_minmax(0,1fr)] sm:gap-3">
-          <span className="font-mono text-[0.88em] font-semibold" translate="no">
+          <span className="font-mono text-caption font-semibold" translate="no">
             {mention.handle}
           </span>
           <p className="text-prose">{mention.reply}</p>
@@ -91,20 +92,20 @@ export function AgentConsole() {
         style={riseOrder(3)}
       >
         <div className="flex flex-col gap-1">
-          <span className="inline-flex items-center gap-2 text-[0.82rem] font-semibold text-signal-foreground">
+          <span className="inline-flex items-center gap-2 text-caption font-semibold text-signal-foreground">
             <span aria-hidden="true" className="size-2 rounded-full bg-signal" />
             {mention.state}
           </span>
-          <p className="text-[0.9rem] text-prose">{mention.gate}</p>
+          <p className="text-small text-prose">{mention.gate}</p>
         </div>
         <div className="flex flex-wrap items-end gap-x-5 gap-y-3">
           <div aria-hidden="true" className="flex min-w-40 flex-1 flex-col gap-1 pt-5">
             <span className="h-px origin-left bg-foreground motion-safe:animate-sign" />
-            <span className="text-[0.72rem] text-faint">Signature</span>
+            <span className="text-label text-faint">Signature</span>
           </div>
           <span
             aria-hidden="true"
-            className="rounded-md bg-signal px-4 py-2 text-[0.85rem] font-semibold text-background"
+            className="rounded-md bg-signal px-4 py-2 text-small font-semibold text-primary-foreground"
           >
             {mention.approve}
           </span>

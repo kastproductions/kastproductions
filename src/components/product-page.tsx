@@ -1,11 +1,12 @@
 import { ChannelsSection } from "@/components/channels-section";
 import { PlanCard, Plans } from "@/components/plan-card";
 import { RunRecord } from "@/components/run-record";
+import { PullRequestScene } from "@/components/scenes";
 import {
-  Actions,
   Band,
   HeadNote,
-  HeroCopy,
+  HeroActions,
+  HeroSplit,
   HeroTitle,
   Lede,
   Note,
@@ -18,8 +19,8 @@ import {
   UnitHead,
 } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
+import { StopPoint } from "@/components/stop-point";
 import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -30,7 +31,13 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import type { Product } from "@/app/content";
-import { callHref, leadTime, mailtoFor, productPage, work } from "@/app/content";
+import {
+  briefCta,
+  leadTime,
+  mailtoFor,
+  productPage,
+  work,
+} from "@/app/content";
 import { graphHtml, pageNodes } from "@/app/structured-data";
 
 /*
@@ -40,6 +47,11 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
  * takes two edits, both listed in the Catalogue section of README.md: add it
  * to `products`, then add a route file that calls this component and builds its
  * metadata from `productPage`, the way a written page builds its own.
+ *
+ * The page reads in the order a buyer asks: how a run goes, in numbered
+ * steps, and where it stops for a named person; what a run looks like, as a
+ * labelled example; what a buyer needs first and who sets up each line; where
+ * the team reaches it; and what it costs, with the lead time beside the price.
  */
 
 /* Below md a sheet table reads as a stack of cards: the heading row goes, each
@@ -48,7 +60,7 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
 const stackedTable = "max-md:block";
 const stackedRow = "max-md:block max-md:py-3.5";
 const stackedCell =
-  "max-md:block max-md:py-0.5 max-md:pr-0 max-md:before:block max-md:before:font-heading max-md:before:text-[0.72rem] max-md:before:font-semibold max-md:before:text-faint max-md:before:content-[attr(data-label)]";
+  "max-md:block max-md:py-0.5 max-md:pr-0 max-md:before:block max-md:before:font-heading max-md:before:text-label max-md:before:font-semibold max-md:before:text-faint max-md:before:content-[attr(data-label)]";
 
 export function ProductPage({ product }: { product: Product }) {
   /* The product's own page record, and the nodes that follow from it, so
@@ -56,36 +68,24 @@ export function ProductPage({ product }: { product: Product }) {
    * edit. */
   const page = productPage(product);
   const graph = graphHtml(pageNodes(page, { prices: product.prices }));
+  const brief = mailtoFor(product.subject);
 
   return (
     <>
       <SiteHeader route={page.path} />
 
       <main id="main">
-        <Band flush>
-          <div className="wrap grid grid-cols-1 items-center gap-[clamp(2rem,5vw,5rem)] lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
-            <HeroCopy>
-              <HeroTitle>{product.name}</HeroTitle>
-              <Lede>{product.lede}</Lede>
-              <Actions>
-                <a
-                  className={buttonVariants()}
-                  href={mailtoFor(product.subject)}
-                >
-                  Ask about this one
-                </a>
-                <a className={buttonVariants({ variant: "outline" })} href={callHref}>
-                  Book a call
-                </a>
-              </Actions>
-            </HeroCopy>
-            <RunRecord />
-          </div>
+        <Band aria-labelledby="hero-title" flush id="hero">
+          <HeroSplit aside={<RunRecord />}>
+            <HeroTitle id="hero-title">{product.name}</HeroTitle>
+            <Lede>{product.lede}</Lede>
+            <HeroActions href={brief} />
+          </HeroSplit>
         </Band>
 
-        <Band id="stations" aria-labelledby="stations-title">
+        <Band aria-labelledby="steps-title" id="steps">
           <Unit>
-            <UnitHead title="How a run works" titleId="stations-title">
+            <UnitHead index={1} title="How a run goes" titleId="steps-title">
               <HeadNote>{product.stationsIntro}</HeadNote>
             </UnitHead>
             <UnitBody>
@@ -100,15 +100,24 @@ export function ProductPage({ product }: { product: Product }) {
                   </li>
                 ))}
               </Rows>
-              <Note gate>{product.boundary}</Note>
-              <Note>{product.record}</Note>
+              <div className="mt-8 grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+                <div>
+                  <StopPoint className="mt-0" titleId="stop-title">
+                    {product.authority} {product.boundary}
+                  </StopPoint>
+                  <Note>{product.record}</Note>
+                </div>
+                <div className="border border-foreground">
+                  <PullRequestScene />
+                </div>
+              </div>
             </UnitBody>
           </Unit>
         </Band>
 
-        <Band id="work" aria-labelledby="work-title">
+        <Band aria-labelledby="work-title" data-example id="work" tone="panel">
           <Unit>
-            <UnitHead title="What a run looks like" titleId="work-title">
+            <UnitHead index={2} title="What a run looks like" titleId="work-title">
               <HeadNote>
                 <Badge className="align-middle" variant="signal">
                   Example
@@ -138,7 +147,7 @@ export function ProductPage({ product }: { product: Product }) {
                       <TableCell
                         className={cn(
                           stackedCell,
-                          "font-mono text-[0.85rem] whitespace-nowrap",
+                          "font-mono text-small whitespace-nowrap",
                         )}
                         data-label="Days"
                       >
@@ -155,13 +164,14 @@ export function ProductPage({ product }: { product: Product }) {
           </Unit>
         </Band>
 
-        <Band id="prerequisites" aria-labelledby="prereq-title">
+        <Band aria-labelledby="systems-title" id="systems">
           <Unit>
-            <UnitHead title="What it needs before it works" titleId="prereq-title">
+            <UnitHead index={3} title="What you need first" titleId="systems-title">
               <HeadNote>
-                Deploying the code is quick. Connecting it to your company is
-                the part nobody prints, so we print it. Live in {leadTime} once
-                the rows marked You are in place.
+                It works in {product.systems}. Deploying the code is quick.
+                Connecting it to your company is the part nobody prints, so we
+                print it, with who sets up each line. Live in {leadTime} once
+                the lines marked You are in place.
               </HeadNote>
             </UnitHead>
             <UnitBody>
@@ -178,7 +188,7 @@ export function ProductPage({ product }: { product: Product }) {
                       <TableCell
                         className={cn(
                           stackedCell,
-                          "w-16 font-heading first:font-bold max-md:w-auto",
+                          "w-16 font-heading first:font-semibold max-md:w-auto",
                         )}
                         data-label="Who"
                       >
@@ -195,14 +205,15 @@ export function ProductPage({ product }: { product: Product }) {
           </Unit>
         </Band>
 
-        <ChannelsSection />
+        <ChannelsSection index={4} />
 
-        <Band tone="panel" id="pricing" aria-labelledby="product-price-title">
+        <Band aria-labelledby="product-price-title" id="pricing" tone="panel">
           <Unit>
-            <UnitHead title="What it costs" titleId="product-price-title">
+            <UnitHead index={5} title="What it costs" titleId="product-price-title">
               <HeadNote>
-                {product.authority} The build price is a floor, because the work
-                follows the number of systems your agent touches.
+                The build price is a floor, because the work follows the number
+                of systems your agent touches. The monthly price pays for the
+                eval suite on every change, the fixes and a monthly report.
               </HeadNote>
             </UnitHead>
             <Plans>
@@ -210,9 +221,12 @@ export function ProductPage({ product }: { product: Product }) {
                 title={product.name}
                 body={product.promise}
                 prices={product.prices}
-                href={mailtoFor(product.subject)}
-                cta="Ask about this one"
+                href={brief}
+                cta={briefCta}
               />
+              <Note>
+                Live in {leadTime} once the accounts marked You are in place.
+              </Note>
             </Plans>
           </Unit>
         </Band>

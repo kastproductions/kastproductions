@@ -21,6 +21,7 @@ import {
   company,
   contactEmail,
   contactPage,
+  contactSubject,
   location,
   mailtoFor,
 } from "../src/app/content";
@@ -64,4 +65,17 @@ test("the contact page prints who a reader is writing to", () => {
     expect(main).toContain(fact);
   }
   expect(main).toContain(`mailto:${contactEmail}`);
+});
+
+test("the contact page writes with its own subject", () => {
+  /* The subject names the page a mail came from, so a mail from here is
+   * counted under the contact page and its first line says so. A mailto with
+   * another page's subject, or with none, would count it somewhere else. */
+  const hrefs = [...mainOf(fileFor(contactPage.path)).matchAll(/<a\b[^>]*?\shref="([^"]*)"/g)]
+    .map(([, href]) => decodeEntities(href))
+    .filter((href) => href.startsWith(`mailto:${contactEmail}`) && href !== callHref);
+  expect(hrefs.length).toBeGreaterThan(0);
+  for (const href of hrefs) {
+    expect(href).toBe(mailtoFor(contactSubject));
+  }
 });

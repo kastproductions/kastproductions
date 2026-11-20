@@ -5,7 +5,7 @@ import {
   FactTerm,
   FactValue,
   HeadNote,
-  HeroCopy,
+  HeroFrame,
   HeroTitle,
   Lede,
   Note,
@@ -15,6 +15,7 @@ import {
   UnitBody,
   UnitHead,
 } from "@/components/section";
+import { Eclipse } from "@/components/ornaments";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import {
   company,
@@ -44,19 +45,19 @@ export default function Terms() {
 
       <main id="main">
         <Band flush>
-          <HeroCopy className="wrap">
+          <HeroFrame ornament={<Eclipse className="size-28 lg:size-36" />}>
             <HeroTitle>Terms of service</HeroTitle>
             <Lede wide>
               These terms say what the prices on this site buy and what both
               sides can expect. The spec and the order you sign cover your own
               work, and where the two differ, the order is what binds us.
             </Lede>
-          </HeroCopy>
+          </HeroFrame>
         </Band>
 
         <Band aria-labelledby="parties-title">
           <Unit>
-            <UnitHead title="Who these terms are between" titleId="parties-title" />
+            <UnitHead index={1} title="Who these terms are between" titleId="parties-title" />
             <UnitBody>
               <Prose>
                 They are between {company.legalName}, called &ldquo;we&rdquo;
@@ -70,7 +71,7 @@ export default function Terms() {
 
         <Band aria-labelledby="sell-title">
           <Unit>
-            <UnitHead title="What we sell" titleId="sell-title" />
+            <UnitHead index={2} title="What we sell" titleId="sell-title" />
             <UnitBody>
               <Prose>
                 A build is the work of building one standing agent and
@@ -103,7 +104,7 @@ export default function Terms() {
 
         <Band aria-labelledby="price-title">
           <Unit>
-            <UnitHead title="What a price means" titleId="price-title">
+            <UnitHead index={3} title="What a price means" titleId="price-title">
               <HeadNote>
                 The prices this site prints today, and what each of them is a
                 price for.
@@ -144,7 +145,7 @@ export default function Terms() {
 
         <Band aria-labelledby="own-title">
           <Unit>
-            <UnitHead title="What you own" titleId="own-title" />
+            <UnitHead index={4} title="What you own" titleId="own-title" />
             <UnitBody>
               <Prose>
                 You own the agent and the code. It lives in your repository and
@@ -161,7 +162,7 @@ export default function Terms() {
 
         <Band aria-labelledby="authority-title">
           <Unit>
-            <UnitHead title="What the agent may do" titleId="authority-title" />
+            <UnitHead index={5} title="What the agent may do" titleId="authority-title" />
             <UnitBody>
               <Prose>
                 A named person at your company approves every outward action:
@@ -179,7 +180,7 @@ export default function Terms() {
 
         <Band aria-labelledby="promise-title">
           <Unit>
-            <UnitHead title="What we promise" titleId="promise-title" />
+            <UnitHead index={6} title="What we promise" titleId="promise-title" />
             <UnitBody>
               <Prose>
                 We do not promise uptime, and nobody honestly can for software
@@ -196,7 +197,7 @@ export default function Terms() {
 
         <Band aria-labelledby="end-title">
           <Unit>
-            <UnitHead title="Ending it" titleId="end-title" />
+            <UnitHead index={7} title="Ending it" titleId="end-title" />
             <UnitBody>
               <Prose>
                 Cancel the monthly work at the end of any month. Your agent
@@ -209,7 +210,7 @@ export default function Terms() {
               </Prose>
               <Note>
                 Last changed on{" "}
-                <time className="font-mono text-[0.92em]" dateTime={termsPage.date}>
+                <time className="font-mono text-caption" dateTime={termsPage.date}>
                   {termsPage.date}
                 </time>
                 .

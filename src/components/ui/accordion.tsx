@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { ChevronDownIcon } from "lucide-react"
 
 /*
- * Questions and answers on rules. The chevron is the blue, because opening
+ * Questions and answers on rules. The chevron is the stamp red, because opening
  * a question is the one action in the list, and it turns over when the
  * answer opens.
  */
@@ -37,7 +37,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "group/accordion-trigger relative flex flex-1 items-center justify-between gap-6 border border-transparent py-4.5 text-left font-heading text-[1.08rem] font-semibold tracking-tight text-pretty text-foreground transition-colors outline-none hover:text-signal-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-disabled:pointer-events-none aria-disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:size-4.5 **:data-[slot=accordion-trigger-icon]:text-signal",
+          "group/accordion-trigger relative flex flex-1 items-center justify-between gap-6 border border-transparent py-4.5 text-left font-heading text-body font-semibold text-pretty text-foreground transition-colors outline-none hover:text-signal-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-disabled:pointer-events-none aria-disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:size-4.5 **:data-[slot=accordion-trigger-icon]:text-signal",
           className
         )}
         {...props}
@@ -65,7 +65,7 @@ function AccordionContent({
     >
       <div
         className={cn(
-          "h-(--accordion-panel-height) max-w-(--measure) pt-0 pb-5 text-base leading-relaxed text-prose data-ending-style:h-0 data-starting-style:h-0 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
+          "h-(--accordion-panel-height) max-w-(--measure) pt-0 pb-5 text-body leading-relaxed text-prose data-ending-style:h-0 data-starting-style:h-0 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
           className
         )}
       >
