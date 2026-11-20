@@ -1,10 +1,9 @@
-import { ArrowUpRightIcon } from "lucide-react";
 import { AgentConsole } from "@/components/agent-console";
 import {
-  Actions,
   Band,
   HeadNote,
-  HeroCopy,
+  HeroActions,
+  HeroSplit,
   HeroTitle,
   Lede,
   Note,
@@ -18,8 +17,7 @@ import {
   UnitHead,
 } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
-import { buttonVariants } from "@/components/ui/button";
-import { callHref, channels, customPage, mailtoFor, slackPage, slackSubject } from "../content";
+import { channels, customPage, mailtoFor, slackPage, slackSubject } from "../content";
 import { pageMetadata } from "../head-directives";
 import { graphHtml, pageNodes } from "../structured-data";
 
@@ -50,31 +48,19 @@ export default function Slack() {
 
       <main id="main">
         <Band flush>
-          <div className="wrap grid grid-cols-1 items-center gap-[clamp(2rem,5vw,5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-            <HeroCopy>
-              <HeroTitle>An agent your team addresses in Slack.</HeroTitle>
-              <Lede>
-                Your team already works in Slack, so that is where the agent
-                answers. A person mentions it by name in a channel, it replies
-                in the thread, and anything that leaves your company waits there
-                for a named person to approve it.
-              </Lede>
-              <Actions>
-                <a className={buttonVariants()} href={brief}>
-                  Get a spec and a fixed price
-                  <ArrowUpRightIcon data-icon="inline-end" />
-                </a>
-                <a className={buttonVariants({ variant: "ghost" })} href={callHref}>
-                  Or book a call
-                </a>
-              </Actions>
-            </HeroCopy>
-
-            {/* The exchange a reader is asked to picture: a mention, a reply
-                and the approval it waits on. Synthetic, so it carries the
-                "Example" label. */}
-            <AgentConsole />
-          </div>
+          {/* Beside the words, the exchange a reader is asked to picture: a
+              mention, a reply and the approval it waits on. Synthetic, so it
+              carries the "Example" label. */}
+          <HeroSplit aside={<AgentConsole />}>
+            <HeroTitle>An agent your team addresses in Slack.</HeroTitle>
+            <Lede>
+              Your team already works in Slack, so that is where the agent
+              answers. A person mentions it by name in a channel, it replies
+              in the thread, and anything that leaves your company waits there
+              for a named person to approve it.
+            </Lede>
+            <HeroActions href={brief} />
+          </HeroSplit>
         </Band>
 
         <Band aria-labelledby="address-title" id="address">

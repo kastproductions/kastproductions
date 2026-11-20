@@ -51,7 +51,7 @@ export function AgentConsole() {
             <dt className="text-label font-medium text-faint">{reading.label}</dt>
             <dd className="flex flex-col gap-0.5 text-small leading-snug font-semibold">
               <span
-                className={cn(reading.mono && "font-mono text-[0.92em]")}
+                className={cn(reading.mono && "font-mono text-caption")}
                 translate={reading.mono ? "no" : undefined}
               >
                 {reading.value}
@@ -73,14 +73,14 @@ export function AgentConsole() {
         <li className="grid gap-1 py-3.5 sm:grid-cols-[4.75rem_minmax(0,1fr)] sm:gap-3">
           <span className="font-semibold">{mention.asker}</span>
           <p className="text-prose">
-            <span className="font-mono text-[0.88em] font-semibold text-foreground" translate="no">
+            <span className="font-mono text-caption font-semibold text-foreground" translate="no">
               {mention.handle}
             </span>{" "}
             {mention.ask}
           </p>
         </li>
         <li className="grid gap-1 py-3.5 sm:grid-cols-[4.75rem_minmax(0,1fr)] sm:gap-3">
-          <span className="font-mono text-[0.88em] font-semibold" translate="no">
+          <span className="font-mono text-caption font-semibold" translate="no">
             {mention.handle}
           </span>
           <p className="text-prose">{mention.reply}</p>

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils"
  * the reference's ticket button.
  */
 const buttonStyles = cva(
-  "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding font-mono leading-tight font-semibold tracking-[0.08em] uppercase whitespace-nowrap no-underline transition-[background-color,color,border-color] duration-150 ease-settle outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-200 [&_svg:not([class*='size-'])]:size-[0.95em]",
+  "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding label-mono font-semibold whitespace-nowrap no-underline transition-[background-color,color,border-color] duration-150 ease-settle outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:transition-transform [&_svg]:duration-200 [&_svg:not([class*='size-'])]:size-[0.95em]",
   {
     variants: {
       variant: {

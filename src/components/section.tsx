@@ -1,5 +1,8 @@
+import { ArrowUpRightIcon } from "lucide-react";
 import Link from "next/link";
 import type { ComponentProps, ReactNode } from "react";
+import { briefCta, callHref } from "@/app/content";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 /*
@@ -163,12 +166,24 @@ export function HeroFrame({
   return (
     <div
       className={cn(
-        "wrap grid items-end gap-[clamp(2rem,5vw,5rem)] md:grid-cols-[minmax(0,1fr)_auto]",
+        "wrap grid items-end gap-(--split) md:grid-cols-[minmax(0,1fr)_auto]",
         className,
       )}
     >
       <HeroCopy>{children}</HeroCopy>
       <div className="hidden md:block">{ornament}</div>
+    </div>
+  );
+}
+
+/* The first screen of a page with a scene or a sheet beside its words: the
+ * hero column, and the picture in a column of the same width from lg up.
+ * Below lg the picture goes under the words. */
+export function HeroSplit({ aside, children }: { aside: ReactNode; children: ReactNode }) {
+  return (
+    <div className="wrap grid grid-cols-1 items-center gap-(--split) lg:grid-cols-2">
+      <HeroCopy>{children}</HeroCopy>
+      {aside}
     </div>
   );
 }
@@ -202,6 +217,11 @@ export function Lede({
   );
 }
 
+/* The red rule and the wash a gate carries everywhere (DESIGN.md, the Stamp
+ * Rule): a `Note` with `gate`, the stop point on a product or job page, and
+ * the merge line of an example run. */
+export const gateClass = "border-l-2 border-signal bg-signal-tint";
+
 /* A side remark under a block. `gate` marks the sentence that says where a
  * person has to sign, with the red rule a gate carries everywhere. */
 export function Note({
@@ -213,7 +233,7 @@ export function Note({
     <p
       className={cn(
         "mt-5 max-w-(--measure) text-note leading-relaxed text-muted-foreground",
-        gate && "border-l-2 border-signal bg-signal-tint py-3 pr-4 pl-4 text-foreground",
+        gate && cn(gateClass, "py-3 pr-4 pl-4 text-foreground"),
         className,
       )}
       {...props}
@@ -231,6 +251,28 @@ export function Actions({ className, ...props }: ComponentProps<"div">) {
       )}
       {...props}
     />
+  );
+}
+
+/* The calls to action under a hero heading: the one action a reader can
+ * take, filled in the stamp red and named by what comes back, the call
+ * beside it in outline, and the reply time under both. `href` carries the
+ * page's own mail subject, so a click counts under the door a reader came
+ * through. */
+export function HeroActions({ href, cta = briefCta }: { href: string; cta?: ReactNode }) {
+  return (
+    <>
+      <Actions>
+        <a className={buttonVariants()} href={href}>
+          {cta}
+          <ArrowUpRightIcon data-icon="inline-end" />
+        </a>
+        <a className={buttonVariants({ variant: "outline" })} href={callHref}>
+          Book a call
+        </a>
+      </Actions>
+      <p className="label-mono text-faint">Reply within one working day</p>
+    </>
   );
 }
 

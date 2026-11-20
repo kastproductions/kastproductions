@@ -23,7 +23,9 @@ import "./globals.css";
  * renders in the one face. Its fallback is a serif, so a letter the face
  * lacks still reads in a serif. The bold weight is a second call with no
  * preload: Google's stylesheet for it marks its Japanese files as Latin, and
- * preloading them would fetch 120 files nobody reads.
+ * preloading them would fetch 120 files nobody reads. next/font names both
+ * calls' faces "Zen Old Mincho", so the bold call sets the same
+ * --font-mincho variable, and one family carries both weights.
  */
 const chakra = Chakra_Petch({
   variable: "--font-chakra",
@@ -41,7 +43,7 @@ const mincho = Zen_Old_Mincho({
 });
 
 const minchoBold = Zen_Old_Mincho({
-  variable: "--font-mincho-bold",
+  variable: "--font-mincho",
   weight: "700",
   display: "swap",
   preload: false,

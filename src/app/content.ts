@@ -150,7 +150,7 @@ export const references = [
  * The illustrations the pages place: one hero scene of a future Vilnius, and
  * four scenes of teams at work with an agent. They are drawn by hand as inline
  * SVG in `src/components/scenes.tsx`, so they add no request and paint with
- * the theme tokens. They are pictures, not evidence: no scene shows a client,
+ * the theme tokens. They are pictures and prove nothing: no scene shows a client,
  * a readable product screen or a figure, so none of them needs the "Example"
  * label the Claims section asks of synthetic runs.
  *
@@ -265,8 +265,8 @@ export const safety = [
     body: "Anything that reaches someone outside your company waits for a named person at your company: an email to a customer, a published page, a posted message, a payment.",
   },
   {
-    title: "A spend cap on every task",
-    body: "We agree a ceiling on model cost for each task the agent takes. A task that reaches it stops and asks a person, or stops and reports when nobody is there to ask.",
+    title: "A spend cap on every session",
+    body: "We agree a ceiling on model cost for each session: one piece of work, from the message that starts it to the answer that ends it. A session that reaches the cap stops and asks a person, or stops and reports when nobody is there to ask.",
   },
   {
     title: "A written test of correct, run on every change",
@@ -400,7 +400,7 @@ export const issueToPullRequest: Product = {
     { item: "A model provider key, on an account that never trains on your code", who: "You" },
     { item: "A Cloudflare account for the deployment", who: "You" },
     { item: "The GitHub app installed, the webhooks subscribed and the events filtered", who: "We" },
-    { item: "The approval steps, the spend cap and the eval suite", who: "We" },
+    { item: "The approval gates, the spend cap and the eval suite", who: "We" },
   ],
   prices: [
     { amount: "From €7,500", per: "to build" },
@@ -759,15 +759,74 @@ export const jobPages: JobPage[] = jobs.flatMap((job) => job.page ?? []);
  * The custom door
  * ------------------------------------------------------------------------- */
 
+/* Every word the custom door prints, as README.md "Content" and ADR-0004
+ * set out: the door is the offer itself, so its prose lives here and the
+ * route file only lays it out. */
 export const custom = {
   heading: "An agent shaped around how you already work",
   lede: "Describe the work you want off your team in a few lines. You get a spec and a fixed price within one working day, and we build the agent around the way your company already does that work.",
+  howHeading: "How a custom build goes",
+  howLede: "From your first email to a live agent, and what we do after it is live.",
+  /* How a custom build goes, from the first email to the monthly upkeep. */
+  steps: [
+    {
+      title: "You describe the work",
+      body: "A few lines are enough: what comes in, what should come out, and who checks it today.",
+    },
+    {
+      title: "A spec and a fixed price",
+      body: "Within one working day we send a short spec and one fixed price for the build. We write no code before you accept the price.",
+    },
+    {
+      title: "Built around your workflow",
+      body: "We write the eval suite first: the tasks the agent must get right, and what a correct result for each one contains. Then we build the agent in your repository, deploy it into your own cloud account and connect it to the chat your team already uses.",
+    },
+    {
+      title: "Kept correct after launch",
+      body: "One of our engineers owns your agent. Every change we make must pass the eval suite, and each month you get a report of what the agent did, what it cost and what we changed.",
+    },
+  ],
+  specHeading: "What the spec settles",
+  specLede: "The spec is short, and you can check every line of it before you accept the price.",
+  specMore: "What an eval suite is",
+  /* What the spec settles before the build. Each line is a mechanism from
+   * CONTEXT.md (the job, the agent's authority, the approval gate, the spend
+   * cap, the eval suite), stated in buyer words. */
+  spec: [
+    {
+      title: "The work",
+      body: "What starts a session, what the agent produces, and what done looks like, written from your description.",
+    },
+    {
+      title: "The systems",
+      body: "Every account the agent reads from or writes to, and the ones it never touches.",
+    },
+    {
+      title: "Where it stops",
+      body: "Each action that reaches someone outside your company, and the named person at your company who approves it.",
+    },
+    {
+      title: "The spend cap",
+      body: "A ceiling on model cost for each session. A session that reaches it stops and asks a person.",
+    },
+    {
+      title: "The test of correct",
+      body: "The tasks the eval suite checks. Work we cannot write a test for goes to a person, and the spec says which work that is.",
+    },
+  ],
   jobsHeading: "Work we take",
   jobsLede:
     "Five jobs we build an agent for, to measure your own work against. Each line names the systems the agent works in. None of them has a price until we have read how your team does the work.",
   /* Written for the search the door's title answers, the way
    * `pricingIntro.heading` is on the home page. */
   pricingHeading: "What custom AI agent development costs",
+  pricingLede: "The build price is a floor, because the work grows with the number of systems your agent touches. The spec states the exact price. The monthly price pays an engineer to keep the agent correct: the eval suite on every change, the fixes and a report each month.",
+  pricingNote: "Which accounts you need depends on the systems your agent touches. The spec names every one of them, next to the price, before you commit to anything.",
+  /* The plan's name, on the home price list, the door's card and every job
+   * page's card. */
+  title: "Custom agent",
+  /* The plan's two prices. The door and every job page print them as two
+   * lines, and the home price list builds its one line from them. */
   prices: [
     { amount: "From €10,000", per: "to build" },
     { amount: "From €1,500", per: "a month to operate" },
@@ -827,8 +886,10 @@ export const prices = [
   {
     title: "Managed",
     body: "We build the issue to pull request agent into your own accounts and run it on your backlog. Our coding agents do the work, and our engineer reads every diff before it merges.",
-    amount: "From €7,500",
-    per: "to build, then from €4,000 a month",
+    /* The build is the product's own build price, so the number is written
+     * once, on the product. */
+    amount: issueToPullRequest.prices[0].amount,
+    per: `${issueToPullRequest.prices[0].per}, then from €4,000 a month`,
     includes: [
       "As many issues as the month allows, in the order we agree with you each week",
       "A named engineer signs every merge",
@@ -841,7 +902,7 @@ export const prices = [
     page: "/backlog",
   },
   {
-    title: "Custom agent",
+    title: custom.title,
     body: "For work that matches nothing we have built. You describe it, we write the spec and name the price, and the agent is shaped around your workflow.",
     ...buildThenMonthly(custom.prices),
     includes: [
@@ -896,11 +957,11 @@ export const questions: Question[] = [
   },
   {
     q: "What stops it spending our money overnight?",
-    a: "Every task has a spend cap that we agree with you. A task that reaches the cap stops and asks you. A task running unattended stops and reports. The cap is our code, because the framework reports what a call cost and enforces nothing.",
+    a: "Every session has a spend cap that we agree with you. A session that reaches the cap stops and asks you. A session that runs unattended stops and reports. The cap is our code, because the framework reports what a call cost and enforces nothing.",
   },
   {
     q: "What is it built on?",
-    a: "Flue, the open agent harness the Astro organisation publishes, deployed into your own Cloudflare account, or onto Node.js where your platform needs it. We write four pieces the framework does not provide: the approval step, the spend cap, the tool that opens a pull request, and the filter that decides what starts a task.",
+    a: "Flue, the open agent harness the Astro organisation publishes, deployed into your own Cloudflare account, or onto Node.js where your platform needs it. We write four pieces the framework does not provide: the approval gate, the spend cap, the tool that opens a pull request, and the filter that decides what starts a session.",
   },
   {
     q: "Do you promise uptime?",
@@ -1088,7 +1149,7 @@ export const backlogPage: PageRecord = {
   title: "AI coding agents for your backlog",
   description:
     "Our coding agents plan, build and test the issues on your backlog, and our engineer signs every merge. Month to month as Managed, or one brief as a Sprint.",
-  date: "2026-11-19",
+  date: "2026-11-20",
 };
 
 /* The mail subject the page's own calls to action carry, which is how the

@@ -210,7 +210,7 @@ export default function Terms() {
               </Prose>
               <Note>
                 Last changed on{" "}
-                <time className="font-mono text-[0.92em]" dateTime={termsPage.date}>
+                <time className="font-mono text-caption" dateTime={termsPage.date}>
                   {termsPage.date}
                 </time>
                 .

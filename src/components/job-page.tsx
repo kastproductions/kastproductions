@@ -1,15 +1,14 @@
-import { ArrowUpRightIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { ChannelsSection } from "@/components/channels-section";
 import { SunDisc } from "@/components/ornaments";
 import { PlanCard, Plans } from "@/components/plan-card";
 import { FinanceDeskScene, ShopFloorScene, SupportDeskScene } from "@/components/scenes";
 import {
-  Actions,
   Band,
   HeadNote,
-  HeroCopy,
+  HeroActions,
   HeroFrame,
+  HeroSplit,
   HeroTitle,
   Lede,
   Note,
@@ -24,12 +23,11 @@ import {
 } from "@/components/section";
 import { SiteFooter, SiteHeader } from "@/components/site-chrome";
 import { StopPoint } from "@/components/stop-point";
-import { buttonVariants } from "@/components/ui/button";
 /* The record is the job's page, and this component draws it, so the two carry
  * one name between them: the record is aliased here rather than renamed
  * everywhere else. */
 import type { JobPage as JobPageRecord } from "@/app/content";
-import { briefCta, callHref, custom, customPage, mailtoFor } from "@/app/content";
+import { briefCta, custom, customPage, mailtoFor } from "@/app/content";
 import { graphHtml, pageNodes } from "@/app/structured-data";
 
 /*
@@ -76,20 +74,12 @@ export function JobPage({ page }: { page: JobPageRecord }) {
    * click is counted under the job a reader came in on. */
   const brief = mailtoFor(page.subject);
 
-  const copy = (
+  /* The words of the first screen, beside a scene or an ornament. */
+  const heroWords = (
     <>
       <HeroTitle id="hero-title">{page.heading}</HeroTitle>
       <Lede>{page.lede}</Lede>
-      <Actions>
-        <a className={buttonVariants()} href={brief}>
-          {briefCta}
-          <ArrowUpRightIcon data-icon="inline-end" />
-        </a>
-        <a className={buttonVariants({ variant: "ghost" })} href={callHref}>
-          Or book a call
-        </a>
-      </Actions>
-      <p className="label-mono text-faint">Reply within one working day</p>
+      <HeroActions href={brief} />
     </>
   );
 
@@ -100,12 +90,13 @@ export function JobPage({ page }: { page: JobPageRecord }) {
       <main id="main">
         <Band aria-labelledby="hero-title" flush id="hero">
           {page.scene ? (
-            <div className="wrap grid items-center gap-[clamp(2.5rem,5vw,5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
-              <HeroCopy>{copy}</HeroCopy>
-              <div className="border border-foreground">{sceneFor[page.scene]()}</div>
-            </div>
+            <HeroSplit
+              aside={<div className="border border-foreground">{sceneFor[page.scene]()}</div>}
+            >
+              {heroWords}
+            </HeroSplit>
           ) : (
-            <HeroFrame ornament={<SunDisc className="w-48 lg:w-60" />}>{copy}</HeroFrame>
+            <HeroFrame ornament={<SunDisc className="w-48 lg:w-60" />}>{heroWords}</HeroFrame>
           )}
         </Band>
 
@@ -171,7 +162,7 @@ export function JobPage({ page }: { page: JobPageRecord }) {
             </UnitHead>
             <Plans>
               <PlanCard
-                title="Custom agent"
+                title={custom.title}
                 body={
                   <>
                     You describe this job as your company runs it. We write the

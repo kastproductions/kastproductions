@@ -71,12 +71,12 @@ const STAMP_TEXT = token("signal-foreground");
 const RICE = token("primary-foreground");
 
 /* The paper as globals.css draws it on <body>: a gold light high on the page
- * and the 112px grid. The light fades to its own colour at no opacity, since
- * a fade to `transparent` passes through grey. */
-const LIGHT = srgb("oklch(82% 0.11 79 / 0.55)");
-const LIGHT_GONE = srgb("oklch(82% 0.11 79 / 0)");
-const GRID_X = srgb("oklch(20% 0.015 80 / 0.035)");
-const GRID_Y = srgb("oklch(20% 0.015 80 / 0.028)");
+ * and the 112px grid, from the same tokens. The light fades to its own colour
+ * at no opacity, since a fade to `transparent` passes through grey. */
+const LIGHT = token("paper-light");
+const LIGHT_GONE = LIGHT.replace(/, [\d.]+\)$/, ", 0)");
+const GRID_X = token("grid-x");
+const GRID_Y = token("grid-y");
 
 /*
  * Satori reads TTF only. Google Fonts serves a static, subset TTF when the

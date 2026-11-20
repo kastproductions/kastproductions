@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { gateClass } from "@/components/section";
 import { cn } from "@/lib/utils";
 
 /*
@@ -23,7 +24,8 @@ export function StopPoint({
     <div
       aria-labelledby={titleId}
       className={cn(
-        "mt-8 max-w-(--measure) border-l-2 border-signal bg-signal-tint py-5 pr-5 pl-5 sm:pl-6",
+        gateClass,
+        "mt-8 max-w-(--measure) py-5 pr-5 pl-5 sm:pl-6",
         className,
       )}
       role="group"

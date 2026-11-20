@@ -234,7 +234,7 @@ The ramp is a set of `--text-*` tokens in `src/app/globals.css`, used as `text-d
 
 The page is a stack of `Band`s. A `Unit` splits a band into a heading column (21rem from the `lg` breakpoint, sticky) and a body column under one ink rule that runs the width of the content. Content sits in `wrap`: `min(100% - 2 * gutter, 78rem)`, centred. The band rhythm is `clamp(3rem, 5.5vw, 5rem)`.
 
-A `UnitHead` takes an `index`, which sets the section's number over its heading in mono caps (`01`, then a short line rule). The number is hidden from a screen reader, because the heading already names the section. A page with one section has no number. A page with no scene opens with a `HeroFrame`: the hero column, and one ornament beside it from `md` up (the seal on the about page, the eclipse on the contact, legal and not-found pages).
+A `UnitHead` takes an `index`, which sets the section's number over its heading in mono caps (`01`, then a short line rule). The number is hidden from a screen reader, because the heading already names the section. A page with one section has no number. A page with no scene opens with a `HeroFrame`: the hero column, and one ornament beside it from `md` up (the seal on the about page, the eclipse on the contact, legal and not-found pages). A page with a scene or a sheet beside its words opens with a `HeroSplit`: two columns of one width from `lg` up, the `split` gap between them, and the picture under the words below `lg`.
 
 Breakpoints replace Tailwind's: `sm` 35.0625rem (a button shares its row), `md` 55.0625rem (the header shows its links), `lg` 67.5625rem (the heading takes its own column), and `rail` 86rem (the margin is wide enough for the vertical rail).
 
@@ -252,7 +252,7 @@ The system is flat. Depth comes from tone: rice cards on gold paper, night bands
 
 ## Shapes
 
-Paper is cut, not moulded: every radius token resolves to 2px or less, so a corner reads square. The round things are the seal, the sun disc, the eclipse and the dot under the current navigation link. The horizon lines under the sun have round caps.
+Corners are cut square: every radius token resolves to 2px or less. The round things are the seal, the sun disc, the eclipse and the dot under the current navigation link. The horizon lines under the sun have round caps.
 
 ## Components
 
@@ -261,7 +261,7 @@ Paper is cut, not moulded: every radius token resolves to 2px or less, so a corn
 - **Shape:** square (2px).
 - **Primary:** stamp red fill, rice label in Azeret Mono caps, 44px tall (40px in the header). On night teal it turns gold with ink type.
 - **Hover / Focus:** the fill darkens to `primary-hover`; an icon inside moves up and right by 2px. Focus shows the 3px sun-coloured outline at a 4px offset, gold on night.
-- **Outline:** a transparent fill with an ink edge and an ink label. It sits beside the primary button.
+- **Outline:** a transparent fill with an ink edge and an ink label. It sits beside the primary button: "Book a call" beside the brief in every hero (`HeroActions` in `src/components/section.tsx`), and beside the action of a closing night band. There is no ghost button beside a primary one, because a label with no edge reads as a link and hides its 44px target.
 
 ### Badges
 
