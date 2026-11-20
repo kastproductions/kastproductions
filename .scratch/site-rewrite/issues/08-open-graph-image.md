@@ -4,9 +4,9 @@
 
 **Blocked by:** 01
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] The Open Graph image draws from the same tokens as the page and uses the new display family.
-- [ ] The version query on the image URL is higher than before, in the same commit as the redraw.
-- [ ] The image is still served as `image/png` and resolves in the export, as the Open Graph test asserts.
-- [ ] `bun run test` passes.
+- [x] The Open Graph image draws from the same tokens as the page and uses the new display family.
+- [x] The version query on the image URL is higher than before, in the same commit as the redraw.
+- [x] The image is still served as `image/png` and resolves in the export, as the Open Graph test asserts.
+- [x] `bun run test` passes.

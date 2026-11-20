@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import {
   aboutPage,
+  backlogPage,
   brand,
   briefHref,
   callHref,
@@ -220,6 +221,11 @@ export function SiteFooter({ route }: Chrome) {
             <li>
               <PageLink href={customPage.path} route={route}>
                 Custom agent
+              </PageLink>
+            </li>
+            <li>
+              <PageLink href={backlogPage.path} route={route}>
+                Coding agents for your backlog
               </PageLink>
             </li>
             <li>

@@ -23,7 +23,7 @@ The home page and the pricing sell one thing: an agent we build for your company
 
 All copy is rewritten with the `copywriting` skill in plain buyer language. The page says "agent", and the internal terms stay in `CONTEXT.md`. The home page tells one story in a fixed order. Every other page keeps its URL, and its sections and copy are rewritten in the same voice.
 
-The whole site moves to the Neo Mirai visual world as ADR-0006 sets out. It uses the reference's palette, fonts, paper grain and grid, stamp seal, sun and eclipse disc, vertical rail, numbered sections with mono labels, and about five generated golden-hour illustrations of a future Vilnius and teams at work. It has a light theme only and no Japanese text.
+The whole site moves to the Neo Mirai visual world as ADR-0006 sets out. It uses the reference's palette, fonts, paper grain and grid, stamp seal, sun and eclipse disc, vertical rail, numbered sections with mono labels, and about five golden-hour scenes of a future Vilnius and teams at work, drawn by hand as SVG. It has a light theme only and no Japanese text.
 
 ## User Stories
 
@@ -62,11 +62,11 @@ The whole site moves to the Neo Mirai visual world as ADR-0006 sets out. It uses
 33. As a search engine, I want the home page's structured data to state only the prices and questions the page prints, so that the graph and the page do not disagree.
 34. As a visitor who follows an old link to `/work`, I want to land on the section about work an agent can take, so that the redirect still makes sense after the section changes.
 35. As a keyboard or screen reader user, I want visible focus, a skip link, correct heading order and alt text on every illustration, so that the new design is as usable as the old one.
-36. As a visitor on a slow connection, I want the illustrations compressed and lazy-loaded below the fold, and the fonts self-hosted, so that the first screen paints fast.
+36. As a visitor on a slow connection, I want the illustrations drawn as light inline SVG, and the fonts self-hosted, so that the first screen paints fast.
 37. As a visitor whose system asks for dark mode, I want a page that is fully legible, so that the light-only design does not break for me.
 38. As the owner, I want `PRODUCT.md` and `DESIGN.md` in the repo, so that the next design change starts from a written brief and a written system.
 39. As the owner, I want the built-export suite green after every ticket, so that the redesign cannot silently break what a crawler reads.
-40. As the owner, I want the image prompts kept in the repo next to the images, so that I can generate a matching scene later.
+40. As the owner, I want each scene kept as a component built from the theme tokens, so that I can change a scene or draw a matching one later.
 
 ## Implementation Decisions
 
@@ -80,7 +80,7 @@ The whole site moves to the Neo Mirai visual world as ADR-0006 sets out. It uses
 
 ### The home page order
 
-1. Hero: what you get, in buyer words, one main call to action, a quiet second action, and a generated hero scene.
+1. Hero: what you get, in buyer words, one main call to action, a quiet second action, and the hero scene.
 2. Client strip.
 3. Work an agent can take off your team: one list with the ready-made product first, then the five jobs, each with the systems it touches and a link to its page, and a link to the custom page for work not on the list.
 4. How a build goes: numbered steps from brief, to spec and fixed price in one working day, to live in your own channel and accounts, to monthly upkeep.
@@ -110,9 +110,9 @@ The whole site moves to the Neo Mirai visual world as ADR-0006 sets out. It uses
 
 ### Illustrations
 
-- About five scenes are generated with GPT Image through HeyGen, using the `media-use` skill and the `HEYGEN_API_KEY` in the Agents vault: a hero scene of a golden-hour future Vilnius skyline with old-town spires, a red sun disc and small figures, plus three or four section scenes of teams at work with an agent (a support desk, a finance desk at night, an engineer reviewing a pull request, a shop floor). All scenes share one style prompt that matches the reference: amber and gold palette, ink line, paper texture, small human figures.
-- The images ship as compressed webp at the sizes they render at, with width and height set. The hero image loads eagerly, and the rest load lazily. Every image has alt text written in the content module.
-- The style prompt and each scene prompt are kept in a text file next to the images.
+- About five scenes are drawn by hand as inline SVG, not generated. The owner chose this on 2026-11-20 when HeyGen had no credit: drawn scenes cost nothing, add no image request and use the theme tokens. The scenes: a hero scene of a golden-hour future Vilnius skyline with old-town spires, a red sun disc and small figures, plus three or four section scenes of teams at work with an agent (a support desk, a finance desk at night, an engineer reviewing a pull request, a shop floor).
+- All scenes share one drawing style that matches the reference: flat shapes in the gold, sun and night tokens, an ink line, the paper behind, and small human figures. Colours come from the theme tokens, never from literal values.
+- Each scene is a React component. It carries `role="img"` and an accessible name from alt text written in the content module. The scenes add no network request.
 - SVG ornaments (sun disc, eclipse, horizon lines, seal) are drawn by hand and used on every page, with or without a scene.
 
 ### Machine-readable layer
@@ -141,5 +141,5 @@ The whole site moves to the Neo Mirai visual world as ADR-0006 sets out. It uses
 
 ## Further Notes
 
-- The build needs network access for the Open Graph font fetch and for generating images. HeyGen use costs credits. The `media-use` skill sets how to plan and cap them.
-- Post-gate decisions taken in this spec: the backlog page path and title; Managed keeps its glossary meaning on that page; the scene list; the body font fallback for Latin Extended glyphs; the `/work` redirect target; ADR-0006.
+- The build needs network access for the Open Graph font fetch.
+- Post-gate decisions taken in this spec: the backlog page path and title; Managed keeps its glossary meaning on that page; the scene list; drawn SVG scenes in place of generated images (owner's choice, 2026-11-20); the body font fallback for Latin Extended glyphs; the `/work` redirect target; ADR-0006.

@@ -12,7 +12,7 @@
 - [ ] The FAQ has about six questions, and the graph marks up the same list.
 - [ ] "Door", "standing agent", "station" and "authority" appear in no heading and no call to action on the page.
 - [ ] The `/work` redirect in the Vercel config targets the new work section's anchor, and the anchor exists in the export.
-- [ ] The hero scene loads eagerly with its size set. Section scenes load lazily.
+- [ ] The hero scene is placed with its size set, so the layout does not shift.
 - [ ] The synthetic console keeps its "Example" label. No case study or figure is invented, and the quote is printed as written.
 - [ ] Copy is edited against the humanizer checklist, and the home record's copy date is the commit day.
 - [ ] Checked with agent-browser at 390px and 1440px.
