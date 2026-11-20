@@ -1,3 +1,5 @@
+import { ArrowUpRightIcon } from "lucide-react";
+import { AgentConsole } from "@/components/agent-console";
 import {
   Actions,
   Band,
@@ -48,32 +50,40 @@ export default function Slack() {
 
       <main id="main">
         <Band flush>
-          <HeroCopy className="wrap">
-            <HeroTitle>An agent your team addresses in Slack.</HeroTitle>
-            <Lede wide>
-              Your team already works in Slack, so that is where the agent
-              answers. A person mentions it by name in a channel, it works in
-              the thread that opens, and anything that leaves your company
-              waits there for a named person to approve it.
-            </Lede>
-            <Actions>
-              <a className={buttonVariants()} href={brief}>
-                Describe the work
-              </a>
-              <a className={buttonVariants({ variant: "outline" })} href={callHref}>
-                Book a call
-              </a>
-            </Actions>
-          </HeroCopy>
+          <div className="wrap grid grid-cols-1 items-center gap-[clamp(2rem,5vw,5rem)] lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <HeroCopy>
+              <HeroTitle>An agent your team addresses in Slack.</HeroTitle>
+              <Lede>
+                Your team already works in Slack, so that is where the agent
+                answers. A person mentions it by name in a channel, it replies
+                in the thread, and anything that leaves your company waits there
+                for a named person to approve it.
+              </Lede>
+              <Actions>
+                <a className={buttonVariants()} href={brief}>
+                  Get a spec and a fixed price
+                  <ArrowUpRightIcon data-icon="inline-end" />
+                </a>
+                <a className={buttonVariants({ variant: "ghost" })} href={callHref}>
+                  Or book a call
+                </a>
+              </Actions>
+            </HeroCopy>
+
+            {/* The exchange a reader is asked to picture: a mention, a reply
+                and the approval it waits on. Synthetic, so it carries the
+                "Example" label. */}
+            <AgentConsole />
+          </div>
         </Band>
 
-        <Band id="address" aria-labelledby="address-title">
+        <Band aria-labelledby="address-title" id="address">
           <Unit>
-            <UnitHead title="How a person addresses it" titleId="address-title">
+            <UnitHead index={1} title="How your team asks it for work" titleId="address-title">
               <HeadNote>
                 The agent has a name in your workspace, the way a colleague
-                does. Nobody installs anything or learns a new tool: they ask
-                in the channel where the work already happens.
+                does. Nobody learns a new tool: they ask in the channel where
+                the work already happens.
               </HeadNote>
             </UnitHead>
             <UnitBody>
@@ -82,31 +92,30 @@ export default function Slack() {
                   <Row stack>
                     <RowLabel>Mention it by name</RowLabel>
                     <RowText>
-                      A person writes the agent&rsquo;s name in a channel it has
-                      been added to, followed by what they want done. Slack
-                      delivers that mention to your agent, and the agent starts
-                      work on it.
+                      A person writes the agent&rsquo;s name in a channel,
+                      followed by what they want done. Slack sends that mention
+                      to your agent, and the agent starts work on it.
                     </RowText>
                   </Row>
                 </li>
                 <li>
                   <Row stack>
-                    <RowLabel>The thread is the session</RowLabel>
+                    <RowLabel>One thread, one piece of work</RowLabel>
                     <RowText>
-                      The thread under that message is one session. The agent
-                      answers in that thread and no other, and a second mention
-                      in the same thread continues the same session rather than
-                      starting a new one.
+                      Flue ties the agent to the thread under that message. The
+                      agent replies in that thread, and a later mention in the
+                      same thread reaches the same agent and not a new one.
                     </RowText>
                   </Row>
                 </li>
                 <li>
                   <Row stack>
-                    <RowLabel>A slash command, where you prefer one</RowLabel>
+                    <RowLabel>A slash command, if you prefer one</RowLabel>
                     <RowText>
                       A team that would rather type a command than a mention
-                      can have one. Slack sends the command to the agent, which
-                      acknowledges it at once and starts the work.
+                      can have one. Slack expects a fast answer to a command,
+                      so the agent acknowledges it at once and does the work
+                      after.
                     </RowText>
                   </Row>
                 </li>
@@ -118,24 +127,24 @@ export default function Slack() {
           </Unit>
         </Band>
 
-        <Band id="gate" aria-labelledby="gate-title">
+        <Band aria-labelledby="gate-title" id="gate" tone="panel">
           <Unit>
-            <UnitHead title="What the approval gate looks like" titleId="gate-title">
+            <UnitHead index={2} title="Where it stops for approval" titleId="gate-title">
               <HeadNote>
-                An approval gate is where the agent stops and waits for a named
-                person. In a channel, it is a message with a button under it.
+                Before the agent does anything that reaches outside your
+                company, it stops and waits for a named person. In Slack, that
+                is a message with a button under it.
               </HeadNote>
             </UnitHead>
             <UnitBody>
               <Rows>
                 <li>
                   <Row stack>
-                    <RowLabel>The agent states what it wants to do</RowLabel>
+                    <RowLabel>It says what it wants to do</RowLabel>
                     <RowText>
-                      Before an outward action, the agent posts in the thread
-                      what it is about to do and for whom, with the draft or the
-                      figure attached, and a button to approve it. Then it
-                      stops.
+                      The agent posts in the thread what it is about to do and
+                      for whom, with the draft or the figure attached, and a
+                      button to approve it. Then it stops.
                     </RowText>
                   </Row>
                 </li>
@@ -143,38 +152,36 @@ export default function Slack() {
                   <Row stack>
                     <RowLabel>A named person presses the button</RowLabel>
                     <RowText>
-                      Slack delivers the press to your agent. The rule that only
-                      a named person&rsquo;s press counts is ours to write,
-                      because Flue delivers the press and leaves the policy to
-                      us.
+                      Flue passes the press to code we write. Flue sets no rule
+                      about who may approve, so we write that rule: a press
+                      counts only from the person your spec names.
                     </RowText>
                   </Row>
                 </li>
                 <li>
                   <Row stack>
-                    <RowLabel>The agent cannot choose where it posts</RowLabel>
+                    <RowLabel>It cannot choose where it posts</RowLabel>
                     <RowText>
-                      The channel and the thread it answers in, and the token it
-                      answers with, are bound in code we write. The model
-                      chooses the words of a message and nothing else: not a
-                      workspace, not a channel, not a credential.
+                      Code we write fixes the channel and the thread the agent
+                      replies in, and the token it replies with. The model
+                      writes the words of a message. It does not choose a
+                      workspace, a channel or a credential.
                     </RowText>
                   </Row>
                 </li>
               </Rows>
               <Note gate>
-                An outward action is anything that reaches someone outside your
-                company: a sent email, a published page, a posted message, a
-                payment. Only a named person at your company approves one, and
-                the press in Slack is that approval.
+                Anything that reaches someone outside your company waits for
+                this press: a sent email, a published page, a posted message, a
+                payment. Only a named person at your company can approve one.
               </Note>
             </UnitBody>
           </Unit>
         </Band>
 
-        <Band id="prerequisites" aria-labelledby="prerequisites-title">
+        <Band aria-labelledby="prerequisites-title" id="prerequisites">
           <Unit>
-            <UnitHead title="What you provide" titleId="prerequisites-title">
+            <UnitHead index={3} title="What you provide" titleId="prerequisites-title">
               <HeadNote>
                 Three things, all of them yours. We set the agent up inside
                 them with you, so the account, the keys and the code are yours
@@ -188,7 +195,7 @@ export default function Slack() {
                     <RowLabel>A Slack workspace</RowLabel>
                     <RowText>
                       The one your team already works in, and the channels the
-                      agent is to answer in.
+                      agent answers in.
                     </RowText>
                   </Row>
                 </li>
@@ -196,11 +203,10 @@ export default function Slack() {
                   <Row>
                     <RowLabel>A Slack app in that workspace</RowLabel>
                     <RowText>
-                      The agent holds two values from it. The first is the
-                      app&rsquo;s signing secret: the agent verifies the
-                      signature on every request before it reads a word of it.
-                      The second is the bot token the agent
-                      answers with. Both stay in your project.
+                      The agent keeps two values from it. The signing secret
+                      lets the agent check that each request comes from your
+                      Slack app. The bot token is what the agent replies with.
+                      Both stay in your project.
                     </RowText>
                   </Row>
                 </li>
@@ -218,20 +224,20 @@ export default function Slack() {
           </Unit>
         </Band>
 
-        <Band id="teams" aria-labelledby="teams-title">
+        <Band aria-labelledby="teams-title" id="teams">
           <Unit>
-            <UnitHead title="If your team is in Microsoft Teams" titleId="teams-title">
+            <UnitHead index={4} title="If your team is in Microsoft Teams" titleId="teams-title">
               <HeadNote>
-                The agent reads the same way to your team: a person mentions it
-                in a channel, and it answers where it was asked. What changes
-                is what you provide, and it changes on your side of it.
+                Your team uses it the same way: a person mentions the agent in
+                a channel, and it replies in that conversation. The setup on
+                your side is different.
               </HeadNote>
             </UnitHead>
             <UnitBody>
               <Rows>
                 <li>
                   <Row>
-                    <RowLabel>Slack holds two values</RowLabel>
+                    <RowLabel>Slack needs two values</RowLabel>
                     <RowText>
                       The app&rsquo;s signing secret and its bot token, both
                       issued in your workspace.
@@ -240,43 +246,42 @@ export default function Slack() {
                 </li>
                 <li>
                   <Row>
-                    <RowLabel>Teams holds three, and one registration</RowLabel>
+                    <RowLabel>Teams needs three, and a registration</RowLabel>
                     <RowText>
-                      An app ID, a tenant ID and an app password, and an Azure
-                      Bot registration whose messaging endpoint points at your
-                      agent before Teams sends it anything. The registration is
-                      the step Slack does not have.
+                      An app ID, a tenant ID and an app password. Teams also
+                      needs an Azure Bot registration whose messaging endpoint
+                      points at your agent. Slack has no step like it.
                     </RowText>
                   </Row>
                 </li>
               </Rows>
               <Note>{channels.teamsNote}</Note>
-              <PullLink href={teamsDoc} rel="noreferrer">
+              <PullLink className="mt-4 inline-block" href={teamsDoc} rel="noreferrer">
                 Read what Flue verifies for Teams
               </PullLink>
             </UnitBody>
           </Unit>
         </Band>
 
-        <Band tone="panel" id="cost" aria-labelledby="slack-cost-title">
+        <Band aria-labelledby="slack-cost-title" id="cost" tone="panel">
           <Unit>
-            <UnitHead title="What it costs" titleId="slack-cost-title">
+            <UnitHead index={5} title="What it costs" titleId="slack-cost-title">
               <HeadNote>
-                An agent in Slack is shaped around the work your team asks it
-                for, so it is custom work, and the custom door prices it.
+                An agent in Slack is built around the work your team asks it
+                for, so it is a custom agent, at the custom price.
               </HeadNote>
             </UnitHead>
             <UnitBody>
-              {/* The floor, the month and what a custom agent needs from you
-                  are the door's own sentences, so this page prints no number
-                  and sends the reader there. */}
-              <Note>
-                The door states the floor to build, what the month buys, and
-                what a custom agent needs from you before we start.{" "}
-                <PullLink href={customPage.path}>
-                  What custom AI agent development costs
-                </PullLink>
+              {/* The price to build, what the month buys and what a custom
+                  agent needs from you are the door's own sentences, so this
+                  page prints no number and sends the reader there. */}
+              <Note className="mt-0">
+                The custom page gives the price to build, what the monthly
+                price pays for, and what you need before we start.
               </Note>
+              <PullLink className="mt-4 inline-block" href={customPage.path}>
+                What custom AI agent development costs
+              </PullLink>
             </UnitBody>
           </Unit>
         </Band>

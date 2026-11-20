@@ -747,10 +747,10 @@ export const jobPages: JobPage[] = jobs.flatMap((job) => job.page ?? []);
 
 export const custom = {
   heading: "An agent shaped around how you already work",
-  lede: "No two companies work the same way, and the work you want taken over probably matches nothing on a shelf. Describe it. You get a short spec and a fixed price within one working day.",
+  lede: "Describe the work you want off your team in a few lines. You get a spec and a fixed price within one working day, and we build the agent around the way your company already does that work.",
   jobsHeading: "Work we take",
   jobsLede:
-    "Five jobs we take, to measure your own against. Each one names the systems it touches. None of them is a product you can buy today, and none carries a price until we have read your workflow.",
+    "Five jobs we build an agent for, to measure your own work against. Each line names the systems the agent works in. None of them has a price until we have read how your team does the work.",
   /* Written for the search the door's title answers, the way
    * `pricingIntro.heading` is on the home page. */
   pricingHeading: "What custom AI agent development costs",
@@ -953,7 +953,7 @@ export const customPage: PageRecord = {
   title: "Custom AI agent development",
   description:
     "Custom AI agent development for work that matches nothing on a shelf. Describe it and get a short spec and a fixed price within one working day.",
-  date: "2026-09-21",
+  date: "2026-11-20",
 };
 
 /* The pages a buyer reads before a first call. They state no offer, they
@@ -1046,7 +1046,7 @@ export const slackPage: PageRecord = {
   title: "AI agent for Slack",
   description:
     "An AI agent for Slack, built for one company: your team addresses it by name in a channel, and every outward action waits for a named person’s approval.",
-  date: "2026-09-21",
+  date: "2026-11-20",
 };
 
 /* The mail subject every call to action on the Slack page carries, which is
