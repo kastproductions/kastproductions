@@ -35,6 +35,7 @@ import { buttonVariants } from "@/components/ui/button";
 import {
   aboutPage,
   backlogPage,
+  briefCta,
   briefHref,
   callHref,
   contactEmail,
@@ -77,9 +78,6 @@ const reference = references.reduce((a, b) =>
  * written in text with a link, never as a logo. */
 const [flue] = stack.links;
 
-/* The words a buyer asks with, on both calls to action. What comes back is
- * the reason to write, so the button names it. */
-const briefCta = "Get a spec and a fixed price";
 
 /* How a build goes, from the first email to the monthly upkeep. Only the home
  * page prints these steps, so they live here (ADR-0004). */

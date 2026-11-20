@@ -20,6 +20,10 @@ export const contactEmail = "hello@kastproductions.com";
 export const mailtoFor = (subject: string) =>
   `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}`;
 export const briefHref = mailtoFor("New brief");
+/* The words a buyer asks with, on the main call to action of the home page,
+ * the product page and every job page. What comes back is the reason to
+ * write, so the button names it. */
+export const briefCta = "Get a spec and a fixed price";
 /* Put a booking URL here and "Book a call" points at it instead of the mailbox.
  * Empty until one exists, because a dead link costs more than a mailto. */
 export const bookingUrl = "";
@@ -361,11 +365,11 @@ export const issueToPullRequest: Product = {
   promise: "Takes an issue off your tracker and opens a draft pull request.",
   description:
     "Issue to pull request, run by a standing agent: label an issue in your tracker and get a draft pull request on your repository. A named person signs the merge.",
-  lede: "Your team labels an issue, or delegates it in Linear. The agent works it through four stations and opens a draft pull request on your repository, with the run record attached. A named person signs the merge.",
-  authority: "It acts behind an approval gate.",
-  boundary: "It never merges. Every branch it pushes waits for a signature.",
+  lede: "Your team labels an issue, or hands it to the agent in Linear. The agent works it in four steps and opens a draft pull request on your repository, with a record of the run attached. A named person on your team merges it.",
+  authority: "On its own, it plans the change, writes the code, runs your checks and opens a draft pull request.",
+  boundary: "It never merges. Every branch it pushes waits for a named person on your team to review it and merge it.",
   stationsIntro:
-    "A station is one step of a run, worked by a subagent that does that step and nothing else.",
+    "Four steps, in order. A separate part of the agent does each step and nothing else, and the last step checks the whole change against the plan.",
   stations: [
     {
       title: "Triage",
@@ -385,7 +389,7 @@ export const issueToPullRequest: Product = {
     },
   ],
   record:
-    "Every run attaches its run record to the draft pull request: each tool call, each test result, each verdict and what the run cost. When you ask why it chose an approach, the answer is in the pull request.",
+    "Every run attaches its record to the draft pull request: each tool call, each test result, each verdict and what the run cost. When you ask why it chose an approach, the answer is in the pull request.",
   prerequisites: [
     { item: "A GitHub organisation and the repository the agent works on", who: "You" },
     { item: "A tracker: GitHub Issues, or Linear with agent sessions enabled", who: "You" },
@@ -402,7 +406,7 @@ export const issueToPullRequest: Product = {
   ],
   systems: "GitHub, GitHub Issues or Linear",
   subject: "Issue to pull request",
-  date: "2026-09-22",
+  date: "2026-11-20",
 };
 
 export const products: Product[] = [issueToPullRequest];
@@ -473,7 +477,8 @@ export type JobPage = PageRecord & {
   heading: string;
   lede: string;
   /* What the agent may do on its own. One of the three authorities in
-   * CONTEXT.md, and never a fourth. */
+   * CONTEXT.md, and never a fourth, said in buyer words: the page prints
+   * it, and the word "authority" stays off the page. */
   authority: string;
   /* Where the agent stops and waits for a named person. */
   gate: string;
@@ -487,6 +492,10 @@ export type JobPage = PageRecord & {
   /* The words the two job lists link to this page with. Its own, so a reader
    * meeting five of these rows hears five different links. */
   more: string;
+  /* The room scene the page's first screen shows, where one of the set in
+   * `scenes` shows this job's team at work. A job with no matching scene
+   * shows an ornament there instead. */
+  scene?: "supportDesk" | "financeDesk" | "shopFloor";
 };
 
 export const contentPublishing: JobPage = {
@@ -494,12 +503,12 @@ export const contentPublishing: JobPage = {
   title: "Content publishing agent",
   description:
     "Content publishing, run by a standing agent: a brief in Notion comes back as a drafted and edited page in your CMS, and publishing waits for a name.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that turns a brief into a page ready to publish.",
   lede: "A brief in Notion comes back as a drafted and edited page, waiting unpublished in your CMS. Nothing goes live until a named person publishes it.",
   authority:
-    "It acts behind an approval gate. Reading the brief, drafting the page and editing the draft against the brief needs nobody, and the finished draft then stops.",
-  gate: "The gate sits before a page is published. A published page reaches everyone outside your company, so a named person reads it and publishes it.",
+    "On its own, it reads the brief, drafts the page and edits the draft against the brief. Then it stops.",
+  gate: "It stops before the page is published. A published page reaches everyone outside your company, so a named person on your team reads it and publishes it.",
   steps: [
     {
       title: "Reads the brief",
@@ -537,12 +546,12 @@ export const socialScheduling: JobPage = {
   title: "Social scheduling agent",
   description:
     "Social scheduling, run by a standing agent: your team asks in Slack, the agent drafts in Typefully, and a post joins the queue once a named person approves it.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that drafts and schedules your posts from a channel.",
   lede: "Your team asks for a post in the channel they already work in. The agent drafts it in Typefully, and it joins the queue once a named person approves it. Every batch comes back as one summary of what went out.",
   authority:
-    "It acts behind an approval gate. Reading the ask, drafting the post and reporting the batch needs nobody, and every draft then stops.",
-  gate: "The gate sits before a post joins the queue. A queued post goes out under your name at its time, so a named person reads the draft and approves it.",
+    "On its own, it takes the ask, drafts the post and reports on each batch. Every draft then stops for approval.",
+  gate: "It stops before a post joins the queue. A queued post goes out under your name at its time, so a named person reads the draft and approves it.",
   steps: [
     {
       title: "Takes the ask in the channel",
@@ -580,12 +589,12 @@ export const supportTicketTriage: JobPage = {
   title: "Support ticket triage agent",
   description:
     "Support ticket triage, run by a standing agent: every new ticket read and grouped, a reply drafted where the answer is known, a GitHub issue where it is a bug.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that reads every support ticket before your team does.",
   lede: "Every new ticket in Zendesk or Intercom is read and grouped as it arrives. Where the answer is already written down, the reply is drafted in the ticket and waits for a name. Where the ticket is a bug, it is filed as a GitHub issue.",
   authority:
-    "It acts behind an approval gate. Reading the ticket, grouping it, drafting the reply and filing the issue needs nobody, and every reply then stops.",
-  gate: "The gate sits before a reply reaches your customer. A drafted reply waits in the ticket, and a named person on your support team reads it and sends it. An issue in your own repository crosses no gate.",
+    "On its own, it reads each ticket, groups it, drafts the reply and files the bug. Every reply then stops for a person.",
+  gate: "It stops before a reply reaches your customer. The draft waits in the ticket, and a named person on your support team reads it and sends it. Filing an issue in your own repository needs no approval.",
   steps: [
     {
       title: "Reads the ticket as it arrives",
@@ -616,6 +625,7 @@ export const supportTicketTriage: JobPage = {
   ],
   subject: "Support ticket triage",
   more: "How the triage works",
+  scene: "supportDesk",
 };
 
 export const failedPaymentRecovery: JobPage = {
@@ -625,12 +635,12 @@ export const failedPaymentRecovery: JobPage = {
    * read left to right. The title carries the same words. */
   description:
     "Failed payment recovery, run by a standing agent: every charge Stripe failed comes back as a drafted message that waits for your approval.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that works last night’s failed payments.",
   lede: "Every charge Stripe failed overnight comes back as one summary, with a drafted message per customer waiting in your outbox. Nothing reaches a customer until a named person approves it.",
   authority:
-    "It acts behind an approval gate. Reading Stripe, sorting the failures and writing the drafts needs nobody, and every draft then stops.",
-  gate: "The gate sits before a message leaves your company. A follow-up reaches your customer, so a named person reads it and sends it.",
+    "On its own, it reads Stripe, sorts the failures and writes the drafts. Every draft then stops for a person.",
+  gate: "It stops before a message leaves your company. A follow-up reaches your customer, so a named person reads it and sends it.",
   steps: [
     {
       title: "Reads the night’s failures",
@@ -661,6 +671,7 @@ export const failedPaymentRecovery: JobPage = {
   ],
   subject: "Failed payment recovery",
   more: "How the follow-up works",
+  scene: "financeDesk",
 };
 
 export const shopifyOperations: JobPage = {
@@ -668,12 +679,12 @@ export const shopifyOperations: JobPage = {
   title: "Shopify operations agent",
   description:
     "Shopify operations, run by a standing agent: stock, pricing and order exceptions watched on a schedule, and the ones that need a decision brought to a person.",
-  date: "2026-09-21",
+  date: "2026-11-20",
   heading: "An agent that watches your store, so a person sees only the exceptions.",
   lede: "On the schedule you set, the agent reads your Shopify store for what is out of line: stock running low, a price outside the range you set, an order that stalled. It reports what it found in one place and brings the ones that need a decision to a named person.",
   authority:
-    "It reads and reports. Nothing in your store changes because the agent looked: it reads Shopify, sorts what it found and writes one summary. Every change is a person’s to make.",
-  gate: "The gate sits in front of every change to the store, and this agent stops there every time. An exception that needs a decision comes to a named person with the product, the order or the price it concerns and the choices open, and that person makes the change in Shopify.",
+    "It only reads and reports. It reads Shopify, sorts what it found and writes one summary. Nothing in your store changes because the agent looked.",
+  gate: "It stops in front of every change to the store, every time. An exception that needs a decision comes to a named person with the product, the order or the price it concerns and the choices open. That person makes the change in Shopify.",
   steps: [
     {
       title: "Reads the store on a schedule",
@@ -700,6 +711,7 @@ export const shopifyOperations: JobPage = {
   ],
   subject: "Shopify operations",
   more: "How the store is watched",
+  scene: "shopFloor",
 };
 
 export const jobs: Job[] = [
