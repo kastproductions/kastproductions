@@ -24,7 +24,10 @@ export default function NotFound() {
       <SiteHeader />
 
       <main id="main">
-        <Band flush>
+        {/* The vertical rail runs about 44rem down from the top of the
+            page. Where the rail shows, the band is at least that tall, so
+            the rail ends above the footer and not under it. */}
+        <Band className="rail:min-h-[42rem]" flush>
           <HeroFrame ornament={<Eclipse className="size-28 lg:size-36" />}>
             <HeroTitle>No page at this address.</HeroTitle>
             <Lede>

@@ -63,7 +63,7 @@ import { graphHtml, pageNodes } from "@/app/structured-data";
 const stackedTable = "max-md:block";
 const stackedRow = "max-md:block max-md:py-3.5";
 const stackedCell =
-  "max-md:block max-md:py-0.5 max-md:pr-0 max-md:before:block max-md:before:font-heading max-md:before:text-[0.72rem] max-md:before:font-semibold max-md:before:text-faint max-md:before:content-[attr(data-label)]";
+  "max-md:block max-md:py-0.5 max-md:pr-0 max-md:before:block max-md:before:font-heading max-md:before:text-label max-md:before:font-semibold max-md:before:text-faint max-md:before:content-[attr(data-label)]";
 
 export function ProductPage({ product }: { product: Product }) {
   /* The product's own page record, and the nodes that follow from it, so
@@ -132,7 +132,7 @@ export function ProductPage({ product }: { product: Product }) {
           </Unit>
         </Band>
 
-        <Band aria-labelledby="work-title" id="work" tone="panel">
+        <Band aria-labelledby="work-title" data-example id="work" tone="panel">
           <Unit>
             <UnitHead index={2} title="What a run looks like" titleId="work-title">
               <HeadNote>
@@ -164,7 +164,7 @@ export function ProductPage({ product }: { product: Product }) {
                       <TableCell
                         className={cn(
                           stackedCell,
-                          "font-mono text-[0.85rem] whitespace-nowrap",
+                          "font-mono text-small whitespace-nowrap",
                         )}
                         data-label="Days"
                       >

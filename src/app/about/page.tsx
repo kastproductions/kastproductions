@@ -146,7 +146,7 @@ export default function About() {
                   <figure>
                     <SectionNumber className="mb-3" index={at + 1} />
                     <blockquote>
-                      <p className="max-w-[60ch] text-[1.15rem] leading-[1.55] text-foreground">
+                      <p className="max-w-[60ch] text-title leading-[1.55] text-foreground">
                         {reference.quote}
                       </p>
                     </blockquote>
@@ -160,9 +160,9 @@ export default function About() {
                         loading="lazy"
                         decoding="async"
                       />
-                      <span className="flex flex-col text-[0.92rem] leading-[1.35]">
+                      <span className="flex flex-col text-note leading-[1.35]">
                         <b className="font-heading font-semibold text-foreground">{reference.name}</b>
-                        <span className="text-[0.84rem] text-faint">{reference.position}</span>
+                        <span className="text-small text-faint">{reference.position}</span>
                       </span>
                     </figcaption>
                   </figure>

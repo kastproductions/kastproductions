@@ -106,6 +106,29 @@
 @theme {
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
 
+  /* The type ramp, as DESIGN.md lists it. A size not on it is drift: pick
+   * the nearest step. Display is the h1, headline a section's h2, lede the
+   * paragraph under the h1, quote a pulled quote. Title is a card's name or a
+   * question, body is reading text, note a side remark, small a figure in a
+   * form or a list, caption a machine string, label and label-sm mono caps.
+   * Figure is a price. The two labels keep the line height of `label-mono`,
+   * so a size step never loosens a label. src/lib/utils.ts names every step
+   * for `cn`, so a size and a colour on one element both survive a merge. */
+  --text-display: clamp(2.3rem, 1.2rem + 3.6vw, 4.6rem);
+  --text-headline: clamp(1.6rem, 1.1rem + 1.5vw, 2.4rem);
+  --text-figure: 1.9rem;
+  --text-quote: clamp(1.2rem, 1rem + 0.8vw, 1.55rem);
+  --text-lede: clamp(1.1rem, 1rem + 0.4vw, 1.28rem);
+  --text-title: 1.15rem;
+  --text-body: 1.05rem;
+  --text-note: 0.95rem;
+  --text-small: 0.88rem;
+  --text-caption: 0.8rem;
+  --text-label: 0.72rem;
+  --text-label--line-height: 1.3;
+  --text-label-sm: 0.66rem;
+  --text-label-sm--line-height: 1.3;
+
   /* The site's breakpoints, replacing Tailwind's: at sm a button shares its
    * row, at md the header shows its links and two columns sit side by side,
    * at lg a section's heading takes its own column, and at rail the margin
@@ -236,7 +259,7 @@
  * and section labels. */
 @utility label-mono {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--text-label);
   font-weight: 500;
   letter-spacing: 0.08em;
   line-height: 1.3;

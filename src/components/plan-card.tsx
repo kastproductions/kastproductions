@@ -38,18 +38,24 @@ export function PlanCard({
   lead?: boolean;
 }) {
   return (
-    <Card className={cn(lead && "night border-transparent")} size="lg">
+    /* Each card takes three rows of the grid it sits in, on a subgrid, so the
+     * prices of cards side by side start on one line whatever the length of
+     * the words above them. */
+    <Card
+      className={cn("row-span-3 grid grid-rows-subgrid", lead && "night border-transparent")}
+      size="lg"
+    >
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>
           <p>{body}</p>
         </CardDescription>
       </CardHeader>
-      <CardContent className="mt-auto">
+      <CardContent>
         <div className="flex flex-col gap-1 border-t border-hairline pt-4">
           {prices.map((price) => (
             <div
-              className="font-heading text-[1.9rem] leading-tight font-medium"
+              className="font-heading text-figure leading-tight font-medium"
               key={price.per}
             >
               {price.amount}{" "}
@@ -60,7 +66,7 @@ export function PlanCard({
           ))}
         </div>
         {includes.length > 0 ? (
-          <ul className="mt-4 grid gap-2 text-[0.88rem] leading-normal text-prose *:relative *:pl-4 *:before:absolute *:before:top-[0.7em] *:before:left-0 *:before:h-px *:before:w-2 *:before:bg-foreground">
+          <ul className="mt-4 grid gap-2 text-small leading-normal text-prose *:relative *:pl-4 *:before:absolute *:before:top-[0.7em] *:before:left-0 *:before:h-px *:before:w-2 *:before:bg-foreground">
             {includes.map((item) => (
               <li key={item}>{item}</li>
             ))}

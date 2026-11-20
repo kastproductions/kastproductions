@@ -192,7 +192,9 @@ export const scenes = {
 /* A price as a reader sees it, and the only place the number lives. The ways to
  * buy in `prices`, `custom.prices` and the `prices` field on a product all hold
  * these, and `src/app/structured-data.ts` reads the number and the currency
- * back out of the string so the page and the graph cannot drift apart. */
+ * back out of the string so the page and the graph cannot drift apart. The
+ * custom door and a product write each number once, in their own `prices`:
+ * the Self-run and Custom agent plans build their one line from those. */
 export type Price = { amount: string; per: string };
 
 export const hero = {
@@ -398,7 +400,7 @@ export const issueToPullRequest: Product = {
     { item: "A model provider key, on an account that never trains on your code", who: "You" },
     { item: "A Cloudflare account for the deployment", who: "You" },
     { item: "The GitHub app installed, the webhooks subscribed and the events filtered", who: "We" },
-    { item: "The approval gates, the spend cap and the eval suite", who: "We" },
+    { item: "The approval steps, the spend cap and the eval suite", who: "We" },
   ],
   prices: [
     { amount: "From €7,500", per: "to build" },
@@ -794,12 +796,23 @@ export const pricingIntro = {
   lede: "A build price is a floor, because the work grows with the number of systems your agent touches. The monthly price pays for the upkeep: the eval suite on every change, the fixes and a report each month.",
 };
 
+/* A way to buy that prices one agent prints its build and monthly price as one
+ * line, "From €7,500 to build, then from €1,500 a month". The line is built
+ * from the agent's own two prices, so the price list, the agent's page and
+ * the graph all read the one number. */
+function buildThenMonthly([build, monthly]: Price[]): Price {
+  if (!monthly?.per.startsWith("a month")) {
+    throw new Error(`"${monthly?.amount} ${monthly?.per}" is not a monthly price.`);
+  }
+  const from = monthly.amount.charAt(0).toLowerCase() + monthly.amount.slice(1);
+  return { amount: build.amount, per: `${build.per}, then ${from} a month` };
+}
+
 export const prices = [
   {
     title: "Self-run",
     body: "We build the issue to pull request agent into your own accounts and hand over the keys. Your team runs it, and your own engineers sign the merges.",
-    amount: "From €7,500",
-    per: "to build, then from €1,500 a month",
+    ...buildThenMonthly(issueToPullRequest.prices),
     includes: [
       `Live in your own channel in ${leadTime}`,
       "Your accounts, your keys, your code from the first commit",
@@ -830,8 +843,7 @@ export const prices = [
   {
     title: "Custom agent",
     body: "For work that matches nothing we have built. You describe it, we write the spec and name the price, and the agent is shaped around your workflow.",
-    amount: "From €10,000",
-    per: "to build, then from €1,500 a month",
+    ...buildThenMonthly(custom.prices),
     includes: [
       "A spec and a fixed price within one working day",
       "The same terms: your accounts, your keys, your code",

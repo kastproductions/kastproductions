@@ -33,7 +33,7 @@ export function ChannelsSection({ index }: { index?: number } = {}) {
         <UnitBody>
           <div className="grid gap-10 md:grid-cols-2">
             <div>
-              <h3 className="mb-3.5 font-heading text-[0.85rem] font-semibold text-faint">
+              <h3 className="mb-3.5 font-heading text-small font-semibold text-faint">
                 A person reaches it in
               </h3>
               <ul className="flex flex-wrap gap-2">
@@ -51,7 +51,7 @@ export function ChannelsSection({ index }: { index?: number } = {}) {
               <Note>{channels.teamsNote}</Note>
             </div>
             <div>
-              <h3 className="mb-3.5 font-heading text-[0.85rem] font-semibold text-faint">
+              <h3 className="mb-3.5 font-heading text-small font-semibold text-faint">
                 An event wakes it from
               </h3>
               <ul className="flex flex-wrap gap-2">

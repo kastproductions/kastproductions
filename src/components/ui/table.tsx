@@ -14,7 +14,7 @@ function Table({ className, ...props }: React.ComponentProps<"table">) {
     >
       <table
         data-slot="table"
-        className={cn("w-full caption-bottom text-[0.95rem] leading-normal", className)}
+        className={cn("w-full caption-bottom text-note leading-normal", className)}
         {...props}
       />
     </div>
@@ -69,7 +69,7 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
     <th
       data-slot="table-head"
       className={cn(
-        "pr-4 pb-2.5 text-left align-bottom font-heading text-[0.8rem] font-semibold text-faint",
+        "pr-4 pb-2.5 text-left align-bottom font-heading text-caption font-semibold text-faint",
         className
       )}
       {...props}
