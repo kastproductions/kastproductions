@@ -90,9 +90,10 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 src/app/
   layout.tsx           # Root layout: fonts, site-wide metadata, the site-wide graph,
                        #   analytics
-  page.tsx             # Home: hero and console, clients, the two doors, the work we
-                       #   take, fit, mechanism and stack, channels, reviewer, prices,
-                       #   questions, closing call to action;
+  page.tsx             # Home: hero and scene, clients, the work an agent can take,
+                       #   how a build goes, why it is safe (with the example console),
+                       #   channels, prices, the founder, questions, closing call to
+                       #   action;
                        #   metadata and graph built from its page record
   custom/page.tsx      # The custom door: the jobs we take, channels, price; metadata
                        #   and graph built from its page record
@@ -198,6 +199,8 @@ tests/
   llms-txt.test.ts     # The plain-text index lists the URLs the sitemap lists, with
                        #   the description each record states
   structured-data.test.ts  # The company states only what it can support
+  home.test.ts         # The home page's section order, its one offer, its questions,
+                       #   its words, and the /work redirect
   page-graph.test.ts   # Each route describes itself: the date its copy changed, the
                        #   printed prices as offers, the questions the home page
                        #   answers, and one spelling of the site URL in every identifier
@@ -246,9 +249,9 @@ what the build emitted, never what Google accepted.
 
 Every word of both doors and of every job we take lives in `src/app/content.ts`, along with the facts the copy carries: the prices, the profiles, and the page records with the day each page's copy last changed. What a page tells a machine rather than a reader is not there, and neither is the prose a shared component prints on every page of a kind. The metadata each page derives from its record, with the unfurl image and the indexing directive, lives in `src/app/head-directives.ts`, and the schema.org graph in `src/app/structured-data.ts`. The vocabulary is fixed in `CONTEXT.md`, and the decisions that shape the site, the test seam and where prose lives among them, are recorded in `docs/adr/`.
 
-The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the evals, the changes and the report that `mechanism` describes. Change a number here only when the business changes it.
+The prices there are real: `prices` for the four ways to buy, and the `prices` field on each product and on `custom`. A build price is a floor, because the work follows the number of systems the agent touches. A monthly price buys the upkeep the home page's build steps describe: the eval suite on every change, the fixes and the monthly report. Change a number here only when the business changes it.
 
-The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `openPrices`, which is the plans the catalogue leaves standing, so a plan the page keeps back is a plan the graph does not claim. One offer states one number, which is the `amount`, so a way to buy whose `per` words carry a second figure ("to build, then from €1,500 a month") offers its build floor and leaves the monthly one in prose. `custom.prices` and a product's prices avoid that by holding the build and the monthly price as two prices, and a way to buy would have to print them as two lines to do the same.
+The printed price is also the only source for the machine-readable offer in the graph. `src/app/structured-data.ts` reads the number and the currency out of the string, so a price cannot say one thing to a reader and another to a crawler. Because every price we print is a floor, it requires the `From` and states a minimum, never a fixed price. A format it cannot read throws and fails the build, rather than emitting an empty offer nobody notices or calling a fixed price a floor. A page offers the prices it prints and no others: the home page offers `homePlans` and the backlog page `backlogPlans`, the plans filed under each page's path, so a plan a page does not print is a plan its graph does not claim. One offer states one number, which is the `amount`, so a way to buy whose `per` words carry a second figure ("to build, then from €1,500 a month") offers its build floor and leaves the monthly one in prose. `custom.prices` and a product's prices avoid that by holding the build and the monthly price as two prices, and a way to buy would have to print them as two lines to do the same.
 
 `company` holds what the Lithuanian register of legal entities holds: the legal name, the legal form, the registration code, the VAT number, the registered address and the director. The imprint prints those six, and `contactEmail` under them so a reader who has finished checking can write; nothing else goes on that page. `tests/legal.test.ts` fails if one of the six stops appearing there. A reader is on that page to check us against the register, so a detail we cannot point at in the register does not go in. Note that `company.registeredAddress` is not `location`: the copy says Vilnius, where the studio works, and the register holds an address in the Lazdijai district.
 
@@ -256,7 +259,7 @@ The printed price is also the only source for the machine-readable offer in the 
 
 `evalSuitePage` is the first explainer: one page on one part of the mechanism, written for the reader who searches the part. An explainer sells nothing and prints no price, so it states no offer, as every written page that is not a door does; it stays out of the header and the footer, and the home page hands a reader on to it from the section it explains. A second explainer is a record in `writtenPages` and a route file.
 
-`openPrices` is `prices` with the catalogue rule applied: a way to buy that depends on a ready-made product stays off every page until one runs. The home page and the terms page both print that list, so neither can print a price the other does not.
+`openPrices` is `prices` with the catalogue rule applied: a way to buy that depends on a ready-made product stays off every page until one runs. The terms page prints that whole list, and the home page and the backlog page each print the part filed under their own path, so no page prints a price the terms do not explain.
 
 `bookingUrl` is the one constant the owner sets once a booking link exists. `callHref` reads it, and every booking link on the site, the contact page's included, is `callHref`: set the URL and all of them point at it in the next build, with no other edit. While it is empty, `callHref` falls back to a `mailto:` with `callSubject`, "First call", so a click on it still names the door the reader came through; once it is set, that click leaves the site instead of opening a mail client, and the `mailto` event in `## Analytics` below stops counting it. `tests/contact.test.ts` knows a booking link by that destination and not by its words, so once the URL is set, a page still carrying the fallback mailto fails there. `contactEmail` is the mailbox the whole site uses, the privacy page included: it is the route by which a visitor's own words reach us. The contact page prints it with `contactSubject`, so a mail written from there says so.
 
@@ -379,7 +382,7 @@ the door.
 
 ## The catalogue
 
-`products` holds only a product that runs today, and today it holds issue to pull request. A job we have not built yet belongs to the custom door, on the custom page or on a job page of its own. Were the array empty, the home page would show one door, the self-run and managed plans would stay off the home page's price list, out of the offers in its graph and off the terms, and no product would appear in the nav, the sitemap or `llms.txt`. `openPrices` and the home page's `openDoors` both read the array's length, so the plans and the door switch together.
+`products` holds only a product that runs today, and today it holds issue to pull request. A job we have not built yet belongs to the custom door, on the custom page or on a job page of its own. Were the array empty, the home page's work list would open with the five jobs, the Self-run and Managed plans would stay off every price list, out of the offers in every graph and off the terms, and no product would appear in the nav, the sitemap or `llms.txt`. `openPrices` and the home page's work list both read the array, so the plans and the list switch together.
 
 A product takes two edits, because `output: "export"` refuses a dynamic route segment that generates no paths. Issue to pull request is the worked example:
 
