@@ -1,6 +1,6 @@
 # Rewrite the site's copy and structure, and move it to the Neo Mirai design
 
-Status: ready-for-agent
+Status: done
 Source: `/grill-to-tickets` session on 2026-11-19. The gate was approved that day.
 
 Tickets: `issues/01-neo-mirai-foundation.md` to `issues/09-final-design-pass.md`
