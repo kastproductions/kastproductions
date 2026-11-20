@@ -16,8 +16,8 @@ import {
   custom,
   customPage,
   homePage,
+  homePlans,
   jobPages,
-  openPrices,
   type Price,
   prices as plans,
   products,
@@ -87,7 +87,7 @@ function claim(amount: string): { currency: string; value: number } {
  * what it claims.
  */
 function pricesFor(path: string): Price[] | null {
-  if (path === homePage.path) return openPrices;
+  if (path === homePage.path) return homePlans;
   if (path === customPage.path) return custom.prices;
   if (path === backlogPage.path) return backlogPlans;
   if (jobPages.some((job) => job.path === path)) return custom.prices;

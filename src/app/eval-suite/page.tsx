@@ -152,8 +152,8 @@ export default function EvalSuite() {
                 everything on its own is promising a definition of correct it
                 has not shown you.
               </Prose>
-              <PullLink href={`${homePage.path}#mechanism`}>
-                The other four parts of how we keep it right
+              <PullLink href={`${homePage.path}#safety`}>
+                The other three rules that make an agent safe to run
               </PullLink>
             </UnitBody>
           </Unit>

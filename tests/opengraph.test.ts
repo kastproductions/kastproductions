@@ -17,7 +17,7 @@ import {
   notFoundFiles,
   readExport,
   siteUrl,
-  tagTexts,
+  documentTitles,
 } from "./export";
 
 /*
@@ -177,7 +177,7 @@ for (const route of indexableRoutes) {
      * `openGraph` object of its own and forgets a field unfurls with the
      * field missing rather than with the one the layout states. Both come
      * from the page record, so both are read back against it. */
-    expect(metaContents(document, "og:title")).toEqual(tagTexts(document, "title"));
+    expect(metaContents(document, "og:title")).toEqual(documentTitles(document));
     expect(metaContents(document, "og:description")).toEqual([route.description]);
   });
 
