@@ -20,14 +20,12 @@ import { Badge } from "@/components/ui/badge";
  * three page files. The Slack page is the one channel with a page of its own,
  * and this section is where a reader finds it, so the link is here rather than
  * on each of those pages.
- *
- * `index` numbers the section where the page numbers its sections.
  */
-export function ChannelsSection({ index }: { index?: number } = {}) {
+export function ChannelsSection() {
   return (
     <Band aria-labelledby="channels-title" id="channels">
       <Unit>
-        <UnitHead index={index} title={channels.heading} titleId="channels-title">
+        <UnitHead title={channels.heading} titleId="channels-title">
           <HeadNote>{channels.lede}</HeadNote>
         </UnitHead>
         <UnitBody>

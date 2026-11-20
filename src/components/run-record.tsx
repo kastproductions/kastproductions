@@ -88,10 +88,10 @@ export function RunRecord() {
     <figure
       aria-labelledby="run-title"
       data-example
-      className="overflow-hidden rounded-lg border border-foreground bg-card text-small"
+      className="overflow-hidden rounded-xl border bg-card text-small shadow-sheet"
     >
       <figcaption
-        className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-foreground px-5 py-3.5"
+        className="flex flex-wrap items-center gap-x-4 gap-y-2 border-b px-5 py-3.5"
         style={head}
       >
         <span className="font-heading text-note font-semibold" id="run-title">

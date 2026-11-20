@@ -1,5 +1,4 @@
 import { ClientsStrip } from "@/components/clients-strip";
-import { Seal } from "@/components/ornaments";
 import {
   Actions,
   Band,
@@ -12,7 +11,6 @@ import {
   Lede,
   PullLink,
   Row,
-  SectionNumber,
   Unit,
   UnitBody,
   UnitHead,
@@ -59,9 +57,6 @@ const graph = graphHtml(pageNodes(aboutPage));
  * work as a developer, before he built agents, and this page is where that is
  * said. The quotes are printed as written: the content module forbids editing
  * them, and `tests/about.test.ts` reads each one back out of the export.
- *
- * The hero carries the seal, because the seal is the mark of the person who
- * signs the work, and this page is about that person.
  */
 export default function About() {
   return (
@@ -70,7 +65,7 @@ export default function About() {
 
       <main id="main">
         <Band flush>
-          <HeroFrame ornament={<Seal className="size-32 lg:size-40" />}>
+          <HeroFrame>
             <HeroTitle>{founder} builds your agent and puts his name on it.</HeroTitle>
             <Lede>
               He founded {brand} in {location.city}, {location.country}. Before
@@ -84,7 +79,7 @@ export default function About() {
 
         <Band id="founder" aria-labelledby="founder-title">
           <Unit>
-            <UnitHead index={1} title="The founder" titleId="founder-title">
+            <UnitHead title="The founder" titleId="founder-title">
               <HeadNote>
                 He runs the company from {location.city}. The register names
                 him as its director.
@@ -134,17 +129,16 @@ export default function About() {
 
         <Band id="references" aria-labelledby="references-title">
           <Unit>
-            <UnitHead index={2} title="Six references, quoted as written" titleId="references-title">
+            <UnitHead title="Six references, quoted as written" titleId="references-title">
               <HeadNote>
                 People who worked with {founder} wrote these about his earlier
                 work as a developer. Nothing in them is edited.
               </HeadNote>
             </UnitHead>
             <ul className="grid min-w-0 divide-y divide-hairline">
-              {references.map((reference, index) => (
-                <li className="py-7 first:pt-0" key={reference.name}>
+              {references.map((reference) => (
+                <li className="py-8 first:pt-0" key={reference.name}>
                   <figure>
-                    <SectionNumber className="mb-3" index={index + 1} />
                     <blockquote>
                       <p className="max-w-[60ch] text-title leading-[1.55] text-foreground">
                         {reference.quote}
@@ -152,7 +146,7 @@ export default function About() {
                     </blockquote>
                     <figcaption className="mt-4 flex items-center gap-3.5">
                       <img
-                        className="size-11 rounded-sm object-cover grayscale contrast-105"
+                        className="size-11 rounded-full object-cover"
                         src={reference.portrait}
                         alt={`${reference.name}, ${reference.position}`}
                         width={176}
@@ -174,7 +168,7 @@ export default function About() {
 
         <Band aria-labelledby="write-title" tone="panel">
           <Unit>
-            <UnitHead index={3} title="Send us the work" titleId="write-title">
+            <UnitHead title="Send us the work" titleId="write-title">
               <HeadNote>
                 Describe the work you want an agent to take off your team. A
                 short spec and a fixed price come back within one working day.

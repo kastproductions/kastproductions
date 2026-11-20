@@ -9,12 +9,12 @@ import { cn } from "@/lib/utils";
  * under the handle are form fields holding the words the rest of the page
  * uses, so a reader meets channel, authority and the deployment in the first
  * object they see. The exchange is a transcript, and the gate at the foot is
- * the signature field: stamp red, because it is where a person acts. It carries
+ * the signature field: signature blue, because it is where a person acts. It carries
  * the "Example" badge until a real exchange replaces it: see the Claims
  * section of README.md.
  *
  * The four parts rise in order on load and the signature line draws last.
- * That is the one entrance the home page has.
+ * That is the one entrance the home page has, and it plays in the hero.
  */
 const PARTS = 4;
 const signDelay = `${PARTS * 130 + 250}ms`;
@@ -26,7 +26,7 @@ export function AgentConsole() {
     <figure
       aria-labelledby="console-title"
       data-example
-      className="relative flex flex-col overflow-hidden rounded-lg border border-foreground bg-card *:[--rise-delay:calc(var(--i,0)*130ms_+_80ms)] motion-safe:*:animate-rise"
+      className="relative flex flex-col overflow-hidden rounded-xl border bg-card shadow-sheet *:[--rise-delay:calc(var(--i,0)*130ms_+_80ms)] motion-safe:*:animate-rise"
       style={{ "--sign-delay": signDelay } as CSSProperties}
     >
       <figcaption
@@ -40,7 +40,7 @@ export function AgentConsole() {
       </figcaption>
 
       <dl
-        className="grid border-y border-foreground sm:grid-cols-3"
+        className="grid border-y bg-secondary/60 sm:grid-cols-3"
         style={riseOrder(1)}
       >
         {mention.readings.map((reading) => (

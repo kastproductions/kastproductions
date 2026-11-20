@@ -1,333 +1,270 @@
 ---
 name: KastProductions
-description: The Neo Mirai world on gold paper, light only, for a Vilnius agency that builds agents.
+description: Signed off. A cool white page, blue-black ink and one signature blue, for a Vilnius agency that builds agents a named person approves.
 colors:
-  paper: "oklch(94% 0.035 78)"
-  paper-soft: "oklch(91% 0.045 78)"
-  rice: "oklch(97% 0.02 82)"
-  ink: "oklch(18% 0.035 82)"
-  ink-soft: "oklch(32% 0.045 80)"
-  muted-ink: "oklch(38% 0.045 79)"
-  faint-ink: "oklch(44% 0.045 78)"
-  ash: "oklch(54% 0.04 80)"
-  line: "oklch(73% 0.055 77)"
-  gold: "oklch(68% 0.145 74)"
-  gold-bright: "oklch(76% 0.165 80)"
-  sun: "oklch(64% 0.19 43)"
-  sun-deep: "oklch(52% 0.17 38)"
-  sun-text: "oklch(48% 0.16 38)"
-  sun-hover: "oklch(44% 0.15 36)"
-  focus: "oklch(58% 0.18 42)"
-  night: "oklch(17% 0.035 185)"
-  night-soft: "oklch(24% 0.04 170)"
-  pass: "oklch(45% 0.11 150)"
-  destructive: "oklch(50% 0.17 30)"
+  paper: "#fbfbfc"
+  card: "#ffffff"
+  panel: "#f0f2f6"
+  accent: "#e8ecf3"
+  ink: "#172033"
+  prose: "#3e4757"
+  muted: "#4e5869"
+  faint: "#5b6475"
+  input: "#7c8697"
+  line: "#c9d0db"
+  border: "#d6dbe4"
+  hairline: "#e4e8ee"
+  signature: "#2443b8"
+  signature-hover: "#1b3394"
+  pass: "#1f7a4d"
+  destructive: "#b42318"
+  ink-card: "#1f2a40"
+  ink-signal: "#a9bbff"
 typography:
   display:
-    fontFamily: "Chakra Petch, Noto Sans, system-ui, sans-serif"
-    fontSize: "clamp(2.3rem, 1.2rem + 3.6vw, 4.6rem)"
-    fontWeight: 300
-    lineHeight: 0.98
-    letterSpacing: "0em"
+    fontFamily: "Schibsted Grotesk, Helvetica Neue, Arial, sans-serif"
+    fontSize: "clamp(2.5rem, 1.7rem + 2.5vw, 3.875rem)"
+    fontWeight: 600
+    lineHeight: 1.02
+    letterSpacing: "-0.03em"
   headline:
-    fontFamily: "Chakra Petch, Noto Sans, system-ui, sans-serif"
-    fontSize: "clamp(1.6rem, 1.1rem + 1.5vw, 2.4rem)"
-    fontWeight: 400
-    lineHeight: 1.04
-    letterSpacing: "0em"
+    fontFamily: "Schibsted Grotesk, Helvetica Neue, Arial, sans-serif"
+    fontSize: "clamp(1.6rem, 1.25rem + 1.1vw, 2.25rem)"
+    fontWeight: 600
+    lineHeight: 1.1
+    letterSpacing: "-0.02em"
   figure:
-    fontFamily: "Chakra Petch, Noto Sans, system-ui, sans-serif"
-    fontSize: "1.9rem"
-    fontWeight: 500
-    lineHeight: 1
+    fontFamily: "Schibsted Grotesk, Helvetica Neue, Arial, sans-serif"
+    fontSize: "2rem"
+    fontWeight: 600
+    letterSpacing: "-0.02em"
   quote:
-    fontFamily: "Zen Old Mincho, Noto Serif, Georgia, serif"
-    fontSize: "clamp(1.2rem, 1rem + 0.8vw, 1.55rem)"
-    fontWeight: 400
-    lineHeight: 1.4
+    fontFamily: "Schibsted Grotesk, Helvetica Neue, Arial, sans-serif"
+    fontSize: "clamp(1.3rem, 1.1rem + 0.7vw, 1.65rem)"
+    fontWeight: 500
+    lineHeight: 1.35
   lede:
-    fontFamily: "Zen Old Mincho, Noto Serif, Georgia, serif"
-    fontSize: "clamp(1.1rem, 1rem + 0.4vw, 1.28rem)"
+    fontFamily: "Schibsted Grotesk, Helvetica Neue, Arial, sans-serif"
+    fontSize: "clamp(1.15rem, 1.05rem + 0.35vw, 1.3125rem)"
     fontWeight: 400
     lineHeight: 1.5
   title:
-    fontFamily: "Chakra Petch, Noto Sans, system-ui, sans-serif"
-    fontSize: "1.15rem"
+    fontSize: "1.125rem"
     fontWeight: 600
-    lineHeight: 1.25
   body:
-    fontFamily: "Zen Old Mincho, Noto Serif, Georgia, serif"
-    fontSize: "1.05rem"
+    fontSize: "1.0625rem"
     fontWeight: 400
     lineHeight: 1.65
   note:
-    fontFamily: "Zen Old Mincho, Noto Serif, Georgia, serif"
-    fontSize: "0.95rem"
-    fontWeight: 400
-    lineHeight: 1.6
+    fontSize: "0.9375rem"
   small:
-    fontFamily: "Zen Old Mincho, Noto Serif, Georgia, serif"
-    fontSize: "0.88rem"
-    fontWeight: 400
-    lineHeight: 1.5
+    fontSize: "0.875rem"
   caption:
-    fontFamily: "Azeret Mono, ui-monospace, monospace"
-    fontSize: "0.8rem"
-    fontWeight: 400
-    lineHeight: 1.4
+    fontFamily: "IBM Plex Mono, ui-monospace, monospace"
+    fontSize: "0.8125rem"
   label:
-    fontFamily: "Azeret Mono, ui-monospace, monospace"
-    fontSize: "0.72rem"
+    fontSize: "0.8125rem"
     fontWeight: 500
-    lineHeight: 1.3
-    letterSpacing: "0.08em"
+    lineHeight: 1.35
   label-sm:
-    fontFamily: "Azeret Mono, ui-monospace, monospace"
-    fontSize: "0.66rem"
+    fontSize: "0.75rem"
     fontWeight: 500
-    lineHeight: 1.3
-    letterSpacing: "0.08em"
 rounded:
-  sm: "1px"
-  md: "2px"
-  seal: "9999px"
+  sm: "3.6px"
+  md: "6px"
+  lg: "9px"
+  xl: "12px"
 spacing:
-  gutter: "clamp(1.25rem, 4vw, 3.5rem)"
+  gutter: "clamp(1.25rem, 4vw, 3rem)"
   band: "clamp(3rem, 5.5vw, 5rem)"
   split: "clamp(2rem, 5vw, 5rem)"
-  head-col: "21rem"
+  head-col: "19rem"
   measure: "66ch"
-  grid: "112px"
 components:
   button-primary:
-    backgroundColor: "{colors.sun-deep}"
-    textColor: "{colors.rice}"
-    typography: "{typography.label}"
+    backgroundColor: "{colors.signature}"
+    textColor: "{colors.card}"
     rounded: "{rounded.md}"
     height: "44px"
-    padding: "0 24px"
+    padding: "0 20px"
   button-primary-hover:
-    backgroundColor: "{colors.sun-hover}"
+    backgroundColor: "{colors.signature-hover}"
   button-outline:
-    backgroundColor: "transparent"
+    backgroundColor: "{colors.card}"
     textColor: "{colors.ink}"
-    typography: "{typography.label}"
     rounded: "{rounded.md}"
     height: "44px"
-  button-primary-night:
-    backgroundColor: "{colors.gold-bright}"
+  button-primary-ink:
+    backgroundColor: "{colors.card}"
     textColor: "{colors.ink}"
   card:
-    backgroundColor: "{colors.rice}"
+    backgroundColor: "{colors.card}"
     textColor: "{colors.ink}"
-    rounded: "{rounded.md}"
+    rounded: "{rounded.xl}"
     padding: "24px"
-  card-night:
-    backgroundColor: "{colors.night}"
-    textColor: "{colors.rice}"
+  card-ink:
+    backgroundColor: "{colors.ink}"
+    textColor: "{colors.paper}"
   badge-example:
-    textColor: "{colors.sun-text}"
-    typography: "{typography.label}"
+    textColor: "{colors.signature}"
     rounded: "{rounded.sm}"
-  skip-link:
-    backgroundColor: "{colors.night}"
-    textColor: "{colors.rice}"
-    typography: "{typography.label}"
-  seal:
-    backgroundColor: "{colors.sun-deep}"
-    textColor: "{colors.rice}"
-    rounded: "{rounded.seal}"
 ---
 
 # Design System: KastProductions
 
 ## Overview
 
-**Creative North Star: "Golden hour in a future Vilnius"**
+**Creative North Star: "Signed off"**
 
-The site takes its world from Impeccable's Neo Mirai reference, as ADR-0006 adapts it. We took the system and left the place. The page is warm gold paper with a faint 112px grid and a fine grain. Ink type sits on it. A red sun, a gold light and night teal are the only other colours. Headings speak in Chakra Petch caps, the reading text is Zen Old Mincho, and labels are Azeret Mono caps. A stamp seal with a KP monogram is the nameplate, and a sun disc and an eclipse are the ornaments. Five scenes, drawn by hand as SVG, show a future Vilnius at golden hour and teams at work with an agent.
+The site sells agents whose every outward action waits for a named person. So the visual idea is the moment of approval: blue-black ink on a cool white page, and one fountain-pen blue for the place a person signs. ADR-0007 records why this replaced the Neo Mirai world.
 
-The tone is warm and optimistic, and also exact: an agency that signs its work. Density is that of a well-set document, with generous bands and a reading measure of 66ch.
+The first thing a reader sees is the thing the agent makes. The home page hero shows an example approval message, built in HTML: the agent's handle, its channel, the exchange, and the "Approve and send" button that waits for a person. The product page shows a run record and the backlog page an example run, in the same form. The site has no drawn pictures and no ornaments.
 
-There is one theme, and it is light. A system that asks for dark mode gets the same paper. There is no Japanese text, no kanji, no Mount Fuji and no Tokyo scenery: a Vilnius company that shows Tokyo gives the reader a new question to ask.
+The tone is calm and exact. Density is that of a well-set document: generous bands, a reading measure of 66ch, everything aligned to the left edge.
+
+There is one theme, and it is light. A system that asks for dark mode gets the same page.
 
 **Key Characteristics:**
 
-- Gold paper with a 112px grid, a grain overlay and a gold light high on the page.
-- Ink type. The stamp red marks where a person acts.
-- Night teal bands give contrast where a section needs it.
-- Display caps, a serif for reading, mono caps for labels.
-- Square corners. The seal is the one round thing, apart from the sun and the eclipse.
-- Ornaments are hand-drawn SVG in neutral forms, with no rays.
+- A cool white page, never cream. Ink is a blue-black, the colour of fountain-pen ink.
+- One blue marks where a person acts. Green marks a check that passed.
+- One family, Schibsted Grotesk, in sentence case. Mono is only for strings a machine wrote.
+- A heading column and a body column under a rule. No section numbers, no eyebrow labels.
+- The examples (console, run record, example run) sit a little above the page. Everything else is flat.
 
 ## Colors
 
-A warm, low-chroma paper and ink palette with two hot accents (the red sun and the gold light) and one cool surface (night teal). The values are OKLCH and live in `src/app/globals.css`. Components read them only through the semantic tokens, never as a raw value.
+The values live in `src/app/globals.css`. Components read them through the semantic tokens, never as a raw value. The export suite fails a page that states a colour in a class or a style.
 
 ### Primary
 
-- **Stamp Red** (`sun-deep`, oklch(52% 0.17 38)): the colour of the seal. It fills the primary button, marks the gate a standing agent stops at, underlines a link that leads somewhere, and colours the "Example" label. Rice type on it reads at 5.5:1. Token: `primary`, `signal`.
-- **Stamp Red Text** (`sun-text`, oklch(48% 0.16 38)): the red set as type on paper, at 5.9:1. Token: `signal-foreground`.
+- **Signature Blue** (`#2443b8`): fills the primary button, marks the gate a standing agent stops at, sets a link that leads on, and colours the "Example" badge. White on it reads at 8.2:1, and it reads at 7.9:1 as type on the page. Tokens: `primary`, `ring`, `signal`, `signal-foreground`. **Signature Blue Hover** (`#1b3394`) is the pressed and hovered fill.
 
 ### Secondary
 
-- **Gold Light** (`gold-bright`, oklch(76% 0.165 80)): the light on the paper. It starts the sun's gradient, draws the eclipse's ring, and is the action colour on a night surface, with ink type on it at 8.6:1. Never the colour of a word on paper: on paper it fails contrast.
-- **Gold** (`gold`, oklch(68% 0.145 74)): the eclipse's disc and the seal on night teal.
-- **Sun** (`sun`, oklch(64% 0.19 43)): the foot of the sun disc's gradient. An ornament colour only.
-
-### Tertiary
-
-- **Night Teal** (`night`, oklch(17% 0.035 185)): the one other surface. The footer, the closing band and the plan a price list leads with are set on it. **Night Teal Soft** (`night-soft`) is a card on a night surface.
+- **Pass Green** (`#1f7a4d`): a check that passed in a run record, a merged run. Never a button and never a link.
 
 ### Neutral
 
-- **Paper** (`paper`, oklch(94% 0.035 78), #f8e9d2): the page. The viewport's theme colour and the manifest use its hex value from `src/app/theme.ts`.
-- **Paper Soft** (`paper-soft`): a panel band and a muted fill. Tokens: `secondary`, `muted`, `accent`.
-- **Rice** (`rice`): a card, which is a slip of lighter paper on the gold, and type on stamp red or night teal.
-- **Ink** (`ink`, 15.8:1 on paper): headings and every word that must be read first.
-- **Ink Soft** (`ink-soft`, 10.7:1): body prose. Token: `prose`.
-- **Muted Ink** and **Faint Ink** (`muted-ink`, `faint-ink`, 6.5:1 or better): a note, a label, a caption. Tokens: `muted-foreground`, `faint`.
-- **Line** (`line`): a decorative rule, a card's edge, the horizon lines. Token: `border`, `line`. It is not used for a control's edge, which is ink.
-- **Ash** (`ash`): the edge of a form field, at 4.25:1. Token: `input`.
+- **Paper** (`#fbfbfc`): the page. The viewport's theme colour and the manifest use it from `src/app/theme.ts`.
+- **Card** (`#ffffff`): a card, a popover, the outline button's fill.
+- **Panel** (`#f0f2f6`): a panel band and a muted fill. Tokens: `secondary`, `muted`.
+- **Ink** (`#172033`, 15.7:1 on paper): headings and every word that must be read first.
+- **Prose** (`#3e4757`, 9:1): body copy. Token: `prose`.
+- **Muted** and **Faint** (`#4e5869`, `#5b6475`, 5.3:1 or better, on the page and on a panel): a note, a label, a caption. Tokens: `muted-foreground`, `faint`.
+- **Line** (`#c9d0db`): the rule over a section. **Border** (`#d6dbe4`): a card's or a control's edge. **Hairline** (`#e4e8ee`): the rule between rows.
+- **Input** (`#7c8697`, 3.6:1): the edge of a form field, and the outline button's edge on hover.
+
+### The ink surface
+
+The closing call to action, the footer and the plan a price list leads with are set in ink. The `inverse` utility turns the same variables over: light type, a white primary button with ink type, and links and the focus ring in a light blue (`#a9bbff`, 8.7:1 on ink). A component never states a colour for one background.
 
 ### Named Rules
 
-**The Stamp Rule.** Stamp red marks the place a person acts, and nothing else: the one action in a view, the approval gate, the link onward, the seal. A rule, a number or a table cell is never red.
+**The Signature Rule.** Signature blue marks the place a person acts, and nothing else: the one action in a view, the approval gate, the link onward. A rule, a number or a table cell is never blue.
 
-**The Night Rule.** A surface set in night teal carries the `night` utility, which turns the same variables over: rice type, gold action, a gold focus ring. A component never states a colour for one background.
-
-**The One Paper Rule.** There is no dark theme, no `dark` class and no rule that answers `prefers-color-scheme: dark`. `color-scheme` is `light`.
+**The One Theme Rule.** There is no dark theme, no `dark` class and no rule that answers `prefers-color-scheme: dark`. `color-scheme` is `light`.
 
 ## Typography
 
-**Display Font:** Chakra Petch (with Noto Sans, system-ui)
-**Body Font:** Zen Old Mincho (with Noto Serif, Georgia, serif)
-**Label/Mono Font:** Azeret Mono (with ui-monospace)
+**Text and display:** Schibsted Grotesk (with Helvetica Neue, Arial)
+**Machine strings:** IBM Plex Mono (with ui-monospace)
 
-**Character:** A squared, engineered display face in caps against a calm, old-style serif. The mono caps carry dates, prices, labels and machine strings, as the reference's ticket and agenda labels do.
+**Character:** a sturdy grotesk with a newspaper's directness, set tight at display sizes and open at reading sizes. One family carries the whole page, so hierarchy comes from size and weight alone.
 
-All three load through `next/font/google` in `src/app/layout.tsx`, so the export serves the files and no request goes to Google. Zen Old Mincho carries Latin Extended, so a name such as "Povilas Nanevičius" renders in the one face. Its regular weight preloads the Latin and Latin Extended files. Its bold weight is a second loader call with no preload, because Google's stylesheet marks the bold weight's Japanese files as Latin.
+Both load through `next/font/google` in `src/app/layout.tsx`, so the export serves the files and no request goes to Google. Schibsted Grotesk loads as a variable font with Latin and Latin Extended, so a name such as "Povilas Nanevičius" renders in the one face.
 
 ### Hierarchy
 
-The ramp is a set of `--text-*` tokens in `src/app/globals.css`, used as `text-display`, `text-note` and so on. A size off the ramp is drift: take the nearest step. `src/lib/utils.ts` names every step for `cn`.
+The ramp is a set of `--text-*` tokens in `src/app/globals.css`, used as `text-display`, `text-note` and so on, on a classical scale from a 17px body. A size off the ramp is drift: take the nearest step. `src/lib/utils.ts` names every step for `cn`.
 
-- **Display** (`text-display`, Chakra Petch 300, caps, `clamp(2.3rem, 1.2rem + 3.6vw, 4.6rem)`, line-height 0.98): the one h1 of a page (`HeroTitle`), and the heading of a closing night band.
-- **Headline** (`text-headline`, Chakra Petch 400, caps, `clamp(1.6rem, 1.1rem + 1.5vw, 2.4rem)`, line-height 1.04): a section's h2 (`UnitHead`).
-- **Figure** (`text-figure`, Chakra Petch 500, 1.9rem): the price on a plan card.
-- **Quote** (`text-quote`, Zen Old Mincho, `clamp(1.2rem, 1rem + 0.8vw, 1.55rem)`): the one reference the home page quotes.
-- **Lede** (`text-lede`, Zen Old Mincho, `clamp(1.1rem, 1rem + 0.4vw, 1.28rem)`): the paragraph under the h1.
-- **Title** (`text-title`, 1.15rem): the title of a point in the safety section, in Chakra Petch 600, and a reference's quote on the about page, in the serif. A row label, a card title and an accordion question take Chakra Petch 600 at `text-body`.
-- **Body** (`text-body`, Zen Old Mincho 400, 1.05rem, line-height 1.65, max 66ch): prose and every answer.
-- **Note** (`text-note`, 0.95rem): a side remark, the paragraph beside a section's h2, a footer link.
-- **Small** (`text-small`, 0.88rem): the words inside a form or a record, such as the console's exchange or a plan's list.
-- **Caption** (`text-caption`, Azeret Mono, 0.8rem): a machine string, such as the systems under a job or an issue key.
-- **Label** (`text-label`, Azeret Mono 500, caps, 0.72rem, tracking 0.08em): buttons, badges in a sentence, column titles in the footer, the price unit, the registration line. The `label-mono` utility sets it. **Label small** (`text-label-sm`, 0.66rem) is the header's links, a badge and the vertical rail.
+- **Display** (600, tracking -0.03em): the one h1 of a page (`HeroTitle`), and the heading of a closing ink band.
+- **Headline** (600, tracking -0.02em): a section's h2 (`UnitHead`).
+- **Figure** (600): the price on a plan card.
+- **Quote** (500): the one reference the home page quotes.
+- **Lede** (400): the paragraph under the h1.
+- **Title** (600, 1.125rem): a point in the safety section, a reference on the about page.
+- **Body** (400, 1.0625rem, line-height 1.65, max 66ch): prose and every answer. A row label, a card title and an accordion question take 600 at this size.
+- **Note** (0.9375rem): a side remark, the paragraph beside a section's h2, a button's label, a footer link.
+- **Small** (0.875rem): the header's links, the words inside a record or a plan's list.
+- **Caption** (IBM Plex Mono, 0.8125rem): a machine string, such as a handle, a channel or an issue key.
+- **Label** (500, 0.8125rem, sentence case): a price unit, a footer column's name, the reply time under a button. The `meta` utility sets it. **Label small** (0.75rem) is a badge.
 
 ### Named Rules
 
-**The Loaded Weights Rule.** Chakra Petch loads 300 to 600 and Zen Old Mincho loads 400 and 700. Never ask for a weight that is not loaded: the browser fakes it.
+**The Sentence Case Rule.** No heading, button, label or badge is set in capitals. A heading carries no emphasis of its own: no italic word, no coloured word, no coloured full stop.
 
-**The No Negative Tracking Rule.** Chakra Petch caps set at their natural spacing. Labels track out to 0.08em.
+**The Machine String Rule.** Mono is for a string a machine wrote: a handle, a channel, a branch, a timestamp, a diff. A label a person wrote is in the text face.
 
 ## Layout
 
-The page is a stack of `Band`s. A `Unit` splits a band into a heading column (21rem from the `lg` breakpoint, sticky) and a body column under one ink rule that runs the width of the content. Content sits in `wrap`: `min(100% - 2 * gutter, 78rem)`, centred. The band rhythm is `clamp(3rem, 5.5vw, 5rem)`.
+The page is a stack of `Band`s. A `Unit` splits a band into a heading column (19rem from `lg`, sticky) and a body column, under one `line` rule that runs the width of the content. Content sits in `wrap`: `min(100% - 2 * gutter, 74rem)`, centred, and every block in it is aligned to the left.
 
-A `UnitHead` takes an `index`, which sets the section's number over its heading in mono caps (`01`, then a short line rule). The number is hidden from a screen reader, because the heading already names the section. A page with one section has no number. A page with no scene opens with a `HeroFrame`: the hero column, and one ornament beside it from `md` up (the seal on the about page, the eclipse on the contact, legal and not-found pages). A page with a scene or a sheet beside its words opens with a `HeroSplit`: two columns of one width from `lg` up, the `split` gap between them, and the picture under the words below `lg`.
+A page with words only opens with a `HeroFrame`: the hero column at reading width, with no picture beside it. A page with an example beside its words opens with a `HeroSplit`: the words, and the example in a slightly wider column from `lg` up. Below `lg`, the example goes under the words.
 
-Breakpoints replace Tailwind's: `sm` 35.0625rem (a button shares its row), `md` 55.0625rem (the header shows its links), `lg` 67.5625rem (the heading takes its own column), and `rail` 86rem (the margin is wide enough for the vertical rail).
+A number in front of a row means the rows are steps in order (`<Rows sequence>`). A section heading never carries a number.
 
-The body carries the 112px grid in two linear gradients, a gold radial light at 66% across and 7% down, and the paper colour under them. A fixed grain overlay (three fine dot fields, multiplied, `pointer-events: none`) sits over the content and under the sticky header.
+Breakpoints replace Tailwind's: `sm` 35.0625rem (a button shares its row), `md` 55.0625rem (the header shows its links), `lg` 67.5625rem (the heading takes its own column).
 
 Every page reads at 390px and 1440px wide with no sideways scroll.
 
 ## Elevation & Depth
 
-The system is flat. Depth comes from tone: rice cards on gold paper, night bands on paper, and the grain. The sticky header is paper at 92% opacity with a 14px backdrop blur and a hairline under it, so content reads as passing beneath it. The mobile menu sheet carries the one shadow, because it covers the page.
-
-### Named Rules
-
-**The Paper Slip Rule.** A card is one drawn edge and a lighter fill. It never has a shadow as well.
+The page is flat. The one shadow is `shadow-sheet`, a soft lift under the examples: the console, the run record and the example run. They are the things the agent makes, so they sit a little above the page. A plan card a reader compares stays flat, with one `border` edge. The sticky header is the page colour at 90% opacity with a backdrop blur and a hairline under it.
 
 ## Shapes
 
-Corners are cut square: every radius token resolves to 2px or less. The round things are the seal, the sun disc, the eclipse and the dot under the current navigation link. The horizon lines under the sun have round caps.
+Radius follows hierarchy: a badge is 3.6px, a button 6px, a card and an example 12px. A portrait is round.
 
 ## Components
 
 ### Buttons
 
-- **Shape:** square (2px).
-- **Primary:** stamp red fill, rice label in Azeret Mono caps, 44px tall (40px in the header). On night teal it turns gold with ink type.
-- **Hover / Focus:** the fill darkens to `primary-hover`; an icon inside moves up and right by 2px. Focus shows the 3px sun-coloured outline at a 4px offset, gold on night.
-- **Outline:** a transparent fill with an ink edge and an ink label. It sits beside the primary button: "Book a call" beside the brief in every hero (`HeroActions` in `src/components/section.tsx`), and beside the action of a closing night band. There is no ghost button beside a primary one, because a label with no edge reads as a link and hides its 44px target.
+- **Primary:** signature blue fill, white label in the text face at 600, 44px tall (40px in the header). On the ink surface it turns white with ink type.
+- **Hover / Focus:** the fill darkens to `primary-hover`; an icon inside moves up and right by 2px. Focus shows a 3px blue outline at a 4px offset.
+- **Outline:** a white fill with a grey edge and an ink label. It sits beside the primary button: "Book a call" beside the brief in every hero (`HeroActions` in `src/components/section.tsx`).
+
+### Links
+
+A link that leads on (`PullLink`) is set in signature blue at 600 with a faint blue underline that turns solid on hover. A link in running text keeps an underline in a 45% tint of its own colour.
 
 ### Badges
 
-- **Example** (`variant="signal"`): stamp red text in mono caps on a faint red wash with a red edge. It labels anything synthetic. See "Claims" in `README.md`.
-- **Panel / Outline** (`size="lg"`): a name in a list a reader can check, in the display face at reading size.
+- **Example** (`variant="signal"`): blue text on a faint blue wash with a blue edge. It labels anything synthetic. See "Claims" in `README.md`.
+- **Outline** (`size="lg"`): a name in a list a reader can check, such as a channel.
 
-### Cards / Containers
+### Cards
 
-- **Corner Style:** 2px.
-- **Background:** rice on paper; night teal for the plan a price list leads with.
-- **Shadow Strategy:** none.
-- **Border:** one `line` edge.
-- **Internal Padding:** 16px, 20px, or 24px from `sm` up for the `lg` size.
+- **Background:** white on the page; ink for the plan a price list leads with.
+- **Border:** one `border` edge.
+- **Corner:** 12px.
+- **Padding:** 16px, or 24px from `sm` up for the `lg` size.
+
+### The gate
+
+Where the agent stops for a named person, a block carries a 2px blue rule on its left and a faint blue wash (`gateClass`): the stop point on a product or job page, a `Note` with `gate`, the merge line of an example run, and the foot of the console.
 
 ### Navigation
 
-The header holds the seal nameplate, the page links in mono caps (`text-label-sm`, 44px tall), and two calls to action. A dot in stamp red rises under a link on hover and stays under the current page. Below `md`, the links fold into a sheet that drops from the top; its links are display caps on hairlines, and the current page is set in stamp red.
-
-### Skip Link
-
-The first stop of the Tab key on every page: a night slip in mono caps that drops in from above the viewport when it takes focus.
+The header holds the name as a word in bold, the page links in the text face at `text-small`, and two calls to action. The current page is ink with a blue underline. Below `md`, the links fold into a sheet.
 
 ### Footer
 
-A night teal surface. The seal nameplate and the sun disc sit on one hairline rule, the sun setting on it. Under the rule are the four link columns with mono column titles, and at the foot a mono line with the eclipse, the legal name, the city and the registration code.
-
-### Ornaments
-
-`src/components/ornaments.tsx` holds the three, each a hand-drawn SVG that paints with theme tokens, is hidden from a screen reader, and carries a `data-ornament` name.
-
-- **Seal:** a round stamp in the action colour with a fine inner ring, and K and P cut in straight strokes, so the monogram never waits on a font.
-- **Sun disc:** a disc that runs from gold light to sun, cut by the horizon, with three horizon lines under it that shorten towards the viewer.
-- **Eclipse:** a gold disc with a thin ring of light, crossed by a disc in the `eclipse` token (ink on paper, night on night teal).
-
-### Scenes
-
-`src/components/scenes.tsx` holds the illustration set: `HeroScene` (Vilnius at golden hour, 16:9) and four room scenes at 4:3, `SupportDeskScene`, `FinanceDeskScene`, `PullRequestScene` and `ShopFloorScene`. Each is inline SVG, so a scene adds no request. The rules that make them one set:
-
-- **Palette:** paper, rice, gold, gold light, sun, stamp red, night teal and ink, through the raw palette classes (`fill-paper`, `fill-night`, `fill-ink` and the rest) that `globals.css` maps for the scenes alone. A scene is a picture, so it keeps its colours on a night surface. Distance is the same colours at a lower opacity, with a gold haze laid over the far rows.
-- **Line:** one ink line, 2 units in the hero and 2 to 3 units in a room scene, so it renders near 1.5px at the size each scene is placed. Shadow is fine diagonal ink hatching, never a blur.
-- **Sun:** a plain disc cut by bands of haze. Window light on a floor is a set of flat gold patches with the mullions as gaps. Never a ray.
-- **Figures:** small flat silhouettes with a fine light line for the arms. In a room, the people sit with their backs to the viewer and face their screens, as the people on the hero's terrace face the city.
-- **The agent:** the same mark in every room, a small eclipse (a gold disc and ring crossed by a dark moon), with thin dashed gold lines to the work it does.
-- **The city:** every room has a window onto the old town skyline, by day with the red sun and by night with the moon and lit windows.
-
-Each scene carries `role="img"`, takes its accessible name from `scenes` in `src/app/content.ts` through a `<title>` that `aria-labelledby` points at, sets a viewBox, a width and a height, and fills the width of its container at its own ratio. Screens show bars, never words, so no scene carries text.
-
-### Vertical Rail
-
-From the `rail` breakpoint, the margin beside the first screen holds the eclipse, a line, and the brand and the city set down the page in mono caps. It scrolls away with the first screen, so it never crosses a night band.
+An ink surface: the name, then four link columns with quiet column names, and at the foot the legal name, the city and the registration code.
 
 ## Do's and Don'ts
 
 ### Do:
 
-- **Do** read every colour through a token (`text-prose`, `bg-signal`, `border-hairline`, shadcn's own). The export suite fails a page that states a colour in a class or a style.
-- **Do** set a night surface with the `night` utility, never with hand-picked colours.
+- **Do** read every colour through a token (`text-prose`, `bg-signal`, `border-hairline`, shadcn's own).
+- **Do** set an ink surface with the `inverse` utility, never with hand-picked colours.
 - **Do** keep body text at 4.5:1 or better and a control's edge at 3:1 or better against its surface.
-- **Do** keep each ornament in a neutral form: a disc, a ring, an eclipse, a horizon line, a seal.
-- **Do** give every scene alt text from the content module, a viewBox, a width and a height.
+- **Do** show what the agent makes, labelled "Example", where a page needs a picture.
 
 ### Don't:
 
+- **Don't** draw an illustration, a scene or an ornament. The export suite fails a page that holds an SVG other than an icon.
 - **Don't** add a dark theme, a `dark` class, or a rule for `prefers-color-scheme: dark`.
-- **Don't** put Japanese text, kanji, Mount Fuji or Tokyo scenery on the page.
-- **Don't** draw rays, a sunburst or a rising-sun pattern around any sun or seal.
-- **Don't** set a word in gold on paper; it fails contrast.
-- **Don't** put a shadow on a card, or round a corner past 2px.
-- **Don't** ask for a font weight the loader does not load.
+- **Don't** set a heading, a label or a button in capitals, or put a label above a heading.
+- **Don't** number a section, or put a number in front of rows that are not steps in order.
+- **Don't** put a shadow on a plan card, or use a cream page colour.

@@ -4,7 +4,6 @@ import { ChannelsSection } from "@/components/channels-section";
 import { ClientsStrip } from "@/components/clients-strip";
 import { JobRows } from "@/components/job-rows";
 import { PlanCard, Plans } from "@/components/plan-card";
-import { HeroScene, PullRequestScene } from "@/components/scenes";
 import {
   Actions,
   Band,
@@ -117,13 +116,7 @@ export default function Home() {
 
       <main id="main">
         <Band aria-labelledby="hero-title" flush id="hero">
-          <HeroSplit
-            aside={
-              <div className="border border-foreground">
-                <HeroScene />
-              </div>
-            }
-          >
+          <HeroSplit aside={<AgentConsole />}>
             <HeroTitle id="hero-title">{hero.heading}</HeroTitle>
             <Lede>{hero.lede}</Lede>
             <HeroActions href={briefHref} />
@@ -136,7 +129,7 @@ export default function Home() {
 
         <Band aria-labelledby="work-title" id="work">
           <Unit>
-            <UnitHead index={1} title={jobsIntro.heading} titleId="work-title">
+            <UnitHead title={jobsIntro.heading} titleId="work-title">
               <HeadNote>{jobsIntro.lede}</HeadNote>
             </UnitHead>
             <UnitBody>
@@ -162,7 +155,7 @@ export default function Home() {
                   ) : null
                 }
               />
-              <div className="border-t border-foreground pt-5">
+              <div className="border-t border-line pt-5">
                 <PullLink href={customPage.path}>{jobsIntro.more}</PullLink>
               </div>
             </UnitBody>
@@ -171,7 +164,7 @@ export default function Home() {
 
         <Band aria-labelledby="how-title" id="how" tone="panel">
           <Unit>
-            <UnitHead index={2} title="How a build goes" titleId="how-title">
+            <UnitHead title="How a build goes" titleId="how-title">
               <HeadNote>
                 From your first email to a live agent, and what the monthly
                 price pays for after that.
@@ -194,13 +187,13 @@ export default function Home() {
 
         <Band aria-labelledby="safety-title" id="safety">
           <Unit>
-            <UnitHead index={3} title={safetyIntro.heading} titleId="safety-title">
+            <UnitHead title={safetyIntro.heading} titleId="safety-title">
               <HeadNote>{safetyIntro.lede}</HeadNote>
               <PullLink className="mt-4" href={evalSuitePage.path}>
                 {safetyIntro.more}
               </PullLink>
             </UnitHead>
-            <UnitBody className="grid gap-10">
+            <UnitBody>
               <ul className={pointGrid}>
                 {safety.map((point, i) => (
                   <li key={point.title}>
@@ -221,23 +214,15 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,16rem)]">
-                <AgentConsole />
-                <p className="text-note leading-relaxed text-muted-foreground">
-                  What the first rule looks like in a chat channel. The agent
-                  drafts the follow-ups, and sending waits for a person. The
-                  names and figures in it are made up.
-                </p>
-              </div>
             </UnitBody>
           </Unit>
         </Band>
 
-        <ChannelsSection index={4} />
+        <ChannelsSection />
 
         <Band aria-labelledby="pricing-title" id="pricing">
           <Unit>
-            <UnitHead index={5} title={pricingIntro.heading} titleId="pricing-title">
+            <UnitHead title={pricingIntro.heading} titleId="pricing-title">
               <HeadNote>{pricingIntro.lede}</HeadNote>
             </UnitHead>
             <Plans>
@@ -278,7 +263,7 @@ export default function Home() {
 
         <Band aria-labelledby="founder-title" id="founder" tone="panel">
           <Unit>
-            <UnitHead index={6} title="Who puts their name on it" titleId="founder-title">
+            <UnitHead title="Who puts their name on it" titleId="founder-title">
               <HeadNote>
                 {founder} founded the company in {location.city}. He owns the
                 agents we build and answers for every change we make to them.
@@ -287,18 +272,18 @@ export default function Home() {
                 The founder and six references
               </PullLink>
             </UnitHead>
-            <UnitBody className="grid items-start gap-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
-              <div>
-                <figure className="border-l border-foreground pl-6 sm:pl-8">
+            <UnitBody>
+              <div className="max-w-[44rem]">
+                <figure>
                   <blockquote>
-                    <p className="text-quote leading-[1.4] text-pretty">
+                    <p className="text-quote leading-[1.35] font-medium text-pretty">
                       &ldquo;{reference.quote}&rdquo;
                     </p>
                   </blockquote>
                   <figcaption className="mt-6 flex items-center gap-3.5">
                     <img
                       alt={`${reference.name}, ${reference.position}`}
-                      className="size-11 rounded-sm object-cover contrast-105 grayscale"
+                      className="size-11 rounded-full object-cover"
                       decoding="async"
                       height={176}
                       loading="lazy"
@@ -317,16 +302,13 @@ export default function Home() {
                   would rather print nothing than invent one.
                 </Note>
               </div>
-              <div className="border border-foreground">
-                <PullRequestScene />
-              </div>
             </UnitBody>
           </Unit>
         </Band>
 
         <Band aria-labelledby="questions-title" id="questions">
           <Unit>
-            <UnitHead index={7} title="Questions buyers ask first" titleId="questions-title">
+            <UnitHead title="Questions buyers ask first" titleId="questions-title">
               <HeadNote>
                 The answers as we give them on a first call. Ask anything else
                 in your brief.
@@ -350,11 +332,11 @@ export default function Home() {
           </Unit>
         </Band>
 
-        <Band aria-labelledby="cta-title" id="cta" tone="night">
+        <Band aria-labelledby="cta-title" id="cta" tone="ink">
           <div className="wrap grid items-end gap-(--split) lg:grid-cols-[minmax(0,1.25fr)_minmax(0,0.75fr)]">
             <div className="flex flex-col gap-6">
               <h2
-                className="max-w-[18ch] font-heading text-display leading-[0.98] font-light uppercase text-balance"
+                className="max-w-[18ch] font-heading text-display font-semibold text-balance"
                 id="cta-title"
               >
                 Tell us the work you want off your team

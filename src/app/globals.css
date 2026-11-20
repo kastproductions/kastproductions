@@ -1,20 +1,20 @@
 /*
- * KastProductions theme: the Neo Mirai world (ADR-0006).
+ * KastProductions theme: Signed off (ADR-0007).
  *
- * Warm gold paper with a faint 112px grid and a grain, ink type, a red sun,
- * and night teal. The red of the sun is the red of a stamp seal, so it marks
- * the place a person acts: the one action a reader can take in a view, the
- * gate a standing agent stops at, and the seal on the nameplate. Gold is the
- * light on the paper, never the colour of a word a reader must read. Night
- * teal is the one other surface: a band or a sheet set on it turns the same
- * variables over through the `night` utility, so a component never states a
- * colour for one background. There is one theme, and a system that asks for
- * dark mode gets the same paper.
+ * A cool white page, blue-black ink, and one fountain-pen blue. The blue is
+ * the colour of a signature, so it marks the places a person acts: the one
+ * action a reader can take in a view, a link that leads on, and the gate a
+ * standing agent stops at. A rule, a number or a table cell is never blue.
+ * Green marks a check that passed. The ink band is the one dark surface: a
+ * band or a card set on it turns the same variables over through the
+ * `inverse` utility, so a component never states a colour for one
+ * background. There is one theme, and a system that asks for dark mode gets
+ * the same page.
  *
- * Chakra Petch is the display face, Zen Old Mincho the face of every word a
- * person reads at length, and Azeret Mono the face of a label and of any
- * string a machine wrote. The fonts load through next/font in layout.tsx,
- * which sets the three --font-* variables on <html>.
+ * Schibsted Grotesk sets every word a person wrote, headings and body alike.
+ * IBM Plex Mono sets only the strings a machine wrote: a handle, a channel, a
+ * branch, a timestamp. The fonts load through next/font in layout.tsx, which
+ * sets the two --font-* variables on <html>.
  *
  * Every style is a Tailwind utility in the component that draws it, and every
  * control is a shadcn/ui component in src/components/ui. This file holds only
@@ -27,11 +27,9 @@
 @import "shadcn/tailwind.css";
 
 @theme inline {
-  /* Zen Old Mincho carries Latin Extended. The serifs after it are the
-   * fallback for a letter it lacks, so the letter stays in a serif. */
-  --font-sans: var(--font-mincho), "Noto Serif", Georgia, serif;
-  --font-heading: var(--font-chakra), "Noto Sans", system-ui, sans-serif;
-  --font-mono: var(--font-azeret), ui-monospace, monospace;
+  --font-sans: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
+  --font-heading: var(--font-schibsted), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -53,11 +51,11 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* The site's own tokens. Signal is the stamp red, signal-foreground the
-   * colour to set type in where the red marks an action, signal-tint the wash
-   * behind a gate. Prose is the colour of body copy, faint the colour of a
-   * label, hairline the soft rule inside a sheet. Sun, gold and line draw the
-   * ornaments: the sun disc, the eclipse and the horizon lines. */
+  /* The site's own tokens. Signal is the signature blue, signal-foreground
+   * the colour to set type in where the blue marks an action, signal-tint the
+   * wash behind a gate. Prose is the colour of body copy, faint the colour of
+   * a label, hairline the soft rule between rows, line the firmer rule under
+   * a section. Pass is the green of a check that passed. */
   --color-signal: var(--signal);
   --color-signal-foreground: var(--signal-foreground);
   --color-signal-tint: var(--signal-tint);
@@ -65,35 +63,19 @@
   --color-faint: var(--faint);
   --color-hairline: var(--hairline);
   --color-line: var(--line);
-  --color-sun: var(--sun);
-  --color-gold: var(--gold);
-  --color-gold-bright: var(--gold-bright);
-  --color-eclipse: var(--eclipse);
-  /* The raw palette, for the scenes in src/components/scenes.tsx. A scene is
-   * a picture, so it keeps its own colours on any surface: these do not turn
-   * over under the night utility. A component reads the semantic tokens
-   * above, never these. */
-  --color-paper: var(--paper);
-  --color-paper-soft: var(--paper-soft);
-  --color-rice: var(--rice);
-  --color-ink: var(--ink);
-  --color-ink-soft: var(--ink-soft);
-  --color-night: var(--night);
-  --color-night-soft: var(--night-soft);
-  --color-sun-deep: var(--sun-deep);
   --color-pass: var(--pass);
   --color-pass-tint: var(--pass-tint);
   --color-halt-tint: var(--halt-tint);
 
-  /* A corner is square to the eye, as cut paper is. A seal is the one round
-   * thing. */
-  --radius-sm: calc(var(--radius) * 0.5);
+  /* Radius follows hierarchy: a badge is the tightest, a control a little
+   * rounder, a card the roundest thing on the page. */
+  --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: var(--radius);
-  --radius-lg: var(--radius);
-  --radius-xl: var(--radius);
-  --radius-2xl: var(--radius);
-  --radius-3xl: var(--radius);
-  --radius-4xl: var(--radius);
+  --radius-lg: calc(var(--radius) * 1.5);
+  --radius-xl: calc(var(--radius) * 2);
+  --radius-2xl: calc(var(--radius) * 2.5);
+  --radius-3xl: calc(var(--radius) * 3);
+  --radius-4xl: calc(var(--radius) * 4);
 
   /* The one entrance a page may carry: see the motion rule in README.md.
    * An element staggers its rise through --rise-delay (and may slow it
@@ -106,37 +88,46 @@
 @theme {
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* The type ramp, as DESIGN.md lists it. A size not on it is drift: pick
-   * the nearest step. Display is the h1, headline a section's h2, lede the
-   * paragraph under the h1, quote a pulled quote. Title is a card's name or a
-   * question, body is reading text, note a side remark, small a figure in a
-   * form or a list, caption a machine string, label and label-sm mono caps.
-   * Figure is a price. The two labels keep the line height of `label-mono`,
-   * so a size step never loosens a label. src/lib/utils.ts names every step
-   * for `cn`, so a size and a colour on one element both survive a merge. */
-  --text-display: clamp(2.3rem, 1.2rem + 3.6vw, 4.6rem);
-  --text-headline: clamp(1.6rem, 1.1rem + 1.5vw, 2.4rem);
-  --text-figure: 1.9rem;
-  --text-quote: clamp(1.2rem, 1rem + 0.8vw, 1.55rem);
-  --text-lede: clamp(1.1rem, 1rem + 0.4vw, 1.28rem);
-  --text-title: 1.15rem;
-  --text-body: 1.05rem;
-  --text-note: 0.95rem;
-  --text-small: 0.88rem;
-  --text-caption: 0.8rem;
-  --text-label: 0.72rem;
-  --text-label--line-height: 1.3;
-  --text-label-sm: 0.66rem;
-  --text-label-sm--line-height: 1.3;
+  /* The lift of an example: the console, the run record and the example
+   * run. They are the things the agent makes, so they sit a little above the
+   * page. A card a reader compares (a plan) stays flat. */
+  --shadow-sheet: 0 1px 2px rgb(23 32 51 / 0.04), 0 12px 32px -12px rgb(23 32 51 / 0.14);
+
+  /* The type ramp, as DESIGN.md lists it, on a classical scale from a 17px
+   * body. A size not on it is drift: pick the nearest step. Display is the
+   * h1, headline a section's h2, lede the paragraph under the h1, quote a
+   * pulled quote. Title is a card's name or a question, body is reading
+   * text, note a side remark, small a figure in a form or a list, caption a
+   * machine string, label and label-sm a short tag. Figure is a price.
+   * src/lib/utils.ts names every step for `cn`, so a size and a colour on one
+   * element both survive a merge. */
+  --text-display: clamp(2.5rem, 1.7rem + 2.5vw, 3.875rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.03em;
+  --text-headline: clamp(1.6rem, 1.25rem + 1.1vw, 2.25rem);
+  --text-headline--line-height: 1.1;
+  --text-headline--letter-spacing: -0.02em;
+  --text-figure: 2rem;
+  --text-figure--letter-spacing: -0.02em;
+  --text-quote: clamp(1.3rem, 1.1rem + 0.7vw, 1.65rem);
+  --text-quote--letter-spacing: -0.01em;
+  --text-lede: clamp(1.15rem, 1.05rem + 0.35vw, 1.3125rem);
+  --text-title: 1.125rem;
+  --text-body: 1.0625rem;
+  --text-note: 0.9375rem;
+  --text-small: 0.875rem;
+  --text-caption: 0.8125rem;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.35;
+  --text-label-sm: 0.75rem;
+  --text-label-sm--line-height: 1.35;
 
   /* The site's breakpoints, replacing Tailwind's: at sm a button shares its
    * row, at md the header shows its links and two columns sit side by side,
-   * at lg a section's heading takes its own column, and at rail the margin
-   * beside the content is wide enough for the vertical rail. */
+   * at lg a section's heading takes its own column. */
   --breakpoint-sm: 35.0625rem;
   --breakpoint-md: 55.0625rem;
   --breakpoint-lg: 67.5625rem;
-  --breakpoint-rail: 86rem;
 
   @keyframes rise {
     from {
@@ -160,116 +151,96 @@
 }
 
 :root {
-  /* The palette of the reference, kept in its own OKLCH values. */
-  --paper: oklch(94% 0.035 78);
-  --paper-soft: oklch(91% 0.045 78);
-  --ink: oklch(18% 0.035 82);
-  --ink-soft: oklch(32% 0.045 80);
-  --rice: oklch(97% 0.02 82);
-  --night: oklch(17% 0.035 185);
-  --night-soft: oklch(24% 0.04 170);
-  --sun-deep: oklch(52% 0.17 38);
+  --paper: #fbfbfc;
+  --ink: #172033;
 
   --background: var(--paper);
   --foreground: var(--ink);
-  --card: var(--rice);
+  --card: #ffffff;
   --card-foreground: var(--ink);
-  --popover: var(--paper);
+  --popover: #ffffff;
   --popover-foreground: var(--ink);
-  --primary: var(--sun-deep);
-  --primary-foreground: var(--rice);
-  --primary-hover: oklch(44% 0.15 36);
-  --secondary: var(--paper-soft);
+  --primary: #2443b8;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1b3394;
+  --secondary: #f0f2f6;
   --secondary-foreground: var(--ink);
-  --muted: var(--paper-soft);
-  --muted-foreground: oklch(38% 0.045 79);
-  --accent: var(--paper-soft);
+  --muted: #f0f2f6;
+  --muted-foreground: #4e5869;
+  --accent: #e8ecf3;
   --accent-foreground: var(--ink);
-  --destructive: oklch(50% 0.17 30);
-  --border: oklch(73% 0.055 77);
-  --input: oklch(54% 0.04 80);
-  --ring: oklch(58% 0.18 42);
-  --radius: 2px;
+  --destructive: #b42318;
+  --border: #d6dbe4;
+  --input: #7c8697;
+  --ring: #2443b8;
+  --radius: 0.375rem;
 
-  --signal: var(--sun-deep);
-  --signal-foreground: oklch(48% 0.16 38);
-  --signal-tint: oklch(64% 0.19 43 / 0.09);
-  --prose: var(--ink-soft);
-  --faint: oklch(44% 0.045 78);
-  --hairline: oklch(58% 0.06 76 / 0.3);
-  --line: oklch(73% 0.055 77);
-  --sun: oklch(64% 0.19 43);
-  --gold: oklch(68% 0.145 74);
-  --gold-bright: oklch(76% 0.165 80);
-  --eclipse: var(--ink);
-  --pass: oklch(45% 0.11 150);
-  --pass-tint: oklch(45% 0.11 150 / 0.1);
-  --halt-tint: oklch(50% 0.17 30 / 0.1);
-  /* The paper's own light and grid, which the body draws and the Open Graph
-   * image reads: the gold light high on the page, and the vertical and
-   * horizontal lines of the 112px grid. */
-  --paper-light: oklch(82% 0.11 79 / 0.55);
-  --grid-x: oklch(20% 0.015 80 / 0.035);
-  --grid-y: oklch(20% 0.015 80 / 0.028);
+  --signal: #2443b8;
+  --signal-foreground: #2443b8;
+  --signal-tint: rgb(36 67 184 / 0.06);
+  --prose: #3e4757;
+  --faint: #5b6475;
+  --hairline: #e4e8ee;
+  --line: #c9d0db;
+  --pass: #1f7a4d;
+  --pass-tint: rgb(31 122 77 / 0.09);
+  --halt-tint: rgb(180 35 24 / 0.08);
 
   --measure: 66ch;
-  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+  --gutter: clamp(1.25rem, 4vw, 3rem);
   --band: clamp(3rem, 5.5vw, 5rem);
-  --head-col: 21rem;
+  --head-col: 19rem;
   --split: clamp(2rem, 5vw, 5rem);
 }
 
 /*
- * Night teal as a surface: a band, the footer, the plan a price list leads
- * with. On it the action turns gold with ink type, because the stamp red
- * reads as a stain on teal, and the ornaments keep their light.
+ * The ink band: the closing call to action, the footer, and the plan a price
+ * list leads with. On it the action turns white with ink type, and links
+ * take a light blue that reads on the dark.
  */
-@utility night {
-  --background: var(--night);
-  --foreground: var(--rice);
-  --card: var(--night-soft);
-  --card-foreground: var(--rice);
-  --popover: var(--night);
-  --popover-foreground: var(--rice);
-  --primary: var(--gold-bright);
+@utility inverse {
+  --background: var(--ink);
+  --foreground: #f4f6fa;
+  --card: #1f2a40;
+  --card-foreground: #f4f6fa;
+  --popover: var(--ink);
+  --popover-foreground: #f4f6fa;
+  --primary: #ffffff;
   --primary-foreground: var(--ink);
-  --primary-hover: oklch(84% 0.13 84);
-  --secondary: var(--night-soft);
-  --secondary-foreground: var(--rice);
-  --muted: var(--night-soft);
-  --muted-foreground: oklch(88% 0.04 82);
-  --accent: var(--night-soft);
-  --accent-foreground: var(--rice);
-  --border: oklch(73% 0.055 77 / 0.55);
-  --input: oklch(73% 0.055 77 / 0.7);
-  --ring: var(--gold-bright);
+  --primary-hover: #dfe5f4;
+  --secondary: #1f2a40;
+  --secondary-foreground: #f4f6fa;
+  --muted: #1f2a40;
+  --muted-foreground: #b4bccb;
+  --accent: #26324b;
+  --accent-foreground: #f4f6fa;
+  --border: rgb(255 255 255 / 0.16);
+  --input: rgb(255 255 255 / 0.4);
+  --ring: #a9bbff;
 
-  --signal: var(--gold-bright);
-  --signal-foreground: var(--gold-bright);
-  --signal-tint: color-mix(in oklch, var(--gold-bright) 12%, transparent);
-  --prose: oklch(93% 0.03 82);
-  --faint: oklch(80% 0.07 82);
-  --hairline: oklch(73% 0.055 77 / 0.3);
-  --eclipse: var(--night);
+  --signal: #a9bbff;
+  --signal-foreground: #a9bbff;
+  --signal-tint: rgb(169 187 255 / 0.1);
+  --prose: #d3d9e4;
+  --faint: #a3adbf;
+  --hairline: rgb(255 255 255 / 0.12);
+  --line: rgb(255 255 255 / 0.2);
 
   background-color: var(--background);
   color: var(--foreground);
 }
 
 @utility wrap {
-  width: min(100% - var(--gutter) * 2, 78rem);
+  width: min(100% - var(--gutter) * 2, 74rem);
   margin-inline: auto;
 }
 
-/* A label: a mono caps string, the voice of the reference's dates, prices
- * and section labels. */
-@utility label-mono {
-  font-family: var(--font-mono);
+/* A short tag in the text face: a price unit, a footer column's name, the
+ * reply time under a button. It is sentence case and stays quiet. */
+@utility meta {
   font-size: var(--text-label);
   font-weight: 500;
-  letter-spacing: 0.08em;
-  line-height: 1.3;
-  text-transform: uppercase;
+  line-height: 1.35;
 }
 
 @layer base {
@@ -279,6 +250,7 @@
   html {
     @apply bg-background font-sans text-foreground antialiased;
     line-height: 1.6;
+    font-size: 1.0625rem;
     text-size-adjust: 100%;
     scrollbar-color: var(--line) transparent;
     accent-color: var(--signal);
@@ -286,40 +258,10 @@
     color-scheme: light;
     -webkit-tap-highlight-color: transparent;
   }
-  /* The paper: a gold light high on the page, the 112px grid, and under it
-   * the paper colour. */
   body {
     min-height: 100dvh;
     overflow-x: clip;
-    background:
-      radial-gradient(circle at 66% 7%, var(--paper-light), transparent 17rem),
-      linear-gradient(90deg, var(--grid-x) 1px, transparent 1px),
-      linear-gradient(0deg, var(--grid-y) 1px, transparent 1px),
-      var(--paper);
-    background-size:
-      auto,
-      112px 112px,
-      112px 112px,
-      auto;
-  }
-  /* The grain: three fine dot fields, multiplied over everything below the
-   * header, which never takes a pointer. */
-  body::before {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    pointer-events: none;
-    content: "";
-    opacity: 0.42;
-    mix-blend-mode: multiply;
-    background:
-      radial-gradient(circle at 18% 21%, oklch(100% 0 0 / 0.6), transparent 0.08rem),
-      radial-gradient(circle at 76% 63%, oklch(36% 0.05 70 / 0.18), transparent 0.07rem),
-      radial-gradient(circle at 48% 88%, oklch(38% 0.07 35 / 0.14), transparent 0.06rem);
-    background-size:
-      0.7rem 0.85rem,
-      1.1rem 1.3rem,
-      0.95rem 1.05rem;
+    background: var(--background);
   }
   @media (prefers-reduced-motion: no-preference) {
     html {
@@ -330,8 +272,8 @@
     background: var(--signal);
     color: var(--primary-foreground);
   }
-  /* A focus ring in the sun colour, clear of the edge it rings, on every
-   * surface: the night utility sets the ring to gold. */
+  /* A focus ring in the signature blue, clear of the edge it rings, on every
+   * surface: the inverse utility sets the ring to a light blue. */
   :focus-visible {
     outline: 3px solid var(--ring);
     outline-offset: 4px;
@@ -343,6 +285,7 @@
     text-decoration-line: underline;
     text-underline-offset: 0.22em;
     text-decoration-thickness: 1px;
+    text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
   }
   a,
   button,
@@ -357,7 +300,12 @@
   }
   b,
   strong {
-    font-weight: 700;
+    font-weight: 600;
+  }
+  h1,
+  h2,
+  h3 {
+    font-weight: 600;
   }
   code {
     font-family: var(--font-mono);

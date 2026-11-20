@@ -1,10 +1,10 @@
 /*
  * The visual world every page wears, as the browser receives it.
  *
- * ADR-0006 sets one light theme. A reader whose system asks for dark mode gets
- * the same gold paper, so the stylesheet the export ships must hold no second
+ * ADR-0007 keeps one light theme. A reader whose system asks for dark mode gets
+ * the same page, so the stylesheet the export ships must hold no second
  * theme: no `dark` class, no dark colour scheme, and no rule that answers a
- * dark system preference. The three families load from the export itself,
+ * dark system preference. The two families load from the export itself,
  * because a request to Google at runtime is a request a reader did not agree
  * to, and the body face must carry the Latin Extended letters in the names the
  * site prints.
@@ -41,7 +41,7 @@ test("the stylesheet holds no dark theme", () => {
   /* The class that turned the variables over, and the variant built on it. */
   expect(css).not.toMatch(/\.dark\b/);
   /* A colour scheme of dark tells the browser to draw its own controls and
-   * scrollbars dark on gold paper. */
+   * scrollbars dark on a light page. */
   expect(css).not.toMatch(/color-scheme:\s*dark/);
   /* A rule that answers a dark system preference is a second theme. */
   expect(css).not.toMatch(/prefers-color-scheme:\s*dark/);
@@ -69,7 +69,12 @@ function fontFaces(): FontFace[] {
       .split(",")
       .filter(Boolean)
       .map((range): [number, number] => {
+        /* A range is `U+start-end`, one code point, or a wildcard such as
+         * `U+??`, which stands for every value its question marks can take. */
         const [start, end] = range.trim().replace(/^U\+/i, "").split("-");
+        if (end === undefined && start.includes("?")) {
+          return [parseInt(start.replaceAll("?", "0"), 16), parseInt(start.replaceAll("?", "F"), 16)];
+        }
         return [parseInt(start, 16), parseInt(end ?? start, 16)];
       });
     return {
@@ -86,7 +91,7 @@ function fontFaces(): FontFace[] {
 
 const faces = fontFaces();
 
-for (const family of ["Chakra Petch", "Zen Old Mincho", "Azeret Mono"]) {
+for (const family of ["Schibsted Grotesk", "IBM Plex Mono"]) {
   test(`${family} loads from the export`, () => {
     const own = faces.filter((face) => face.family === family);
     expect(own.length).toBeGreaterThan(0);
@@ -108,9 +113,9 @@ test("no page and no stylesheet asks Google for a font", () => {
 });
 
 test("the body face carries every letter of every reference's name", () => {
-  /* The regular weight of the body face is the one a name in running text is
-   * set in. A letter outside every range it states falls to another face. */
-  const regular = faces.filter((face) => face.family === "Zen Old Mincho" && face.weight === "400");
+  /* The body face is a variable font, so one face per subset carries every
+   * weight. A letter outside every range it states falls to another face. */
+  const regular = faces.filter((face) => face.family === "Schibsted Grotesk");
   const covered = (code: number) =>
     regular.some((face) => face.ranges.some(([start, end]) => code >= start && code <= end));
   for (const { name } of references) {
@@ -135,8 +140,8 @@ test("the browser chrome takes the paper colour the manifest states", () => {
     expect(metaContents(readExport(file), "theme-color")).toEqual([manifest.theme_color]);
   }
   expect(manifest.background_color).toBe(manifest.theme_color);
-  /* White was the old paper; the gold paper is not white. */
-  expect(manifest.theme_color.toLowerCase()).not.toBe("#ffffff");
+  /* The page colour, which globals.css states as --paper. */
+  expect(manifest.theme_color.toLowerCase()).toBe("#fbfbfc");
 });
 
 /* A colour written straight into a class or a style, rather than read from a
@@ -162,20 +167,6 @@ for (const file of everyPage) {
   });
 }
 
-/* The markup of the first element of one tag, or a failure naming the page. */
-function first(file: string, tag: string): string {
-  const found = new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)</${tag}>`).exec(readExport(file));
-  if (!found) {
-    throw new Error(`${file} emits no ${tag} element.`);
-  }
-  return found[0];
-}
-
-/* The ornaments a page draws, by the name each one carries. */
-function ornaments(markup: string): string[] {
-  return [...markup.matchAll(/<svg\b[^>]*\bdata-ornament="([^"]+)"/g)].map(([, name]) => name);
-}
-
 for (const file of everyPage) {
   test(`${file} opens with a skip link to its main content`, () => {
     const document = readExport(file);
@@ -188,23 +179,12 @@ for (const file of everyPage) {
     expect(document).toMatch(/<main\b[^>]*\bid="main"/);
   });
 
-  test(`${file} stamps the KP seal on its header and its footer`, () => {
-    expect(ornaments(first(file, "header"))).toContain("seal");
-    expect(ornaments(first(file, "footer"))).toContain("seal");
-  });
-
-  test(`${file} draws the sun and the eclipse`, () => {
-    const drawn = ornaments(readExport(file));
-    expect(drawn).toContain("sun");
-    expect(drawn).toContain("eclipse");
-  });
-
-  test(`${file} hides every ornament from a screen reader`, () => {
-    /* An ornament says nothing the page does not say in words. */
-    const tags = [...readExport(file).matchAll(/<svg\b[^>]*\bdata-ornament="[^"]+"[^>]*>/g)];
-    expect(tags.length).toBeGreaterThan(0);
-    for (const [tag] of tags) {
-      expect(tag).toContain('aria-hidden="true"');
+  test(`${file} draws no illustration`, () => {
+    /* ADR-0007: the pages carry no drawn pictures. The one SVG a page may
+     * hold is an icon from lucide-react inside a link or a control. */
+    const svgs = readExport(file).match(/<svg\b[^>]*>/g) ?? [];
+    for (const tag of svgs) {
+      expect(tag).toMatch(/\bclass="[^"]*\blucide\b/);
     }
   });
 }

@@ -1,4 +1,3 @@
-import { Eclipse } from "@/components/ornaments";
 import {
   Band,
   HeadNote,
@@ -40,7 +39,7 @@ export default function EvalSuite() {
 
       <main id="main">
         <Band flush>
-          <HeroFrame ornament={<Eclipse className="size-28 lg:size-36" />}>
+          <HeroFrame>
             <HeroTitle>How we know your agent is right</HeroTitle>
             <Lede wide>
               An eval suite is a written test of what correct means for your
@@ -54,7 +53,7 @@ export default function EvalSuite() {
 
         <Band id="definition" aria-labelledby="definition-title">
           <Unit>
-            <UnitHead index={1} title="What an eval suite is" titleId="definition-title">
+            <UnitHead title="What an eval suite is" titleId="definition-title">
               <HeadNote>One agent, one suite. We write it before the agent is built, and you can read it.</HeadNote>
             </UnitHead>
             <UnitBody>
@@ -86,7 +85,7 @@ export default function EvalSuite() {
 
         <Band id="every-change" aria-labelledby="change-title" tone="panel">
           <Unit>
-            <UnitHead index={2} title="How it runs on every change" titleId="change-title">
+            <UnitHead title="How it runs on every change" titleId="change-title">
               <HeadNote>A change that fails the suite does not ship.</HeadNote>
             </UnitHead>
             <UnitBody>
@@ -115,7 +114,7 @@ export default function EvalSuite() {
 
         <Band id="unwritten" aria-labelledby="unwritten-title">
           <Unit>
-            <UnitHead index={3} title="When correct cannot be written down" titleId="unwritten-title">
+            <UnitHead title="When correct cannot be written down" titleId="unwritten-title">
               <HeadNote>Some work has no written answer. We tell you before we build.</HeadNote>
             </UnitHead>
             <UnitBody>

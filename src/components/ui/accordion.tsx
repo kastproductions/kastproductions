@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils"
 import { ChevronDownIcon } from "lucide-react"
 
 /*
- * Questions and answers on rules. The chevron is the stamp red, because opening
- * a question is the one action in the list, and it turns over when the
- * answer opens.
+ * Questions and answers on rules. The chevron is the signature blue, because
+ * opening a question is the one action in the list, and it turns over when
+ * the answer opens.
  */
 function Accordion({ className, ...props }: AccordionPrimitive.Root.Props) {
   return (

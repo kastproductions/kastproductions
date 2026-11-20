@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Azeret_Mono, Chakra_Petch, Zen_Old_Mincho } from "next/font/google";
+import { IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
 import { Analytics } from "@/components/analytics";
-import { Rail } from "@/components/site-chrome";
 import { cn } from "@/lib/utils";
 import { brand, founder, founderHandle, homePage, language, siteUrl } from "./content";
 import { graphHtml, siteNodes } from "./structured-data";
@@ -9,50 +8,29 @@ import { paper } from "./theme";
 import "./globals.css";
 
 /*
- * The three families of the Neo Mirai world (ADR-0006), each on its own
- * --font-* variable: Chakra Petch for display, Zen Old Mincho for every word
- * a person reads at length, and Azeret Mono for labels and strings a machine
- * wrote. globals.css maps them onto Tailwind's font-heading, font-sans and
- * font-mono. next/font self-hosts them and preloads the Latin files, so no
- * request leaves for Google at runtime. Each loads `swap` with a
- * size-adjusted fallback, which keeps the hero from moving when a font
- * arrives after the first paint.
+ * The two families of the Signed off theme (ADR-0007), each on its own
+ * --font-* variable: Schibsted Grotesk for every word a person wrote, and IBM
+ * Plex Mono for the strings a machine wrote. globals.css maps them onto
+ * Tailwind's font-heading, font-sans and font-mono. next/font self-hosts them
+ * and preloads the Latin files, so no request leaves for Google at runtime.
+ * Each loads `swap` with a size-adjusted fallback, which keeps the hero from
+ * moving when a font arrives after the first paint.
  *
- * Zen Old Mincho carries Latin Extended, and both Latin subsets of the
- * regular weight are preloaded, so a name such as "Povilas Nanevičius"
- * renders in the one face. Its fallback is a serif, so a letter the face
- * lacks still reads in a serif. The bold weight is a second call with no
- * preload: Google's stylesheet for it marks its Japanese files as Latin, and
- * preloading them would fetch 120 files nobody reads. next/font names both
- * calls' faces "Zen Old Mincho", so the bold call sets the same
- * --font-mincho variable, and one family carries both weights.
+ * Schibsted Grotesk carries Latin Extended, and both Latin subsets are
+ * preloaded, so a name such as "Povilas Nanevičius" renders in the one face.
+ * It loads as a variable font, so every weight the site sets comes from one
+ * file per subset.
  */
-const chakra = Chakra_Petch({
-  variable: "--font-chakra",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  display: "swap",
-});
-
-const mincho = Zen_Old_Mincho({
-  variable: "--font-mincho",
+const schibsted = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin", "latin-ext"],
-  weight: "400",
   display: "swap",
-  fallback: ["Noto Serif", "Georgia", "serif"],
 });
 
-const minchoBold = Zen_Old_Mincho({
-  variable: "--font-mincho",
-  weight: "700",
-  display: "swap",
-  preload: false,
-  fallback: ["Noto Serif", "Georgia", "serif"],
-});
-
-const azeret = Azeret_Mono({
-  variable: "--font-azeret",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -103,18 +81,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang={language}
-      className={cn(chakra.variable, mincho.variable, minchoBold.variable, azeret.variable)}
+      className={cn(schibsted.variable, plexMono.variable)}
     >
       <body>
-        {/* The first stop of the Tab key: a night slip that drops in from above
-         * the viewport when it takes focus, as the reference draws it. */}
+        {/* The first stop of the Tab key: an ink slip that drops in from above
+         * the viewport when it takes focus. */}
         <a
-          className="night fixed top-4 left-4 z-100 -translate-y-[160%] px-4 py-3 label-mono no-underline transition-transform duration-200 ease-settle focus:translate-y-0"
+          className="inverse fixed top-4 left-4 z-100 -translate-y-[160%] rounded-md px-4 py-3 meta no-underline transition-transform duration-200 ease-settle focus:translate-y-0"
           href="#main"
         >
           Skip to content
         </a>
-        <Rail />
         {children}
         <script
           type="application/ld+json"

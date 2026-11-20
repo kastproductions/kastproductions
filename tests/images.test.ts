@@ -8,17 +8,15 @@
  * hold is a broken image on the live site. So this reads every page the build
  * wrote and every `img` tag on it, the reference portraits included.
  *
- * The scenes are drawn as inline SVG, so they reach a reader as markup and not
- * as a file. A drawing a page marks as an image (`role="img"`) has to carry a
- * name, or a screen reader says "image" and nothing more. It also has to set
- * a `viewBox`, because a drawing with no viewBox cannot scale to its column.
- * The content module holds each scene's alt text, and a name too short to
- * describe a picture is a label, not alt text.
+ * A drawing a page marks as an image (`role="img"`) has to carry a name, or a
+ * screen reader says "image" and nothing more. It also has to set a
+ * `viewBox`, because a drawing with no viewBox cannot scale to its column.
+ * The site draws no pictures today (ADR-0007), so this holds a drawing that
+ * comes back to the same rule.
  */
 import { readdirSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 import { expect, test } from "bun:test";
-import { scenes } from "../src/app/content";
 import { decodeEntities, exportRoot, readExport } from "./export";
 
 /* Every HTML file the build wrote, relative to the export root. */
@@ -111,12 +109,4 @@ for (const file of pages) {
       expect(svg.viewBox ?? "").toMatch(/^[\d.]+ [\d.]+ [\d.]+ [\d.]+$/);
     });
   }
-}
-
-for (const [key, scene] of Object.entries(scenes)) {
-  test(`the ${key} scene has alt text that describes it`, () => {
-    /* A sentence, not a label: a screen reader reads it in place of the
-     * picture. */
-    expect(scene.alt.trim().split(/\s+/).length).toBeGreaterThanOrEqual(8);
-  });
 }

@@ -8,46 +8,44 @@ Live at [www.kastproductions.com](https://www.kastproductions.com).
 
 - **Framework**: Next.js 16 (App Router, static export)
 - **Styling**: Tailwind CSS v4 utilities, and shadcn/ui components on Base UI (`components.json`, style `base-nova`). The theme lives in `src/app/globals.css`
-- **Fonts**: Chakra Petch for display, Zen Old Mincho for reading, and Azeret Mono for labels and machine strings; all three load through `next/font`, so the export serves them
+- **Fonts**: Schibsted Grotesk for every word a person wrote, and IBM Plex Mono for machine strings; both load through `next/font`, so the export serves them
 - **Language**: TypeScript (strict)
 - **Runtime**: Bun
 
 ## The design
 
-The site wears Impeccable's Neo Mirai world, as ADR-0006 adapts it: warm gold
-paper with a 112px grid and a grain, ink type, a red sun, gold light and night
-teal, Chakra Petch caps for display, Zen Old Mincho for reading and Azeret
-Mono caps for labels. It has one light theme and no Japanese text.
-`DESIGN.md` is the full system and `PRODUCT.md` is the brief; read both before
-a design change. It is the same world on every page, and three rules hold it
-together. Breaking one is a bug.
+The site's design is called Signed off (ADR-0007): a cool white page,
+blue-black ink, one signature blue for the places a person acts, and
+Schibsted Grotesk in sentence case. It has one light theme and draws no
+pictures. `DESIGN.md` is the full system and `PRODUCT.md` is the brief; read
+both before a design change. Every page follows the same three rules, and
+breaking one is a bug.
 
-1. **A rule and a sheet are the only structure.** A `Band` is one course of
+1. **A rule and a card are the only structure.** A `Band` is one course of
    the page. A `Unit` splits it into a head column and a body column under one
-   ink rule that runs the width of the content. A sheet is a rice-paper panel
-   with a drawn edge and no shadow: a `Card` for the ways to buy, and the
-   example console and the run records. It is reserved for the things a
-   reader compares or acts on. Rows and lists sit on hairlines with no box
-   around them. The ornaments (the KP seal, the sun disc, the eclipse and the
-   vertical rail) are drawn in `src/components/ornaments.tsx` and
-   `site-chrome.tsx`, in neutral forms only: no rays.
-2. **`signal` (the stamp red) means someone must act.** It marks the gate the
-   agent stops at and the one action a reader can take in a view: the primary
-   button, the underline under a link that leads somewhere, the marker on a
-   question that opens. A rule, a number or a table cell is never red. A
-   surface set in night teal (`Band tone="night"`, a `lead` plan, the footer)
-   carries the `night` utility, which turns the same variables over, so the
-   primary button turns gold with ink type.
-3. **`font-mono` is a label or a machine string.** A button, a navigation
-   link, a badge, a price unit, a handle, a channel, a timestamp, a diff, a
-   registration code. Running text a person wrote is set in the serif.
+   rule that runs the width of the content. A `Card` holds a way to buy. The
+   examples (the console, the run record and the example run) are cards that
+   sit a little above the page on `shadow-sheet`, because they show what the
+   agent makes. Rows and lists sit on hairlines with no box around them. No
+   page holds an illustration or an ornament: where a page needs a picture,
+   it shows an example.
+2. **`signal` (the signature blue) means someone must act.** It marks the
+   gate the agent stops at and the one action a reader can take in a view:
+   the primary button, a link that leads on, the marker on a question that
+   opens. A rule, a number or a table cell is never blue. A surface set in
+   ink (`Band tone="ink"`, a `lead` plan, the footer) carries the `inverse`
+   utility, which turns the same variables over, so the primary button turns
+   white with ink type.
+3. **`font-mono` is a machine string.** A handle, a channel, a branch, a
+   timestamp, a diff, an issue key. Everything a person wrote, buttons and
+   labels included, is set in the text face, in sentence case.
 
-A heading carries no emphasis of its own: no italic word, no coloured full
-stop. Its weight and size are the emphasis.
+A heading carries no emphasis of its own: no italic word, no coloured word,
+and no label above it. Its weight and size are the emphasis.
 
 Motion is one orchestrated entrance per page, on load: the example console
-rises part by part and ends by drawing its signature line (in the home page's
-safety section and in the Slack page's hero), or the run record ticks in on a
+rises part by part and ends by drawing its signature line (in the hero of
+the home page and of the Slack page), or the run record ticks in on a
 product page. A page carries one or the other, never both, and nothing
 else on the site moves unless a reader asks it to. `prefers-reduced-motion`
 gets the end state immediately.
@@ -97,8 +95,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 src/app/
   layout.tsx           # Root layout: fonts, site-wide metadata, the site-wide graph,
                        #   analytics
-  page.tsx             # Home: hero and scene, clients, the work an agent can take,
-                       #   how a build goes, why it is safe (with the example console),
+  page.tsx             # Home: hero with the example console, clients, the work an
+                       #   agent can take, how a build goes, why it is safe,
                        #   channels, prices, the founder, questions, closing call to
                        #   action;
                        #   metadata and graph built from its page record
@@ -148,11 +146,11 @@ src/app/
                        #   `pageNodes`, which builds what a page adds from that same
                        #   record: the page with the date its copy changed and the
                        #   questions it answers, the service it sells, the breadcrumb
-  globals.css          # The theme: shadcn's variables set to the Neo Mirai palette,
-                       #   the site's own tokens beside them, the `night` surface, the
-                       #   breakpoints, the entrance keyframes, the paper grid and
-                       #   grain, and the few base rules no component owns
-  theme.ts             # The paper colour as hex, for the viewport and the manifest
+  globals.css          # The theme: shadcn's variables set to the Signed off palette,
+                       #   the site's own tokens beside them, the `inverse` surface,
+                       #   the type ramp, the breakpoints, the entrance keyframes, and
+                       #   the few base rules no component owns
+  theme.ts             # The page colour as hex, for the viewport and the manifest
   opengraph-image.tsx  # Open Graph image, rendered at build time
   manifest.ts          # Web app manifest
   robots.ts            # robots.txt
@@ -166,15 +164,14 @@ src/app/
                        #   `noindex` there, and a second beside it is a contradiction
   icon.svg             # Favicon, drawn as the brand mark
 src/components/
-  ornaments.tsx        # The KP seal, the sun disc and the eclipse, hand-drawn SVG
-  site-chrome.tsx      # Header, footer, nameplate and vertical rail, shared by every page. The
+  site-chrome.tsx      # Header, footer and nameplate, shared by every page. The
                        #   header links the about page, and the footer links privacy,
                        #   terms, the imprint and the contact page from every page
   mobile-nav.tsx       # The header's menu button on a narrow screen. Loads the
                        #   sheet on first press, so no page ships it up front
   menu-sheet.tsx       # The header's links in a sheet, mounted open by that press
   section.tsx          # The shapes every page is built from: band, unit, hero
-                       #   (with its scene or ornament, and its calls to action),
+                       #   (with its example beside it, and its calls to action),
                        #   lede, note, pull link, rows
   plan-card.tsx        # One way to buy as a card, and the grid the cards sit in
   ui/                  # shadcn/ui components, themed to the palette in their source
@@ -185,10 +182,9 @@ src/components/
   job-page.tsx         # One job we take, on its own page
   job-rows.tsx         # The jobs we take, as rows, on the home page and the door
   run-record.tsx       # The example run, on a product page
-  agent-console.tsx    # The example agent, in the home page's safety section and the
-                       #   Slack page's hero: a sign-off slip with its nameplate, the
+  agent-console.tsx    # The example agent, in the hero of the home page and the
+                       #   Slack page: a sign-off slip with its nameplate, the
                        #   exchange, and the gate it stops at
-  scenes.tsx           # The five scenes, drawn by hand as inline SVG from the tokens
   stop-point.tsx       # Where an agent stops for a person, on a product or job page
   analytics.tsx        # Vercel Web Analytics: the tracker this deployment serves,
                        #   and one event per call to action clicked
@@ -232,7 +228,7 @@ tests/
                        #   as `content.ts` holds them
   definition-lists.test.ts  # Everything inside a definition list sits in a term or a
                        #   value, so a screen reader reads it with its term
-  images.test.ts       # Every img has alt text, a size and a file; every scene a name
+  images.test.ts       # Every img has alt text, a size and a file; every drawing a name
   examples.test.ts     # Every synthetic part carries the Example label
   accessibility.test.ts  # No heading skips a level; every drawing is named or hidden
   chrome.test.ts       # The header and the footer use no internal term
@@ -241,10 +237,10 @@ tests/
   custom-slack-eval.test.ts  # The custom, Slack and eval suite pages: buyer words,
                        #   the custom prices in one shape on the door and every job
                        #   page, the Flue links, no price on an explainer
-  backlog.test.ts      # The backlog page numbers its sections and draws an ornament
+  backlog.test.ts      # The backlog page numbers no section
   vocabulary.test.ts   # A spend cap caps a session, never a task, on every page
   theme.test.ts        # One light theme, the fonts from the export, every colour
-                       #   through a token, the skip link and the ornaments
+                       #   through a token, the skip link, and no illustration
 vercel.json            # Redirects from retired URLs; content type for the Open Graph image
 ```
 
@@ -384,7 +380,6 @@ job is written twice. The prose the five pages share, their section headings amo
      systems: [{ name: "Stripe", role: "..." }],
      subject: "Failed payment recovery", // the mail subject, and the door in an event
      more: "How the follow-up works", // the words the two job lists link with
-     scene: "financeDesk", // optional: the room scene the first screen shows
    };
    ```
 
@@ -472,7 +467,7 @@ The site runs on Vercel, and `vercel.json` carries two settings the static expor
 
 `llms.txt` needs no such header. The build writes it under its own name, extension and all, so a static host reads the content type off the `.txt` the way it already does for `robots.txt`.
 
-The Open Graph image fetches Chakra Petch and Azeret Mono from Google Fonts during `bun run build`, so the build machine needs network access. It reads its colours from the tokens in `src/app/globals.css`, the same tokens the page uses, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
+The Open Graph image fetches Schibsted Grotesk from Google Fonts during `bun run build`, so the build machine needs network access. It reads its colours from the tokens in `src/app/globals.css`, the same tokens the page uses, and its URL in `src/app/head-directives.ts` carries a version query: a scraper caches an unfurl on the image URL for months, so redrawing the image means bumping that query in the same commit.
 
 ## Analytics
 
